@@ -1,0 +1,11 @@
+tunit = _this select 0;
+_grp = _this select 1;
+if (not local (leader _grp) or tunit == player) exitWith {};
+_name = name tunit;
+_mess = format["Recruit %1",_name];
+hint format["%1 wants to join your squad",_name];
+_vec = vehicle player;
+_Action = _vec addAction [_mess, "actions\accept.sqf",[tunit]];
+sleep 10.0;
+_vec removeAction _Action;
+if(group tunit != group player) then {(player) sideChat format["I have no position for you at this time %1", _name]};     

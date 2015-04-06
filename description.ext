@@ -1,0 +1,177 @@
+
+respawn="BASE";
+respawndelay=5;
+respawnDialog = 1;
+disabledAI=1;
+author="Kolmain";
+OnLoadName = "Evoluton";
+OnLoadMission = "An ArmA Classic.";
+loadScreen = "img\evo.paa";
+respawnTemplates[] = {"Wave", "Counter", "MenuPosition", "EVO_respawn"};
+respawnOnStart = 1;
+
+#include "gvs\colors_include.hpp"
+#include "gvs\control_include.hpp"
+#include "gvs\stc_include.hpp"
+#include "bon_recruit_units\dialog\common.hpp"
+#include "bon_recruit_units\dialog\recruitment.hpp"
+#include "ATM_airdrop\dialog.hpp"
+#include "CHVD\dialog.hpp"
+
+class Header
+{
+ gameType = COOP;            //DM, Team, Coop, CTI
+ minPlayers = 1;             //min # of players the mission supports
+ maxPlayers = 30;            //Max # of players the mission supports
+ playerCountMultipleOf = 1;  //Unknown
+};
+
+
+
+
+
+class CfgRespawnTemplates
+{
+	class EVO_respawn
+	{
+		// Function or script executed upon death. Parameters passed into it are the same as are passed into onPlayerKilled.sqf file
+		// [<oldUnit>, <killer>, <respawn>, <respawnDelay>]
+		onPlayerKilled = "";
+		// Function or script executed upon respawn. Parameters passed into it are the same as are passed into onPlayerRespawn.sqf file
+		// [<newUnit>, <oldUnit>, <respawn>, <respawnDelay>]
+		onPlayerRespawn = "EVO_fnc_pinit";
+
+	};
+
+};
+
+class Params
+{
+    class initialWeatherParam {
+        title = "Starting Weather";
+        values[] = {0,1,2,3,4};
+        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
+        default = 4;
+       };
+
+    class pfatigue {
+		title = "Player Fatigue";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 0;
+	};
+
+	class pRespawnPoints {
+		title = "Player Respawn Points";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
+};
+
+class CfgFunctions
+{
+    #include "CHVD\CfgFunctions.hpp"
+    class EVO
+	{
+		tag = "EVO";
+		class script
+		{
+			file = "EVO";
+			class demoOnly {};
+			class deployEplayer {};
+			class deployMplayer {};
+			class globalSideChat {};
+			class initEVO {};
+			class initTarget {};
+			class paradrop {};
+			class rank {};
+			class repair {};
+			class rtoffline {};
+			class pinit {};
+			class respawnRepair {};
+			class amb {};
+		};
+	};
+};
+
+class CfgSounds
+{
+	sounds[] = {Paycall,Recall,Vent,Vent2,Para};
+
+
+	class Paycall
+	{
+		name = "Paycall";
+		sound[] = {"Sound\Paycall.ogg", db-1, 1.0};
+		titles[] = {};
+	};
+	class Recall
+	{
+		name = "Recall";
+		sound[] = {"Sound\Recall.ogg", db-1, 1.0};
+		titles[] = {};
+	};
+	class Vent {name="Vent";sound[]={ATM_airdrop\data\Vent.ogg,db-11,1.0};titles[] = {};};
+	class Vent2 {name="Vent2";sound[]={ATM_airdrop\data\Vent2.ogg,db-11,1.0};titles[] = {};};
+	class Para {name="Para";sound[]={ATM_airdrop\data\parachute.ogg,db-11,1.0};titles[] = {};};
+
+};
+
+
+class CfgNotifications
+{
+	class Default
+	{
+		title = ""; // Tile displayed as text on black background. Filled by arguments.
+		iconPicture = ""; // Small icon displayed in left part. Colored by "color", filled by arguments.
+		iconText = ""; // Short text displayed over the icon. Colored by "color", filled by arguments.
+		description = ""; // Brief description displayed as structured text. Colored by "color", filled by arguments.
+		color[] = {1,1,1,1}; // Icon and text color
+		duration = 5; // How many seconds will the notification be displayed
+		priority = 0; // Priority; higher number = more important; tasks in queue are selected by priority
+		difficulty[] = {}; // Required difficulty settings. All listed difficulties has to be enabled
+	};
+
+	class promoted
+	{
+		title = "FIELD PROMOTION";
+		iconPicture = "%1";
+		description = "%2";
+		priority = 1;
+	};
+	class notQualified
+	{
+		title = "NOT QUALIFIED TO OPERATE";
+		iconPicture = "\A3\ui_f\data\map\mapcontrol\taskIconFailed_ca.paa";
+		description = "%1";
+		priority = 1;
+	};
+	class deployed
+	{
+		title = "%1";
+		iconPicture = "\A3\ui_f\data\map\mapcontrol\taskIcon_ca.paa";
+		description = "%2";
+		priority = 1;
+	};
+		class PointsAdded
+	{
+		title = "POINTS ADDED";
+		iconText = "+%2";
+		description = "%1";
+		color[] = {0.5,1,1,1};
+		priority = 0;
+	};
+	class PointsRemoved
+	{
+		title = "POINTS DEDUCTED";
+		iconText = "-%2";
+		description = "%1";
+		color[] = {1,0,0,1};
+		priority = 0;
+	};
+};
+
+
+
+

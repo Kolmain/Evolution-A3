@@ -1,0 +1,13 @@
+_officer = _this select 0;
+_caller = _this select 1;
+_id = _this select 2;
+_grp = group _officer;
+_officer join _caller;
+_msg = format ["Colonel %1 has been found, extract him!", name _officer];
+["deployed",["OFFICER FOUND", _msg]] call BIS_fnc_showNotification;
+waitUntil {(_officer distance (getMarkerPos det) < 50)};
+_officer join _grp;
+_msg = format ["Colonel %1 has been secured.", name _officer];
+["deployed",["OFFICER SECURED", _msg]] call BIS_fnc_showNotification;
+deleteVehicle _officer;
+deleteGroup _grp;
