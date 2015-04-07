@@ -116,7 +116,6 @@ CHHQ_fnc_deploy = {
 	sleep 3;
 	[["CHHQ_deployBlackout"],"BIS_fnc_blackIn",_nearestPlayers,false,true] call BIS_fnc_MP;
 	[[_veh, ["Packup HQ", "_this spawn CHHQ_fnc_undeploy", [_side, _cargoInfo, _composition], 0, false, true, "", "[_target, _this] call CHHQ_fnc_actionConditions"]], "CHHQ_fnc_addAction", _side] call BIS_fnc_MP;
-	[["RespawnAdded",["DEPLOYMENT POINT",format ["HQ deployed at grid %1", mapGridPosition (getPos _veh)],"\A3\ui_f\data\map\markers\nato\b_hq.paa"]],"BIS_fnc_showNotification",_side] call BIS_fnc_MP;
 
 	_veh setVariable ["CHHQ_inProgress", false, true];
 	_veh setVariable ["CHHQ_deployed", true, true];

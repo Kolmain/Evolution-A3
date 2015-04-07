@@ -43,7 +43,30 @@ sleep 8.5;
 
 
 /********************* UNIT CREATION ********************/
-_unit = group player createUnit [_unittype, [(getPos bon_recruit_barracks select 0) + 10 - random 10,(getPos bon_recruit_barracks select 1) + 10 - random 20,0], [], 0, "FORM"];
+_unit = objNull;
+_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+if (player in list AirportIn) then {
+	_unit = group player createUnit [_unittype, _spawnPos, [], 0, "FORM"];
+} else {
+	_unit = group player createUnit [_unittype, [_spawnPos select 0, _spawnPos select 1, 200], [], 0, "FORM"];
+    _unit allowdamage false;
+    waitUntil {(position _unit select 2) <= 150};
+    _chute = createVehicle ["Steerable_Parachute_F", position _unit, [], ((_dir)- 5 + (random 10)), 'FLY'];
+    _chute setPos (getPos _unit);
+    _unit assignAsDriver _chute;
+    _unit moveIndriver _chute;
+    _unit allowdamage true;
+	[_unit] spawn {
+	    _unit = _this select 0;
+	    (vehicle _unit) allowDamage false;// Set parachute invincible to prevent exploding if it hits buildings
+	    waitUntil {isTouchingGround _unit || (position _unit select 2) < 1 };
+	    _unit allowDamage false;
+	    _unit action ["EJECT", vehicle _unit];
+	    _unit setvelocity [0,0,0];
+	    sleep 1;// Para Units sometimes get damaged on landing. Wait to prevent this.
+	    _unit allowDamage true;
+	};
+};
 _unit setRank "PRIVATE";
 [_unit] execVM (BON_RECRUIT_PATH+"init_newunit.sqf");
 /*******************************************************/
@@ -52,7 +75,7 @@ _unit setRank "PRIVATE";
 
 
 //hint parseText format["Your <t size='1.0' font='PuristaMedium' color='#008aff'>%1</t> %2 has arrived.",_typename,name _unit];
-_msg = format["Your %1 %2 has arrived.",_typename,name _unit];
+_msg = format["Your <t size='1.0' font='PuristaMedium' color='#008aff'>%1</t> %2 has arrived.",_typename,name _unit];
 ["deployed",["REINFORCEMENTS", _msg]] call BIS_fnc_showNotification;
 bon_recruit_queue = bon_recruit_queue - [_queuepos];
 

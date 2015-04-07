@@ -4,7 +4,6 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 handle = [] execVM "scripts\randomWeather2.sqf";
 handle = [] execVM "scripts\clean.sqf";
 handle = [] execVM "scripts\group_manager.sqf";
-handle = [] execVM "gvs\gvs_init.sqf";
 
 enableSaving [false, false];
 CHHQ_showMarkers = true;
@@ -65,5 +64,7 @@ if (isServer && isMultiplayer) exitWith {};
 
 //Client
 _intro = player execVM "scripts\intro.sqf";
+_brief = [] execVM "briefing.sqf";
 titleCut ["","black faded", 0];
-//handle = [] spawn EVO_fnc_pinit;
+loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
+

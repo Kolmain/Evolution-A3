@@ -5,14 +5,11 @@ currentTarget setMarkerAlpha 1;
 "opforair" setMarkerPos (getMarkerPos currentTarget);
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 
-
-
-
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
-_null = [(leader _grp), currentTarget, "Fortify", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+_null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
-_null = [(leader _grp), currentTarget, "Fortify", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+_null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 for "_i" from 1 to paraSquads do {
 	_null = [_currentTarget] spawn {
@@ -32,7 +29,8 @@ for "_i" from 1 to paraSquads do {
 		    _heli flyInHeight 150;
 		    waitUntil {(_heli distance (getMarkerPos currentTarget)) < 500};
 		    handle = [_heli] call EVO_fnc_paradrop;
-		    _heli doMove (getPos server);
+		    _pos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+		    _heli doMove _pos;
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
 		    	waitUntil {(_heli distance server) < 1000};
@@ -42,8 +40,8 @@ for "_i" from 1 to paraSquads do {
 		    	deleteVehicle _heli;
 			};
 			_null = [(leader _grp), currentTarget, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			waitUntil {({alive _x} count units _grp) < 3};
-			sleep 300;
+			//waitUntil {({alive _x} count units _grp) < 3};
+			sleep 600;
 		};
 	};
 };
@@ -93,29 +91,39 @@ for "_i" from 1 to armorSquads do {
 };
 
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTarget]] call EVO_fnc_globalSideChat;
-_tskName = format ["Clear %1", currentTarget];
-attackTask = player createSimpleTask [_tskName];
-attackTask setTaskState "Created";
-attackTask setSimpleTaskDestination (getMarkerPos currentTarget);
-_tskName = format ["Destroy Radio Tower"];
-towerTask = player createSimpleTask [_tskName, attackTask];
-towerTask setTaskState "Assigned";
-towerTask setSimpleTaskDestination (getPos currentTargetRT);
-_tskName = format ["Secure Col. %1", name currentTargetOF];
-officerTask = player createSimpleTask [_tskName, attackTask];
-officerTask setTaskState "Created";
-_tskName = format ["Clear the city of %1.", currentTarget];
-["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
+[[[], {
+	if (!isServer || !isMultiplayer) then {
+		_tskName = format ["Clear %1", currentTarget];
+		attackTask = player createSimpleTask [_tskName];
+		attackTask setTaskState "Created";
+		attackTask setSimpleTaskDestination (getMarkerPos currentTarget);
+		_tskName = format ["Destroy Radio Tower"];
+		towerTask = player createSimpleTask [_tskName, attackTask];
+		towerTask setTaskState "Assigned";
+		towerTask setSimpleTaskDestination (getPos currentTargetRT);
+		_tskName = format ["Secure Col. %1", name currentTargetOF];
+		officerTask = player createSimpleTask [_tskName, attackTask];
+		officerTask setTaskState "Created";
+		_tskName = format ["Clear the city of %1.", currentTarget];
+		["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
+	};
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 waitUntil {!RTonline};
-towerTask setTaskState "Succeeded";
-_tskName = format ["Radio Tower Destroyed"];
-["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+
+[[[], {
+	if (!isServer || !isMultiplayer) then {
+		towerTask setTaskState "Succeeded";
+		_tskName = format ["Radio Tower Destroyed"];
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+	};
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
 sleep 5;
 [CROSSROADS, format ["We've received confirmation that the OPFOR communications tower has been destroyed, %1 will no longer be reinforced by OPFOR.", currentTarget]] call EVO_fnc_globalSideChat;
 _eastUnits = 100;
 while {_eastUnits > 10} do {
-	_allUnits = (getMarkerPos _currentTarget) nearEntities [["Man", "Car", "Tank"], 1000];
+	_allUnits = (getMarkerPos _currentTarget) nearEntities [["Man", "Car", "Tank"], 500];
 	{
 		if (side _x == EAST) then {
 			_eastUnits = _eastUnits + 1;
@@ -124,9 +132,13 @@ while {_eastUnits > 10} do {
 	sleep 15;
 };
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTarget]] call EVO_fnc_globalSideChat;
-attackTask setTaskState "Succeeded";
-_tskName = format ["%1 Cleared", currentTarget];
-["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+[[[], {
+	if (!isServer || !isMultiplayer) then {
+		attackTask setTaskState "Succeeded";
+		_tskName = format ["%1 Cleared", currentTarget];
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+	};
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 sleep 30;
 currentTarget = activetargets select 0;
 activetargets = activetargets - [currentTarget];

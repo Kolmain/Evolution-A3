@@ -10,9 +10,6 @@ loadScreen = "img\evo.paa";
 respawnTemplates[] = {"MenuPosition", "EVO_respawn"};
 respawnOnStart = 1;
 
-#include "gvs\colors_include.hpp"
-#include "gvs\control_include.hpp"
-#include "gvs\stc_include.hpp"
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"
 #include "ATM_airdrop\dialog.hpp"
