@@ -251,6 +251,7 @@ handle = [] spawn {
 		[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 		sleep 3;
 	};
+};
 
 
 
