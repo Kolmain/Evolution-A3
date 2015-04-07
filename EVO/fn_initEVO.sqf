@@ -7,6 +7,7 @@ currentTarget = "empty";
 currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
+officerAlive = true;
 paraSquads = 1;
 infSquads = (("infSquadsParam" call BIS_fnc_getParamValue) * 2);
 mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);

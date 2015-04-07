@@ -4,6 +4,7 @@ _currentTarget = currentTarget;
 currentTarget setMarkerAlpha 1;
 "opforair" setMarkerPos (getMarkerPos currentTarget);
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
+currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable officerAlive;}];
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 _null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
