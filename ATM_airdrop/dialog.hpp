@@ -259,7 +259,7 @@ class ATM_AD_ALTITUDE_SELECT
 		class Altitude : ATM_AD_RscText
 		{
 			idc = -1;
-			text = "$STR_ATM_Alt";
+			text = "Altitude:";
 			
 			x = 0.32; y = 0.258;
 			w = 0.275; h = 0.04;
@@ -268,7 +268,7 @@ class ATM_AD_ALTITUDE_SELECT
 		class Keys : ATM_AD_RscText
 		{
 			idc = -1;
-			text = "$STR_ATM_Keys";
+			text = "Select Key:";
 			
 			x = 0.32; y = 0.358;
 			w = 0.275; h = 0.04;
@@ -281,7 +281,7 @@ class ATM_AD_ALTITUDE_SELECT
 		class atmTitle : ATM_AD_RscTitle {
 			colorBackground[] = {0, 0, 0, 0};
 			idc = -1;
-			text = "$STR_ATM_Main";
+			text = "Choose your Altitude and Cut Key";
 			x = 0.38;
 			y = 0.2;
 			w = 0.8;
@@ -293,7 +293,7 @@ class ATM_AD_ALTITUDE_SELECT
 			idc = 2901;
 			text = "";
 			onSliderPosChanged = "[_this select 1] call fnc_alt_onsliderchange";
-			tooltip = "$STR_ATM_hover";
+			tooltip = "Your selected Altitude.";
 			x = 0.42;
 			y = 0.30 - (1 / 25);
 			
@@ -333,7 +333,7 @@ class ATM_AD_ALTITUDE_SELECT
 		class ATM_AD_ButtonClose : ATM_AD_RscButtonMenu {
 			idc = -1;
 			//shortcuts[] = {0x00050000 + 2};
-			text = "$STR_ATM_Close";
+			text = "Close";
 			onButtonClick = "closeDialog 0;";
 			x = 0.48;
 			y = 0.6 - (2 / 15);

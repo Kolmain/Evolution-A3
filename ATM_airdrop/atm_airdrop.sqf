@@ -14,7 +14,7 @@ private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2",
 		_z = _position select 2;
 		Altitude = 500;
 
-	hint Localize "STR_ATM_hinton";
+	hint "Select Altitude and Designate LZ for HALO Jump on the map.";
 	openMap true;
 
 	createDialog "ATM_AD_ALTITUDE_SELECT";
@@ -82,7 +82,7 @@ if ((getPos _target select 2) >= 8000) then{
 };
 
 hintsilent "";
-hint Localize "STR_ATM_hintjump";
+hint "PRESS KEY TO CUT-AWAY ROPES";
 Cut_Rope = (FindDisplay 46) displayAddEventHandler ["keydown","_this call dokeyDown"];
 
 	_height = getPos _target select 2;
@@ -105,7 +105,7 @@ while {(getPos _target select 2) > 2} do {
 	};
 };
 
-	hint Localize "STR_ATM_hintload";
+	hint "Loading loadout...";
 		_target removeAction RedOn;
 		_target removeAction BlueOn;
 		_target removeAction YellowOn;
