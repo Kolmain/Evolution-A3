@@ -7,9 +7,19 @@ currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable officerAlive;}];
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+if (HCconnected) then {
+	{
+		handle = [_x] call EVO_fnc_sendToHC;
+	} forEach units _grp;
+};
 _null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+if (HCconnected) then {
+	{
+		handle = [_x] call EVO_fnc_sendToHC;
+	} forEach units _grp;
+};
 _null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 for "_i" from 1 to paraSquads do {
@@ -18,10 +28,20 @@ for "_i" from 1 to paraSquads do {
 		while { _currentTarget == currentTarget } do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
+		    if (HCconnected) then {
+				{
+					handle = [_x] call EVO_fnc_sendToHC;
+				} forEach units _grp;
+			};
 		    _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
 		    _heli = _ret select 0;
 		    _heliGrp = _ret select 2;
+		    if (HCconnected) then {
+				{
+					handle = [_x] call EVO_fnc_sendToHC;
+				} forEach units _heliGrp;
+			};
 		    {
 		    	_x assignAsCargo _heli;
 		    	_x moveInCargo _heli;
@@ -53,6 +73,11 @@ for "_i" from 1 to infSquads do {
 		while { RTonline && _currentTarget == currentTarget } do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+		    if (HCconnected) then {
+				{
+					handle = [_x] call EVO_fnc_sendToHC;
+				} forEach units _grp;
+			};
 			_null = [(leader _grp), currentTarget, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			waitUntil {({alive _x} count units _grp) < 2};
 		};
@@ -69,6 +94,11 @@ for "_i" from 1 to (mechSquads) do {
 		    _ret = [_spawnPos, (floor (random 360)), _class, EAST] call bis_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
+		    if (HCconnected) then {
+				{
+					handle = [_x] call EVO_fnc_sendToHC;
+				} forEach units _grp;
+			};
 			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "NORMAL";
 			waitUntil {!canMove _tank || !alive _tank};
@@ -84,6 +114,11 @@ for "_i" from 1 to armorSquads do {
 		    _ret = [_spawnPos, (floor (random 360)), "O_MBT_02_cannon_F", EAST] call bis_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
+		    if (HCconnected) then {
+				{
+					handle = [_x] call EVO_fnc_sendToHC;
+				} forEach units _grp;
+			};
 			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "LIMITED";
 			waitUntil {(({alive _x} count units _grp) == 0) || !alive _tank || !canMove _tank};

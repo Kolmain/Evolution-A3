@@ -107,6 +107,8 @@ class CfgFunctions
 			class respawnRepair {};
 			class amb {};
 			class officer {};
+			class sendToHC {};
+			class sendToServer {};
 		};
 	};
 };

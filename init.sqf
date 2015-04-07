@@ -4,6 +4,7 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 handle = [] execVM "scripts\randomWeather2.sqf";
 handle = [] execVM "scripts\clean.sqf";
 handle = [] execVM "scripts\group_manager.sqf";
+handle = [] execVM "bon_recruit_units\init.sqf";
 
 enableSaving [false, false];
 CHHQ_showMarkers = true;
@@ -42,19 +43,54 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
-[] execVM "bon_recruit_units\init.sqf";
+HCconnected = false;
 //Server
+HC_uid = getPlayerUID headlessClient;
+
+if (HC_uid == getPlayerUID server) then {
+	HC_uid = nil;
+	HCconnected = false;
+	publicVariable "HCconnected";
+} else {
+	HCconnected = true;
+	publicVariable "HCconnected";
+};
 
 if (isServer) then
 {
 	[] spawn EVO_fnc_initEVO;
-	//onplayerconnected "[_name] exec ""scripts\update.sqf"";if(dunit == _name) then {dunit = ""none""}";
+	onplayerconnected "
+	if (owner headlessClient == _uid) then {
+		HC_uid = _uid;
+		publicVariable 'HC_uid';
+		HCconnected = true;
+		publicVariable 'HCconnected';
+	}
+	if (_uid == HC_uid) then {
+		{
+			if (owner _x == owner server && !isPlayer _x) then {
+				handle = [_x] EVO_fnc_sendToHC;
+				systemChat 'WARNING: Headless Client connected, sending all units to Headless Client.';
+			};
+		} forEach allUnits;
+	};
+	";
 	onPlayerDisconnected "
 	dunit = _name;
 	_mark = format[""%1mash"",dunit];
 	deleteMarker _mark;
 	_mark = format[""%1farp"",dunit];
 	deleteMarker _mark;
+	if (_uid == HC_uid) then {
+		HCconnected = false;
+		publicVariable 'HCconnected';
+		{
+			if (owner _x == owner headlessClient && !isPlayer _x) then {
+				handle = [_x] EVO_fnc_sendToServer;
+				systemChat 'WARNING: Headless Client lost connection, sending all units back to Server.';
+			};
+		} forEach allUnits;
+	};
 	";
 };
 
