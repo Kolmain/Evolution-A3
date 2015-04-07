@@ -68,7 +68,7 @@ if (isServer) then
 	}
 	if (_uid == HC_uid) then {
 		{
-			if (owner _x == owner server && !isPlayer _x) then {
+			if (owner _x == owner server && !isPlayer _x && side _x == EAST) then {
 				handle = [_x] EVO_fnc_sendToHC;
 				systemChat 'WARNING: Headless Client connected, sending all units to Headless Client.';
 			};
