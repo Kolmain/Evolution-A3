@@ -54,7 +54,7 @@ for "_i" from 1 to infSquads do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 			_null = [(leader _grp), currentTarget, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			waitUntil {({alive _x} count units _grp) < 3};
+			waitUntil {({alive _x} count units _grp) < 2};
 		};
 	};
 };
@@ -71,7 +71,7 @@ for "_i" from 1 to (mechSquads) do {
 		    _grp = _ret select 2;
 			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "NORMAL";
-			waitUntil {({alive _x} count units _grp) < 3};
+			waitUntil {!canMove _tank || !alive _tank};
 		};
 	};
 };
