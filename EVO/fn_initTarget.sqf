@@ -117,6 +117,7 @@ waitUntil {!RTonline};
 		towerTask setTaskState "Succeeded";
 		_tskName = format ["Radio Tower Destroyed"];
 		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
@@ -138,6 +139,7 @@ while {_eastUnits > 10} do {
 		attackTask setTaskState "Succeeded";
 		_tskName = format ["%1 Cleared", currentTarget];
 		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 sleep 30;
