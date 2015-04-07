@@ -44,7 +44,6 @@ CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
 HCconnected = false;
-//Server
 HC_uid = getPlayerUID headlessClient;
 
 if (HC_uid == getPlayerUID server) then {
