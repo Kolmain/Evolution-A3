@@ -8,9 +8,9 @@ currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
 paraSquads = 1;
-infSquads = 3;
-mechSquads = 2;
-armorSquads = 1;
+infSquads = (("infSquadsParam" call BIS_fnc_getParamValue) * 2);
+mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
+armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 infSquadStep = 1;
 mechSquadStep = 1;
 ArmorSquadStep = 1;
@@ -20,9 +20,10 @@ MHQ = firstMHQ;
 
 { _x setMarkerAlpha 0 } forEach activetargets;
 "opforair" setMarkerAlpha 0;
-/*
+
 {
 	_targetRadioTower = _x;
+	/*
 	_pos = (getPos _targetRadioTower);
 	_spawnPos = [];
 	_max_distance = 100;
@@ -31,8 +32,10 @@ MHQ = firstMHQ;
 		_max_distance = _max_distance + 50;
 	};
 	_targetRadioTower setPosASL _spawnPos;
+	*/
+	handle = [_targetRadioTower] spawn EVO_fnc_demoOnly;
 } count activetargetsRT;
-*/
+
 {
 	_officer = _x;
 	_pos = (getPos _officer);

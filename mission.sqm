@@ -408,7 +408,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={10665.626,130.29382,9429.8291};
+					position[]={10645.823,124.24802,9477.3535};
 					placement=200;
 					id=16;
 					side="EAST";
@@ -2903,7 +2903,7 @@ class Mission
 		};
 		class Item137
 		{
-			position[]={10486.63,137.18323,9301.0283};
+			position[]={10468.698,135.33493,9304.833};
 			placement=200;
 			id=212;
 			side="EMPTY";
@@ -3223,14 +3223,14 @@ class Mission
 		items=15;
 		class Item0
 		{
-			position[]={10563.249,152.98784,9324.1455};
+			position[]={10531.724,140.25775,9373.6865};
 			name="Pariso";
 			markerType="ELLIPSE";
 			type="Empty";
 			colorName="ColorRed";
 			fillName="Border";
-			a=450;
-			b=450;
+			a=400;
+			b=400;
 			drawBorder=1;
 		};
 		class Item1

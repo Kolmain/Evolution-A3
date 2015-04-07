@@ -34,7 +34,7 @@ handle = [] spawn {
 		sleep 10;
 	};
 	//Lists of items to include
-	_availableHeadgear = [
+	availableHeadgear = [
 	"H_HelmetB",
 	"H_HelmetB_camo",
 	"H_HelmetB_paint",
@@ -57,7 +57,7 @@ handle = [] spawn {
 	"H_HelmetCrew_B"
 	];
 
-	_availableGoggles = [
+	availableGoggles = [
 	"G_Combat",
 	"G_Lowprofile",
 	"G_Shades_Black",
@@ -72,7 +72,7 @@ handle = [] spawn {
 	"G_Bandanna_blk"
 	];
 
-	_availableUniforms = [
+	availableUniforms = [
 	"U_B_CombatUniform_mcam",
 	"U_B_CombatUniform_mcam_tshirt",
 	"U_B_CombatUniform_mcam_vest",
@@ -82,7 +82,7 @@ handle = [] spawn {
 	"U_B_CTRG_3"
 	];
 
-	_availableVests = [
+	availableVests = [
 	"V_BandollierB_khk",
 	"V_BandollierB_blk",
 	"V_PlateCarrier1_rgr",
@@ -93,7 +93,7 @@ handle = [] spawn {
 	"V_PlateCarrierH_CTRG"
 	];
 
-	_availableItems = [
+	availableItems = [
 	"ItemWatch",
 	"ItemCompass",
 	"ItemGPS",
@@ -107,7 +107,7 @@ handle = [] spawn {
 	"ToolKit"
 	];
 
-	_availableBackpacks = [
+	availableBackpacks = [
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_mcamo",
 	"B_Kitbag_rgr",
@@ -116,9 +116,14 @@ handle = [] spawn {
 	"B_TacticalPack_mcamo"
 	];
 
-	_availableWeapons = [];
+	availableWeapons = [];
 
-	_availableMagazines = [];
+	availableMagazines = [];
+
+	[hqbox, (availableBackpacks)] call BIS_fnc_addVirtualBackpackCargo;
+	[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
+	[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
+	[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 
 	while {alive player} do {
 		_player = player;
@@ -194,56 +199,56 @@ handle = [] spawn {
 		_msg = format ["You've been promoted to the rank of %1.", rank _player];
 		if (_newScore < rank1 and _rank != "PRIVATE")  then {
 			_player setUnitRank "PRIVATE";
-			_availableWeapons = _availableWeapons + rank1weapons;
-			_availableMagazines = _availableMagazines + rank1magazines;
+			availableWeapons = availableWeapons + rank1weapons;
+			availableMagazines = availableMagazines + rank1magazines;
 			["promoted",["img\pvt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore < rank2 and _newScore >= rank1 and _rank != "CORPORAL")  then	{
 			_player setUnitRank "CORPORAL";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons;
-			_availableItems = _availableItems + rank2items;
-			_availableMagazines = _availableMagazines + rank1magazines;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons;
+			availableItems = availableItems + rank2items;
+			availableMagazines = availableMagazines + rank1magazines;
 			["promoted",["img\corp.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore < rank3 and _newScore >= rank2 and _rank != "SERGEANT")  then	{
 			_player setUnitRank "SERGEANT";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons + rank3weapons;
-			_availableItems = _availableItems + rank2items + rank3items;
-			_availableMagazines = _availableMagazines + rank1magazines;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons;
+			availableItems = availableItems + rank2items + rank3items;
+			availableMagazines = availableMagazines + rank1magazines;
 			["promoted",["img\sgt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore < rank4 and _newScore >= rank3 and _rank != "LIEUTENANT")  then {
 			_player setUnitRank "LIEUTENANT";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons;
 			["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore < rank5 and _newScore >= rank4 and _rank != "CAPTAIN")  then {
 			_player setUnitRank "CAPTAIN";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons;
 			["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore < rank6 and _newScore >= rank5 and _rank != "MAJOR")  then {
 			_player setUnitRank "MAJOR";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank6weapons;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank6weapons;
 			["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		if (_newScore >= rank6 and _rank != "COLONEL")  then {
 			_player setUnitRank "COLONEL";
-			_availableWeapons = _availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank7weapons;
+			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank7weapons;
 			["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 		};
 		_firstRun = false;
-		[hqbox, (_availableBackpacks)] call BIS_fnc_addVirtualBackpackCargo;
-		[hqbox, (_availableHeadgear + _availableGoggles + _availableItems + _availableUniforms + _availableVests)] call BIS_fnc_addVirtualItemCargo;
-		[hqbox, (_availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
-		[hqbox, (_availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
+		[hqbox, (availableBackpacks)] call BIS_fnc_addVirtualBackpackCargo;
+		[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
+		[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
+		[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 		sleep 3;
 	};
 

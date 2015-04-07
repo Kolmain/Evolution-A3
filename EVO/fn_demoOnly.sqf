@@ -1,11 +1,13 @@
 _radio = _this select 0;
 _radio allowDamage false;
-while {alive _radio} do
+_loop = true;
+_bombs = [];
+
+while {_loop} do
 {
 	sleep 3.0;
-	_bomb = (_radio nearObjects ["SatchelCharge_Remote_Mag", 20]) select 0;
-
-	if(!isNull _bomb) then
+	_bombs = _radio nearObjects ["satchelcharge_remote_ammo", 20];
+	if(count (_bombs) > 0) then
 	{
 		_radio allowDamage true;
 	};

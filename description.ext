@@ -7,7 +7,7 @@ author="Kolmain";
 OnLoadName = "Evoluton";
 OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
-respawnTemplates[] = {"Wave", "Counter", "MenuPosition", "EVO_respawn"};
+respawnTemplates[] = {"MenuPosition", "EVO_respawn"};
 respawnOnStart = 1;
 
 #include "gvs\colors_include.hpp"
@@ -67,6 +67,24 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
+	class infSquadsParam {
+		title = "# of Infantry Squads at AO";
+		texts[] = {"1","2","3","4","5"};
+		values[] = {1,2,3,4,5};
+		default = 5;
+	};
+	class mechSquadsParam {
+		title = "# of Mechanized Squads at AO";
+		texts[] = {"1","2","3","4","5"};
+		values[] = {1,2,3,4,5};
+		default = 2;
+	};
+	class armorSquadsParam {
+		title = "# of Armor at AO";
+		texts[] = {"1","2","3","4","5"};
+		values[] = {1,2,3,4,5};
+		default = 2;
+	};
 };
 
 class CfgFunctions
@@ -91,6 +109,7 @@ class CfgFunctions
 			class pinit {};
 			class respawnRepair {};
 			class amb {};
+			class officer {};
 		};
 	};
 };

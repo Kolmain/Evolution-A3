@@ -46,7 +46,6 @@ for "_i" from 1 to paraSquads do {
 			sleep 300;
 		};
 	};
-
 };
 
 for "_i" from 1 to infSquads do {
@@ -54,40 +53,43 @@ for "_i" from 1 to infSquads do {
 		_currentTarget = _this select 0;
 		while { RTonline && _currentTarget == currentTarget } do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
+		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 			_null = [(leader _grp), currentTarget, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			waitUntil {({alive _x} count units _grp) < 3};
 		};
 	};
-
 };
 
-for "_i" from 1 to mechSquads do {
+for "_i" from 1 to (mechSquads) do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
 		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Mechanized" >> "OIA_MechInfSquad")] call BIS_fnc_spawnGroup;
-			_null = [(leader _grp), currentTarget, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_spawnPos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			//_class = ["O_MRAP_02_gmg_F","O_MRAP_02_hmg_F"] select (random floor(1));
+			_class = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom; //returns one of the variables
+		    _ret = [_spawnPos, (floor (random 360)), _class, EAST] call bis_fnc_spawnvehicle;
+		    _tank = _ret select 0;
+		    _grp = _ret select 2;
+			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_grp setSpeedMode "NORMAL";
 			waitUntil {({alive _x} count units _grp) < 3};
 		};
 	};
-
 };
 
 for "_i" from 1 to armorSquads do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
 		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _ret = [_spawnPos, (floor (random 360)), "O_MBT_02_cannon_F", EAST] call bis_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
-			_null = [(leader _grp), currentTarget, "RANDOM", "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_grp setSpeedMode "LIMITED";
 			waitUntil {(({alive _x} count units _grp) == 0) || !alive _tank || !canMove _tank};
 		};
 	};
-
 };
 
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTarget]] call EVO_fnc_globalSideChat;
@@ -98,6 +100,7 @@ attackTask setSimpleTaskDestination (getMarkerPos currentTarget);
 _tskName = format ["Destroy Radio Tower"];
 towerTask = player createSimpleTask [_tskName, attackTask];
 towerTask setTaskState "Assigned";
+towerTask setSimpleTaskDestination (getPos currentTargetRT);
 _tskName = format ["Secure Col. %1", name currentTargetOF];
 officerTask = player createSimpleTask [_tskName, attackTask];
 officerTask setTaskState "Created";

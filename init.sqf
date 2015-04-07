@@ -66,4 +66,4 @@ if (isServer && isMultiplayer) exitWith {};
 //Client
 _intro = player execVM "scripts\intro.sqf";
 titleCut ["","black faded", 0];
-handle = [] spawn EVO_fnc_pinit;
+//handle = [] spawn EVO_fnc_pinit;
