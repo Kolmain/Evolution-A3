@@ -33,6 +33,29 @@ if (typeOf player == "B_soldier_repair_F") then {
 //[player, recruitComm] call BIS_fnc_removeCommMenuItem;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 
+_ret = [] spawn {
+	_hitID = player addEventHandler ["Hit",{
+		if (alive player) then {
+			player setVariable ["hint_hit", true, true];
+		};
+	}];
+	waitUntil {(player getVariable "hint_hit")};
+	player removeEventHandler ["Hit", _hitID];
+	[["damage","fak"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+};
+
+_handleHealID = player addEventHandler ["HandleHeal",{
+	[[[_this select 1], {
+		if (player == (_this select 1)) then {
+			_score = player getVariable "KOL_score";
+			_score = _score + 1;
+			player setVariable ["KOL_score", _score, true];
+			["PointsAdded",["Applied FAK to Friendly Unit.", 1]] call BIS_fnc_showNotification;
+			[player, 1] call BIS_fnc_addScore;
+		};
+	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+}];
+
 handle = [] spawn {
 	waitUntil {player distance spawnBuilding > 25};
 	loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
