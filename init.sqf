@@ -101,5 +101,5 @@ if (isServer && isMultiplayer) exitWith {};
 _intro = player execVM "scripts\intro.sqf";
 _brief = [] execVM "briefing.sqf";
 titleCut ["","black faded", 0];
-loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
+//loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
 

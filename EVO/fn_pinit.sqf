@@ -6,9 +6,12 @@ _amb = [] call EVO_fnc_amb;
 player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+
 if (!isNull hqbox) then {deleteVehicle hqbox};
+
 hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");
 ["AmmoboxInit",[hqbox, false, {true}]] spawn BIS_fnc_arsenal;
+
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 	player enableFatigue false;
 } else {
@@ -27,6 +30,9 @@ if (typeOf player == "B_soldier_repair_F") then {
 	player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
 };
 
+//[player, recruitComm] call BIS_fnc_removeCommMenuItem;
+recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
+
 handle = [] spawn {
 	waitUntil {player distance spawnBuilding > 25};
 	loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
@@ -34,10 +40,6 @@ handle = [] spawn {
 };
 
 handle = [] spawn {
-	_firstRun = true;
-	if (_firstRun) then {
-		sleep 10;
-	};
 	//Lists of items to include
 	availableHeadgear = [
 	"H_HelmetB",
@@ -126,73 +128,16 @@ handle = [] spawn {
 	availableMagazines = [];
 
 	while {alive player} do {
-		_player = player;
-		_vehicle = vehicle player;
-		_class = typeOf _vehicle;
-		_classname = toLower(_class);
-		if (_vehicle != _player && (driver _vehicle == _player)) then {
-			switch (rank _player) do {
-				case "PRIVATE": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
+		handle = [player] call EVO_fnc_vehicleCheck;
+		if (leader group player == player) then {
+			{
+				if (!isPlayer _x) then {
+					//_x setUnitRank (rank player);
+					handle = [_x] call EVO_fnc_vehicleCheck;
 				};
-				case "CORPORAL": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				case "SERGEANT": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				case "LIEUTENANT": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				case "CAPTAIN": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				case "MAJOR": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				case "COLONEL": {
-					if ((faction _vehicle == "BLU_F") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles) && !(_classname in rank7vehicles)) then {
-						["notQualified",["You are not qualified to operate this vehicle."]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-			};
+			} forEach units group player;
 		};
-		handle [] call EVO_fnc_rank;
-		_firstRun = false;
-
+		handle = [] call EVO_fnc_rank;
 		sleep 3;
 	};
 };
