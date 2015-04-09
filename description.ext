@@ -82,6 +82,12 @@ class Params
 		values[] = {1,2,3,4,5};
 		default = 2;
 	};
+	 class fullArsenal {
+		title = "Full Virtual Arsenal";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
 };
 
 class CfgFunctions

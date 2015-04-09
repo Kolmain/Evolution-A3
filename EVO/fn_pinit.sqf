@@ -1,9 +1,12 @@
 waitUntil {!isNull player};
-handle = [player, loadout] execVM "set_loadout.sqf";
+if (!isNil "loadout") then {
+	handle = [player, loadout] execVM "set_loadout.sqf";
+};
+
 _mus = [] spawn BIS_fnc_jukebox;
 _amb = [] call EVO_fnc_amb;
 //_brief = [] execVM "briefing.sqf";
-player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+
 player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
@@ -11,6 +14,10 @@ if (!isNull hqbox) then {deleteVehicle hqbox};
 
 hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");
 ["AmmoboxInit",[hqbox, false, {true}]] spawn BIS_fnc_arsenal;
+
+if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
+	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+};
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 	player enableFatigue false;

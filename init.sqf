@@ -9,6 +9,7 @@ handle = [] execVM "bon_recruit_units\init.sqf";
 enableSaving [false, false];
 CHHQ_showMarkers = true;
 
+militaryInstallations = [];
 etent = objNull;
 epad = objNull;
 ebox = objNull;
@@ -98,7 +99,7 @@ if (isServer && isMultiplayer) exitWith {};
 
 //Client
 _intro = player execVM "scripts\intro.sqf";
-_brief = [] execVM "briefing.sqf";
+//_brief = [] execVM "briefing.sqf";
 titleCut ["","black faded", 0];
 //loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
 
