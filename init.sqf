@@ -27,7 +27,6 @@ rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_arme
 rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
 rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
 rank7vehicles = ["b_plane_cas_01_f"];
-
 rank1weapons = ["arifle_MX_F"];
 rank1magazines = ["HandGrenade", "SmokeShell", "SmokeShellBlue", "Chemlight_blue", "B_IR_Grenade", "30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag_Tracer","1Rnd_HE_Grenade_shell","UGL_FlareWhite_F","20Rnd_556x45_UW_mag","30Rnd_556x45_Stanag","30Rnd_556x45_Stanag_Tracer_Red","1Rnd_Smoke_Grenade_shell","1Rnd_SmokeBlue_Grenade_shell","Titan_AA","Titan_AT","Titan_AP","9Rnd_45ACP_Mag","30Rnd_9x21_Mag","30Rnd_45ACP_Mag_SMG_01","10Rnd_762x51_Mag","20Rnd_762x51_Mag","6Rnd_45ACP_Cylinder","5Rnd_127x108_Mag","5Rnd_127x108_APDS_Mag","7Rnd_408_Mag"];
 rank2weapons = ["arifle_MXC_F","arifle_MX_GL_F","launch_B_Titan_short_F","hgun_ACPC2_F","arifle_MXC_Black_F"];

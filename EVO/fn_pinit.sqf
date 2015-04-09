@@ -6,7 +6,7 @@ _amb = [] call EVO_fnc_amb;
 player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
-
+player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
 if (!isNull hqbox) then {deleteVehicle hqbox};
 
 hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");

@@ -35,6 +35,7 @@ MHQ = firstMHQ;
 	_targetRadioTower setPosASL _spawnPos;
 	*/
 	handle = [_targetRadioTower] spawn EVO_fnc_demoOnly;
+	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 } count activetargetsRT;
 
 {
@@ -79,6 +80,9 @@ handle = [] spawn {
 		_plane = _ret select 0;
 		_grp = _ret select 2;
 		_plane flyInHeight 350;
+		{
+			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+		}  forEach units _grp;
 		_wp =_grp addWaypoint [getMarkerPos "opforair", 0];
 		[_grp, 0] setWaypointBehaviour "COMBAT";
 		[_grp, 0] setWaypointCombatMode "RED";

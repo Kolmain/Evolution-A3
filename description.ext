@@ -110,6 +110,8 @@ class CfgFunctions
 			class sendToHC {};
 			class sendToServer {};
 			class vehicleCheck {};
+			class handleScore {};
+			class onUnitKilled {};
 		};
 	};
 };
