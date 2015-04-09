@@ -73,12 +73,22 @@ _i = 0;
 	};
 } forEach vehicles;
 
-/*
-_ret = [(getPos server), (floor (random 360)), "O_Plane_CAS_02_F", EAST] call bis_fnc_spawnvehicle;
-_plane = _ret select 0;
-_grp = _ret select 2;
-_null = [(leader _grp), opforair, "DELETE:", 80] execVM "scripts\UPSMON.sqf";
-*/
+handle = [] spawn {
+	while {true} do {
+		_ret = [(getPos server), (floor (random 360)), "O_Plane_CAS_02_F", EAST] call bis_fnc_spawnvehicle;
+		_plane = _ret select 0;
+		_grp = _ret select 2;
+		_plane flyInHeight 350;
+		_wp =_grp addWaypoint [getMarkerPos "opforair", 0];
+		[_grp, 0] setWaypointBehaviour "COMBAT";
+		[_grp, 0] setWaypointCombatMode "RED";
+		[_grp, 0] setWaypointSpeed "FULL";
+		[_grp, 0] setWaypointType "HOLD";
+		[_grp, 0] setWPPos markerPos "opforair";
+		waitUntil {!canMove _plane || !alive _plane};
+		sleep 400;
+	};
+};
 
 currentTarget = activetargets select 0;
 publicVariable "currentTarget";

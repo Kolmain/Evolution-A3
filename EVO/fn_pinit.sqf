@@ -24,14 +24,17 @@ if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
 
 if (typeOf player == "B_medic_F") then {
 	player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
+	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 if (typeOf player == "B_soldier_repair_F") then {
 	player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
+	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 //[player, recruitComm] call BIS_fnc_removeCommMenuItem;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
+[["Gamemode","recruiting"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 
 _ret = [] spawn {
 	_hitID = player addEventHandler ["Hit",{

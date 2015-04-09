@@ -240,11 +240,21 @@ class CfgHints
 			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
 			noImage = false;
 		};
-		class armory
+		class farp
 		{
 			displayName = "Forward Arming and Refueling Point";
 			displayNameShort = "FARP";
 			description = "While at the Forward Arming and Refueling Point, players have the option to modify their loadout by approaching supplies and using their action menu to select %3Change Loadout%4. Additional equipment will become available as you accrue points during the operation.";
+            tip = "As you gain points on the battlefield, special equipment will become available for your use such as UAVs and long barreled rifles.";
+			arguments[] = {};
+			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
+			noImage = false;
+		};
+		class mash
+		{
+			displayName = "Mobile Army Surgical Hospital";
+			displayNameShort = "MASH";
+			description = "While at the Mobile Army Surgical Hospital, players have the option to heal themselves by approaching the MASH tent and using their action menu to select %Heal at MASH%4. The player who deployed the MASH will receive the points for healing the individual.";
             tip = "As you gain points on the battlefield, special equipment will become available for your use such as UAVs and long barreled rifles.";
 			arguments[] = {};
 			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
