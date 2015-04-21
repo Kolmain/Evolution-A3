@@ -1,14 +1,13 @@
-
-respawn="BASE";
-respawndelay=5;
-respawnDialog = 1;
 disabledAI=1;
 author="Kolmain";
 OnLoadName = "Evoluton";
 OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
-respawnTemplates[] = {"MenuPosition", "EVO_respawn"};
-respawnOnStart = 1;
+respawn = 3;
+respawnDelay = 15;
+respawnTemplates[] = {"MenuPosition", "EVO_respawn", "Revive"};
+reviveDelay = 10;
+respawnOnStart = -1;
 
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"
