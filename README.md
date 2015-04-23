@@ -12,6 +12,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - The original cleanup code was replaced with **Quiksilver's cleanup**.
   - Overall unit management moved to **UPSMON** with minor script modifications (Hardcoded airdrops, etc).
   - Weapon crate replaced with **BI's Virtual Arsenal**, still working on proper whitelisting of equipment.
+  - An MHQ was added using **CHHQ**.
   - ArmA3 Content used in place of ArmA content.
 
 
