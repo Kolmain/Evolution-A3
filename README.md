@@ -13,6 +13,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - Overall unit management moved to **UPSMON** with minor script modifications (Hardcoded airdrops, etc).
   - Weapon crate replaced with **BI's Virtual Arsenal**, still working on proper whitelisting of equipment.
   - An MHQ was added using **CHHQ**.
+  - *Experimental* **Headless Client implementation**, that accounts for disconnect/reconnect of HC automatically.
   - ArmA3 Content used in place of ArmA content.
 
 
