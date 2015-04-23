@@ -18,7 +18,6 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 > The overall goal of this project is to bring Evolution Blue up to ArmA 3 standards while preserving as much origional gameplay as possible. Minor additions such as Revive and Support Assets that delineate from the origional concept should be added with optional paramters.
 
-*actually* 
 
 ### Current Version
 Pre-release. Stay tuned for release content!
