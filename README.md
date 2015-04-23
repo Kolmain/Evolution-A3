@@ -7,7 +7,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - Dynamic view distance settings have been replaced with **CHVD**.
   - Paradrop insertions have been replaced with **ATM_airdrop**.
   - The **original Evolution** sounds are still used!
-  - The group management interface is currently using **aeroson's group management**, but we're investigating using BI's dynamic groups.
+  - The group management interface is **BI's dynamic groups**.
   - The dynamic map-based weather was removed and currently **Meatball's randomWeather2** is being used.
   - The original cleanup code was replaced with **Quiksilver's cleanup**.
   - Overall unit management moved to **UPSMON** with minor script modifications (Hardcoded airdrops, etc).
