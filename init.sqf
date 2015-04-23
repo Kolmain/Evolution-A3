@@ -3,7 +3,6 @@ debug=false;
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 handle = [] execVM "scripts\randomWeather2.sqf";
 handle = [] execVM "scripts\clean.sqf";
-handle = [] execVM "scripts\group_manager.sqf";
 handle = [] execVM "bon_recruit_units\init.sqf";
 
 enableSaving [false, false];
