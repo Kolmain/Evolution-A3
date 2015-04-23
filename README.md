@@ -1,7 +1,7 @@
 # Evolution-A3
 
 Evolution-A3 is a remake of the popular Armed Assualt (ArmA) mission, Evolution Blue by KilJoy.
-Evolution-A3 features all of the original gameplay mechanics, either in their origional form, redesigned by myself, or with similair community content replacing the functionality of the origional outdated code. 
+Evolution-A3 features all of the original gameplay mechanics, either in their original form, redesigned by myself, or with similair community content replacing the functionality of the original outdated code. 
 
   - Unit recruiting has been replaced with **bon_recruit_units**.
   - Dynamic view distance settings have been replaced with **CHVD**.
