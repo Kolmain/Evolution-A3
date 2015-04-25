@@ -1,9 +1,12 @@
 private ["_targetRadioTower","_pos","_spawnPos","_max_distance","_officer","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp"];
 
-activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
-activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
-activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
-currentTarget = "empty";
+//activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
+//activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
+//activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
+targetLocations = nearestLocations [ (getPos spawnBuilding), ["NameCity","NameVillage"], 10000000];
+targetCounter = 2;
+currentTarget = targetLocations select targetCounter;
+currentTargetName = text currentTarget;
 currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
@@ -18,42 +21,8 @@ ArmorSquadStep = 1;
 CROSSROADS = [West,"HQ"];
 MHQ = firstMHQ;
 
-
-{ _x setMarkerAlpha 0 } forEach activetargets;
 "opforair" setMarkerAlpha 0;
 
-{
-	_targetRadioTower = _x;
-	/*
-	_pos = (getPos _targetRadioTower);
-	_spawnPos = [];
-	_max_distance = 100;
-	while{ count _spawnPos < 1 } do	{
-		_spawnPos = _pos findEmptyPosition[ 30 , _max_distance , (typeOf _targetRadioTower)];
-		_max_distance = _max_distance + 50;
-	};
-	_targetRadioTower setPosASL _spawnPos;
-	*/
-	handle = [_targetRadioTower] spawn EVO_fnc_demoOnly;
-	_targetRadioTower addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-} forEach activetargetsRT;
-
-{
-	_officer = _x;
-	_pos = (getPos _officer);
-	_spawnPos = [];
-	_max_distance = 100;
-	while{ count _spawnPos < 1 } do	{
-		_spawnPos = _pos findEmptyPosition[ 30 , _max_distance , (typeOf _officer)];
-		_max_distance = _max_distance + 50;
-	};
-	_officer setPosASL _spawnPos;
-	removeAllWeapons _officer;
-	_officer setCaptive true;
-	[[[_officer], {(_this select 0) addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-	//_officer addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];
-	doStop _officer;
-} count activetargetsOF;
 
 _i = 0;
 {
@@ -93,7 +62,7 @@ handle = [] spawn {
 		sleep 400;
 	};
 };
-
+/*
 currentTarget = activetargets select 0;
 publicVariable "currentTarget";
 activetargets = activetargets - [currentTarget];
@@ -108,6 +77,7 @@ activetargetsOF = activetargetsOF - [currentTargetOF];
 publicVariable "activetargetsOF";
 RTonline = true;
 publicVariable "RTonline";
+*/
 handle = [] spawn EVO_fnc_initTarget;
 //if (isMultiplayer) then {handle = [] spawn EVO_fnc_initTarget};
 

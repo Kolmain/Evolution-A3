@@ -1,10 +1,61 @@
 private ["_currentTarget","_grp","_null","_ret","_tank","_eastUnits","_allUnits"];
 
+currentTargetName = text currentTarget;
 _currentTarget = currentTarget;
-currentTarget setMarkerAlpha 1;
-"opforair" setMarkerPos (getMarkerPos currentTarget);
+_targetType = type currentTarget;
+currentTargetMarkerName = format ["%1_ao", currentTargetName];
+_currentTargetMarker = createMarker [currentTargetMarkerName, position _currentTarget];
+currentTargetMarkerName setMarkerShape "ELLIPSE";
+currentTargetMarkerName setMarkerBrush "Border";
+currentTargetMarkerName setMarkerDir direction currentTarget;
+_aoSize = [(((size currentTarget) select 0) + 200), (((size currentTarget) select 1) + 200)];
+currentTargetMarkerName setMarkerSize _aoSize;
+currentTargetMarkerName setMarkerColor "ColorEAST";
+currentTargetMarkerName setMarkerPos (position currentTarget);
+"opforair" setMarkerPos (getMarkerPos currentTargetMarkerName);
+
+
+_towerClass = ["Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
+_center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
+_spawnPos = [];
+_max_distance = 100;
+while{ count _spawnPos < 1 } do
+{
+	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
+	_max_distance = _max_distance + 50;
+};
+currentTargetRT = _towerClass createVehicle _spawnPos;
+handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
+currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
+RTonline = true;
+
+
+_center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
+_spawnPos = [];
+_max_distance = 100;
+while{ count _spawnPos < 1 } do
+{
+	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
+	_max_distance = _max_distance + 50;
+};
+_grp = createGroup east;
+currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable officerAlive;}];
+_officer = currentTargetOF;
+_pos = (getPos _officer);
+_spawnPos = [];
+_max_distance = 100;
+while{ count _spawnPos < 1 } do	{
+	_spawnPos = _pos findEmptyPosition[ 30 , _max_distance , (typeOf _officer)];
+	_max_distance = _max_distance + 50;
+};
+_officer setPosASL _spawnPos;
+removeAllWeapons _officer;
+_officer setCaptive true;
+[[[_officer], {(_this select 0) addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+//_officer addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];
+doStop _officer;
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
@@ -17,7 +68,7 @@ if (HCconnected) then {
 	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
-_null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+_null = [(leader _grp), currentTargetMarkerName, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
@@ -30,7 +81,7 @@ if (HCconnected) then {
 	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
-_null = [(leader _grp), currentTarget, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+_null = [(leader _grp), currentTargetMarkerName, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 
 for "_i" from 1 to paraSquads do {
 	_null = [_currentTarget] spawn {
@@ -62,11 +113,11 @@ for "_i" from 1 to paraSquads do {
 		    	_x assignAsCargo _heli;
 		    	_x moveInCargo _heli;
 		    } forEach units _grp;
-		    _heli doMove (getMarkerPos currentTarget);
+		    _heli doMove (getMarkerPos currentTargetMarkerName);
 		    _heli flyInHeight 150;
-		    waitUntil {(_heli distance (getMarkerPos currentTarget)) < 500};
+		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
 		    handle = [_heli] call EVO_fnc_paradrop;
-		    _pos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+		    _pos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _heli doMove _pos;
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
@@ -76,7 +127,7 @@ for "_i" from 1 to paraSquads do {
 		    	} forEach units group driver _heli;
 		    	deleteVehicle _heli;
 			};
-			_null = [(leader _grp), currentTarget, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			//waitUntil {({alive _x} count units _grp) < 3};
 			sleep 600;
 		};
@@ -97,7 +148,7 @@ for "_i" from 1 to infSquads do {
 			{
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
-			_null = [(leader _grp), currentTarget, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_null = [(leader _grp), currentTargetMarkerName, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			waitUntil {({alive _x} count units _grp) < 2};
 		};
 	};
@@ -107,7 +158,7 @@ for "_i" from 1 to (mechSquads) do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
 		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			//_class = ["O_MRAP_02_gmg_F","O_MRAP_02_hmg_F"] select (random floor(1));
 			_class = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom; //returns one of the variables
 		    _ret = [_spawnPos, (floor (random 360)), _class, EAST] call bis_fnc_spawnvehicle;
@@ -121,7 +172,7 @@ for "_i" from 1 to (mechSquads) do {
 			{
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
-			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "NORMAL";
 			waitUntil {!canMove _tank || !alive _tank};
 		};
@@ -132,7 +183,7 @@ for "_i" from 1 to armorSquads do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
 		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getMarkerPos currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _ret = [_spawnPos, (floor (random 360)), "O_MBT_02_cannon_F", EAST] call bis_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
@@ -144,20 +195,20 @@ for "_i" from 1 to armorSquads do {
 			{
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
-			_null = [(leader _grp), currentTarget, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "LIMITED";
 			waitUntil {(({alive _x} count units _grp) == 0) || !alive _tank || !canMove _tank};
 		};
 	};
 };
 
-[CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTarget]] call EVO_fnc_globalSideChat;
+[CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
 [[[], {
 	if (!isServer || !isMultiplayer) then {
-		_tskName = format ["Clear %1", currentTarget];
+		_tskName = format ["Clear %1", currentTargetName];
 		attackTask = player createSimpleTask [_tskName];
 		attackTask setTaskState "Created";
-		attackTask setSimpleTaskDestination (getMarkerPos currentTarget);
+		attackTask setSimpleTaskDestination (getMarkerPos currentTargetMarkerName);
 		_tskName = format ["Destroy Radio Tower"];
 		towerTask = player createSimpleTask [_tskName, attackTask];
 		towerTask setTaskState "Assigned";
@@ -165,7 +216,7 @@ for "_i" from 1 to armorSquads do {
 		_tskName = format ["Secure Col. %1", name currentTargetOF];
 		officerTask = player createSimpleTask [_tskName, attackTask];
 		officerTask setTaskState "Created";
-		_tskName = format ["Clear the city of %1.", currentTarget];
+		_tskName = format ["Clear the city of %1.", currentTargetName];
 		["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
@@ -206,17 +257,9 @@ playSound _sound;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 sleep 30;
-currentTarget = activetargets select 0;
-activetargets = activetargets - [currentTarget];
-publicVariable "activetargets";
-currentTargetRT = currentTargetRT select 0;
-publicVariable "currentTargetRT";
-activetargetsRT = activetargetsRT - [currentTargetRT];
-publicVariable "currentTargetOF";
-currentTargetOF = activetargetsOF select 0;
-publicVariable "currentTargetOF";
-activetargetsOF = currentTargetOF - [currentTargetOF];
-publicVariable "activetargetsOF";
+targetCounter = targetCounter + 1;
+currentTarget = targetLocations select targetCounter;
+currentTargetName = text currentTarget;
 RTonline = true;
 publicVariable "RTonline";
 handle = [] spawn EVO_fnc_initTarget;
