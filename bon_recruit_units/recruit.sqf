@@ -44,17 +44,20 @@ sleep 8.5;
 
 /********************* UNIT CREATION ********************/
 _unit = objNull;
-_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+
 if (player in list AirportIn) then {
+	_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	_unit = group player createUnit [_unittype, _spawnPos, [], 0, "FORM"];
 } else {
+    _spawnPos = [((getPos player) select 0), ((getPos player) select 1), (((getPos player) select 2) + 200)];
 	_unit = group player createUnit [_unittype, [_spawnPos select 0, _spawnPos select 1, 200], [], 0, "FORM"];
     _unit allowdamage false;
     waitUntil {(position _unit select 2) <= 150};
-    _chute = createVehicle ["Steerable_Parachute_F", position _unit, [], ((_dir)- 5 + (random 10)), 'FLY'];
+    _chute = createVehicle ["Steerable_Parachute_F", position _unit, [], (random 10), 'FLY'];
     _chute setPos (getPos _unit);
     _unit assignAsDriver _chute;
     _unit moveIndriver _chute;
+    _unit DoMove (getPos leader group _unit);
     _unit allowdamage true;
 	[_unit] spawn {
 	    _unit = _this select 0;

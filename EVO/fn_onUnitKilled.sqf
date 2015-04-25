@@ -1,3 +1,8 @@
+_killed = _this select 0;
+_killer = _this select 1;
+_scoreToAdd = 0;
+_score = _killer getVariable "EVO_score";
+
 if (isPlayer _killer) then {
 	if (_killer == player) then {
 		if ((side _killed) != (side _killer)) then {

@@ -144,6 +144,25 @@ class CfgSounds
 		sound[] = {"Sound\goodjob.ogg", db-1, 1.0};
 		titles[] = {};
 	};
+	class sectorCaptured_0
+	{
+		name = "sectorCaptured_2";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", db-1, 1.0};
+		titles[] = {};
+	};
+	class sectorCaptured_1
+	{
+		name = "sectorCaptured_2";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_1.ogg", db-1, 1.0};
+		titles[] = {};
+	};
+	class sectorCaptured_2
+	{
+		name = "sectorCaptured_2";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_2.ogg", db-1, 1.0};
+		titles[] = {};
+	};
+
 	class Vent {name="Vent";sound[]={ATM_airdrop\data\Vent.ogg,db-11,1.0};titles[] = {};};
 	class Vent2 {name="Vent2";sound[]={ATM_airdrop\data\Vent2.ogg,db-11,1.0};titles[] = {};};
 	class Para {name="Para";sound[]={ATM_airdrop\data\parachute.ogg,db-11,1.0};titles[] = {};};
@@ -284,7 +303,7 @@ class CfgHints
 			description = "Players can recruit AI units to reinforce them both at the main base and in the area of operations.%1<t></t>1. Point at the target.%1<t></t>2. Press %3[0]%4 to enter the command menu.%1<t></t>3. Select %3Communications%4 - %3[8]%4.%1<t></t>4. Select %Request Reinforcements%4.%1<t></t> Command will then confirm the request and dispatch the friendly forces to the requested location. <t></t>";
 			tip = "These forces will not be reinforced once they are no longer combat effective, and players may only request based on their rank.";
 			arguments[] = {};
-			image = "\a3\ui_f\data\gui\cfg\hints\ArtilleryCall_ca.paa";
+			image = "\a3\ui_f\data\gui\cfg\hints\Commanding_ca.paa";
 			noImage = false;
 		};
 	};

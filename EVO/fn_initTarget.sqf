@@ -193,6 +193,9 @@ while {_eastUnits > 10} do {
 	} count _allUnits;
 	sleep 15;
 };
+
+_sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
+playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTarget]] call EVO_fnc_globalSideChat;
 [[[], {
 	if (!isServer || !isMultiplayer) then {

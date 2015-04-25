@@ -1,6 +1,7 @@
 private ["_score","_player","_newScore","_rank","_scoreToAdd","_msg"];
-
-_score = score _player;
+_player = player;
+//_score = score _player;
+_score = player getVariable "EVO_score";
 _newScore = _score;
 _rank = rank _player;
 		//_newScore = _score + _scoreToAdd;

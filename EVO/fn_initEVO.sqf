@@ -35,8 +35,8 @@ MHQ = firstMHQ;
 	_targetRadioTower setPosASL _spawnPos;
 	*/
 	handle = [_targetRadioTower] spawn EVO_fnc_demoOnly;
-	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-} count activetargetsRT;
+	_targetRadioTower addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+} forEach activetargetsRT;
 
 {
 	_officer = _x;

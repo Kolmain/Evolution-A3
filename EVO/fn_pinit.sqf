@@ -1,7 +1,13 @@
 waitUntil {!isNull player};
 if (!isNil "loadout") then {
-	handle = [player, loadout] execVM "set_loadout.sqf";
+	handle = [player, loadout] execVM "scripts\setloadout.sqf";
 };
+
+_score = player getVariable "EVO_score";
+if (isNil "_score") then {
+	player setVariable ["EVO_score", 0, true];
+};
+
 
 _mus = [] spawn BIS_fnc_jukebox;
 _amb = [] call EVO_fnc_amb;
@@ -10,7 +16,7 @@ _amb = [] call EVO_fnc_amb;
 player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
-if (!isNull hqbox) then {deleteVehicle hqbox};
+if (!isNil "hqbox") then {deleteVehicle hqbox};
 
 hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");
 ["AmmoboxInit",[hqbox, false, {true}]] spawn BIS_fnc_arsenal;
@@ -68,7 +74,7 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 
 handle = [] spawn {
 	waitUntil {player distance spawnBuilding > 25};
-	loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	systemChat "Loadout saved...";
 };
 
