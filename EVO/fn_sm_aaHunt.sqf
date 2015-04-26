@@ -1,5 +1,12 @@
 [{
+<<<<<<< HEAD
 	titleCut ["","BLACK IN", 0];
+=======
+<<<<<<< HEAD
+	titleCut ["","BLACK IN", 0];
+=======
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 	currentSideMission = "aaHunt";
 	publicVariable "currentSideMission";
 	if (isServer) then {

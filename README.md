@@ -14,7 +14,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - Weapon crate replaced with **BI's Virtual Arsenal**, still working on proper whitelisting of equipment.
   - An MHQ was added using **CHHQ**.
   - *Experimental* **Headless Client implementation**, that accounts for disconnect/reconnect of HC automatically.
-  - ArmA3 Content used in place of ArmA content.
+  - All powered by vanilla ArmA 3 content.
 
 
 
@@ -26,8 +26,4 @@ Pre-release. Stay tuned for release content!
 
 ### Requirements
 
-Evolution-A3 uses a number of community mods to work properly:
-
-* SMD Sahrani A3 - http://forums.bistudio.com/showthread.php?185924-SMD-Sahrani-A3-Bohemia-s-Sahrani-Terrain-as-ported-by-SMD
-* All in Arma Terrain Pack (AiA TP) - A1/A2/OA terrains from BI in A3 - http://forums.bistudio.com/showthread.php?182072-All-in-Arma-Terrain-Pack-(AiA-TP)-A1-A2-OA-terrains-from-BI-in-A3
-
+Evolution-A3/alits uses no mods and is 100% Vanilla ArmA 3.

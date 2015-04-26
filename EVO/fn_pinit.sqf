@@ -2,9 +2,19 @@ waitUntil {!isNull player};
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
 } else {
+<<<<<<< HEAD
 	handle = [player,
 	[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";
 	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+=======
+<<<<<<< HEAD
+	handle = [player,
+	[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_ACO_pointer_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_ACO_pointer_F","Single"]] execVM "scripts\setloadout.sqf";
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+=======
+	removeAllWeapons player;
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 };
 _score = 0;
 if (isMultiplayer) Then {
@@ -28,7 +38,11 @@ player addaction ["HALO Insertion","ATM_airdrop\atm_airdrop.sqf",nil,1,false,tru
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
 //if (!isNil "hqbox") then {deleteVehicle hqbox};
 
+<<<<<<< HEAD
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
+=======
+if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
+>>>>>>> origin/altis
 	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance ammoOfficer) < 15"];
 };
 
@@ -112,7 +126,11 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 			_score = player getVariable "KOL_score";
 			_score = _score + 1;
 			player setVariable ["KOL_score", _score, true];
+<<<<<<< HEAD
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
+=======
+			_string = format["Applied FAK to BLURFOR %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
+>>>>>>> origin/altis
 			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
 			[player, 1] call BIS_fnc_addScore;
 		};

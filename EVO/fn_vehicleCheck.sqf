@@ -68,4 +68,27 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 	};
+	if (_vehicle != _player && (driver _vehicle == _player)) then {
+		if (_vehicle isKindOf "Helicopter") then {
+			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+			handle = [player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+			handle = [] spawn {
+				waitUntil {vehicle player == player};
+				if (player in list AirportIn) then {
+					handle = [player, loadout] execVM "scripts\setloadout.sqf";
+				};
+			};
+		};
+		if (_vehicle isKindOf "Plane") then {
+			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+			handle = [player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetFighter_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_PilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShell","SmokeShellBlue","Chemlight_green","Chemlight_blue","B_IR_Grenade","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],"B_Parachute",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+			handle = [] spawn {
+				waitUntil {vehicle player == player};
+				if (player in list AirportIn) then {
+					handle = [player, loadout] execVM "scripts\setloadout.sqf";
+				};
+			};
+		};
+
+	}
 };
