@@ -117,6 +117,15 @@ class CfgFunctions
 			class vehicleCheck {};
 			class handleScore {};
 			class onUnitKilled {};
+			class getVehicleInfo {};
+			class getWeaponInfo {};
+			class getMagazineInfo {};
+			class sm_aaHunt {};
+			class sm_baseDef {};
+			class sm_attackMil {};
+			class sm_convoy {};
+			class buildSideMissionArray {};
+			class osm {};
 		};
 	};
 };
@@ -146,22 +155,59 @@ class CfgSounds
 	};
 	class sectorCaptured_0
 	{
-		name = "sectorCaptured_2";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", db-1, 1.0};
+		name = "sectorCaptured_0";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", 1, 1.0};
 		titles[] = {};
 	};
 	class sectorCaptured_1
 	{
-		name = "sectorCaptured_2";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_1.ogg", db-1, 1.0};
+		name = "sectorCaptured_1";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_1.ogg", 1, 1.0};
 		titles[] = {};
 	};
 	class sectorCaptured_2
 	{
 		name = "sectorCaptured_2";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_2.ogg", db-1, 1.0};
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_2.ogg", 1, 1.0};
 		titles[] = {};
 	};
+	class opforCaptured_2
+	{
+		name = "opforCaptured_2";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\35_EnemyCapturedSector\mp_groundsupport_35_enemycapturedsector_BHQ_2.ogg", 1, 1.0};
+		titles[] = {};
+	};
+	class opforCaptured_1
+	{
+		name = "opforCaptured_1";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_1.ogg", 1, 1.0};
+		titles[] = {};
+	};
+	class opforCaptured_0
+	{
+		name = "opforCaptured_0";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", 1, 1.0};
+		titles[] = {};
+	};
+	class capturing_2
+	{
+		name = "capturing_2";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\30_FriendliesCapturingSector\mp_groundsupport_30_friendliescapturingsector_BHQ_2.ogg", 1, 1.0};
+		titles[] = {};
+	};
+	class capturing_1
+	{
+		name = "capturing_1";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\30_FriendliesCapturingSector\mp_groundsupport_30_friendliescapturingsector_BHQ_1.ogg", 1, 1.0};
+		titles[] = {};
+	};
+	class capturing_0
+	{
+		name = "capturing_0";
+		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\30_FriendliesCapturingSector\mp_groundsupport_30_friendliescapturingsector_BHQ_0.ogg", 1, 1.0};
+		titles[] = {};
+	};
+
 
 	class Vent {name="Vent";sound[]={ATM_airdrop\data\Vent.ogg,db-11,1.0};titles[] = {};};
 	class Vent2 {name="Vent2";sound[]={ATM_airdrop\data\Vent2.ogg,db-11,1.0};titles[] = {};};
@@ -231,7 +277,7 @@ class CfgCommunicationMenu
         text = "Infantry Reinforcements";
         submenu = "";
         expression = "_this execVM 'bon_recruit_units\open_dialog.sqf';";
-        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa";
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\call_ca.paa";
         cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";
         enable = "1";
         removeAfterExpressionCall = 0;
