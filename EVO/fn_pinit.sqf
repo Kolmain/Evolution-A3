@@ -1,28 +1,33 @@
 waitUntil {!isNull player};
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
+} else {
+	removeAllWeapons player;
 };
-
-_score = player getVariable "EVO_score";
-if (isNil "_score") then {
-	player setVariable ["EVO_score", 0, true];
+_score = 0;
+if (isMultiplayer) Then {
+	_score = score player;
+} else {
+	_score = player getVariable "EVO_score";
+	if (isNil "_score") then {
+	_score = 0;
+	}
 };
+player setVariable ["EVO_score", _score, true];
 
 
 _mus = [] spawn BIS_fnc_jukebox;
 _amb = [] call EVO_fnc_amb;
 //_brief = [] execVM "briefing.sqf";
 
-player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
-player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+player addaction ["Side Mission Selection","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 25 && currentSideMission == 'none'"];
+player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25 && ((leader group player) == player)"];
+player addaction ["HALO Insertion","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
-if (!isNil "hqbox") then {deleteVehicle hqbox};
-
-hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");
-["AmmoboxInit",[hqbox, false, {true}]] spawn BIS_fnc_arsenal;
+//if (!isNil "hqbox") then {deleteVehicle hqbox};
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance ammoOfficer) < 15"];
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
@@ -66,16 +71,20 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 			_score = player getVariable "KOL_score";
 			_score = _score + 1;
 			player setVariable ["KOL_score", _score, true];
-			["PointsAdded",["Applied FAK to Friendly Unit.", 1]] call BIS_fnc_showNotification;
+			_string = format["Applied FAK to BLURFOR %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
+			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
 			[player, 1] call BIS_fnc_addScore;
 		};
 	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 }];
 
 handle = [] spawn {
-	waitUntil {player distance spawnBuilding > 25};
-	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-	systemChat "Loadout saved...";
+	while {alive player} do {
+		waitUntil {player distance ammoOfficer < 25};
+	   	waitUntil {player distance ammoOfficer > 25};
+		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		systemChat "Loadout saved...";
+	};
 };
 
 handle = [] spawn {
