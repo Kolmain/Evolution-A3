@@ -3,6 +3,10 @@ private ["_locTypes","_vehicle","_null","_markerName","_aaMarker","_ret","_plane
 //activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
 //activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
 //activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/altis
 _locTypes = [
 //"CityCenter",
 "NameCity",
@@ -25,6 +29,12 @@ militaryLocations = _mil;
 
 
 
+<<<<<<< HEAD
+=======
+=======
+targetLocations = nearestLocations [ (getPos spawnBuilding), ["NameCity","NameVillage"], 10000000];
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
@@ -38,13 +48,28 @@ mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
 armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 CROSSROADS = [West,"HQ"];
 MHQ = firstMHQ;
+<<<<<<< HEAD
 markerCounter = 0;
+=======
+<<<<<<< HEAD
+markerCounter = 0;
+=======
+
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 "opforair" setMarkerAlpha 0;
 currentSideMission = "none";
 currentSideMissionMarker = "nil";
 availableSideMissions = [];
 
+<<<<<<< HEAD
 handle = [] spawn EVO_fnc_buildSideMissionArray;
+=======
+<<<<<<< HEAD
+handle = [] spawn EVO_fnc_buildSideMissionArray;
+=======
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 
 _i = 0;
 {
