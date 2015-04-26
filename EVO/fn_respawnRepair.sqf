@@ -1,6 +1,21 @@
 _veh = _this select 0;
+while {alive _veh} do {
+				if (!canMove _veh) then {
+					_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
+					_markerName = format ["immobil_%1", markerCounter];
+					_vehMarker = createMarker [_markerName, position _veh ];
+					_markerName setMarkerShape "ICON";
+					_markerName setMarkerType "b_maint";
+					_markerName setMarkerColor "ColorWEST";
+					_markerName setMarkerPos (GetPos _veh);
+					_markerName setMarkerText format ["Immobilized %1", _displayName];
+					markerCounter = markerCounter + 1;
+					waitUntil {canMove _veh || !alive _veh};
+					deleteMarker _markerName;
+				};
+				sleep 15;
+			};
 _veh addEventHandler ["Killed", {
-	systemChat "Killed EH Fired!";
 	handle = _this spawn {
 		_vehicle = _this select 0;
 		_killer = _this select 1;
@@ -33,7 +48,7 @@ _veh addEventHandler ["Killed", {
 		} forEach (crew _veh);
 		sleep 120;
 		deleteVehicle _vehicle;
-		sleep 1;
+		sleep 0.5;
 		_newVehicle = _classname createVehicle _pos;
 		if (_mhq) then {
 			handle= [_newVehicle, WEST] execVM "CHHQ.sqf";
@@ -45,5 +60,19 @@ _veh addEventHandler ["Killed", {
 		//_newVehicle setAmmo 0.5;
 		_newVehicle setPosASL _pos;
 		_null = [_newVehicle] spawn EVO_fnc_respawnRepair;
+		handle = [_newVehicle] spawn {
+			_newVehicle = _this select 0;
+			_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _newVehicle) >> "displayName");
+			_markerName = format ["damaged_%1", markerCounter];
+			_vehMarker = createMarker [_markerName, position _newVehicle ];
+			_markerName setMarkerShape "ICON";
+			_markerName setMarkerType "b_maint";
+			_markerName setMarkerColor "ColorWEST";
+			_markerName setMarkerPos (GetPos _newVehicle);
+			_markerName setMarkerText format ["Damaged %1", _displayName];
+			markerCounter = markerCounter + 1;
+			waitUntil {canMove _newVehicle || !alive _newVehicle};
+			deleteMarker _markerName;
+		};
 	};
 }];

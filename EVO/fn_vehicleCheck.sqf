@@ -10,6 +10,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 		case "CORPORAL": {
@@ -18,6 +19,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 		case "SERGEANT": {
@@ -26,6 +28,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 		case "LIEUTENANT": {
@@ -34,6 +37,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 		};
 	};
 		case "CAPTAIN": {
@@ -42,6 +46,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 		case "MAJOR": {
@@ -50,6 +55,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 		case "COLONEL": {
@@ -58,6 +64,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 				_player action ["engineOff", vehicle _player];
 				_player action ["getOut", vehicle _player];
 				_player action ["Eject", vehicle _player];
+				sleep 10;
 			};
 		};
 	};
