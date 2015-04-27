@@ -1,4 +1,5 @@
 debug=false;
+EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 //Init UPSMON script
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 handle = [] execVM "scripts\randomWeather2.sqf";
