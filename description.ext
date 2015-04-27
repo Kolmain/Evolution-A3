@@ -82,7 +82,7 @@ class Params
 		default = 2;
 	};
 	class pilotDressRequired {
-		title = "Require Pilot Loadout to Pilot";
+		title = "Require Pilot Loadout to Fly";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 1;
@@ -98,6 +98,18 @@ class Params
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 0;
+	};
+	class mhqParam {
+		title = "Enable MHQ Respawn Truck";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
+	class pointsNotifications {
+		title = "Enable Point Notifications";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
 	};
 };
 
