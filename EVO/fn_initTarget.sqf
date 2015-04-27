@@ -12,13 +12,6 @@ _aoSize = [(((size currentTarget) select 0) + 200), (((size currentTarget) selec
 currentTargetMarkerName setMarkerSize _aoSize;
 currentTargetMarkerName setMarkerColor "ColorEAST";
 currentTargetMarkerName setMarkerPos (position currentTarget);
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/altis
->>>>>>> origin/altis
 _x1 = ((size currentTarget) select 0) / 1000;
 _y1 = ((size currentTarget) select 1) / 1000;
 currentTargetSqkm = (_x1 * _y1);
@@ -27,19 +20,6 @@ currentTargetSqkm = (_x1 * _y1);
 _towerClass = "Land_Communication_F";
 //_towerClass = ["Land_Communication_F", "Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
 _center = [ getMarkerPos currentTargetMarkerName, random 80 , random 360 ] call BIS_fnc_relPos;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-"opforair" setMarkerPos (getMarkerPos currentTargetMarkerName);
-
-
-_towerClass = ["Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
-_center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 _spawnPos = [];
 _max_distance = 100;
 while{ count _spawnPos < 1 } do
@@ -54,13 +34,6 @@ currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/altis
->>>>>>> origin/altis
 _center = [ getMarkerPos currentTargetMarkerName, (600 + random 500) , random 360 ] call BIS_fnc_relPos;
 _spawnPos = [];
 _max_distance = 100;
@@ -95,14 +68,6 @@ if (HCconnected) then {
 
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 _center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
 _spawnPos = [];
 _max_distance = 100;
@@ -125,7 +90,6 @@ while{ count _spawnPos < 1 } do	{
 _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
-<<<<<<< HEAD
 [[[], {	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"]}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 doStop _officer;
 _pass = currentTarget;
@@ -137,11 +101,6 @@ handle = [_pass] spawn {
 		["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
 	};
 };
-=======
-[[[_officer], {(_this select 0) addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-//_officer addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];
-doStop _officer;
->>>>>>> origin/altis
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
@@ -154,19 +113,7 @@ if (HCconnected) then {
 	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
-<<<<<<< HEAD
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
-=======
-<<<<<<< HEAD
-[_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
-=======
-<<<<<<< HEAD
-[_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
-=======
-_null = [(leader _grp), currentTargetMarkerName, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
@@ -179,19 +126,7 @@ if (HCconnected) then {
 	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
-<<<<<<< HEAD
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
-=======
-<<<<<<< HEAD
-[_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
-=======
-<<<<<<< HEAD
-[_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
-=======
-_null = [(leader _grp), currentTargetMarkerName, "Fortify", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 
 for "_i" from 1 to paraSquads do {
 	_null = [_currentTarget] spawn {
@@ -227,23 +162,8 @@ for "_i" from 1 to paraSquads do {
 		    _heli flyInHeight 150;
 		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
 		    handle = [_heli] call EVO_fnc_paradrop;
-<<<<<<< HEAD
 		    sleep 5;
 		    _heli doMove (getPos server);
-=======
-<<<<<<< HEAD
-		    sleep 5;
-		    _heli doMove (getPos server);
-=======
-<<<<<<< HEAD
-		    sleep 5;
-		    _heli doMove (getPos server);
-=======
-		    _pos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _heli doMove _pos;
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
 		    	waitUntil {(_heli distance server) < 1000};
@@ -328,21 +248,8 @@ for "_i" from 1 to armorSquads do {
 };
 
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
-<<<<<<< HEAD
 _sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
 playSound _sound;
-=======
-<<<<<<< HEAD
-_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
-playSound _sound;
-=======
-<<<<<<< HEAD
-_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
-playSound _sound;
-=======
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 [[[], {
 	if (!isServer || !isMultiplayer) then {
 		_tskName = format ["Clear %1", currentTargetName];
@@ -356,11 +263,7 @@ playSound _sound;
 		_tskName = format ["Secure Col. %1", name currentTargetOF];
 		officerTask = player createSimpleTask [_tskName, attackTask];
 		officerTask setTaskState "Created";
-<<<<<<< HEAD
 		_tskName = format ["Clear the %1 of %2.", "city", currentTargetName];
-=======
-		_tskName = format ["Clear the city of %1.", currentTargetName];
->>>>>>> origin/altis
 		["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
@@ -380,7 +283,6 @@ sleep (random 15);
 [CROSSROADS, format ["We've received confirmation that the OPFOR communications tower has been destroyed, %1 will no longer be reinforced by OPFOR.", currentTargetName]] call EVO_fnc_globalSideChat;
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
 playSound _sound;
-<<<<<<< HEAD
 
 
 currentTargetLeft = 100;
@@ -401,17 +303,6 @@ while {currentTargetLeft > 9} do {
 	} foreach _nearUnits;
 	publicVariable "currentTargetLeft";
 	sleep 10;
-=======
-_eastUnits = 100;
-while {_eastUnits > 10} do {
-	_allUnits = (position _currentTarget) nearEntities [["Man", "Car", "Tank"], 500];
-	{
-		if (side _x == EAST && alive _x) then {
-			_eastUnits = _eastUnits + 1;
-		}
-	} count _allUnits;
-	sleep 15;
->>>>>>> origin/altis
 };
 
 _sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
@@ -435,12 +326,8 @@ playSound _sound;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 deleteMarker currentTargetMarkerName;
-<<<<<<< HEAD
 sleep random 30;
 deleteVehicle currentTargetOF;
-=======
-sleep 30;
->>>>>>> origin/altis
 targetCounter = targetCounter + 1;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;

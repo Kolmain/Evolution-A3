@@ -82,7 +82,7 @@ class Params
 		default = 2;
 	};
 	class pilotDressRequired {
-		title = "Require Pilot Loadout to Fly";
+		title = "Require Pilot Loadout to Pilot";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 1;
@@ -98,18 +98,6 @@ class Params
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 0;
-	};
-	class mhqParam {
-		title = "Enable MHQ Respawn Truck";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class pointsNotifications {
-		title = "Enable Point Notifications";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
 	};
 };
 
@@ -150,7 +138,6 @@ class CfgFunctions
 			class sm_convoy {};
 			class buildSideMissionArray {};
 			class osm {};
-			class basicRespawn {};
 		};
 	};
 };
@@ -194,7 +181,6 @@ class CfgSounds
 	{
 		name = "sectorCaptured_2";
 		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_2.ogg", 1, 1.0};
-<<<<<<< HEAD
 		titles[] = {};
 	};
 	class opforCaptured_2
@@ -215,28 +201,6 @@ class CfgSounds
 		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", 1, 1.0};
 		titles[] = {};
 	};
-=======
-		titles[] = {};
-	};
-	class opforCaptured_2
-	{
-		name = "opforCaptured_2";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\35_EnemyCapturedSector\mp_groundsupport_35_enemycapturedsector_BHQ_2.ogg", 1, 1.0};
-		titles[] = {};
-	};
-	class opforCaptured_1
-	{
-		name = "opforCaptured_1";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_1.ogg", 1, 1.0};
-		titles[] = {};
-	};
-	class opforCaptured_0
-	{
-		name = "opforCaptured_0";
-		sound[] = {"\a3\dubbing_f_heli\mp_groundsupport\40_FriendliesCapturedSector\mp_groundsupport_40_friendliescapturedsector_BHQ_0.ogg", 1, 1.0};
-		titles[] = {};
-	};
->>>>>>> origin/altis
 	class capturing_2
 	{
 		name = "capturing_2";

@@ -1,12 +1,5 @@
 [{
-<<<<<<< HEAD
 	titleCut ["","BLACK IN", 0];
-=======
-<<<<<<< HEAD
-	titleCut ["","BLACK IN", 0];
-=======
->>>>>>> origin/altis
->>>>>>> origin/altis
 	currentSideMission = "baseDef";
 	publicVariable "currentSideMission";
 	attackingUnits = 0;

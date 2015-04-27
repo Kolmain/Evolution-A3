@@ -1,5 +1,8 @@
 private ["_locTypes","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp","_wp"];
 
+//activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
+//activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
+//activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
 _locTypes = [
 //"CityCenter",
 "NameCity",
@@ -19,7 +22,9 @@ _mil = [];
 } foreach _locs;
 militaryLocations = _mil;
 
-targetLocations = nearestLocations [ (getPos spawnBuilding), ["NameCity","NameVillage"], 10000000];
+
+
+
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
@@ -34,22 +39,18 @@ armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 CROSSROADS = [West,"HQ"];
 MHQ = firstMHQ;
 markerCounter = 0;
-markerCounter = 0;
-markerCounter = 0;
 "opforair" setMarkerAlpha 0;
 currentSideMission = "none";
 currentSideMissionMarker = "nil";
 availableSideMissions = [];
-handle = [] spawn EVO_fnc_buildSideMissionArray;gin/altis
+
+handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 _i = 0;
 {
 	_vehicle = _x;
 	if ((faction _vehicle == "BLU_F") && !(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
 		_null = [_vehicle] spawn EVO_fnc_respawnRepair;
-	};
-	if ((typeOf _vehicle) == "B_MRAP_01_F" || (typeOf _vehicle) == "C_Offroad_01_F") then {
-		_null = [_vehicle] spawn EVO_fnc_basicRespawn;
 	};
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
 		_markerName = format ["aa_%1", markerCounter];
@@ -103,7 +104,6 @@ handle = [] spawn {
 };
 
 handle = [] spawn EVO_fnc_initTarget;
-
 
 
 
