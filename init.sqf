@@ -45,6 +45,24 @@ CHVD_maxObj = 2500;
 HCconnected = false;
 HC_uid = getPlayerUID headlessClient;
 
+if (!isMultiplayer) then {
+<<<<<<< HEAD
+	_nearUnits = nearestObjects [spawnBuilding, ["Man"], 100];
+	{
+		_unit = _x;
+		if (!isPlayer _unit && _unit != ammoOfficer) then {
+			deleteVehicle _unit;
+		};
+	} foreach _nearUnits;
+=======
+	{
+		if (_x in list spawnZone && !isPlayer _x && typeOf _x == "Man") then {
+			deleteVehicle _x;
+		};
+	} forEach allUnits;
+>>>>>>> origin/altis
+};
+
 if (HC_uid == getPlayerUID server) then {
 	HC_uid = nil;
 	HCconnected = false;
@@ -98,7 +116,9 @@ if (isServer && isMultiplayer) exitWith {};
 
 //Client
 _intro = player execVM "scripts\intro.sqf";
+WaitUntil{scriptDone _intro};
+playsound "Recall";
 //_brief = [] execVM "briefing.sqf";
-titleCut ["","black faded", 0];
+//titleCut ["","black faded", 0];
 //loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
 

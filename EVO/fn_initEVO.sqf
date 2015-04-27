@@ -1,9 +1,49 @@
-private ["_targetRadioTower","_pos","_spawnPos","_max_distance","_officer","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp"];
+private ["_locTypes","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp","_wp"];
 
-activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
-activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
-activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
-currentTarget = "empty";
+//activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
+//activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
+//activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/altis
+>>>>>>> origin/altis
+_locTypes = [
+//"CityCenter",
+"NameCity",
+"NameCityCapital",
+//"NameLocal",
+//"NameMarine",
+"NameVillage"
+];
+targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
+
+_locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
+_mil = [];
+{
+	if ((tolower (text _x)) in ["military"]) then {
+		_mil set [(count _mil),_x]
+	};
+} foreach _locs;
+militaryLocations = _mil;
+
+
+
+
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+targetLocations = nearestLocations [ (getPos spawnBuilding), ["NameCity","NameVillage"], 10000000];
+>>>>>>> origin/altis
+>>>>>>> origin/altis
+>>>>>>> origin/altis
+targetCounter = 2;
+currentTarget = targetLocations select targetCounter;
+currentTargetName = text currentTarget;
 currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
@@ -12,48 +52,38 @@ paraSquads = 1;
 infSquads = (("infSquadsParam" call BIS_fnc_getParamValue) * 2);
 mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
 armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
-infSquadStep = 1;
-mechSquadStep = 1;
-ArmorSquadStep = 1;
 CROSSROADS = [West,"HQ"];
 MHQ = firstMHQ;
+<<<<<<< HEAD
+markerCounter = 0;
+=======
+<<<<<<< HEAD
+markerCounter = 0;
+=======
+<<<<<<< HEAD
+markerCounter = 0;
+=======
 
-
-{ _x setMarkerAlpha 0 } forEach activetargets;
+>>>>>>> origin/altis
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 "opforair" setMarkerAlpha 0;
+currentSideMission = "none";
+currentSideMissionMarker = "nil";
+availableSideMissions = [];
 
-{
-	_targetRadioTower = _x;
-	/*
-	_pos = (getPos _targetRadioTower);
-	_spawnPos = [];
-	_max_distance = 100;
-	while{ count _spawnPos < 1 } do	{
-		_spawnPos = _pos findEmptyPosition[ 30 , _max_distance , (typeOf _targetRadioTower)];
-		_max_distance = _max_distance + 50;
-	};
-	_targetRadioTower setPosASL _spawnPos;
-	*/
-	handle = [_targetRadioTower] spawn EVO_fnc_demoOnly;
-	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-} count activetargetsRT;
-
-{
-	_officer = _x;
-	_pos = (getPos _officer);
-	_spawnPos = [];
-	_max_distance = 100;
-	while{ count _spawnPos < 1 } do	{
-		_spawnPos = _pos findEmptyPosition[ 30 , _max_distance , (typeOf _officer)];
-		_max_distance = _max_distance + 50;
-	};
-	_officer setPosASL _spawnPos;
-	removeAllWeapons _officer;
-	_officer setCaptive true;
-	[[[_officer], {(_this select 0) addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-	//_officer addAction [ "Capture Officer", "[] call EVO_fnc_officer;"];
-	doStop _officer;
-} count activetargetsOF;
+<<<<<<< HEAD
+handle = [] spawn EVO_fnc_buildSideMissionArray;
+=======
+<<<<<<< HEAD
+handle = [] spawn EVO_fnc_buildSideMissionArray;
+=======
+<<<<<<< HEAD
+handle = [] spawn EVO_fnc_buildSideMissionArray;
+=======
+>>>>>>> origin/altis
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 
 _i = 0;
 {
@@ -61,16 +91,34 @@ _i = 0;
 	if ((faction _vehicle == "BLU_F") && !(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
 		_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 	};
-
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
-		_markerName = format ["aa_%1", _i];
+		_markerName = format ["aa_%1", markerCounter];
 		_aaMarker = createMarker [_markerName, position _x ];
 		_markerName setMarkerShape "ELLIPSE";
 		_markerName setMarkerBrush "Cross";
 		_markerName setMarkerSize [1200, 1200];
 		_markerName setMarkerColor "ColorEAST";
 		_markerName setMarkerPos (GetPos _vehicle);
-		_i = _i + 1;
+		markerCounter = markerCounter + 1;
+		//O_crew_F
+		_grp = createGroup east;
+		_driver = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
+		_commander = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
+		_gunner = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
+		_driver moveInDriver _vehicle;
+		_driver assignAsDriver _vehicle;
+		doStop _driver;
+		_driver disableAI "MOVE";
+		_commander moveInCommander _vehicle;
+		_commander assignAsCommander _vehicle;
+		_gunner moveInGunner _vehicle;
+		_gunner assignAsGunner _vehicle;
+		handle = [_vehicle, _markerName] spawn {
+			_vehicle = _this select 0;
+			_markerName = _this select 1;
+			waitUntil {!alive _vehicle};
+			deleteMarker _markerName;
+		};
 	};
 } forEach vehicles;
 
@@ -93,7 +141,7 @@ handle = [] spawn {
 		sleep 400;
 	};
 };
-
+/*
 currentTarget = activetargets select 0;
 publicVariable "currentTarget";
 activetargets = activetargets - [currentTarget];
@@ -108,6 +156,7 @@ activetargetsOF = activetargetsOF - [currentTargetOF];
 publicVariable "activetargetsOF";
 RTonline = true;
 publicVariable "RTonline";
+*/
 handle = [] spawn EVO_fnc_initTarget;
 //if (isMultiplayer) then {handle = [] spawn EVO_fnc_initTarget};
 

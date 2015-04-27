@@ -1,22 +1,49 @@
 waitUntil {!isNull player};
 if (!isNil "loadout") then {
-	handle = [player, loadout] execVM "set_loadout.sqf";
+	handle = [player, loadout] execVM "scripts\setloadout.sqf";
+} else {
+<<<<<<< HEAD
+	handle = [player,
+	[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+=======
+<<<<<<< HEAD
+	handle = [player,
+	[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_ACO_pointer_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_ACO_pointer_F","Single"]] execVM "scripts\setloadout.sqf";
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+=======
+	removeAllWeapons player;
+>>>>>>> origin/altis
+>>>>>>> origin/altis
 };
+_score = 0;
+if (isMultiplayer) Then {
+	_score = score player;
+} else {
+	_score = player getVariable "EVO_score";
+	if (isNil "_score") then {
+	_score = 0;
+	}
+};
+player setVariable ["EVO_score", _score, true];
+
 
 _mus = [] spawn BIS_fnc_jukebox;
 _amb = [] call EVO_fnc_amb;
 //_brief = [] execVM "briefing.sqf";
 
-player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
-player addaction ["<t color='#ff9900'>HALO Insertion</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+player addaction ["Side Mission Selection","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 25 && currentSideMission == 'none'"];
+player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25 && ((leader group player) == player)"];
+player addaction ["HALO Insertion","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
-if (!isNull hqbox) then {deleteVehicle hqbox};
+//if (!isNil "hqbox") then {deleteVehicle hqbox};
 
-hqbox = "Box_Ammo_F" createVehicleLocal (getMarkerPos "ammob1");
-["AmmoboxInit",[hqbox, false, {true}]] spawn BIS_fnc_arsenal;
-
+<<<<<<< HEAD
+if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
+=======
 if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+>>>>>>> origin/altis
+	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance ammoOfficer) < 15"];
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
@@ -43,6 +70,45 @@ if (typeOf player == "B_soldier_repair_F") then {
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 [["Gamemode","recruiting"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 
+if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
+	_ret = [] spawn {
+		while {alive player} do {
+			sleep 1;
+			_player = player;
+			_vehicle = vehicle _player;
+			if (_vehicle != _player && (driver _vehicle == _player)) then {
+				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B") then {
+					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+					systemChat "Auto-switching loadout to helicopter pilot loadout...";
+					handle = [_player, _vehicle] spawn {
+						_player = _this select 0;
+						_vehicle = _this select 1;
+						waitUntil {driver _vehicle != _player};
+						if (_player distance spawnBuilding < 1000) then {
+							handle = [_player, loadout] execVM "scripts\setloadout.sqf";
+							systemChat "Auto-switching back to previous loadout...";
+						};
+					};
+				};
+				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B") then {
+					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetFighter_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_PilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShell","SmokeShellBlue","Chemlight_green","Chemlight_blue","B_IR_Grenade","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],"B_Parachute",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+					systemChat "Auto-switching loadout to pilot loadout...";
+					handle = [_player, _vehicle] spawn {
+						_player = _this select 0;
+						_vehicle = _this select 1;
+						waitUntil {driver _vehicle != _player};
+						if (_player distance spawnBuilding < 1000) then {
+							handle = [_player, loadout] execVM "scripts\setloadout.sqf";
+							systemChat "Auto-switching back to previous loadout...";
+						};
+					};
+				};
+			};
+		};
+	};
+};
 _ret = [] spawn {
 	_hitID = player addEventHandler ["Hit",{
 		if (alive player) then {
@@ -60,16 +126,24 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 			_score = player getVariable "KOL_score";
 			_score = _score + 1;
 			player setVariable ["KOL_score", _score, true];
-			["PointsAdded",["Applied FAK to Friendly Unit.", 1]] call BIS_fnc_showNotification;
+<<<<<<< HEAD
+			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
+=======
+			_string = format["Applied FAK to BLURFOR %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
+>>>>>>> origin/altis
+			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
 			[player, 1] call BIS_fnc_addScore;
 		};
 	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 }];
 
 handle = [] spawn {
-	waitUntil {player distance spawnBuilding > 25};
-	loadout = [player] call compile preprocessFileLineNumbers "get_loadout.sqf";
-	systemChat "Loadout saved...";
+	while {alive player} do {
+		waitUntil {player distance ammoOfficer < 25};
+	   	waitUntil {player distance ammoOfficer > 25};
+		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		systemChat "Loadout saved...";
+	};
 };
 
 handle = [] spawn {
@@ -161,17 +235,19 @@ handle = [] spawn {
 	availableMagazines = [];
 
 	while {alive player} do {
-		handle = [player] call EVO_fnc_vehicleCheck;
-		if (leader group player == player) then {
-			{
-				if (!isPlayer _x) then {
-					//_x setUnitRank (rank player);
-					handle = [_x] call EVO_fnc_vehicleCheck;
-				};
-			} forEach units group player;
+		if (("rankVehicles" call BIS_fnc_getParamValue) == 1) then {
+			handle = [player] call EVO_fnc_vehicleCheck;
+			if (leader group player == player) then {
+				{
+					if (!isPlayer _x) then {
+						//_x setUnitRank (rank player);
+						handle = [_x] call EVO_fnc_vehicleCheck;
+					};
+				} forEach units group player;
+			};
 		};
 		handle = [] call EVO_fnc_rank;
-		sleep 3;
+		sleep 1;
 	};
 };
 
