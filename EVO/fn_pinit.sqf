@@ -83,7 +83,11 @@ if (typeOf player == "B_soldier_repair_F") then {
 
 //[player, recruitComm] call BIS_fnc_removeCommMenuItem;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-[["Gamemode","recruiting"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+handle = [] spawn {
+	waitUntil{player distance spawnBuilding > 25};
+	[["Gamemode","recruiting"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+};
+
 
 if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 	_ret = [] spawn {
