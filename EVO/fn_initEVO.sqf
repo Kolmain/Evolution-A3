@@ -1,15 +1,5 @@
 private ["_locTypes","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp","_wp"];
 
-//activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
-//activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
-//activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/altis
->>>>>>> origin/altis
 _locTypes = [
 //"CityCenter",
 "NameCity",
@@ -29,18 +19,7 @@ _mil = [];
 } foreach _locs;
 militaryLocations = _mil;
 
-
-
-
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
 targetLocations = nearestLocations [ (getPos spawnBuilding), ["NameCity","NameVillage"], 10000000];
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
@@ -54,42 +33,23 @@ mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
 armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 CROSSROADS = [West,"HQ"];
 MHQ = firstMHQ;
-<<<<<<< HEAD
 markerCounter = 0;
-=======
-<<<<<<< HEAD
 markerCounter = 0;
-=======
-<<<<<<< HEAD
 markerCounter = 0;
-=======
-
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
 "opforair" setMarkerAlpha 0;
 currentSideMission = "none";
 currentSideMissionMarker = "nil";
 availableSideMissions = [];
-
-<<<<<<< HEAD
-handle = [] spawn EVO_fnc_buildSideMissionArray;
-=======
-<<<<<<< HEAD
-handle = [] spawn EVO_fnc_buildSideMissionArray;
-=======
-<<<<<<< HEAD
-handle = [] spawn EVO_fnc_buildSideMissionArray;
-=======
->>>>>>> origin/altis
->>>>>>> origin/altis
->>>>>>> origin/altis
+handle = [] spawn EVO_fnc_buildSideMissionArray;gin/altis
 
 _i = 0;
 {
 	_vehicle = _x;
 	if ((faction _vehicle == "BLU_F") && !(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
 		_null = [_vehicle] spawn EVO_fnc_respawnRepair;
+	};
+	if ((typeOf _vehicle) == "B_MRAP_01_F" || (typeOf _vehicle) == "C_Offroad_01_F") then {
+		_null = [_vehicle] spawn EVO_fnc_basicRespawn;
 	};
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
 		_markerName = format ["aa_%1", markerCounter];
@@ -141,24 +101,9 @@ handle = [] spawn {
 		sleep 400;
 	};
 };
-/*
-currentTarget = activetargets select 0;
-publicVariable "currentTarget";
-activetargets = activetargets - [currentTarget];
-publicVariable "activetargets";
-currentTargetRT = activetargetsRT select 0;
-publicVariable "currentTargetRT";
-activetargetsRT = activetargetsRT - [currentTargetRT];
-publicVariable "currentTargetOF";
-currentTargetOF = activetargetsOF select 0;
-publicVariable "currentTargetOF";
-activetargetsOF = activetargetsOF - [currentTargetOF];
-publicVariable "activetargetsOF";
-RTonline = true;
-publicVariable "RTonline";
-*/
+
 handle = [] spawn EVO_fnc_initTarget;
-//if (isMultiplayer) then {handle = [] spawn EVO_fnc_initTarget};
+
 
 
 
