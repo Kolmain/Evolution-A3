@@ -5,6 +5,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 # Features
 
+  - All features can be disabled/enabled via **mission parameters**.
   - Unit recruiting via **bon_recruit_units** at base, and airdropped in the field.
   - Dynamic view distance settings with **CHVD**.
   - HALO insertions using **ATM_airdrop**.
@@ -29,7 +30,8 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 
 ### Current Version
-Pre-release. Stay tuned for release content!
+
+https://github.com/Kolmain/Evolution-A3/releases
 
 ### Requirements
 
