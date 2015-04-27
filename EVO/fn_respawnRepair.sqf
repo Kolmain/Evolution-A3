@@ -1,6 +1,6 @@
 _veh = _this select 0;
 while {alive _veh} do {
-				if (!canMove _veh) then {
+				if (!canMove _veh && alive _veh) then {
 					_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
 					_markerName = format ["immobil_%1", markerCounter];
 					_vehMarker = createMarker [_markerName, position _veh ];
@@ -50,7 +50,7 @@ _veh addEventHandler ["Killed", {
 		deleteVehicle _vehicle;
 		sleep 0.5;
 		_newVehicle = _classname createVehicle _pos;
-		if (_mhq) then {
+		if (_mhq) exitWith {
 			handle= [_newVehicle, WEST] execVM "CHHQ.sqf";
 			MHQ = _newVehicle;
 		};
