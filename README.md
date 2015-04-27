@@ -3,18 +3,25 @@
 Evolution-A3 is a remake of the popular Armed Assualt (ArmA) mission, Evolution Blue by KilJoy.
 Evolution-A3 features all of the original gameplay mechanics, either in their original form, redesigned by myself, or with similair community content replacing the functionality of the original outdated code. 
 
-  - Unit recruiting has been replaced with **bon_recruit_units**.
-  - Dynamic view distance settings have been replaced with **CHVD**.
-  - Paradrop insertions have been replaced with **ATM_airdrop**.
-  - The **original Evolution** sounds are still used!
-  - The group management interface is **BI's dynamic groups**.
-  - The dynamic map-based weather was removed and currently **Meatball's randomWeather2** is being used.
-  - The original cleanup code was replaced with **Quiksilver's cleanup**.
-  - Overall unit management moved to **UPSMON** with minor script modifications (Hardcoded airdrops, etc).
-  - Weapon crate replaced with **BI's Virtual Arsenal**, still working on proper whitelisting of equipment.
-  - An MHQ was added using **CHHQ**.
+# Features
+
+  - Unit recruiting via **bon_recruit_units** at base, and airdropped in the field.
+  - Dynamic view distance settings with **CHVD**.
+  - HALO insertions using **ATM_airdrop**.
+  - The **original Evolution** sounds.
+  - Group management interface via **BI's dynamic groups**.
+  - **Meatball's randomWeather2** generates random, MP-sync'd weather.
+  - **Quiksilver's cleanup** keeps the mission running smooth throughout the entire game.
+  - Overall unit management moved by **UPSMON** with minor script modifications (Hardcoded airdrops per AO, etc).
+  - Weapon crate replaced with **BI's Virtual Arsenal**.
+  - **CHHQ** provides a mobile HQ transport option.
   - *Experimental* **Headless Client implementation**, that accounts for disconnect/reconnect of HC automatically.
-  - All powered by vanilla ArmA 3 content.
+  - **Player Persistence** keeps players at their last known locations with their last known loadout in the event of a disconnect and rejoin of the same session.
+  - **Pilot loadout requirements** enforced to fly aircraft, includes auto-switching of loadout if you're in the base.
+  - **Modular sidemissions** that provide bonus points to all players, and extra bonus points to the players responsible for completing the task.
+  - **Officer Capturing** in every area of operation.
+  - **OPFOR support assetss** may be available at the AO including mortar, anti-air, and sniper support.
+  - All powered by **vanilla ArmA 3 content**.
 
 
 
