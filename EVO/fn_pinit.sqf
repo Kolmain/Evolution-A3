@@ -1,4 +1,19 @@
 waitUntil {!isNull player};
+/*
+_profileSessionID = profileNamespace getVariable "EVO_sessionID";
+if (isNil "_profileSessionID") then {
+	_profileSessionID = EVO_sessionID;
+	profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
+} else {
+	if (_profileSessionID == EVO_sessionID) then {
+		_lastPos = profileNamespace getVariable "EVO_lastPos";
+		player setPos _lastPos;
+		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
+		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
+	};
+};
+*/
+
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
 } else {
@@ -247,6 +262,10 @@ handle = [] spawn {
 			};
 		};
 		handle = [] call EVO_fnc_rank;
+		_lastPos = getPos player;
+		profileNamespace setVariable ["EVO_lastPos", _lastPos];
+		_lastLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		profileNamespace setVariable ["EVO_lastLadout", _lastLoadout];
 		sleep 1;
 	};
 };
