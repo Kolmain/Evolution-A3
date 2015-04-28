@@ -60,7 +60,8 @@ if (!isMultiplayer) then {
 		};
 	} foreach _nearUnits;
 };
-
+HCconnected = false;
+/*
 if (HC_uid == getPlayerUID server) then {
 	HC_uid = nil;
 	HCconnected = false;
@@ -107,6 +108,7 @@ if (isServer) then
 	};
 	";
 };
+*/
 
 
 if (isServer && isMultiplayer) exitWith {};
