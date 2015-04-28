@@ -33,8 +33,10 @@ if (isMultiplayer) Then {
 };
 player setVariable ["EVO_score", _score, true];
 
+if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
+	_mus = [] spawn BIS_fnc_jukebox;
+};
 
-_mus = [] spawn BIS_fnc_jukebox;
 _amb = [] call EVO_fnc_amb;
 //_brief = [] execVM "briefing.sqf";
 
@@ -83,8 +85,8 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 			sleep 1;
 			_player = player;
 			_vehicle = vehicle _player;
-			if (_vehicle != _player && (driver _vehicle == _player)) then {
-				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B") then {
+			if (_vehicle != _player) then {
+				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player)) then {
 					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
 					systemChat "Auto-switching loadout to helicopter pilot loadout...";
@@ -98,7 +100,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 						};
 					};
 				};
-				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B") then {
+				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B" && driver _vehicle == player) then {
 					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetFighter_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_PilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShell","SmokeShellBlue","Chemlight_green","Chemlight_blue","B_IR_Grenade","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],"B_Parachute",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
 					systemChat "Auto-switching loadout to pilot loadout...";

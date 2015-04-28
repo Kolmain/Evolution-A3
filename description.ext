@@ -50,7 +50,13 @@ class Params
         texts[] = {"Clear","Overcast","Rain","Fog","Random"};
         default = 4;
        };
-
+	class Daytime {
+		title = "Starting Time";
+		texts[] = {"Morning","Day","Evening","Night"};
+		values[] = {6,12,18,0};
+		default = 12;
+		function = "BIS_fnc_paramDaytime";
+ 	};
     class pfatigue {
 		title = "Player Fatigue";
 		texts[] = {"Disabled","Enabled"};
@@ -118,6 +124,13 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
+	class bisJukebox {
+		title = "ArmA 3 Jukebox";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
+
 };
 
 class CfgFunctions
