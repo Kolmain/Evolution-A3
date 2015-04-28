@@ -17,7 +17,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
-			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			bon_max_units_allowed = 2;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons;
 			availableMagazines = availableMagazines + rank1magazines;
@@ -34,6 +34,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 4;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons;
 			availableItems = availableItems + rank2items;
@@ -51,6 +52,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 6;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons;
 			availableItems = availableItems + rank2items + rank3items;
@@ -68,6 +70,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 8;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons;
 			["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
@@ -83,6 +86,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 10;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons;
 			["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
@@ -98,6 +102,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 12;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank6weapons;
 			["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
@@ -113,6 +118,7 @@ if (isNil "_EVOrank") then {
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
 			};
+			bon_max_units_allowed = 14;
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank7weapons;
 			["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;
@@ -121,5 +127,5 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
-		
+
 		};
