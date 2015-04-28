@@ -1,19 +1,25 @@
 waitUntil {!isNull player};
 
-/*
+
 _profileSessionID = profileNamespace getVariable "EVO_sessionID";
 if (isNil "_profileSessionID") then {
 	_profileSessionID = EVO_sessionID;
 	profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
 } else {
 	if (_profileSessionID == EVO_sessionID) then {
+		systemChat "PERSISTENT EVOLUTION DETECTED.";
+		systemChat "Moving player to last location...";
 		_lastPos = profileNamespace getVariable "EVO_lastPos";
-		player setPos _lastPos;
+		player setPos (_lastPos select 0, _lastPos select 1, 0);
 		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
+		systemChat "Setting player loadout...";
 		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
+	} else {
+		_profileSessionID = EVO_sessionID;
+		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
 	};
 };
-*/
+
 
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
@@ -44,7 +50,6 @@ player addaction ["Side Mission Selection","[] spawn EVO_fnc_osm;",nil,1,false,t
 player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25 && ((leader group player) == player)"];
 player addaction ["HALO Insertion","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
-//if (!isNil "hqbox") then {deleteVehicle hqbox};
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
 	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
@@ -131,7 +136,7 @@ _ret = [] spawn {
 
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1], {
-		if (player == (_this select 1)) then {
+		if (player == (_this select 0)) then {
 			_score = player getVariable "KOL_score";
 			_score = _score + 1;
 			player setVariable ["KOL_score", _score, true];
