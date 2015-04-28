@@ -112,6 +112,12 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
+	class killNotificationParam {
+		title = "Visible Kill Notifications";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
 };
 
 class CfgFunctions
