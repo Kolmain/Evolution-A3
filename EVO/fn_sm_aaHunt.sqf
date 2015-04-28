@@ -46,6 +46,7 @@
 		aaTask setTaskState "Created";
 		aaTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
 		["TaskAssigned",["","Destroy AAA Battery"]] call BIS_fnc_showNotification;
+		CROSSROADS sideChat "All units be advised, forward scouts report an AAA battery and have marked it on the map at HQ. Friendly air assets need that battery destroyed!";
 		handle = [] spawn {
 			waitUntil {!alive aaHuntTarget};
 			if (player distance aaHuntTarget < 1000) then {
@@ -57,6 +58,7 @@
 			};
 			sleep (random 15);
 			aaTask setTaskState "Succeeded";
+			CROSSROADS sideChat "Forward scouts report the AAA battery was destroyed. Outstanding job men!";
 			["TaskSucceeded",["","AAA Battery Destroyed"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";

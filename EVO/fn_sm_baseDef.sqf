@@ -82,6 +82,7 @@
 	if (!isServer || !isMultiplayer) then {
 	//client
 		baseDefTask = player createSimpleTask ["Defend NATO Staging Base"];
+		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";
 		baseDefTask setTaskState "Created";
 		baseDefTask setSimpleTaskDestination (getPos spawnBuilding);
 		["TaskAssigned",["","Defend NATO Staging Base"]] call BIS_fnc_showNotification;
@@ -96,6 +97,7 @@
 			};
 			sleep (random 15);
 			baseDefTask setTaskState "Succeeded";
+			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
 			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";

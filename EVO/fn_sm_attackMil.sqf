@@ -51,6 +51,7 @@
 		milTask setTaskState "Created";
 		milTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
 		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
+		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at a military installation. Capture the military installation!";
 		handle = [] spawn {
 			waitUntil {currentSideMission == "none";};
 			if (player distance attackMilTarget < 1000) then {
@@ -62,6 +63,7 @@
 			};
 			sleep (random 15);
 			milTask setTaskState "Succeeded";
+			CROSSROADS sideChat "Forward scouts report OPFOR activity at the military installation is declining. Nice job men!";
 			["TaskSucceeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";

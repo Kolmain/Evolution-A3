@@ -153,6 +153,7 @@
 		};
 
 		["TaskAssigned",["","Ambush Convoy"]] call BIS_fnc_showNotification;
+		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR convoy activity. Check the map and ambush their supply route!";
 		handle = [] spawn {
 			waitUntil {currentSideMission == "none";};
 			if (player distance (position convoyEnd) < ((position convoyStart) distance (position convoyEnd))) then {
@@ -165,6 +166,7 @@
 			sleep (random 15);
 			convoyTask setTaskState "Succeeded";
 			["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
+			CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 		};
