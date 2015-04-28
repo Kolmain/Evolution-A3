@@ -23,6 +23,22 @@ if (isNil "_profileSessionID") then {
 	};
 };
 
+["ammo3DText", "onEachFrame", {
+	private["_vis","_pos"];
+		_sideColor = [(side player)] call BIS_fnc_sideColor;
+		if(player distance hqbox < 100) then
+		{
+			_vis = lineIntersects [eyePos player, eyePos _x, player, _x];
+			if(!_vis) then
+			{
+				_pos = visiblePosition _x;
+				_pos set[2,(getPosATL _x select 2) + 2.2];
+				drawIcon3D ["\A3\ui_f\data\map\markers\nato\b_mech_inf.paa", _sideColor, getPos hqbox, 1, 1, 0, "Ammo Supply", 0, 0.04];
+			
+			};
+		};
+}] call BIS_fnc_addStackedEventHandler;
+
 
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
