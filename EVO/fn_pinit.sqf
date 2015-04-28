@@ -42,11 +42,8 @@ if (isMultiplayer) Then {
 };
 player setVariable ["EVO_score", _score, true];
 
-if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
-	_mus = [] spawn BIS_fnc_jukebox;
-};
 
-_amb = [] call EVO_fnc_amb;
+
 //_brief = [] execVM "briefing.sqf";
 
 player addaction ["Side Mission Selection","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 25 && currentSideMission == 'none'"];
@@ -83,9 +80,8 @@ if (typeOf player == "B_soldier_repair_F") then {
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
-//[player, recruitComm] call BIS_fnc_removeCommMenuItem;
-recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-[["Gamemode","recruiting"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+
+
 
 if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 	_ret = [] spawn {
