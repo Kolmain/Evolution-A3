@@ -12,7 +12,7 @@ if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 
 
 
-
+_pos = getPos player;
 //check for flat land from CHHQ
 _composition = call (compile (preprocessFileLineNumbers "Comps\mash.sqf"));
 _sortedByDist = [_composition,[],{
@@ -29,7 +29,7 @@ _boundingSize = [_sortedBySize select 0 select 0] call _checkBoundingSize;
 if (_boundingSize > _radius) then {
 	_radius = _boundingSize;
 };
-_flatPos = (getPosASL _veh) isFlatEmpty [
+_flatPos = _pos isFlatEmpty [
 	_radius,	//--- Minimal distance from another object
 	0,				//--- If 0, just check position. If >0, select new one
 	0.4,			//--- Max gradient
@@ -48,7 +48,7 @@ if (count _flatPos isEqualTo 0) exitWith {
 
 
 
-
+//Land_Medevac_house_V1_F
 
 player playMove "Acts_carFixingWheel";
 mashRespawn call BIS_fnc_removeRespawnPosition;
@@ -58,6 +58,36 @@ mashRespawn call BIS_fnc_removeRespawnPosition;
 sleep 3.0;
 
 WaitUntil {animationState player != "Acts_carFixingWheel"};
+if (!alive player || player distance _pos > 4) exitWith {};
+
+
+[[_pos],{
+	_pos = _this select 0;
+	if (isServer) then
+	{
+		_nearMen = [];
+		_mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
+		while {alive _mash} do
+		{
+			{
+				if (alive _x && side _x == WEST && damage _x != 0) then
+				{
+					_damage = damage _x;
+					_damage = _damage - 0.01;
+					if (_damage < 0) then
+					{
+						_damage = 0;
+					};
+					_x setDamage _damage;
+				};
+			}
+			forEach ((getPos _obj) nearEntities [["Man"], _radius]);
+			sleep 2;
+		};
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+
+
 
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;

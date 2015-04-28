@@ -1,4 +1,4 @@
-_checkBoundingSize = {	
+_checkBoundingSize = {
 	_type = _this select 0;
 	_bbdummy = _type createVehicleLocal [0,0,0];
 	_boundingBox = (boundingBox _bbdummy) select 1;
@@ -49,18 +49,22 @@ if (count _flatPos isEqualTo 0) exitWith {
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
+_h = nearestObject [_pos, "Land_HelipadSquare_F"];
+[[_h],{
+	_h = _this select 0;
+	if (isServer) then
+	{
+		_nearVehicles = [];
+		while {alive _h} do
+		{
+			{
+				_x call EVO_fnc_rearm;
+			}
+			forEach ((getPos _h) nearEntities [["Car", "Tank", "Helicopter"], 2]);
+			sleep 2;
+		};
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
 
 
 
