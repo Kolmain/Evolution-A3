@@ -14,7 +14,7 @@ private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2",
 		_z = _position select 2;
 		Altitude = 500;
 
-	hint "Select Altitude and Designate LZ for HALO Jump on the map.";
+	hint Localize "STR_ATM_hinton";
 	openMap true;
 
 	createDialog "ATM_AD_ALTITUDE_SELECT";
@@ -33,7 +33,7 @@ Keys = 0;
 _ctrl = _dialog displayCtrl 2903;
 {
 	_index = _ctrl lbAdd _x;
-} forEach ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+} forEach ["Fr Keyboard","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","US Keyboard","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 lbSetCurSel [2903, 0];
 
 	ATM_Jump_mapclick = false;
@@ -82,7 +82,7 @@ if ((getPos _target select 2) >= 8000) then{
 };
 
 hintsilent "";
-hint "PRESS KEY TO CUT-AWAY ROPES";
+hint Localize "STR_ATM_hintjump";
 Cut_Rope = (FindDisplay 46) displayAddEventHandler ["keydown","_this call dokeyDown"];
 
 	_height = getPos _target select 2;
@@ -105,7 +105,7 @@ while {(getPos _target select 2) > 2} do {
 	};
 };
 
-	hint "Loading loadout...";
+	hint Localize "STR_ATM_hintload";
 		_target removeAction RedOn;
 		_target removeAction BlueOn;
 		_target removeAction YellowOn;

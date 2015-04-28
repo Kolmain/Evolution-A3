@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project name="ATM Airdrop">
+	<Package name="ATMDrop">
+		<Key ID="STR_ATM_Alt">
+			<Original>Altitude:</Original>
+			<French>Altitude:</French>
+		</Key>
+		<Key ID="STR_ATM_Keys">
+			<Original>Select Key:</Original>
+			<French>Choisir Une touche:</French>
+		</Key>
+		<Key ID="STR_ATM_Main">
+			<Original>Choose your Altitude and Cut Key</Original>
+			<French>Choisir votre altitude et une touche</French>
+		<Key>
+		<Key ID="STR_ATM_hover">
+			<Original>Your select Altitude</Original>
+			<French>Votre Altitude choisi</French>
+		</Key>
+		<Key ID="STR_ATM_hinton">
+			<Original>Select Altitude and Designate LZ for HALO Jump on the map</Original>
+			<French>Sélectionner votre Altitude et désigner une LZ sur la carte</French>
+		</Key>
+		<Key ID="STR_ATM_hintjump">
+			<Original>PRESS KEY TO CUT-AWAY ROPES</Original>
+			<French>Appuyer sur votre touche pour couper les suspentes</French>
+		</Key>
+		<Key ID="STR_ATM_hintload">
+			<Original>loading loadout ...</Original>
+			<French>Chargement de votre équipement ...</French>
+		</Key>
+		<Key ID="STR_ATM_Close">
+			<Original>Close</Original>
+			<French>Fermer</French>
+		</Key>
+	</Package>
+</Project>
