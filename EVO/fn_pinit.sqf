@@ -91,31 +91,51 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 			_vehicle = vehicle _player;
 			if (_vehicle != _player) then {
 				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player)) then {
-					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
-					systemChat "Auto-switching loadout to helicopter pilot loadout...";
-					handle = [_player, _vehicle] spawn {
-						_player = _this select 0;
-						_vehicle = _this select 1;
-						waitUntil {driver _vehicle != _player};
-						if (_player distance spawnBuilding < 1000) then {
-							handle = [_player, loadout] execVM "scripts\setloadout.sqf";
-							systemChat "Auto-switching back to previous loadout...";
-						};
+					if (player distance spawnBuilding < 1000) then {
+						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+						systemChat "Auto-switching loadout to helicopter pilot loadout...";
+						handle = [_player, _vehicle] spawn {
+							_player = _this select 0;
+							_vehicle = _this select 1;
+							waitUntil {driver _vehicle != _player};
+							if (_player distance spawnBuilding < 1000) then {
+								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
+								systemChat "Auto-switching back to previous loadout...";
+							};
+						}:
+					} else {
+						_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
+						_txt = format["You are not equipped to operate this %1. You require pilot gear.", _displayName];
+						["notQualified",[_txt]] call BIS_fnc_showNotification;
+						_player action ["engineOff", vehicle _player];
+						sleep 1;
+						_player action ["getOut", vehicle _player];
+						_player action ["Eject", vehicle _player];
 					};
 				};
 				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B" && driver _vehicle == player) then {
-					loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-					handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetFighter_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_PilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShell","SmokeShellBlue","Chemlight_green","Chemlight_blue","B_IR_Grenade","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],"B_Parachute",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
-					systemChat "Auto-switching loadout to pilot loadout...";
-					handle = [_player, _vehicle] spawn {
-						_player = _this select 0;
-						_vehicle = _this select 1;
-						waitUntil {driver _vehicle != _player};
-						if (_player distance spawnBuilding < 1000) then {
-							handle = [_player, loadout] execVM "scripts\setloadout.sqf";
-							systemChat "Auto-switching back to previous loadout...";
+					if (player distance spawnBuilding < 1000) then {
+						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetFighter_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_PilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShell","SmokeShellBlue","Chemlight_green","Chemlight_blue","B_IR_Grenade","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],"B_Parachute",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
+						systemChat "Auto-switching loadout to pilot loadout...";
+						handle = [_player, _vehicle] spawn {
+							_player = _this select 0;
+							_vehicle = _this select 1;
+							waitUntil {driver _vehicle != _player};
+							if (_player distance spawnBuilding < 1000) then {
+								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
+								systemChat "Auto-switching back to previous loadout...";
+							};
 						};
+					} else {
+						_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
+						_txt = format["You are not equipped to operate this %1. You require pilot gear.", _displayName];
+						["notQualified",[_txt]] call BIS_fnc_showNotification;
+						_player action ["engineOff", vehicle _player];
+						sleep 1;
+						_player action ["getOut", vehicle _player];
+						_player action ["Eject", vehicle _player];
 					};
 				};
 			};
