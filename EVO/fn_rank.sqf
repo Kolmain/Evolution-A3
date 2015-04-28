@@ -27,6 +27,18 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank1weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank1vehicles;
+
+
 		};
 		if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 			_player setUnitRank "CORPORAL";
@@ -45,6 +57,17 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank2weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >>  _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank2vehicles;
+
 		};
 		if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 			_player setUnitRank "SERGEANT";
@@ -63,6 +86,16 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank3weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank3vehicles;
 		};
 		if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then {
 			_player setUnitRank "LIEUTENANT"
@@ -79,6 +112,16 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank4weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank4vehicles;
 		};
 		if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 			_player setUnitRank "CAPTAIN";
@@ -95,6 +138,16 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank5weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank5vehicles;
 		};
 		if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 			_player setUnitRank "MAJOR";
@@ -110,7 +163,16 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
-			playsound "Paycall";
+			playsound "Paycall"; {
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank6weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank6vehicles;
 		};
 		if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 			_player setUnitRank "COLONEL";
@@ -126,6 +188,15 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
-			playsound "Paycall";
+			playsound "Paycall"; {
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank7weapons;
+			{
+				_txt = format["You now have access to the %1."];
+				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
+				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
+			} forEach rank7vehicles;
 
 		};

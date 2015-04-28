@@ -262,7 +262,13 @@ class CfgNotifications
 		priority = 0; // Priority; higher number = more important; tasks in queue are selected by priority
 		difficulty[] = {}; // Required difficulty settings. All listed difficulties has to be enabled
 	};
-
+	class unlocked
+	{
+		title = "ASSET AVAILABLE";
+		iconPicture = "%1";
+		description = "%2";
+		priority = 1;
+	};
 	class promoted
 	{
 		title = "FIELD PROMOTION";
