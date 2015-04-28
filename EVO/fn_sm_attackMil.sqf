@@ -1,3 +1,6 @@
+private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUnits","_score"];
+
+
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "attackMil";

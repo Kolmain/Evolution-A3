@@ -1,3 +1,6 @@
+private ["_radio","_loop","_bombs"];
+
+
 _radio = _this select 0;
 _radio allowDamage false;
 _loop = true;

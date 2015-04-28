@@ -1,3 +1,7 @@
+private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","_aoSize","_grp","_lastVehicle","_spawnPos","_dir","_classname","_ret","_vehicle","_road","_lastRoad","_wp","_score"];
+
+
+
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "convoy";

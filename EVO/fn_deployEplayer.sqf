@@ -1,3 +1,6 @@
+private ["_checkBoundingSize","_type","_bbdummy","_boundingBox","_boundingSize","_msg","_truck","_composition","_sortedByDist","_frstNum","_secNum","_biggestOffset","_biggestOffsetAbs","_radius","_sortedBySize","_flatPos","_veh","_h","_pos","_nearVehicles","_mark","_mssg","_medmark"];
+
+
 _checkBoundingSize = {
 	_type = _this select 0;
 	_bbdummy = _type createVehicleLocal [0,0,0];

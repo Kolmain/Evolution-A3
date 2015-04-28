@@ -1,3 +1,6 @@
+private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
+
+
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "aaHunt";

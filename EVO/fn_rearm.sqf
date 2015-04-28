@@ -1,3 +1,6 @@
+private ["_object","_type","_magazines","_removed","_count","_config","_count_other","_config2","_vehicle"];
+
+
 _object = _this;
 
 _type = typeOf _object;

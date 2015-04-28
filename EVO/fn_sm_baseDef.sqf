@@ -1,3 +1,6 @@
+private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_heliGrp","_score"];
+
+
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "baseDef";

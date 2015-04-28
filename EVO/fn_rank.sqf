@@ -1,4 +1,6 @@
-private ["_score","_player","_newScore","_rank","_scoreToAdd","_msg"];
+private ["_player","_score","_newScore","_rank","_EVOrank","_scoreToAdd","_msg","_txt","_pic"];
+
+
 _player = player;
 //_score = score _player;
 _score = player getVariable "EVO_score";

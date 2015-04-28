@@ -1,9 +1,6 @@
-/*
-_missionsData 	= [
-		[getMarkerPos "m1",start_mission01,"<Text to Display>","<Description>","","<image>",1,[]],
-		[getMarkerPos "m2",start_mission02,"<Text to Display>","<Description>","","<image>",1,[]]
-];
-*/
+private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip"];
+
+
 currentSideMission = "none";
 //build AA hunt
 //as long as there are AAA batteries

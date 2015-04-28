@@ -1,3 +1,6 @@
+private ["_hc","_unit","_hcID"];
+
+
 if (!isServer || !isMultiplayer || isNull _hc) exitWith {};
 
 waitUntil {time > 2};

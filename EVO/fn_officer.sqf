@@ -1,3 +1,6 @@
+private ["_officer","_caller","_grp","_msg","_score"];
+
+
 _officer = _this select 0;
 _caller = _this select 1;
 _id = _this select 2;

@@ -1,3 +1,6 @@
+private ["_veh","_displayName","_markerName","_vehMarker","_vehicle","_killer","_mhq","_classname","_dir","_pos","_vehPos","_posDriverExit","_posCommanderExit","_posCargoExit","_posDriver","_posCommander","_posCargo","_driverExitOffset","_deadPos","_deadExitPos","_newVehicle","_null"];
+
+
 _veh = _this select 0;
 while {alive _veh} do {
 				if (!canMove _veh) then {

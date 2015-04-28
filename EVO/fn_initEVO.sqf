@@ -1,8 +1,5 @@
-private ["_locTypes","_vehicle","_null","_markerName","_aaMarker","_ret","_plane","_grp","_wp"];
+private ["_locTypes","_locs","_mil","_vehicle","_null","_markerName","_aaMarker","_grp","_driver","_commander","_gunner","_ret","_plane","_wp"];
 
-//activetargets = ["Pariso", "Somato", "Cayo", "Dolores", "Ortego", "Corazol", "Obregan", "Bagango", "Eponia", "Masbate", "Pita"];
-//activetargetsRT = [ParisoRT, SomatoRT, CayoRT, DoloresRT, OrtegoRT, CorazolRT, ObreganRT, BagangoRT, EponiaRT, MasbateRT, PitaRT];
-//activetargetsOF = [ParisoOF, SomatoOF, CayoOF, DoloresOF, OrtegoOF, CorazolOF, ObreganOF, BagangoOF, EponiaOF, MasbateOF, PitaOF];
 _locTypes = [
 //"CityCenter",
 "NameCity",

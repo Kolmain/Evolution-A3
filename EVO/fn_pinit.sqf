@@ -1,3 +1,6 @@
+private ["_profileSessionID","_lastPos","_lastLoadout","_score","_mus","_amb","_brief","_respawnPos","_ret","_player","_vehicle","_hitID","_handleHealID","_string"];
+
+
 waitUntil {!isNull player};
 
 

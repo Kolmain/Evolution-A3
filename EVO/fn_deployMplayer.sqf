@@ -1,3 +1,6 @@
+private ["_msg","_truck","_pos","_composition","_sortedByDist","_frstNum","_secNum","_biggestOffset","_biggestOffsetAbs","_boundingSize","_checkBoundingSize","_radius","_sortedBySize","_flatPos","_nearMen","_mash","_damage","_obj","_mark","_mssg","_medmark"];
+
+
 if (player distance spawnBuilding < 1000) exitWith {
 	_msg = format ["You can't deploy a MASH in the base."];
 	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;

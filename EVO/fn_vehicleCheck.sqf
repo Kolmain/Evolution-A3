@@ -1,3 +1,7 @@
+private ["_player","_vehicle","_class","_classname","_displayName","_txt"];
+
+
+
 _player = _this select 0;
 _vehicle = vehicle _player;
 _class = typeOf _vehicle;
