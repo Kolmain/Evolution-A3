@@ -42,7 +42,7 @@ CHHQ_fnc_deploy = {
 		_msg = format ["You can't deploy a MHQ on uneven terrain."];
 		["deployed",["MHQ NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 	};
-	if (player in list AirportIn) exitWith {
+	if (player distance spawnBuilding < 800) exitWith {
 		_msg = format ["You can't deploy a MHQ in the base."];
 		["deployed",["MHQ NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 	};
