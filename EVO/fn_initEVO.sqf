@@ -23,8 +23,6 @@ _mil = [];
 militaryLocations = _mil;
 
 
-
-
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
@@ -37,7 +35,6 @@ infSquads = (("infSquadsParam" call BIS_fnc_getParamValue) * 2);
 mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
 armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 CROSSROADS = [West,"HQ"];
-MHQ = firstMHQ;
 markerCounter = 0;
 "opforair" setMarkerAlpha 0;
 currentSideMission = "none";

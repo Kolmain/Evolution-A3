@@ -45,7 +45,12 @@ player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
 //if (!isNil "hqbox") then {deleteVehicle hqbox};
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
-	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance ammoOfficer) < 15"];
+	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+} else {
+	if (!isNil "hqbox") then {
+		deleteVehicle hqbox;
+	};
+	hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
@@ -137,8 +142,8 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 
 handle = [] spawn {
 	while {alive player} do {
-		waitUntil {player distance ammoOfficer < 25};
-	   	waitUntil {player distance ammoOfficer > 25};
+		waitUntil {player distance spawnBuilding < 25};
+	   	waitUntil {player distance spawnBuilding > 25};
 		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 		systemChat "Loadout saved...";
 	};

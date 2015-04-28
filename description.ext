@@ -13,6 +13,7 @@ respawnOnStart = -1;
 #include "bon_recruit_units\dialog\recruitment.hpp"
 #include "ATM_airdrop\dialog.hpp"
 #include "CHVD\dialog.hpp"
+#include "R3F_LOG\desc_include.h"
 
 class Header
 {
@@ -97,7 +98,19 @@ class Params
 		title = "Require Rank for Weapons";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 0;
+		default = 1;
+	};
+	class mhqParam {
+		title = "Mobile HQ Spawn Point";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
+	class r3fParam {
+		title = "R3F Logistics";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
 	};
 };
 

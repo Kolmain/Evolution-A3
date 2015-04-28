@@ -9,7 +9,6 @@
         1, // movement
         [
             ["\A3\ui_f\data\map\markers\nato\b_hq.paa", _colorWest, getPos spawnBuilding, 1, 1, 0, "HQ", 0],
-            ["\A3\ui_f\data\map\markers\nato\respawn_inf_ca.paa", _colorWest, getPos ammoOfficer, 1, 1, 0, "Armory", 0],
             ["\A3\ui_f\data\map\markers\nato\respawn_motor_ca.paa", _colorWest, getPos firstMHQ, 1, 1, 0, "Mobile HQ", 0]
         ]
     ] call BIS_fnc_establishingShot;

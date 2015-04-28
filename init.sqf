@@ -1,3 +1,4 @@
+
 debug=false;
 EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 //Init UPSMON script
@@ -10,11 +11,6 @@ enableSaving [false, false];
 CHHQ_showMarkers = true;
 
 militaryInstallations = [];
-etent = objNull;
-epad = objNull;
-ebox = objNull;
-mtent = objNull;
-hqbox = objNull;
 rank1 = 10;
 rank2 = 30;
 rank3 = 60;
@@ -46,11 +42,20 @@ CHVD_maxObj = 2500;
 HCconnected = false;
 HC_uid = getPlayerUID headlessClient;
 
+if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
+	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
+	MHQ = firstMHQ;
+};
+
+if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
+	execVM "R3F_LOG\init.sqf";
+};
+
 if (!isMultiplayer) then {
 	_nearUnits = nearestObjects [spawnBuilding, ["Man"], 100];
 	{
 		_unit = _x;
-		if (!isPlayer _unit && _unit != ammoOfficer) then {
+		if (!isPlayer _unit) then {
 			deleteVehicle _unit;
 		};
 	} foreach _nearUnits;
