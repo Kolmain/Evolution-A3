@@ -46,7 +46,38 @@ _dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
 _comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
 _grp = createGroup EAST;
 _mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
+
+handle = [currentTarget, _mortarGunner] spawn {
+	_currentTarget = _this select 0;
+	_mortarGunner = _this select 1;
+	_loop2 = true;
+	while {_loop2} do {
+	    sleep 5;
+	    if (currentTarget != _currentTarget) then {
+	    	_loop2 = false;
+	    }
+	    if (!alive _obj) exitWith {};
+	};
+		[_mortarGunner, currentTarget] call EVO_fnc_wrapUp;
+};
+
 _newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+handle = [currentTarget, _newComp] spawn {
+	_currentTarget = _this select 0;
+	_newComp = _this select 1;
+	_loop2 = true;
+	while {_loop2} do {
+	    sleep 5;
+	    if (currentTarget != _currentTarget) then {
+	    	_loop2 = false;
+	    }
+	    if (!alive _obj) exitWith {};
+	};
+	{
+		[_x, currentTarget] call EVO_fnc_wrapUp;
+	} forEach _newComp;
+};
+
 _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
 _mortarGunner moveInGunner _mortar;
@@ -54,11 +85,29 @@ _mortarGunner moveInGunner _mortar;
 
 nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
 _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+
+handle = [currentTarget, _grp] spawn {
+	_currentTarget = _this select 0;
+	_grp = _this select 1;
+	_loop2 = true;
+	while {_loop2} do {
+	    sleep 5;
+	    if (currentTarget != _currentTarget) then {
+	    	_loop2 = false;
+	    }
+	    if (!alive _obj) exitWith {};
+	};
+	{
+		[_x, currentTarget] call EVO_fnc_wrapUp;
+	} forEach units _grp;
+};
+
 if (HCconnected) then {
 	{
 		handle = [_x] call EVO_fnc_sendToHC;
 	} forEach units _grp;
 };
+
 
 {
 	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];

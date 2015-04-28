@@ -27,9 +27,13 @@
 			}  forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};
-		handle = [] spawn {
+		handle = [_grp] spawn {
+			_grp = _this select 0;
 			waitUntil {!alive aaHuntTarget};
 			sleep (random 15);
+			{
+				[_x] call EVO_fnc_wrapUp;
+			} forEach units _grp;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
