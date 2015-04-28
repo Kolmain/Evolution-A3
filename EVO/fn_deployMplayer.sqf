@@ -3,7 +3,7 @@ if (player distance spawnBuilding < 1000) exitWith {
 	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 _truck = nearestObject [player, "B_Truck_01_medical_F"];
-if (isNil "_truck" || (player distance _truck > 25)) then {
+if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	_msg = format ["You can't deploy a MASH without a HEMTT Medical Truck."];
 	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
