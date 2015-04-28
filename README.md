@@ -23,6 +23,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - **Officer Capturing** in every area of operation.
   - **OPFOR support assetss** may be available at the AO including mortar, anti-air, and sniper support.
   - All powered by **vanilla ArmA 3 content**.
+  - Build structures in the field using **R3F Logistics**.
 
 
 
