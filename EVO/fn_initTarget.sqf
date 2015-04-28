@@ -312,7 +312,13 @@ playSound _sound;
 		_tskName = format ["Secure Col. %1", name currentTargetOF];
 		officerTask = player createSimpleTask [_tskName, attackTask];
 		officerTask setTaskState "Created";
-		_tskName = format ["Clear the %1 of %2.", "city", currentTargetName];
+		_locationType = type currentTarget;
+		if (_locationType == "NameVillage") then {
+			_type = "village";
+		} else {
+			_type "city";
+		};
+		_tskName = format ["Clear the %1 of %2.", _type, currentTargetName];
 		["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
