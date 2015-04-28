@@ -14,7 +14,7 @@
 		currentSideMissionMarker setMarkerPos (position _location);
 		markerCounter = markerCounter + 1;
 		publicVariable "currentSideMissionMarker";
-		for "_i" from 1 to 2 do {
+		for "_i" from 1 to 5 do {
 			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 			if (HCconnected) then {
@@ -26,18 +26,6 @@
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-		};
-		handle = [] spawn {
-			_westUnits = 0;
-			while {_westUnits == 0} do {
-				_allUnits = (position attackMilTarget) nearEntities [["Man", "Car", "Tank"], 300];
-				{
-					if (side _x == WEST && alive _x) then {
-						_westUnits = _westUnits + 1;
-					};
-				} forEach _allUnits;
-				sleep 15;
-			};
 		};
 		handle = [] spawn {
 			_eastUnits = 100;
@@ -59,9 +47,9 @@
 	};
 	if (!isServer || !isMultiplayer) then {
 	//client
-		aaTask = player createSimpleTask ["Attack OPFOR Installation"];
-		aaTask setTaskState "Created";
-		aaTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
+		milTask = player createSimpleTask ["Attack OPFOR Installation"];
+		milTask setTaskState "Created";
+		milTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
 		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMission == "none";};
@@ -73,7 +61,7 @@
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			aaTask setTaskState "Succeeded";
+			milTask setTaskState "Succeeded";
 			["TaskSucceeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
