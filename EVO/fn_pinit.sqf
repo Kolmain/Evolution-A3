@@ -23,23 +23,6 @@ if (isNil "_profileSessionID") then {
 		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
 	};
 };
-/*
-["ammo3DText", "onEachFrame", {
-	private["_vis","_pos"];
-		_sideColor = [(side player)] call BIS_fnc_sideColor;
-		if(player distance hqbox < 100) then
-		{
-			_vis = lineIntersects [eyePos player, eyePos _x, player, _x];
-			if(!_vis) then
-			{
-				_pos = visiblePosition _x;
-				_pos set[2,(getPosATL _x select 2) + 2.2];
-				drawIcon3D ["\A3\ui_f\data\map\markers\nato\b_mech_inf.paa", _sideColor, getPos hqbox, 1, 1, 0, "Ammo Supply", 0, 0.04];
-
-			};
-		};
-}] call BIS_fnc_addStackedEventHandler;
-*/
 
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
@@ -97,9 +80,6 @@ if (typeOf player == "B_soldier_repair_F") then {
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
-
-
-
 if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 	_ret = [] spawn {
 		while {alive player} do {
@@ -107,7 +87,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 			_player = player;
 			_vehicle = vehicle _player;
 			if (_vehicle != _player) then {
-				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player)) then {
+				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player) && isTouchingGround _vehicle) then {
 					if (player distance spawnBuilding < 1000) then {
 						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","NVGoggles","H_PilotHelmetHeli_B","G_Tactical_Black"],"SMG_01_Holo_F",["","","optic_Holosight_smg",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_HeliPilotCoveralls",["FirstAidKit","30Rnd_45ACP_Mag_SMG_01","30Rnd_45ACP_Mag_SMG_01","Chemlight_green"],"V_TacVest_oli",["FirstAidKit","FirstAidKit","FirstAidKit","30Rnd_45ACP_Mag_SMG_01","SmokeShellGreen","SmokeShellBlue","SmokeShellOrange","Chemlight_green","Chemlight_blue","B_IR_Grenade","30Rnd_45ACP_Mag_SMG_01","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag"],"",[],[["30Rnd_45ACP_Mag_SMG_01"],["16Rnd_9x21_Mag"],[],[]],"SMG_01_Holo_F","Single"]] execVM "scripts\setloadout.sqf";
