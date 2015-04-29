@@ -206,12 +206,14 @@ for "_i" from 1 to paraSquads do {
 		    	_x assignAsCargo _heli;
 		    	_x moveInCargo _heli;
 		    } forEach units _grp;
-		    _heli doMove (getMarkerPos currentTargetMarkerName);
+		    //_heli doMove (getMarkerPos currentTargetMarkerName);
+		    _wp = _heliGrp addWaypoint [getMarkerPos currentTargetMarkerName, 0];
 		    _heli flyInHeight 150;
 		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
 		    handle = [_heli] call EVO_fnc_paradrop;
 		    sleep 5;
-		    _heli doMove (getPos server);
+		    //_heli doMove (getPos server);
+		    _wp = _heliGrp addWaypoint [getPos server, 0];
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
 		    	waitUntil {(_heli distance server) < 1000};

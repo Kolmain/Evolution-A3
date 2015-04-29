@@ -56,13 +56,15 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			   		_x assignAsCargo _heli;
 			   		_x moveInCargo _heli;
 			   } forEach units _grp;
-			   _heli doMove (getPos spawnBuilding);
+			   //_heli doMove (getPos spawnBuilding);
+			   _wp = _heliGrp addWaypoint [getPos spawnBuilding, 0];
 			   _heli flyInHeight 150;
 			   waitUntil {(_heli distance (getPos spawnBuilding)) < 500};
 			   sleep random 10;
 			   handle = [_heli] call EVO_fnc_paradrop;
 			   sleep 5;
-			   _heli doMove (getPos server);
+			   //_heli doMove (getPos server);
+			   _wp = _heliGrp addWaypoint [getPos server, 0];
 			   handle = [_heli] spawn {
 			   	_heli = _this select 0;
 			   	waitUntil {(_heli distance server) < 1000};
