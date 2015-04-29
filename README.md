@@ -36,4 +36,4 @@ https://github.com/Kolmain/Evolution-A3/releases
 
 ### Requirements
 
-Evolution-A3/alits uses no mods and is 100% Vanilla ArmA 3.
+Evolution-A3 uses no mods and is 100% Vanilla ArmA 3.
