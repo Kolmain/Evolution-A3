@@ -30,12 +30,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank1weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank1vehicles;
@@ -60,12 +62,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank2weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >>  _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank2vehicles;
@@ -89,18 +93,20 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank3weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank3vehicles;
 		};
 		if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then {
-			_player setUnitRank "LIEUTENANT"
+			_player setUnitRank "LIEUTENANT";
 			_player setVariable ["EVOrank", "LIEUTENANT", true];
 			if (!isNil "hqbox") then {
 				deleteVehicle hqbox;
@@ -115,12 +121,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank4weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank4vehicles;
@@ -141,12 +149,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall";
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank5weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank5vehicles;
@@ -166,12 +176,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall"; {
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank6weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank6vehicles;
@@ -191,12 +203,14 @@ if (isNil "_EVOrank") then {
 			[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
 			[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
 			playsound "Paycall"; {
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank7weapons;
 			{
-				_txt = format["You now have access to the %1."];
+				_dn = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
+				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank7vehicles;

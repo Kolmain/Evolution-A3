@@ -13,7 +13,8 @@ if (isNil "_profileSessionID") then {
 		systemChat "PERSISTENT EVOLUTION DETECTED.";
 		systemChat "Moving player to last location...";
 		_lastPos = profileNamespace getVariable "EVO_lastPos";
-		player setPos (_lastPos select 0, _lastPos select 1, 0);
+		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
+		player setPos _lastPos;
 		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
 		systemChat "Setting player loadout...";
 		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
@@ -22,7 +23,7 @@ if (isNil "_profileSessionID") then {
 		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
 	};
 };
-
+/*
 ["ammo3DText", "onEachFrame", {
 	private["_vis","_pos"];
 		_sideColor = [(side player)] call BIS_fnc_sideColor;
@@ -34,11 +35,11 @@ if (isNil "_profileSessionID") then {
 				_pos = visiblePosition _x;
 				_pos set[2,(getPosATL _x select 2) + 2.2];
 				drawIcon3D ["\A3\ui_f\data\map\markers\nato\b_mech_inf.paa", _sideColor, getPos hqbox, 1, 1, 0, "Ammo Supply", 0, 0.04];
-			
+
 			};
 		};
 }] call BIS_fnc_addStackedEventHandler;
-
+*/
 
 if (!isNil "loadout") then {
 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
@@ -119,7 +120,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 								systemChat "Auto-switching back to previous loadout...";
 							};
-						}:
+						};
 					} else {
 						_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 						_txt = format["You are not equipped to operate this %1. You require pilot gear.", _displayName];

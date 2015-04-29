@@ -40,7 +40,7 @@ CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
 HCconnected = false;
-HC_uid = getPlayerUID headlessClient;
+//HC_uid = getPlayerUID headlessClient;
 
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
@@ -70,10 +70,11 @@ if (HC_uid == getPlayerUID server) then {
 	HCconnected = true;
 	publicVariable "HCconnected";
 };
-
+*/
 if (isServer) then
 {
 	[] spawn EVO_fnc_initEVO;
+	/*
 	onplayerconnected "
 	if (owner headlessClient == _uid) then {
 		HC_uid = _uid;
@@ -107,8 +108,9 @@ if (isServer) then
 		} forEach allUnits;
 	};
 	";
+	*/
 };
-*/
+
 
 
 if (isServer && isMultiplayer) exitWith {};
@@ -121,5 +123,6 @@ playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
+handle = [] call EVO_fnc_pinit;
 _amb = [] call EVO_fnc_amb;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;

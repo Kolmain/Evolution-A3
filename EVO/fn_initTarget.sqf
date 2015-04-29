@@ -56,8 +56,8 @@ handle = [currentTarget, _mortarGunner] spawn {
 	    sleep 5;
 	    if (currentTarget != _currentTarget) then {
 	    	_loop2 = false;
-	    }
-	    if (!alive _obj) exitWith {};
+	    };
+	    if (!alive _mortarGunner) exitWith {};
 	};
 		[_mortarGunner, currentTarget] call EVO_fnc_wrapUp;
 };
@@ -71,8 +71,7 @@ handle = [currentTarget, _newComp] spawn {
 	    sleep 5;
 	    if (currentTarget != _currentTarget) then {
 	    	_loop2 = false;
-	    }
-	    if (!alive _obj) exitWith {};
+	    };
 	};
 	{
 		[_x, currentTarget] call EVO_fnc_wrapUp;
@@ -95,8 +94,7 @@ handle = [currentTarget, _grp] spawn {
 	    sleep 5;
 	    if (currentTarget != _currentTarget) then {
 	    	_loop2 = false;
-	    }
-	    if (!alive _obj) exitWith {};
+	    };
 	};
 	{
 		[_x, currentTarget] call EVO_fnc_wrapUp;
@@ -314,10 +312,11 @@ playSound _sound;
 		officerTask = player createSimpleTask [_tskName, attackTask];
 		officerTask setTaskState "Created";
 		_locationType = type currentTarget;
+		_type = "";
 		if (_locationType == "NameVillage") then {
 			_type = "village";
 		} else {
-			_type "city";
+			_type = "city";
 		};
 		_tskName = format ["Clear the %1 of %2.", _type, currentTargetName];
 		["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
