@@ -166,7 +166,7 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 handle = [] spawn {
 	while {alive player} do {
 		waitUntil {player distance spawnBuilding < 25};
-	   	waitUntil {player distance spawnBuilding > 25};
+	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
 		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 		systemChat "Loadout saved...";
 	};
