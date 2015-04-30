@@ -2,7 +2,7 @@ private ["_profileSessionID","_lastPos","_lastLoadout","_score","_mus","_amb","_
 
 
 waitUntil {!isNull player};
-
+_lastPos = [];
 
 _profileSessionID = profileNamespace getVariable "EVO_sessionID";
 if (isNil "_profileSessionID") then {
@@ -13,6 +13,10 @@ if (isNil "_profileSessionID") then {
 		systemChat "PERSISTENT EVOLUTION DETECTED.";
 		systemChat "Moving player to last location...";
 		_lastPos = profileNamespace getVariable "EVO_lastPos";
+		if (isNIl "_lastPos") then {
+			_lastPos = getPos player;
+			 profileNamespace setVariable ["EVO_lastPos", _lastPos];
+		};
 		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
 		player setPos _lastPos;
 		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
@@ -163,14 +167,6 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 }];
 
-handle = [] spawn {
-	while {alive player} do {
-		waitUntil {player distance spawnBuilding < 25};
-	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
-		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-		systemChat "Loadout saved...";
-	};
-};
 
 handle = [] spawn {
 	//Lists of items to include
@@ -260,6 +256,7 @@ handle = [] spawn {
 
 	availableMagazines = [];
 
+	waitUntil {alive hqbox};
 	while {alive player} do {
 		if (("rankVehicles" call BIS_fnc_getParamValue) == 1) then {
 			handle = [player] call EVO_fnc_vehicleCheck;

@@ -6,6 +6,9 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 handle = [] execVM "scripts\randomWeather2.sqf";
 handle = [] execVM "scripts\clean.sqf";
 handle = [] execVM "bon_recruit_units\init.sqf";
+if (isServer) then {
+	[] spawn EVO_fnc_initEVO;
+};
 
 enableSaving [false, false];
 CHHQ_showMarkers = true;
@@ -73,7 +76,7 @@ if (HC_uid == getPlayerUID server) then {
 */
 if (isServer) then
 {
-	[] spawn EVO_fnc_initEVO;
+	//[] spawn EVO_fnc_initEVO;
 	/*
 	onplayerconnected "
 	if (owner headlessClient == _uid) then {
@@ -113,16 +116,25 @@ if (isServer) then
 
 
 
-if (isServer && isMultiplayer) exitWith {};
+if (isDedicated && isMultiplayer) exitWith {};
 
 
 //Client
 _intro = player execVM "scripts\intro.sqf";
-WaitUntil{scriptDone _intro};
+//WaitUntil{scriptDone _intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
-handle = [] call EVO_fnc_pinit;
+if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};
 _amb = [] call EVO_fnc_amb;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
+handle = [] spawn {
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+	while {alive player} do {
+		waitUntil {player distance spawnBuilding < 25};
+	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
+		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		systemChat "Loadout saved...";
+	};
+};

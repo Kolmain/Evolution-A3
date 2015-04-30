@@ -29,18 +29,18 @@ private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-		};
-		handle = [_grp] spawn {
-			_grp = _this select 0;
-			waitUntil {!alive aaHuntTarget};
-			sleep (random 15);
-			{
-				[_x] call EVO_fnc_wrapUp;
-			} forEach units _grp;
-			currentSideMission = "none";
-			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
-			deleteMarker currentSideMissionMarker;
+			handle = [_grp] spawn {
+				_grp = _this select 0;
+				waitUntil {!alive aaHuntTarget};
+				sleep (random 15);
+				{
+					[_x] call EVO_fnc_wrapUp;
+				} forEach units _grp;
+				currentSideMission = "none";
+				publicVariable "currentSideMission";
+				handle = [] spawn EVO_fnc_buildSideMissionArray;
+				deleteMarker currentSideMissionMarker;
+			};
 		};
 	};
 	if (!isServer || !isMultiplayer) then {
