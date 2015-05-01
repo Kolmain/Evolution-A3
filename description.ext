@@ -172,6 +172,7 @@ class CfgFunctions
 			class osm {};
 			class wrapUp {};
 			class rearm {};
+			class buildMagazineArray {};
 		};
 	};
 };
