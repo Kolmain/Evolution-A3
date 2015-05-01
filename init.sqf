@@ -120,13 +120,13 @@ if (isDedicated && isMultiplayer) exitWith {};
 
 
 //Client
-_intro = player execVM "scripts\intro.sqf";
+intro = true;
+nul = player execVM "scripts\intro.sqf";
 //WaitUntil{scriptDone _intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
-if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};
 _amb = [] call EVO_fnc_amb;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
@@ -138,3 +138,4 @@ handle = [] spawn {
 		systemChat "Loadout saved...";
 	};
 };
+if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};

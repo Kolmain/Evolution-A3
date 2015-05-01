@@ -20,6 +20,20 @@ _mil = [];
 militaryLocations = _mil;
 
 
+handle = [] spawn {
+	while {true} do {
+	    waitUntil {!officerAlive};
+	    [[[], {
+			officerTask setTaskState "Failed";
+			_msg = format ["Colonel %1 has been killed.", name currentTargetOF];
+			["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
+		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+		_current = currentTarget;
+		waitUntil {_current != currentTarget};
+	};
+};
+
+
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;

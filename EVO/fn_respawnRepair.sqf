@@ -49,7 +49,7 @@ _veh addEventHandler ["Killed", {
 			_x setPos _deadExitPos;
 			};
 		} forEach (crew _veh);
-		sleep 120;
+		sleep 10;
 		deleteVehicle _vehicle;
 		sleep 0.5;
 		_newVehicle = _classname createVehicle _pos;

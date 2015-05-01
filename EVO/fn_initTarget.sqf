@@ -140,15 +140,6 @@ removeAllWeapons _officer;
 _officer setCaptive true;
 [[[], {	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"]}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 doStop _officer;
-_pass = currentTarget;
-handle = [_pass] spawn {
-	waitUntil {!officerAlive};
-	if (currentTarget == _this select 0) then {
-		officerTask setTaskState "Failed";
-		_msg = format ["Colonel %1 has been killed.", name currentTargetOF];
-		["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-	};
-};
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {

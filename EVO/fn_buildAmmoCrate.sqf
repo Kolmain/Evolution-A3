@@ -42,13 +42,13 @@ switch (_EVOrank) do {
 [hqbox, (availableBackpacks)] call BIS_fnc_addVirtualBackpackCargo;
 
 {
-	hqbox addBackpackCargo [_x, 10];
+	hqbox addBackpackCargo [_x, 1];
 } forEach availableBackpacks;
 
 [hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
 
 {
-	hqbox addItemCargo [_x, 10];
+	hqbox addItemCargo [_x, 1];
 } forEach (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests);
 
 [hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
