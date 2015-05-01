@@ -84,7 +84,7 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
 	};
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 	//client
 		baseDefTask = player createSimpleTask ["Defend NATO Staging Base"];
 		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";

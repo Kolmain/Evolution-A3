@@ -145,7 +145,7 @@ private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","
 			deleteMarker convoyEndAoMarker;
 		};
 	};
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 	//client
 		convoyTask = player createSimpleTask ["Ambush Convoy"];
 		convoyTask setTaskState "Created";

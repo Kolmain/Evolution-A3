@@ -43,7 +43,7 @@ private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
 			};
 		};
 	};
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 	//client
 		aaTask = player createSimpleTask ["Destroy AAA Battery"];
 		aaTask setTaskState "Created";

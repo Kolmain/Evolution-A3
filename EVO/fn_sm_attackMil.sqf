@@ -48,7 +48,7 @@ private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUn
 			deleteMarker currentSideMissionMarker;
 		};
 	};
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 	//client
 		milTask = player createSimpleTask ["Attack OPFOR Installation"];
 		milTask setTaskState "Created";
