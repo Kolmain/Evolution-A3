@@ -8,6 +8,7 @@ respawnDelay = 15;
 respawnTemplates[] = {"MenuPosition", "EVO_respawn", "Revive"};
 reviveDelay = 10;
 respawnOnStart = -1;
+enableDebugConsole = 1;
 
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"

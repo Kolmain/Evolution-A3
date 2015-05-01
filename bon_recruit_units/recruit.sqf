@@ -45,8 +45,9 @@ sleep 8.5;
 /********************* UNIT CREATION ********************/
 _unit = objNull;
 
-if (player in list AirportIn) then {
-	_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+if (player distance SpawnBuilding < 1000) then {
+	//_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+	_spawnPos = getPos player;
 	_unit = group player createUnit [_unittype, _spawnPos, [], 0, "FORM"];
 } else {
     _spawnPos = [((getPos player) select 0), ((getPos player) select 1), (((getPos player) select 2) + 200)];
