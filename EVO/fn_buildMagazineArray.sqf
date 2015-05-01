@@ -18,4 +18,7 @@ _return = [];
     } forEach _muzzles;  
 } forEach _weaponArray;  
 
+_return = _return + ["HandGrenade", "SmokeShell", "SmokeShellBlue", "Chemlight_blue", "B_IR_Grenade"];
+
+
 _return
