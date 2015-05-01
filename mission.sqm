@@ -113,8 +113,8 @@ class Mission
 					offsetY=0.00147438;
 					id=0;
 					side="WEST";
-					vehicle="B_medic_F";
-					player="PLAYER COMMANDER";
+					vehicle="B_Soldier_F";
+					player="PLAY CDG";
 					leader=1;
 					skill=0.5;
 				};
@@ -411,7 +411,7 @@ class Mission
 					id=15;
 					side="WEST";
 					vehicle="B_medic_F";
-					player="PLAY CDG";
+					player="PLAYER COMMANDER";
 					leader=1;
 					skill=0.5;
 				};
