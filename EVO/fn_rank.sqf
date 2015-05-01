@@ -12,7 +12,7 @@ if (isNil "_EVOrank") then {
 	_EVOrank = _player getVariable "EVOrank";
 };
 		//_newScore = _score + _scoreToAdd;
-		_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
+		//_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 		if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
 			_player setUnitRank "PRIVATE";
 			_player setVariable ["EVOrank", "PRIVATE", true];
@@ -24,6 +24,7 @@ if (isNil "_EVOrank") then {
 			bon_recruit_recruitableunits = ["B_Soldier_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 			[hqbox, _EVOrank] call EVO_fnc_buildAmmoCrate;
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\pvt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 			{
@@ -50,6 +51,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 4;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_exp_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\corp.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 			{
@@ -75,6 +77,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 6;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\sgt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 			{
@@ -99,6 +102,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 8;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 			{
@@ -123,6 +127,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 10;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
 			{
@@ -147,7 +152,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 12;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F"];
 						hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
-
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall"; {
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
@@ -171,6 +176,7 @@ if (isNil "_EVOrank") then {
 			bon_max_units_allowed = 14;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F","B_ghillie_lsh_F","B_Recon_Sharpshooter_F","B_HeavyGunner_F","B_recon_JTAC_F","B_recon_M_F","B_recon_medic_F","B_recon_exp_F","B_recon_LAT_F","B_recon_F"];
 			hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
+			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall"; {
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");

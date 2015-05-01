@@ -117,7 +117,7 @@ class Params
 		title = "R3F Logistics";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class killNotificationParam {
 		title = "Visible Kill Notifications";
@@ -306,7 +306,7 @@ class CfgNotifications
 		description = "%2";
 		priority = 1;
 	};
-		class PointsAdded
+	class PointsAdded
 	{
 		title = "POINTS ADDED";
 		iconText = "+%2";
