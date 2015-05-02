@@ -3,7 +3,7 @@ private ["_profileSessionID","_lastPos","_lastLoadout","_score","_mus","_amb","_
 
 waitUntil {!isNull player};
 _lastPos = [];
-
+[hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 _profileSessionID = profileNamespace getVariable "EVO_sessionID";
 if (isNil "_profileSessionID") then {
 	_profileSessionID = EVO_sessionID;
@@ -22,6 +22,7 @@ if (isNil "_profileSessionID") then {
 		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
 		systemChat "Setting player loadout...";
 		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
+		loadout = _lastLoadout;
 	} else {
 		_profileSessionID = EVO_sessionID;
 		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];

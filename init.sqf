@@ -130,7 +130,7 @@ if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 _amb = [] call EVO_fnc_amb;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
-	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+	//loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	while {alive player} do {
 		waitUntil {player distance spawnBuilding < 25};
 	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
