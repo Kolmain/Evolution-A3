@@ -175,6 +175,7 @@ class CfgFunctions
 			class rearm {};
 			class buildMagazineArray {};
 			class buildAmmoCrate {};
+			class newTargetTasks {};
 		};
 	};
 };

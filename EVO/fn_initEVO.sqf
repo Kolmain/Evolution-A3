@@ -48,6 +48,8 @@ armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 CROSSROADS = [West,"HQ"];
 markerCounter = 0;
 "opforair" setMarkerAlpha 0;
+"counter" setMarkerAlpha 0;
+"counter_1" setMarkerAlpha 0;
 currentSideMission = "none";
 currentSideMissionMarker = "nil";
 availableSideMissions = [];

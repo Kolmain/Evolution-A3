@@ -86,6 +86,8 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 	};
 	if (!isDedicated) then {
 	//client
+		"counter" setMarkerAlpha 1;
+		"counter_1" setMarkerAlpha 1;
 		baseDefTask = player createSimpleTask ["Defend NATO Staging Base"];
 		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";
 		baseDefTask setTaskState "Created";
@@ -106,6 +108,8 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
+			"counter" setMarkerAlpha 0;
+			"counter_1" setMarkerAlpha 0;
 		};
 	};
 },"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
