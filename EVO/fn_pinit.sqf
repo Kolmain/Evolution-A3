@@ -9,7 +9,7 @@ if (isMultiplayer) Then {
 	}
 };
 player setVariable ["EVO_score", _score, true];
-
+handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 
 
 //_brief = [] execVM "briefing.sqf";
