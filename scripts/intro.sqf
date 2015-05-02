@@ -13,4 +13,5 @@
         ]
     ] call BIS_fnc_establishingShot;
 
+intro = false;
 

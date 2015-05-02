@@ -293,6 +293,7 @@ _sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_
 playSound _sound;
 [[[], {
 	if (!isServer || !isMultiplayer) then {
+		waitUntil {!intro};
 		_tskName = format ["Clear %1", currentTargetName];
 		attackTask = player createSimpleTask [_tskName];
 		attackTask setTaskState "Created";
