@@ -20,8 +20,8 @@ rank3 = 60;
 rank4 = 100;
 rank5 = 150;
 rank6 = 200;
-rank1vehicles = ["b_boat_transport_01_f","b_g_boat_transport_01_f","b_mrap_01_f","b_truck_01_transport_f","nonsteerable_parachute_f","steerable_parachute_f"];
-rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f"];
+rank1vehicles = ["b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
+rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
 rank3vehicles = ["b_heli_light_01_armed_f","b_heli_transport_01_f","b_heli_transport_01_camo_f","b_mrap_01_gmg_f","b_apc_wheeled_01_cannon_f"];
 rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_armed_01_minigun_f"];
 rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
@@ -37,7 +37,92 @@ rank4weapons = ["arifle_TRG21_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black
 rank5weapons = ["arifle_TRG21_GL_F","hgun_ACPC2_snds_F","SMG_02_F","arifle_MXM_Black_F"];
 rank6weapons = ["arifle_Mk20_plain_F","srifle_DMR_01_SOS_F","srifle_EBR_DMS_F"];
 rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LRPS_F","srifle_LRR_LRPS_F"];
+//Lists of items to include
+	availableHeadgear = [
+	"H_HelmetB",
+	"H_HelmetB_camo",
+	"H_HelmetB_paint",
+	"H_HelmetB_light",
+	"H_HelmetSpecB",
+	"H_Booniehat_mcamo",
+	"H_Booniehat_khk_hs",
+	"H_MilCap_mcamo",
+	"H_Cap_tan_specops_US",
+	"H_Cap_khaki_specops_UK",
+	"H_Cap_headphones",
+	"H_Bandanna_mcamo",
+	"H_Bandanna_khk_hs",
+	"H_Shemag_khk",
+	"H_ShemagOpen_khk",
+	"H_Watchcap_blk",
+	"H_PilotHelmetHeli_B",
+	"H_CrewHelmetHeli_B",
+	"H_PilotHelmetFighter_B",
+	"H_HelmetCrew_B"
+	];
 
+	availableGoggles = [
+	"G_Combat",
+	"G_Lowprofile",
+	"G_Shades_Black",
+	"G_Shades_Blue",
+	"G_Shades_Green",
+	"G_Shades_Red",
+	"G_Sport_Blackred",
+	"G_Sport_Blackyellow",
+	"G_Squares_Tinted",
+	"G_Tactical_Black",
+	"G_Tactical_Clear",
+	"G_Bandanna_blk"
+	];
+
+	availableUniforms = [
+	"U_B_CombatUniform_mcam",
+	"U_B_CombatUniform_mcam_tshirt",
+	"U_B_CombatUniform_mcam_vest",
+	"U_B_HeliPilotCoveralls",
+	"U_B_CTRG_1",
+	"U_B_CTRG_2",
+	"U_B_CTRG_3"
+	];
+
+	availableVests = [
+	"V_BandollierB_khk",
+	"V_BandollierB_blk",
+	"V_PlateCarrier1_rgr",
+	"V_PlateCarrier2_rgr",
+	"V_PlateCarrierGL_rgr",
+	"V_PlateCarrierSpec_rgr",
+	"V_PlateCarrierL_CTRG",
+	"V_PlateCarrierH_CTRG"
+	];
+
+	availableItems = [
+	"ItemWatch",
+	"ItemCompass",
+	"ItemGPS",
+	"ItemRadio",
+	"ItemMap",
+	"MineDetector",
+	"Binocular",
+	"NVGoggles",
+	"FirstAidKit",
+	"Medikit",
+	"ToolKit"
+	];
+
+	availableBackpacks = [
+	"B_AssaultPack_rgr",
+	"B_AssaultPack_mcamo",
+	"B_Kitbag_rgr",
+	"B_Kitbag_mcamo",
+	"B_TacticalPack_blk",
+	"B_TacticalPack_mcamo"
+	];
+
+	availableWeapons = [];
+
+	availableMagazines = [];
 
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
