@@ -8,7 +8,7 @@ _veh addEventHandler ["Killed", {
 		_vehicle = _this select 0;
 		_killer = _this select 1;
 		_mhq = false;
-		if (_vehicle == MHQ) then {_mhq = true};
+		if (_vehicle == MHQ) exitWith {[_vehicle] call EVO_fnc_basicRespawn};
 		_classname = typeOf _vehicle;
 		_dir = getDir _vehicle;
 		_pos = getPosASL _vehicle;
