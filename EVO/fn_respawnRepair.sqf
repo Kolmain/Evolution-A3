@@ -51,13 +51,13 @@ _veh addEventHandler ["Killed", {
 		handle = [_newVehicle] spawn {
 			_newVehicle = _this select 0;
 			_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _newVehicle) >> "displayName");
-			_markerName = format ["damaged_%1", markerCounter];
+			_markerName = format ["damaged_%1_%2", _displayName, markerCounter];
 			_vehMarker = createMarker [_markerName, position _newVehicle ];
 			_markerName setMarkerShape "ICON";
 			_markerName setMarkerType "b_maint";
 			_markerName setMarkerColor "ColorWEST";
 			_markerName setMarkerPos (GetPos _newVehicle);
-			_markerName setMarkerText format ["Damaged %1", _displayName];
+			_markerName setMarkerText format ["Wrecked %1", _displayName];
 			markerCounter = markerCounter + 1;
 			waitUntil {canMove _newVehicle || !alive _newVehicle};
 			deleteMarker _markerName;
@@ -66,18 +66,18 @@ _veh addEventHandler ["Killed", {
 }];
 
 while {alive _veh} do {
-				if (!canMove _veh) then {
-					_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
-					_markerName = format ["immobil_%1", markerCounter];
-					_vehMarker = createMarker [_markerName, position _veh ];
-					_markerName setMarkerShape "ICON";
-					_markerName setMarkerType "b_maint";
-					_markerName setMarkerColor "ColorWEST";
-					_markerName setMarkerPos (GetPos _veh);
-					_markerName setMarkerText format ["Immobilized %1", _displayName];
-					markerCounter = markerCounter + 1;
-					waitUntil {canMove _veh || !alive _veh};
-					deleteMarker _markerName;
-				};
-				sleep 15;
-			};
+	if (!canMove _veh) then {
+		_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
+		_markerName = format ["immobil_%1", markerCounter];
+		_vehMarker = createMarker [_markerName, position _veh ];
+		_markerName setMarkerShape "ICON";
+		_markerName setMarkerType "b_maint";
+		_markerName setMarkerColor "ColorWEST";
+		_markerName setMarkerPos (GetPos _veh);
+		_markerName setMarkerText format ["Immobilized %1", _displayName];
+		markerCounter = markerCounter + 1;
+		waitUntil {canMove _veh || !alive _veh};
+		deleteMarker _markerName;
+	};
+	sleep 15;
+};
