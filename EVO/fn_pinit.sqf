@@ -2,6 +2,7 @@ private ["_profileSessionID","_lastPos","_lastLoadout","_score","_mus","_amb","_
 
 
 waitUntil {!isNull player};
+0 = [] execVM "scripts\player_markers.sqf";
 _lastPos = [];
 [hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 _profileSessionID = profileNamespace getVariable "EVO_sessionID";
@@ -51,18 +52,13 @@ player setVariable ["EVO_score", _score, true];
 
 //_brief = [] execVM "briefing.sqf";
 
-player addaction ["Side Mission Selection","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 25 && currentSideMission == 'none'"];
-player addaction ["Recruit Infantry","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25 && ((leader group player) == player)"];
-player addaction ["HALO Insertion","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+player addaction ["<t color='#CCCC00'>Select Side Mission</t>","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 25 && currentSideMission == 'none'"];
+player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25 && ((leader group player) == player)"];
+player addaction ["<t color='#CCCC00'>HALO Drop</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
 	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 25"];
-} else {
-	if (!isNil "hqbox") then {
-		deleteVehicle hqbox;
-	};
-	hqbox = "CargoNet_01_box_F" createVehicleLocal (getMarkerPos "ammobox");
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
@@ -76,12 +72,14 @@ if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
 };
 
 if (typeOf player == "B_medic_F") then {
-	player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
+	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
+	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","(player getVariable 'EVO_rank' != 'PRIVATE' && player distance spawnBuilding > 800)"];
 	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 if (typeOf player == "B_soldier_repair_F") then {
-	player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
+	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
+		player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","(player getVariable 'EVO_rank' != 'PRIVATE' && player distance spawnBuilding > 800)"];
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
@@ -257,7 +255,6 @@ handle = [] spawn {
 
 	availableMagazines = [];
 
-	waitUntil {alive hqbox};
 	while {alive player} do {
 		if (("rankVehicles" call BIS_fnc_getParamValue) == 1) then {
 			handle = [player] call EVO_fnc_vehicleCheck;

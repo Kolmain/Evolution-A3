@@ -39,6 +39,12 @@ switch (_EVOrank) do {
     };
 };
 
+
+[hqbox, ([hqbox] call BIS_fnc_getVirtualWeaponCargo) , false] call BIS_fnc_removeVirtualWeaponCargo;
+[hqbox, ([hqbox] call BIS_fnc_getVirtualMagazineCargo) , false] call BIS_fnc_removeVirtualMagazineCargo;
+[hqbox, ([hqbox] call BIS_fnc_getVirtualBackpackCargo) , false] call BIS_fnc_removeVirtualBackpackCargo;
+[hqbox, ([hqbox] call BIS_fnc_getVirtualItemCargo) , false] call BIS_fnc_removeVirtualItemCargo;
+
 {
 	hqbox addMagazineCargo [_x, 100];
 } forEach availableMagazines;
@@ -47,11 +53,10 @@ switch (_EVOrank) do {
 	hqbox addWeaponCargo [_x, 5];
 } forEach availableWeapons;
 
-[hqbox, (availableWeapons)] call BIS_fnc_addVirtualWeaponCargo;
+[hqbox, (availableWeapons), false, true] call BIS_fnc_addVirtualWeaponCargo;
 
-[hqbox, (availableBackpacks)] call BIS_fnc_addVirtualBackpackCargo;
+[hqbox, (availableBackpacks), false, true] call BIS_fnc_addVirtualBackpackCargo;
 
-[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests)] call BIS_fnc_addVirtualItemCargo;
+[hqbox, (availableHeadgear + availableGoggles + availableItems + availableUniforms + availableVests), false, true] call BIS_fnc_addVirtualItemCargo;
 
-[hqbox, (availableMagazines)] call BIS_fnc_addVirtualMagazineCargo;
-
+[hqbox, (availableMagazines), false, true] call BIS_fnc_addVirtualMagazineCargo;

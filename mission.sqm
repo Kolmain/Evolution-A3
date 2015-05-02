@@ -39,7 +39,8 @@ class Mission
 		"A3_Structures_F_Mil_BagBunker",
 		"A3_Modules_F",
 		"A3_Characters_F_Mark",
-		"A3_Modules_F_Multiplayer"
+		"A3_Modules_F_Multiplayer",
+		"A3_Supplies_F_Heli_CargoNets"
 	};
 	addOnsAuto[]=
 	{
@@ -71,6 +72,7 @@ class Mission
 		"A3_Armor_F_Slammer",
 		"A3_Air_F_EPC_Plane_CAS_01",
 		"A3_Air_F_Beta_Heli_Attack_01",
+		"A3_Supplies_F_Heli_CargoNets",
 		"a3_map_altis"
 	};
 	randomSeed=13408;
@@ -787,7 +789,7 @@ class Mission
 	};
 	class Vehicles
 	{
-		items=183;
+		items=184;
 		class Item0
 		{
 			position[]={20833.1,4.1961699e-005,7168.1499};
@@ -2609,6 +2611,16 @@ class Mission
 			leader=1;
 			skill=0.5;
 			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+		};
+		class Item183
+		{
+			position[]={20792.605,29.114788,7209.772};
+			azimut=-79.494591;
+			id=216;
+			side="EMPTY";
+			vehicle="CargoNet_01_box_F";
+			skill=0.60000002;
+			text="hqbox";
 		};
 	};
 	class Markers
