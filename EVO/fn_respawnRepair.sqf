@@ -2,22 +2,7 @@ private ["_veh","_displayName","_markerName","_vehMarker","_vehicle","_killer","
 
 
 _veh = _this select 0;
-while {alive _veh} do {
-				if (!canMove _veh) then {
-					_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
-					_markerName = format ["immobil_%1", markerCounter];
-					_vehMarker = createMarker [_markerName, position _veh ];
-					_markerName setMarkerShape "ICON";
-					_markerName setMarkerType "b_maint";
-					_markerName setMarkerColor "ColorWEST";
-					_markerName setMarkerPos (GetPos _veh);
-					_markerName setMarkerText format ["Immobilized %1", _displayName];
-					markerCounter = markerCounter + 1;
-					waitUntil {canMove _veh || !alive _veh};
-					deleteMarker _markerName;
-				};
-				sleep 15;
-			};
+
 _veh addEventHandler ["Killed", {
 	handle = _this spawn {
 		_vehicle = _this select 0;
@@ -49,7 +34,7 @@ _veh addEventHandler ["Killed", {
 			_x setPos _deadExitPos;
 			};
 		} forEach (crew _veh);
-		sleep 10;
+		sleep 120;
 		deleteVehicle _vehicle;
 		sleep 0.5;
 		_newVehicle = _classname createVehicle _pos;
@@ -79,3 +64,20 @@ _veh addEventHandler ["Killed", {
 		};
 	};
 }];
+
+while {alive _veh} do {
+				if (!canMove _veh) then {
+					_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _veh) >> "displayName");
+					_markerName = format ["immobil_%1", markerCounter];
+					_vehMarker = createMarker [_markerName, position _veh ];
+					_markerName setMarkerShape "ICON";
+					_markerName setMarkerType "b_maint";
+					_markerName setMarkerColor "ColorWEST";
+					_markerName setMarkerPos (GetPos _veh);
+					_markerName setMarkerText format ["Immobilized %1", _displayName];
+					markerCounter = markerCounter + 1;
+					waitUntil {canMove _veh || !alive _veh};
+					deleteMarker _markerName;
+				};
+				sleep 15;
+			};
