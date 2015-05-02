@@ -10,7 +10,7 @@ bon_recruit_queue = [];
 //Select false if you want to use a a static unit list
 //You can customize static lists in recruitable_units_static.sqf
 bon_dynamic_list = false;
-
+/*
 if(isServer) then{
 	"bon_recruit_newunit" addPublicVariableEventHandler {
 		_newunit = _this select 1;
@@ -19,5 +19,5 @@ if(isServer) then{
 };
 if(isDedicated) exitWith{};
 
-
+*/
 // Client stuff...

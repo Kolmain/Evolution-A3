@@ -207,12 +207,14 @@ if (isDedicated && isMultiplayer) exitWith {};
 //Client
 intro = true;
 nul = player execVM "scripts\intro.sqf";
+0 = [] execVM "scripts\player_markers.sqf";
 //WaitUntil{scriptDone _intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
-_amb = [] call EVO_fnc_amb;
+_amb = [] spawn EVO_fnc_amb;
+[hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
 	//loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
@@ -223,4 +225,44 @@ handle = [] spawn {
 		systemChat "Loadout saved...";
 	};
 };
+_lastPos = [];
+_profileSessionID = profileNamespace getVariable "EVO_sessionID";
+if (isNil "_profileSessionID") then {
+	_profileSessionID = EVO_sessionID;
+	profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
+} else {
+	if (_profileSessionID == EVO_sessionID) then {
+		systemChat "PERSISTENT EVOLUTION DETECTED.";
+		systemChat "Moving player to last location...";
+		_lastPos = profileNamespace getVariable "EVO_lastPos";
+		if (isNIl "_lastPos") then {
+			_lastPos = getPos player;
+			 profileNamespace setVariable ["EVO_lastPos", _lastPos];
+		};
+		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
+		player setPos _lastPos;
+		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
+		systemChat "Setting player loadout...";
+		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
+		loadout = _lastLoadout;
+	} else {
+		_profileSessionID = EVO_sessionID;
+		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
+	};
+};
+
+if (!isNil "loadout") then {
+	handle = [player, loadout] execVM "scripts\setloadout.sqf";
+} else {
+	handle = [player,
+	[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";
+	loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+};
+_index = player addMPEventHandler ["MPRespawn", {
+ 	_newPlayer = _this select 0;
+ 	_oldPlayer = _this select 1;
+ 	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
+ 	_nil = [] spawn EVO_fnc_pinit;
+}];
+
 if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};
