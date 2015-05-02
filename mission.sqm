@@ -2625,7 +2625,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=8;
+		items=5;
 		class Item0
 		{
 			position[]={26418.945,-185.97,5467.5107};
@@ -2647,35 +2647,11 @@ class Mission
 		};
 		class Item2
 		{
-			position[]={20799.906,29.108265,7215.5215};
-			name="mrkr_1";
-			text="Medical";
-			type="b_med";
-			colorName="ColorWEST";
-		};
-		class Item3
-		{
-			position[]={20791.834,27.969902,7265.4131};
-			name="mrkr_3";
-			text="Maintenance";
-			type="b_maint";
-			colorName="ColorWEST";
-		};
-		class Item4
-		{
-			position[]={20830.148,29.371996,7173.6973};
-			name="mrkr_3_1";
-			text="Huron Containers";
-			type="mil_pickup";
-			colorName="ColorWEST";
-		};
-		class Item5
-		{
 			position[]={20793.043,29.108887,7210.1401};
 			name="ammobox";
 			type="Empty";
 		};
-		class Item6
+		class Item3
 		{
 			position[]={20805.525,35.536366,6795.0591};
 			name="counter";
@@ -2685,7 +2661,7 @@ class Mission
 			b=2;
 			angle=3;
 		};
-		class Item7
+		class Item4
 		{
 			position[]={21611.893,15.228076,7567.0405};
 			name="counter_1";
