@@ -218,7 +218,7 @@ _amb = [] spawn EVO_fnc_amb;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
 	//loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-	while {alive player} do {
+	while {true} do {
 		waitUntil {player distance spawnBuilding < 25};
 	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
 		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
@@ -262,6 +262,9 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;
  	_oldPlayer = _this select 1;
  	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
+ 	if (_newPlayer distance spawnBuilding < 25) then {
+ 		handle = [player, loadout] execVM "scripts\setloadout.sqf";
+ 	};
  	_nil = [] spawn EVO_fnc_pinit;
 }];
 

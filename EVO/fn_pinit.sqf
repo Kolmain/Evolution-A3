@@ -9,7 +9,7 @@ if (isMultiplayer) Then {
 	}
 };
 player setVariable ["EVO_score", _score, true];
-handle = [_player, loadout] execVM "scripts\setloadout.sqf";
+//handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 
 
 //_brief = [] execVM "briefing.sqf";
@@ -116,11 +116,11 @@ _ret = [] spawn {
 };
 
 _handleHealID = player addEventHandler ["HandleHeal",{
-	[[[_this select 1], {
-		if (player == (_this select 0)) then {
-			_score = player getVariable "KOL_score";
+	[[[_this select 1, _this select 0], {
+		if (player == (_this select 0) && player != _this select 1) then {
+			_score = player getVariable "EVO_score";
 			_score = _score + 1;
-			player setVariable ["KOL_score", _score, true];
+			player setVariable ["EVO_score", _score, true];
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
 			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
 			[player, 1] call BIS_fnc_addScore;
