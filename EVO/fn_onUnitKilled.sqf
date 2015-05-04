@@ -10,7 +10,8 @@ _notify = true;
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 };
-if (isPlayer _killer) then {
+if (isPlayer _killer || isPlayer (leader group _killer)) then {
+	if (!isPlayer _killer) then {_killer == leader group _killer};
 	if (_killer == player) then {
 		if ((side _killed) != (side _killer)) then {
 			_vis = lineIntersects [eyePos player, eyePos _killed, player, _killed];
@@ -29,7 +30,9 @@ if (isPlayer _killer) then {
 						};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+							[[[_string, _scoreToAdd], {
+								if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -48,7 +51,9 @@ if (isPlayer _killer) then {
 						};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+							[[[_string, _scoreToAdd], {
+								if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -67,7 +72,9 @@ if (isPlayer _killer) then {
 						};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+							[[[_string, _scoreToAdd], {
+								if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -85,7 +92,9 @@ if (isPlayer _killer) then {
 						};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+							[[[_string, _scoreToAdd], {
+								if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -104,7 +113,9 @@ if (isPlayer _killer) then {
 						};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+							[[[_string, _scoreToAdd], {
+								if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -113,7 +124,9 @@ if (isPlayer _killer) then {
 					_scoreToAdd = -5;
 					_score = _score - 5;
 					_killer setVariable ["EVO_score", _score, true];
-					["PointsRemoved",["You killed the OPFOR Officer.", 5]] call BIS_fnc_showNotification;
+					[[[], {
+						if (player == _killer) then {["PointsRemoved",["You killed the OPFOR Officer.", 5]] call BIS_fnc_showNotification};
+					}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 				};
 				if (typeOf _killed == "Land_Radar") then {
 					//support car
@@ -121,10 +134,14 @@ if (isPlayer _killer) then {
 					_score = _score + 8;
 					_killer setVariable ["EVO_score", _score, true];
 					_string = format["You destroyed the %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"))];
-					["PointsAdded",[_string, _scoreToAdd]] call BIS_fnc_showNotification;
+					[[[_string, _scoreToAdd], {
+							if (player == _killer) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+					}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 				};
 		} else {
-			["PointsRemoved",["Friendly Fire Kill", 7]] call BIS_fnc_showNotification;
+			[[[_string, _scoreToAdd], {
+				if (player == _killer) then {["PointsRemoved",["Friendly Fire Kill", 7]] call BIS_fnc_showNotification};
+			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 			_score = _score - 7;
 			_scoreToAdd = -7;
 			_killer setVariable ["EVO_score", _score, true];

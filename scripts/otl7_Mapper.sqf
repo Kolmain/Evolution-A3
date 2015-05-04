@@ -1,4 +1,5 @@
 scriptName "otl7_Mapper.sqf";
+if (!isServer) exitWith {};
 /*
 	Author: Joris-Jan van 't Land, modified for ArmA3: Outlawz7
 
@@ -7,7 +8,7 @@ scriptName "otl7_Mapper.sqf";
 
 	Parameter(s):
 	_this select 0: position of the template - Array [X, Y, Z]
-	_this select 1: azimuth of the template in degrees - Number 
+	_this select 1: azimuth of the template in degrees - Number
 	_this select 2: object template script name - script
 	(optional) _this select 3: set vector up - boolean
 
@@ -58,11 +59,11 @@ for "_i" from 0 to ((count _objs) - 1) do
 		_type = _obj select 0;
 		_relPos = _obj select 1;
 		_azimuth = _obj select 2;
-		
+
 		//Optionally map fuel and damage for backwards compatibility.
 		if ((count _obj) > 3) then {_fuel = _obj select 3};
 		if ((count _obj) > 4) then {_damage = _obj select 4};
-	
+
 		//Rotate the relative position using a rotation matrix.
 		private ["_rotMatrix", "_newRelPos", "_newPos"];
 		_rotMatrix =
@@ -71,23 +72,23 @@ for "_i" from 0 to ((count _objs) - 1) do
 			[-(sin _azi), cos _azi]
 		];
 		_newRelPos = [_rotMatrix, _relPos] call _multiplyMatrixFunc;
-	
+
 		//Backwards compatability causes for height to be optional.
 		private ["_z"];
 		if ((count _relPos) > 2) then {_z = _relPos select 2} else {_z = 0};
-	
+
 		_newPos = [_posX + (_newRelPos select 0), _posY + (_newRelPos select 1), _z];
-	
+
 		//Create the object and make sure it's in the correct location.
 		_newObj = _type createVehicle _newPos;
 		_newObj setDir (_azi + _azimuth);
 		_newObj setPos _newPos;
 		if (_setVector) then {_newObj setVectorUp [0,0,1];};
-		
+
 		//If fuel and damage were grabbed, map them.
 		if (!isNil "_fuel") then {_newObj setFuel _fuel};
 		if (!isNil "_damage") then {_newObj setDamage _damage};
-	
+
 		_newObjs = _newObjs + [_newObj];
 
 };

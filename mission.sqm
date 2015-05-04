@@ -130,7 +130,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={23448.135,3.1900001,18351.209};
+					position[]={24512.74,3.1469409,19275.945};
 					id=1;
 					side="LOGIC";
 					vehicle="HeadlessClient_F";
@@ -1142,7 +1142,7 @@ class Mission
 		};
 		class Item36
 		{
-			position[]={20788.801,-0.0046653701,7207.1499};
+			position[]={20774.217,29.22282,7214.2466};
 			azimut=0.0033613399;
 			offsetY=-0.0046672798;
 			id=69;
@@ -1269,7 +1269,7 @@ class Mission
 		};
 		class Item49
 		{
-			position[]={20791.4,0,7209.98};
+			position[]={20791.365,29.133375,7210.0566};
 			azimut=0.00162955;
 			id=82;
 			side="EMPTY";
@@ -2614,7 +2614,7 @@ class Mission
 		};
 		class Item183
 		{
-			position[]={20792.605,29.114788,7209.772};
+			position[]={20774.723,29.202547,7216.1313};
 			azimut=-79.494591;
 			id=216;
 			side="EMPTY";
@@ -2647,7 +2647,7 @@ class Mission
 		};
 		class Item2
 		{
-			position[]={20793.043,29.108887,7210.1401};
+			position[]={20774.813,29.201462,7215.9575};
 			name="ammobox";
 			type="Empty";
 		};

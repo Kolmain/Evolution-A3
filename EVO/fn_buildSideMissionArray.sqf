@@ -2,6 +2,7 @@ private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationA
 
 
 currentSideMission = "none";
+publicVariable "currentSideMission";
 //build AA hunt
 //as long as there are AAA batteries
 _options = [];
@@ -75,3 +76,5 @@ if (_bool) then {
 		[getPos _obj2, EVO_fnc_sm_convoy, "Ambush Convoy End", _descrip,"",_img,1,[]]
 	];
 };
+
+publicVariable "availableSideMissions";

@@ -127,7 +127,6 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
-HCconnected = false;
 //HC_uid = getPlayerUID headlessClient;
 
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
@@ -149,6 +148,10 @@ if (!isMultiplayer) then {
 	} foreach _nearUnits;
 };
 HCconnected = false;
+if (!(isServer) && !(hasInterface)) then {
+	HCconnected = true;
+	publicVariable "HCconnected";
+};
 /*
 if (HC_uid == getPlayerUID server) then {
 	HC_uid = nil;
@@ -159,8 +162,7 @@ if (HC_uid == getPlayerUID server) then {
 	publicVariable "HCconnected";
 };
 */
-if (isServer) then
-{
+
 	//[] spawn EVO_fnc_initEVO;
 	/*
 	onplayerconnected "
@@ -197,13 +199,9 @@ if (isServer) then
 	};
 	";
 	*/
-};
 
 
-
-if (isDedicated && isMultiplayer) exitWith {};
-
-
+if (isDedicated || !hasInterface) exitWith {};
 //Client
 intro = true;
 nul = player execVM "scripts\intro.sqf";
@@ -219,10 +217,12 @@ recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
 	//loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	while {true} do {
-		waitUntil {player distance spawnBuilding < 25};
-	   	waitUntil {player distance spawnBuilding > 25 && isTouchingGround player && vehicle player == player};
-		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-		systemChat "Loadout saved...";
+		waitUntil {player distance hqbox < 5};
+	   	waitUntil {player distance hqbox > 5};
+	   	if (isTouchingGround player) then {
+			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+			systemChat "Loadout saved...";
+		};
 	};
 };
 _lastPos = [];
@@ -238,6 +238,7 @@ if (isNil "_profileSessionID") then {
 		if (isNIl "_lastPos") then {
 			_lastPos = getPos player;
 			 profileNamespace setVariable ["EVO_lastPos", _lastPos];
+			saveProfileNamespace;
 		};
 		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
 		player setPos _lastPos;
@@ -248,6 +249,7 @@ if (isNil "_profileSessionID") then {
 	} else {
 		_profileSessionID = EVO_sessionID;
 		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
+		saveProfileNamespace;
 	};
 };
 
@@ -263,8 +265,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_oldPlayer = _this select 1;
  	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
  	_nil = [] spawn EVO_fnc_pinit;
- 	WaitUntil {_newPlayer distance spawnBuilding < 25};
- 	handle = [player, loadout] execVM "scripts\setloadout.sqf";
+ 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {handle = [player, loadout] execVM "scripts\setloadout.sqf"};
 }];
 
 if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};

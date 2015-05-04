@@ -2,9 +2,11 @@ private ["_currentTarget","_targetType","_currentTargetMarker","_aoSize","_x1","
 
 
 currentTargetName = text currentTarget;
+publicVariable "currentTargetName";
 _currentTarget = currentTarget;
 _targetType = type currentTarget;
 currentTargetMarkerName = format ["%1_ao", currentTargetName];
+publicVariable "currentTargetMarkerName";
 _currentTargetMarker = createMarker [currentTargetMarkerName, position _currentTarget];
 currentTargetMarkerName setMarkerShape "ELLIPSE";
 currentTargetMarkerName setMarkerBrush "Border";
@@ -16,6 +18,7 @@ currentTargetMarkerName setMarkerPos (position currentTarget);
 _x1 = ((size currentTarget) select 0) / 1000;
 _y1 = ((size currentTarget) select 1) / 1000;
 currentTargetSqkm = (_x1 * _y1);
+publicVariable "currentTargetSqkm";
 "opforair" setMarkerPos (getMarkerPos currentTargetMarkerName);
 
 _towerClass = "Land_Communication_F";
@@ -29,10 +32,12 @@ while{ count _spawnPos < 1 } do
 	_max_distance = _max_distance + 50;
 };
 currentTargetRT = _towerClass createVehicle _spawnPos;
+publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
+publicVariable "RTonline";
 
 
 _center = [ getMarkerPos currentTargetMarkerName, (600 + random 500) , random 360 ] call BIS_fnc_relPos;
@@ -126,6 +131,7 @@ while{ count _spawnPos < 1 } do
 };
 _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
+publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable officerAlive;}];
 _officer = currentTargetOF;
 _pos = (getPos _officer);
@@ -197,14 +203,13 @@ for "_i" from 1 to paraSquads do {
 		    	_x assignAsCargo _heli;
 		    	_x moveInCargo _heli;
 		    } forEach units _grp;
-		    //_heli doMove (getMarkerPos currentTargetMarkerName);
-		    _wp = _heliGrp addWaypoint [getMarkerPos currentTargetMarkerName, 0];
+		    _heli doMove (getMarkerPos currentTargetMarkerName);
+		    //_wp = _heliGrp addWaypoint [getMarkerPos currentTargetMarkerName, 0];
 		    _heli flyInHeight 150;
 		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
-		    handle = [_heli] call EVO_fnc_paradrop;
-		    sleep 5;
-		    //_heli doMove (getPos server);
-		    _wp = _heliGrp addWaypoint [getPos server, 0];
+		    handle = [_heli] spawn EVO_fnc_paradrop;
+		    _heli doMove (getPos server);
+		    //_wp = _heliGrp addWaypoint [getPos server, 0];
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
 		    	waitUntil {(_heli distance server) < 1000};
@@ -363,8 +368,11 @@ deleteMarker currentTargetMarkerName;
 sleep random 30;
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
+publicVariable "targetCounter";
 currentTarget = targetLocations select targetCounter;
+publicVariable "currentTarget";
 currentTargetName = text currentTarget;
+publicVariable "currentTargetName";
 RTonline = true;
 publicVariable "RTonline";
 handle = [] spawn EVO_fnc_initTarget;
