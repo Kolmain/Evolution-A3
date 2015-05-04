@@ -237,7 +237,7 @@ if (isNil "_profileSessionID") then {
 		_lastPos = profileNamespace getVariable "EVO_lastPos";
 		if (isNIl "_lastPos") then {
 			_lastPos = getPos player;
-			 profileNamespace setVariable ["EVO_lastPos", _lastPos];
+			profileNamespace setVariable ["EVO_lastPos", _lastPos];
 			saveProfileNamespace;
 		};
 		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
@@ -264,6 +264,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;
  	_oldPlayer = _this select 1;
  	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
+ 	_newPlayer setUnitRank (_oldPlayer getVariable "EVOrank");
  	_nil = [] spawn EVO_fnc_pinit;
  	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {handle = [player, loadout] execVM "scripts\setloadout.sqf"};
 }];
