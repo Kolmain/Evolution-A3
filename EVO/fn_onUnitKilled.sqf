@@ -1,7 +1,4 @@
 private ["_killed","_killer","_scoreToAdd","_score","_notify","_vis","_displayName","_fLetter","_pre","_string"];
-
-
-
 _killed = _this select 0;
 _killer = _this select 1;
 _scoreToAdd = 0;
@@ -12,9 +9,9 @@ if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 };
 if (isPlayer _killer || isPlayer (leader group _killer)) then {
 	if (!isPlayer _killer) then {_killer == leader group _killer};
-	if (_killer == player) then {
+	if (true) then {
 		if ((side _killed) != (side _killer)) then {
-			_vis = lineIntersects [eyePos player, eyePos _killed, player, _killed];
+			_vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
 				if (_killed isKindOf "Man" && typeOf _killed != "O_officer_F") then {
 					//npc kill
 					_score = _score + 1;
