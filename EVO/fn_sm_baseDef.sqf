@@ -22,9 +22,13 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			};
 			{
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-				_x addEventHandler ["Killed", {attackingUnits = attackingUnits - 1}];
+				_x addEventHandler ["Killed", {
+					attackingUnits = attackingUnits - 1;
+					publicVariable "attackingUnits";
+				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
+			publicVariable "attackingUnits";
 			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
 		};
 		for "_i" from 1 to 2 do {
@@ -37,9 +41,13 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			};
 			{
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-				_x addEventHandler ["Killed", {attackingUnits = attackingUnits - 1}];
+				_x addEventHandler ["Killed", {
+					attackingUnits = attackingUnits - 1;
+					publicVariable "attackingUnits";
+				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
+			publicVariable "attackingUnits";
 			   _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			   _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
 			   _heli = _ret select 0;

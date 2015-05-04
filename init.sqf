@@ -152,54 +152,6 @@ if (!(isServer) && !(hasInterface)) then {
 	HCconnected = true;
 	publicVariable "HCconnected";
 };
-/*
-if (HC_uid == getPlayerUID server) then {
-	HC_uid = nil;
-	HCconnected = false;
-	publicVariable "HCconnected";
-} else {
-	HCconnected = true;
-	publicVariable "HCconnected";
-};
-*/
-
-	//[] spawn EVO_fnc_initEVO;
-	/*
-	onplayerconnected "
-	if (owner headlessClient == _uid) then {
-		HC_uid = _uid;
-		publicVariable 'HC_uid';
-		HCconnected = true;
-		publicVariable 'HCconnected';
-	}
-	if (_uid == HC_uid) then {
-		{
-			if (owner _x == owner server && !isPlayer _x && side _x == EAST) then {
-				handle = [_x] EVO_fnc_sendToHC;
-				systemChat 'WARNING: Headless Client connected, sending all units to Headless Client.';
-			};
-		} forEach allUnits;
-	};
-	";
-	onPlayerDisconnected "
-	dunit = _name;
-	_mark = format[""%1mash"",dunit];
-	deleteMarker _mark;
-	_mark = format[""%1farp"",dunit];
-	deleteMarker _mark;
-	if (_uid == HC_uid) then {
-		HCconnected = false;
-		publicVariable 'HCconnected';
-		{
-			if (owner _x == owner headlessClient && !isPlayer _x) then {
-				handle = [_x] EVO_fnc_sendToServer;
-				systemChat 'WARNING: Headless Client lost connection, sending all units back to Server.';
-			};
-		} forEach allUnits;
-	};
-	";
-	*/
-
 
 if (isDedicated || !hasInterface) exitWith {};
 //Client

@@ -18,7 +18,7 @@
 if (!isServer && hasInterface) exitWith {};
 private ["_vehicle","_chuteheight","_paras","_dir"];
 _vehicle = _this select 0;
-_chuteheight = if ( count _this > 1 ) then { _this select 1 } else { 100 };
+_chuteheight = 150;
 _paras = assignedcargo _vehicle;
 _dir = direction _vehicle;
 [_paras] allowGetIn false;
