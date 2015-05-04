@@ -45,7 +45,6 @@ paraSquads = 1;
 infSquads = (("infSquadsParam" call BIS_fnc_getParamValue) * 2);
 mechSquads = ("mechSquadsParam" call BIS_fnc_getParamValue);
 armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
-CROSSROADS = [West,"HQ"];
 markerCounter = 0;
 "opforair" setMarkerAlpha 0;
 "counter" setMarkerAlpha 0;

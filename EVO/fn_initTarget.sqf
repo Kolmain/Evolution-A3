@@ -197,7 +197,7 @@ for "_i" from 1 to paraSquads do {
 				} forEach units _heliGrp;
 			};
 			{
-			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _heliGrp;
 		    {
 		    	_x assignAsCargo _heli;
@@ -208,11 +208,13 @@ for "_i" from 1 to paraSquads do {
 		    _heli flyInHeight 150;
 		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
 		    handle = [_heli] spawn EVO_fnc_paradrop;
-		    _heli doMove (getPos server);
+		    doStop _heli;
+		    waitUntil {count (assignedCargo _heli) == 0};
+		    _heli doMove _spawnPos;
 		    //_wp = _heliGrp addWaypoint [getPos server, 0];
 		    handle = [_heli] spawn {
 		    	_heli = _this select 0;
-		    	waitUntil {(_heli distance server) < 1000};
+		    	waitUntil {(_heli distance _spawnPos) < 1000};
 		    	{
 		    		deleteVehicle _x;
 		    	} forEach units group driver _heli;

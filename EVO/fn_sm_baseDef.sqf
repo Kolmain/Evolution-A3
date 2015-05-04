@@ -5,8 +5,10 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "baseDef";
 	publicVariable "currentSideMission";
-	attackingUnits = 0;
+	attackingUnits = 100;
+	publicVariable "attackingUnits";
 	if (isServer) then {
+		attackingUnits = 0;
 	//server
 		_spawnLocations = [(targetLocations select 0), (targetLocations select 1)];
 

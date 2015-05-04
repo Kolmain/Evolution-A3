@@ -48,7 +48,6 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-
 	class pRespawnPoints {
 		title = "Player Respawn Points";
 		texts[] = {"Disabled","Enabled"};
