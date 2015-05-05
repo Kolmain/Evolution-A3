@@ -8,6 +8,7 @@ handle = [] execVM "scripts\clean.sqf";
 handle = [] execVM "bon_recruit_units\init.sqf";
 if (isServer) then {
 	[] spawn EVO_fnc_initEVO;
+	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
 enableSaving [false, false];
@@ -159,6 +160,7 @@ if (isDedicated || !hasInterface) exitWith {};
 intro = true;
 nul = player execVM "scripts\intro.sqf";
 0 = [] execVM "scripts\player_markers.sqf";
+["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 //WaitUntil{scriptDone _intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
@@ -174,7 +176,9 @@ handle = [] spawn {
 	   	waitUntil {player distance hqbox > 5};
 	   	if (isTouchingGround player) then {
 			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-			systemChat "Loadout saved...";
+			profileNamespace setVariable ["EVO_loadout", loadout];
+			saveProfileNamespace;
+			systemChat "Loadout saved to profile...";
 		};
 	};
 };
@@ -219,7 +223,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
  	_newPlayer setUnitRank (_oldPlayer getVariable "EVOrank");
  	_nil = [] spawn EVO_fnc_pinit;
- 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {handle = [player, loadout] execVM "scripts\setloadout.sqf"};
+ 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf"};
 }];
 
 if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};

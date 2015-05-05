@@ -1,10 +1,12 @@
 private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUnits","_score"];
-
+if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "attackMil";
 	publicVariable "currentSideMission";
+	currentSideMissionStatus = "ip";
+	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
 	//server
 		_location = attackMilTarget;
@@ -42,6 +44,8 @@ private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUn
 				sleep 15;
 			};
 			sleep (random 15);
+			currentSideMissionStatus = "success";
+			publicVariable "currentSideMissionStatus";
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
@@ -56,7 +60,7 @@ private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUn
 		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at a military installation. Capture the military installation!";
 		handle = [] spawn {
-			waitUntil {currentSideMission == "none";};
+			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance attackMilTarget < 1000) then {
 				playsound "goodjob";
 				_score = player getVariable "EVO_score";

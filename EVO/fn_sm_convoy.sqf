@@ -1,17 +1,20 @@
 private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","_aoSize","_grp","_lastVehicle","_spawnPos","_dir","_classname","_ret","_vehicle","_road","_lastRoad","_wp","_score"];
-
+if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "convoy";
 	publicVariable "currentSideMission";
+	currentSideMissionStatus = "ip";
+	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
 	//server
 		_startLocation = convoyStart;
 		_endLocation = convoyEnd;
 
 		convoyStartMarker = format ["convoyStart_%1", markerCounter];
+		publicVariable "convoyStartMarker";
 		_startMarker = createMarker [convoyStartMarker, position _startLocation ];
 		convoyStartMarker setMarkerShape "ICON";
 		convoyStartMarker setMarkerType "mil_start";
@@ -19,8 +22,10 @@ private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","
 		convoyStartMarker setMarkerPos (position _startLocation);
 		convoyStartMarker setMarkerText "Convoy Start";
 		markerCounter = markerCounter + 1;
+		publicVariable "markerCounter";
 
 		convoyEndMarker = format ["convoyEnd_%1", markerCounter];
+		publicVariable "convoyEndMarker";
 		_startMarker = createMarker [convoyEndMarker, position _endLocation ];
 		convoyEndMarker setMarkerShape "ICON";
 		convoyEndMarker setMarkerType "mil_end";
@@ -28,10 +33,11 @@ private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","
 		convoyEndMarker setMarkerPos (position _endLocation);
 		convoyEndMarker setMarkerText "Convoy End";
 		markerCounter = markerCounter + 1;
-
+		publicVariable "markerCounter";
 
 
 		convoyStartAoMarker = format ["convoyStartAO_%1", markerCounter];
+		publicVariable "convoyStartAoMarker";
 		_currentTargetMarker = createMarker [convoyStartAoMarker, position _startLocation];
 		convoyStartAoMarker setMarkerShape "ELLIPSE";
 		convoyStartAoMarker setMarkerBrush "SOLID";
@@ -43,6 +49,7 @@ private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","
 
 
 		convoyEndAoMarker = format ["convoyEndAO_%1", markerCounter];
+		publicVariable "convoyEndAoMarker";
 		_currentTargetMarker = createMarker [convoyEndAoMarker, position _startLocation];
 		convoyEndAoMarker setMarkerShape "ELLIPSE";
 		convoyEndAoMarker setMarkerBrush "SOLID";
@@ -159,7 +166,7 @@ private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","
 		["TaskAssigned",["","Ambush Convoy"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR convoy activity. Check the map and ambush their supply route!";
 		handle = [] spawn {
-			waitUntil {currentSideMission == "none";};
+			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance (position convoyEnd) < ((position convoyStart) distance (position convoyEnd))) then {
 				playsound "goodjob";
 				_score = player getVariable "EVO_score";

@@ -30,8 +30,8 @@
 
 	_actionText = if (isLocalized "STR_chvd_title") then {localize "STR_chvd_title"} else {"View Distance Settings"};
 	//player addAction [_actionText, CHVD_fnc_openDialog, [], -99, false, true];
-	player addaction [_actionText, CHVD_fnc_openDialog, nil,1,false,true,"","(player distance spawnBuilding) < 25"];
-	player addEventHandler ["Respawn", format ["player addAction ['%1', CHVD_fnc_openDialog, [], -99, false, true]", _actionText]];
+	//player addaction [_actionText, CHVD_fnc_openDialog, nil,1,false,true,"","(player distance spawnBuilding) < 25"];
+	//player addEventHandler ["Respawn", format ["player addAction ['%1', CHVD_fnc_openDialog, [], -99, false, true]", _actionText]];
 
 	//Detect when to change setting type
 	[] spawn {

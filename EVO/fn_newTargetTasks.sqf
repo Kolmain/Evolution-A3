@@ -8,9 +8,8 @@ towerTask setTaskState "Assigned";
 _tskName = format ["Secure Col. %1", name currentTargetOF];
 officerTask = player createSimpleTask [_tskName, attackTask];
 officerTask setTaskState "Created";
-_locationType = type currentTarget;
 _type = "";
-if (_locationType == "NameVillage") then {
+if (currentTargetType == "NameVillage") then {
 	_type = "village";
 } else {
 	_type = "city";

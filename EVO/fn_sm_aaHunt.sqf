@@ -1,14 +1,17 @@
 private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
-
+if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "aaHunt";
+	currentSideMissionStatus = "ip";
+	publicVariable "currentSideMissionStatus";
 	publicVariable "currentSideMission";
 	if (isServer) then {
 	//server
 		_vehicle = aaHuntTarget;
 		currentSideMissionMarker = format ["sidemission_%1", markerCounter];
+		publicVariable "currentSideMissionMarker";
 		_aaMarker = createMarker [currentSideMissionMarker, position _vehicle ];
 		currentTargetMarkerName setMarkerShape "ELLIPSE";
 		currentTargetMarkerName setMarkerBrush "Border";
@@ -33,6 +36,8 @@ private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
 				_grp = _this select 0;
 				waitUntil {!alive aaHuntTarget};
 				sleep (random 15);
+				currentSideMissionStatus = "success";
+				publicVariable "currentSideMissionStatus";
 				{
 					[_x] call EVO_fnc_wrapUp;
 				} forEach units _grp;
@@ -51,7 +56,7 @@ private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
 		["TaskAssigned",["","Destroy AAA Battery"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report an AAA battery and have marked it on the map at HQ. Friendly air assets need that battery destroyed!";
 		handle = [] spawn {
-			waitUntil {!alive aaHuntTarget};
+			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance aaHuntTarget < 1000) then {
 				playsound "goodjob";
 				_score = player getVariable "EVO_score";

@@ -1,12 +1,13 @@
 private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_heliGrp","_score"];
-
+if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "baseDef";
 	publicVariable "currentSideMission";
 	attackingUnits = 100;
-	publicVariable "attackingUnits";
+	currentSideMissionStatus = "ip";
+	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
 		attackingUnits = 0;
 	//server
@@ -30,7 +31,6 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
-			publicVariable "attackingUnits";
 			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
 		};
 		for "_i" from 1 to 2 do {
@@ -45,7 +45,6 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 				_x addEventHandler ["Killed", {
 					attackingUnits = attackingUnits - 1;
-					publicVariable "attackingUnits";
 				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
@@ -91,6 +90,8 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 			sleep (random 15);
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
+			currentSideMissionStatus = "success";
+			publicVariable "currentSideMissionStatus";
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
 	};
@@ -104,7 +105,7 @@ private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_
 		baseDefTask setSimpleTaskDestination (getPos spawnBuilding);
 		["TaskAssigned",["","Defend NATO Staging Base"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
-			waitUntil {attackingUnits < 5};
+			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance spawnBuilding < 1000) then {
 				playsound "goodjob";
 				_score = player getVariable "EVO_score";

@@ -4,7 +4,8 @@ private ["_currentTarget","_targetType","_currentTargetMarker","_aoSize","_x1","
 currentTargetName = text currentTarget;
 publicVariable "currentTargetName";
 _currentTarget = currentTarget;
-_targetType = type currentTarget;
+currentTargetType = type currentTarget;
+publicVariable "currentTargetType";
 currentTargetMarkerName = format ["%1_ao", currentTargetName];
 publicVariable "currentTargetMarkerName";
 _currentTargetMarker = createMarker [currentTargetMarkerName, position _currentTarget];

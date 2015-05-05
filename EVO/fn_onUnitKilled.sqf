@@ -147,3 +147,5 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 };
 
 [_killer, _scoreToAdd] call BIS_fnc_addScore;
+
+false
