@@ -84,7 +84,7 @@ if (_bool) then {
 //_bool = [true, false] call BIS_fnc_selectRandom;
 _bool = true;
 if (_bool) then {
-	defendTarget = militaryLocations call BIS_fnc_selectRandom;
+	defendTarget = sideLocations call BIS_fnc_selectRandom;
 	_pos = locationPosition defendTarget;
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
 	availableSideMissions = availableSideMissions + [
