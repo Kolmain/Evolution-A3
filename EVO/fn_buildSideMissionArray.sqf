@@ -86,9 +86,11 @@ _bool = true;
 if (_bool) then {
 	defendTarget = sideLocations call BIS_fnc_selectRandom;
 	_pos = locationPosition defendTarget;
+	_array = nearestObjects [_pos, ["house"], 500];
+	_obj = _array select 0;
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
 	availableSideMissions = availableSideMissions + [
-		[_pos, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element","OPFOR squads have discovered our forward recon units. They're sending squads to seek and destroy our men, get out there and help them!","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element","OPFOR squads have discovered our forward recon units. They're sending squads to seek and destroy our men, get out there and help them!","",_img,1,[]]
 	];
 };
 

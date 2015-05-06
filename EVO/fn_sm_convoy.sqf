@@ -139,7 +139,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				{
 					if (!alive _x) then {
 						convoyTargets = convoyTargets - [_x];
-					}
+					};
 					if (_x distance (getMarkerPos convoyEndMarker) < 500) then {
 						_veh = _x;
 						_complete = true;
@@ -149,7 +149,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 						} forEach crew _x;
 						convoyTargets = convoyTargets - [_x];
 						deleteVehicle _veh;
-					}:
+					};
 				} forEach convoyTargets;
 				sleep 15;
 			};

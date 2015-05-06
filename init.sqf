@@ -226,7 +226,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {
  		handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf";
  	} else {
- 		_newPlayer setDamage 0.25;
+ 		_newPlayer setDamage 0.5;
  		handle = [player, (profileNamespace getVariable "EVO_currentLoadout")] execVM "scripts\setloadout.sqf";
  	};
 }];

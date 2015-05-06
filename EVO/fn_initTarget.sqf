@@ -213,7 +213,8 @@ for "_i" from 1 to paraSquads do {
 		    waitUntil {count (assignedCargo _heli) == 0};
 		    _heli doMove _spawnPos;
 		    //_wp = _heliGrp addWaypoint [getPos server, 0];
-		    handle = [_heli] spawn {
+		    handle = [_heli, _spawnPos] spawn {
+		    	_spawnPos = _this select 1;
 		    	_heli = _this select 0;
 		    	waitUntil {(_heli distance _spawnPos) < 1000};
 		    	{
