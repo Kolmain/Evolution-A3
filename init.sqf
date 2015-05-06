@@ -223,7 +223,11 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
  	_newPlayer setUnitRank (_oldPlayer getVariable "EVOrank");
  	_nil = [] spawn EVO_fnc_pinit;
- 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf"};
+ 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {
+ 		handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf";
+ 	} else {
+ 		_newPlayer setDamage 0.25;
+ 	};
 }];
 
 if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};
