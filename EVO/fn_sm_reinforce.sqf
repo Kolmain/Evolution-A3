@@ -3,20 +3,18 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 
 [{
 	titleCut ["","BLACK IN", 0];
-	currentSideMission = "baseDef";
+	currentSideMission = "reinforce";
 	publicVariable "currentSideMission";
 	attackingUnits = 100;
 	currentSideMissionStatus = "ip";
 	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
 		attackingUnits = 0;
-	//server
-		_spawnLocations = [(targetLocations select 0), (targetLocations select 1)];
-
-
+         	//server
+         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "West" >> "Guerilla" >> "Infantry" >> "IRG_InfTeam_AT")] call BIS_fnc_spawnGroup;
+         	handle = [reinforceSquad, locationPosition defendTarget] call BIS_fnc_taskDefend;
 		for "_i" from 1 to 4 do {
-			_spawnLocation = _spawnLocations call BIS_fnc_selectRandom;
-			_spawnPos = [position _spawnLocation, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [locationPosition defendTarget, 500, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
@@ -27,11 +25,10 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 				_x addEventHandler ["Killed", {
 					attackingUnits = attackingUnits - 1;
-					publicVariable "attackingUnits";
 				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
-			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
+			handle = [_grp, locationPosition defendTarget] call BIS_fnc_taskAttack;
 		};
 		for "_i" from 1 to 2 do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
@@ -48,7 +45,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
-			publicVariable "attackingUnits";
 			   _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			   _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
 			   _heli = _ret select 0;
@@ -65,15 +61,13 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			   		_x assignAsCargo _heli;
 			   		_x moveInCargo _heli;
 			   } forEach units _grp;
-			   //_heli doMove (getPos spawnBuilding);
-			   _wp = _heliGrp addWaypoint [getPos spawnBuilding, 0];
+			   _heli doMove (locationPosition defendTarget);
 			   _heli flyInHeight 150;
-			   waitUntil {(_heli distance (getPos spawnBuilding)) < 500};
+			   waitUntil {(_heli distance (locationPosition defendTarget)) < 500};
 			   sleep random 10;
 			   handle = [_heli] call EVO_fnc_paradrop;
 			   sleep 5;
-			   //_heli doMove (getPos server);
-			   _wp = _heliGrp addWaypoint [getPos server, 0];
+			   _heli doMove (getPos server);
 			   handle = [_heli] spawn {
 			   	_heli = _this select 0;
 			   	waitUntil {(_heli distance server) < 1000};
@@ -82,45 +76,55 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			   	} forEach units group driver _heli;
 			   	deleteVehicle _heli;
 			};
-			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
+			handle = [_grp, locationPosition defendTarget] call BIS_fnc_taskAttack;
 		};
 
 		handle = [] spawn {
-			waitUntil {attackingUnits < 5};
+			waitUntil {attackingUnits < 5 || {alive _x} count units reinforceSquad < 1};
 			sleep (random 15);
+			if ({alive _x} count units reinforceSquad > 0) then {
+				currentSideMissionStatus = "success";
+				publicVariable "currentSideMissionStatus";
+			} else {
+				currentSideMissionStatus = "failed";
+				publicVariable "currentSideMissionStatus";	
+			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			currentSideMissionStatus = "success";
-			publicVariable "currentSideMissionStatus";
+				
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
 	};
 	if (!isDedicated) then {
 	//client
-		"counter" setMarkerAlpha 1;
-		"counter_1" setMarkerAlpha 1;
-		baseDefTask = player createSimpleTask ["Defend NATO Staging Base"];
-		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";
+		baseDefTask = player createSimpleTask ["Reinforce Recon Units"];
+		CROSSROADS sideChat "All units be advised, OPFOR ground assets are moving to engage our recon elements. All available teams move to reinforce them!";
 		baseDefTask setTaskState "Created";
-		baseDefTask setSimpleTaskDestination (getPos spawnBuilding);
-		["TaskAssigned",["","Defend NATO Staging Base"]] call BIS_fnc_showNotification;
+		baseDefTask setSimpleTaskDestination (locationPosition defendTarget);
+		["TaskAssigned",["","Reinforce Recon Units"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
-			if (player distance spawnBuilding < 1000) then {
-				playsound "goodjob";
-				_score = player getVariable "EVO_score";
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
-				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
+			if (currentSideMissionStatus == "success") then {
+				if (player distance defendTarget < 1000) then {
+					playsound "goodjob";
+					_score = player getVariable "EVO_score";
+					_score = _score + 10;
+					player setVariable ["EVO_score", _score, true];
+					[player, 10] call BIS_fnc_addScore;
+					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
+				};
+				sleep (random 15);
+				baseDefTask setTaskState "Succeeded";
+				CROSSROADS sideChat "The OPFOR advance on our recon element has been defeated. Nice job men!";
+				["TaskSucceeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
+				
+			} else {
+				baseDefTask setTaskState "Failed";
+				CROSSROADS sideChat "We've lost communications with our recon element, all units RTB and rearm.";
+				["TaskFailed",["","Recon Units Killed"]] call BIS_fnc_showNotification;
 			};
-			sleep (random 15);
-			baseDefTask setTaskState "Succeeded";
-			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
-			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			"counter" setMarkerAlpha 0;
-			"counter_1" setMarkerAlpha 0;
 		};
 	};
 },"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
