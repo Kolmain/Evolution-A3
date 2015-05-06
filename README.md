@@ -16,18 +16,18 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - Overall unit management moved by **UPSMON** with minor script modifications (Hardcoded airdrops per AO, etc).
   - Weapon crate replaced with **BI's Virtual Arsenal**.
   - **CHHQ** provides a mobile HQ transport option.
-  - *Experimental* **Headless Client implementation**, that accounts for disconnect/reconnect of HC automatically.
+  - **Headless Client implementation** automatically detects and offloads AI to your HC.
   - **Player Persistence** keeps players at their last known locations with their last known loadout in the event of a disconnect and rejoin of the same session.
   - **Pilot loadout requirements** enforced to fly aircraft, includes auto-switching of loadout if you're in the base.
   - **Modular sidemissions** that provide bonus points to all players, and extra bonus points to the players responsible for completing the task.
   - **Officer Capturing** in every area of operation.
-  - **OPFOR support assetss** may be available at the AO including mortar, anti-air, and sniper support.
+  - **OPFOR support assets** may be available at the AO including mortar, anti-air, and sniper support.
   - All powered by **vanilla ArmA 3 content**.
   - Build structures in the field using **R3F Logistics**.
 
 
 
-> The overall goal of this project is to bring Evolution Blue up to ArmA 3 standards while preserving as much origional gameplay as possible. Minor additions such as Revive and Support Assets that delineate from the origional concept should be added with optional paramters.
+> The overall goal of this project is to bring Evolution Blue up to ArmA 3 standards while preserving as much original gameplay as possible. Minor additions such as Revive and Support Assets that delineate from the origional concept should be added with optional paramters.
 
 
 ### Current Version
