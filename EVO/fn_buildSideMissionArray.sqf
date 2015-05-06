@@ -26,8 +26,8 @@ if (!isNil "_vehicle") then {
 
 //base defence
 // 1 in 4 chance
-_bool = [true, false, false, false] call BIS_fnc_selectRandom;
-//_bool = true;
+//_bool = [true, false, false, false] call BIS_fnc_selectRandom;
+_bool = true;
 if (_bool) then {
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
 	availableSideMissions = availableSideMissions + [
@@ -38,8 +38,8 @@ if (_bool) then {
 
 //military installation
 // 1 in 2 chance
-_bool = [true, false] call BIS_fnc_selectRandom;
-//_bool = true;
+//_bool = [true, false] call BIS_fnc_selectRandom;
+_bool = true;
 if (_bool) then {
 	attackMilTarget = militaryLocations call BIS_fnc_selectRandom;
 	_pos = position attackMilTarget;
@@ -76,6 +76,19 @@ if (_bool) then {
 	];
 	availableSideMissions = availableSideMissions + [
 		[getPos _obj2, EVO_fnc_sm_convoy, "Ambush Convoy End", _descrip,"",_img,1,[]]
+	];
+};
+
+//reinforce defense
+// 1 in 2 chance
+//_bool = [true, false] call BIS_fnc_selectRandom;
+_bool = true;
+if (_bool) then {
+	defendTarget = militaryLocations call BIS_fnc_selectRandom;
+	_pos = locationPosition defendTarget;
+	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
+	availableSideMissions = availableSideMissions + [
+		[_pos, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element","OPFOR squads have discovered our forward recon units. They're sending squads to seek and destroy our men, get out there and help them!","",_img,1,[]]
 	];
 };
 
