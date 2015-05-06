@@ -11,6 +11,8 @@ _locTypes = [
 targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
 
 _locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
+sideLocations = _locs;
+publicVariable "sideLocations";
 _mil = [];
 {
 	if ((tolower (text _x)) in ["military"]) then {
