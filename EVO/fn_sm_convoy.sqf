@@ -134,15 +134,33 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 
 
 		handle = [] spawn {
-			while {count convoyTargets > 0} do {
+			_complete = false;
+			while {count convoyTargets > 0 && !_complete} do {
 				{
 					if (!alive _x) then {
 						convoyTargets = convoyTargets - [_x];
 					}
+					if (_x distance (getMarkerPos convoyEndMarker) < 500) then {
+						_veh = _x;
+						_complete = true;
+						{
+							_crew = _x;
+							deleteVehicle _crew;
+						} forEach crew _x;
+						convoyTargets = convoyTargets - [_x];
+						deleteVehicle _veh;
+					}:
 				} forEach convoyTargets;
 				sleep 15;
 			};
 			sleep (random 15);
+			if (_complete) then {
+				currentSideMissionStatus = "failed";
+				publicVariable "currentSideMissionStatus";
+			} else {
+				currentSideMissionStatus = "success";
+				publicVariable "currentSideMissionStatus";
+			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
@@ -167,19 +185,25 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR convoy activity. Check the map and ambush their supply route!";
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
-			if (player distance (position convoyEnd) < ((position convoyStart) distance (position convoyEnd))) then {
-				playsound "goodjob";
-				_score = player getVariable "EVO_score";
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
-				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
+			if (currentSideMissionStatus == "success") then {
+				if (player distance (position convoyEnd) < ((position convoyStart) distance (position convoyEnd))) then {
+					playsound "goodjob";
+					_score = player getVariable "EVO_score";
+					_score = _score + 10;
+					player setVariable ["EVO_score", _score, true];
+					[player, 10] call BIS_fnc_addScore;
+					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
+				};
+				sleep (random 15);
+				convoyTask setTaskState "Succeeded";
+				["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
+				CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
+			} else {
+				convoyTask setTaskState "Failed";
+				["TaskFailed",["","OPFOR Convoy Escaped"]] call BIS_fnc_showNotification;
+				CROSSROADS sideChat "Forward scouts report the convoy is out of reach, you missed your window- RTB.";
 			};
-			sleep (random 15);
-			convoyTask setTaskState "Succeeded";
-			["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
-			CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
 			currentSideMission = "none";
-			publicVariable "currentSideMission";
 		};
 	};
 },"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
