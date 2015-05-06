@@ -136,13 +136,17 @@ handle = [] spawn {
 			if (leader group player == player) then {
 				{
 					if (!isPlayer _x) then {
-						//_x setUnitRank (rank player);
 						handle = [_x] call EVO_fnc_vehicleCheck;
 					};
 				} forEach units group player;
 			};
 		};
 		handle = [] call EVO_fnc_rank;
+		_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		profileNamespace setVariable ["EVO_currentLoadout", _currentLoadout];
+		profileNamespace setVariable ["EVO_score", (player getVariable "EVO_score")];
+		profileNamespace setVariable ["EVO_lastPos", getPos player];
+		saveProfileNamespace;
 		sleep 1;
 	};
 };
