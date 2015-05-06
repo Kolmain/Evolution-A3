@@ -227,6 +227,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  		handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf";
  	} else {
  		_newPlayer setDamage 0.25;
+ 		handle = [player, (profileNamespace getVariable "EVO_currentLoadout")] execVM "scripts\setloadout.sqf";
  	};
 }];
 
