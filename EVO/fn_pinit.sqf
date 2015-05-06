@@ -35,13 +35,13 @@ if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
 
 if (typeOf player == "B_medic_F") then {
 	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
-	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","((player getVariable 'EVO_rank') != 'PRIVATE' && player distance spawnBuilding > 800)"];
+	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800"];
 	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 if (typeOf player == "B_soldier_repair_F") then {
 	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
-	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","((player getVariable 'EVO_rank') != 'PRIVATE' && player distance spawnBuilding > 800)"];
+	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800"];
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
