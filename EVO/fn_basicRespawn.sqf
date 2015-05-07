@@ -7,6 +7,7 @@ _vehicle setVariable ["EVO_respawnPos", getPos _vehicle, true];
 _vehicle setVariable ["EVO_respawnDir", getDir _vehicle, true];
 waitUntil{!alive _vehicle || !canMove _vehicle};
 sleep 60;
+if (canMove _vehicle) exitWith {[_vehicle] call EVO_fnc_basicRespawn};
 _pos = _vehicle getVariable "EVO_respawnPos";
 _dir = _vehicle getVariable "EVO_respawnDir";
 _newVehicle = _classname createVehicle _pos;
