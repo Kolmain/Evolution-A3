@@ -149,6 +149,7 @@ class CfgFunctions
 			class sm_baseDef {};
 			class sm_attackMil {};
 			class sm_convoy {};
+			class sm_reinforce {};
 			class buildSideMissionArray {};
 			class osm {};
 			class wrapUp {};
@@ -156,6 +157,7 @@ class CfgFunctions
 			class buildMagazineArray {};
 			class buildAmmoCrate {};
 			class newTargetTasks {};
+			class supportPoints {};
 		};
 	};
 };
