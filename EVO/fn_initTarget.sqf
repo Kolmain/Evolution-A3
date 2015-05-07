@@ -65,30 +65,13 @@ handle = [currentTarget, _mortarGunner] spawn {
 	    };
 	    if (!alive _mortarGunner) exitWith {};
 	};
-		[_mortarGunner, currentTarget] call EVO_fnc_wrapUp;
+	[_mortarGunner, currentTarget] call EVO_fnc_wrapUp;
 };
 
 _newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-handle = [currentTarget, _newComp] spawn {
-	_currentTarget = _this select 0;
-	_newComp = _this select 1;
-	_loop2 = true;
-	while {_loop2} do {
-	    sleep 5;
-	    if (currentTarget != _currentTarget) then {
-	    	_loop2 = false;
-	    };
-	};
-	{
-		[_x, currentTarget] call EVO_fnc_wrapUp;
-	} forEach _newComp;
-};
-
 _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
 _mortarGunner moveInGunner _mortar;
-
-
 nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
 _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 
@@ -145,7 +128,6 @@ while{ count _spawnPos < 1 } do	{
 _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
-[[[], {	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"]}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 doStop _officer;
 
 handle = [currentTargetOF] spawn {

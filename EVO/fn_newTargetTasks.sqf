@@ -16,7 +16,7 @@ if (currentTargetType == "NameVillage") then {
 };
 _tskName = format ["Clear the %1 of %2.", _type, currentTargetName];
 ["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
-_tskName = format ["Capture Col. %1.", name currentTargetOF];
+_tskName = format ["Capture Colonel %1.", name currentTargetOF];
 ["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
 _tskName = format ["Destroy %1's Radio Tower.", currentTargetName];
 ["TaskAssigned",["",_tskName]] call BIS_fnc_showNotification;
