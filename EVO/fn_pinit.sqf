@@ -17,6 +17,22 @@ player addaction ["<t color='#CCCC00'>View Distance Settings</t>", CHVD_fnc_open
 player addaction ["<t color='#CCCC00'>Select Side Mission</t>","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 10 && currentSideMission == 'none'"];
 player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10 && ((leader group player) == player)"];
 player addaction ["<t color='#CCCC00'>HALO Drop</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
+
+if (alive currentTargetOF) then {
+	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
+} else {
+	[] spawn {
+		_loop = true;
+		while {_loop} do {
+		    sleep 10;
+		    if (alive currentTargetOF) then {
+		    	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
+		    	_loop = false;
+		    };
+		};
+	};
+};
+
 player addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
