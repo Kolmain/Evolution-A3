@@ -1,15 +1,7 @@
 private ["_locTypes","_locs","_mil","_vehicle","_null","_markerName","_aaMarker","_grp","_driver","_commander","_gunner","_ret","_plane","_wp"];
 
-_locTypes = [
-//"CityCenter",
-"NameCity",
-"NameCityCapital",
-//"NameLocal",
-//"NameMarine",
-"NameVillage"
-];
+_locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
 targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
-
 _locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
 sideLocations = _locs;
 publicVariable "sideLocations";
@@ -20,22 +12,6 @@ _mil = [];
 	};
 } foreach _locs;
 militaryLocations = _mil;
-
-
-handle = [] spawn {
-	while {true} do {
-	    waitUntil {!officerAlive};
-	    [[[], {
-			officerTask setTaskState "Failed";
-			_msg = format ["Colonel %1 has been killed.", name currentTargetOF];
-			["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-		_current = currentTarget;
-		waitUntil {_current != currentTarget};
-	};
-};
-
-
 targetCounter = 2;
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
@@ -54,10 +30,9 @@ markerCounter = 0;
 currentSideMission = "none";
 currentSideMissionMarker = "nil";
 availableSideMissions = [];
-
+currentSideMissionStatus = "ip";
 handle = [] spawn EVO_fnc_buildSideMissionArray;
 
-_i = 0;
 {
 	_vehicle = _x;
 	if ((faction _vehicle == "BLU_F") && !(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
@@ -103,6 +78,7 @@ handle = [] spawn {
 		{
 			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		}  forEach units _grp;
+		_plane addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_wp =_grp addWaypoint [getMarkerPos "opforair", 0];
 		[_grp, 0] setWaypointBehaviour "COMBAT";
 		[_grp, 0] setWaypointCombatMode "RED";
