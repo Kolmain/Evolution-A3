@@ -19,7 +19,7 @@ player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\o
 player addaction ["<t color='#CCCC00'>HALO Drop</t>","ATM_airdrop\atm_airdrop.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 
 if (alive currentTargetOF) then {
-	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
+	currentTargetOF addAction [format["Capture %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
 } else {
 	[] spawn {
 		_loop = true;

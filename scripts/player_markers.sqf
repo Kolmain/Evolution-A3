@@ -120,6 +120,9 @@ while {true} do {
 			if(_unit getVariable ["NORRN_unconscious",false]) then {
 				_injured = true;
 			};
+			if(_unit getVariable ["BIS_revive_incapacitated"]) then {
+				_injured = true;
+			};
 		};
 
 		if(_show) then {

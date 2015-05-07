@@ -2,13 +2,14 @@ private ["_killed","_killer","_scoreToAdd","_score","_notify","_vis","_displayNa
 _killed = _this select 0;
 _killer = _this select 1;
 _scoreToAdd = 0;
-_score = _killer getVariable "EVO_score";
+_score = 0;
 _notify = true;
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 };
 if (isPlayer _killer || isPlayer (leader group _killer)) then {
 	if (!isPlayer _killer) then {_killer == leader group _killer};
+	_score = _killer getVariable "EVO_score";
 	if (true) then {
 		if ((side _killed) != (side _killer)) then {
 			_vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
