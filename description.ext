@@ -21,10 +21,7 @@ class Header
  gameType = COOP;            //DM, Team, Coop, CTI
  minPlayers = 1;             //min # of players the mission supports
  maxPlayers = 30;            //Max # of players the mission supports
- playerCountMultipleOf = 1;  //Unknown
 };
-
-
 
 
 class Params

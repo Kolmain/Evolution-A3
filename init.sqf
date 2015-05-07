@@ -1,19 +1,17 @@
-
-debug=false;
-EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
-//Init UPSMON script
+//Init Third Party Scripts
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
-handle = [] execVM "scripts\randomWeather2.sqf";
-handle = [] execVM "scripts\clean.sqf";
-handle = [] execVM "bon_recruit_units\init.sqf";
-if (isServer) then {
-	[] spawn EVO_fnc_initEVO;
-	["Initialize"] call BIS_fnc_dynamicGroups;
-};
-
-enableSaving [false, false];
+[] execVM "scripts\randomWeather2.sqf";
+[] execVM "scripts\clean.sqf";
+[] execVM "bon_recruit_units\init.sqf";
 CHHQ_showMarkers = true;
+CHVD_allowNoGrass = true;
+CHVD_maxView = 2500;
+CHVD_maxObj = 2500;
 
+if (isMultiplayer) then {enableSaving [false, false]};
+
+//Init Common Variables
+debug=false;
 militaryInstallations = [];
 rank1 = 10;
 rank2 = 30;
@@ -21,6 +19,7 @@ rank3 = 60;
 rank4 = 100;
 rank5 = 150;
 rank6 = 200;
+HCconnected = false;
 CROSSROADS = [West,"HQ"];
 rank1vehicles = ["b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
 rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
@@ -30,7 +29,6 @@ rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
 rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
 rank7vehicles = ["b_plane_cas_01_f"];
 rank1weapons = ["arifle_MX_F"];
-//rank1magazines = ["HandGrenade", "SmokeShell", "SmokeShellBlue", "Chemlight_blue", "B_IR_Grenade", "30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag_Tracer","1Rnd_HE_Grenade_shell","UGL_FlareWhite_F","20Rnd_556x45_UW_mag","30Rnd_556x45_Stanag","30Rnd_556x45_Stanag_Tracer_Red","1Rnd_Smoke_Grenade_shell","1Rnd_SmokeBlue_Grenade_shell","Titan_AA","Titan_AT","Titan_AP","9Rnd_45ACP_Mag","30Rnd_9x21_Mag","30Rnd_45ACP_Mag_SMG_01","10Rnd_762x51_Mag","20Rnd_762x51_Mag","6Rnd_45ACP_Cylinder","5Rnd_127x108_Mag","5Rnd_127x108_APDS_Mag","7Rnd_408_Mag"];
 rank2weapons = ["arifle_MXC_F","arifle_MX_GL_F","launch_B_Titan_short_F","hgun_ACPC2_F","arifle_MXC_Black_F"];
 rank2items = ["optic_Arco","optic_Hamr","optic_Aco","optic_Holosight","optic_Holosight_smg","optic_SOS","acc_flashlight","acc_pointer_IR","optic_MRCO"];
 rank3weapons = ["arifle_MX_SW_F","arifle_MXM_F","arifle_SDAR_F","launch_B_Titan_F","arifle_MX_Black_F"];
@@ -39,8 +37,7 @@ rank4weapons = ["arifle_TRG21_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black
 rank5weapons = ["arifle_TRG21_GL_F","hgun_ACPC2_snds_F","SMG_02_F","arifle_MXM_Black_F"];
 rank6weapons = ["arifle_Mk20_plain_F","srifle_DMR_01_SOS_F","srifle_EBR_DMS_F"];
 rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LRPS_F","srifle_LRR_LRPS_F"];
-//Lists of items to include
-	availableHeadgear = [
+availableHeadgear = [
 	"H_HelmetB",
 	"H_HelmetB_camo",
 	"H_HelmetB_paint",
@@ -61,9 +58,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"H_CrewHelmetHeli_B",
 	"H_PilotHelmetFighter_B",
 	"H_HelmetCrew_B"
-	];
-
-	availableGoggles = [
+];
+availableGoggles = [
 	"G_Combat",
 	"G_Lowprofile",
 	"G_Shades_Black",
@@ -76,9 +72,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"G_Tactical_Black",
 	"G_Tactical_Clear",
 	"G_Bandanna_blk"
-	];
-
-	availableUniforms = [
+];
+availableUniforms = [
 	"U_B_CombatUniform_mcam",
 	"U_B_CombatUniform_mcam_tshirt",
 	"U_B_CombatUniform_mcam_vest",
@@ -86,9 +81,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"U_B_CTRG_1",
 	"U_B_CTRG_2",
 	"U_B_CTRG_3"
-	];
-
-	availableVests = [
+];
+availableVests = [
 	"V_BandollierB_khk",
 	"V_BandollierB_blk",
 	"V_PlateCarrier1_rgr",
@@ -97,9 +91,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"V_PlateCarrierSpec_rgr",
 	"V_PlateCarrierL_CTRG",
 	"V_PlateCarrierH_CTRG"
-	];
-
-	availableItems = [
+];
+availableItems = [
 	"ItemWatch",
 	"ItemCompass",
 	"ItemGPS",
@@ -111,9 +104,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"FirstAidKit",
 	"Medikit",
 	"ToolKit"
-	];
-
-	availableBackpacks = [
+];
+availableBackpacks = [
 	"B_AssaultPack_rgr",
 	"B_AssaultPack_mcamo",
 	"B_Kitbag_rgr",
@@ -121,15 +113,8 @@ rank7weapons = ["arifle_Mk20_GL_plain_F","hgun_Pistol_heavy_02_F","srifle_GM6_LR
 	"B_TacticalPack_blk",
 	"B_TacticalPack_mcamo"
 	];
-
-	availableWeapons = [];
-
-	availableMagazines = [];
-
-CHVD_allowNoGrass = true;
-CHVD_maxView = 2500;
-CHVD_maxObj = 2500;
-//HC_uid = getPlayerUID headlessClient;
+availableWeapons = [];
+availableMagazines = [];
 
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
@@ -149,19 +134,28 @@ if (!isMultiplayer) then {
 		};
 	} foreach _nearUnits;
 };
-HCconnected = false;
+
 if (!(isServer) && !(hasInterface)) then {
 	HCconnected = true;
 	publicVariable "HCconnected";
 };
 
+
+//init Server
+if (isServer) then {
+	[] spawn EVO_fnc_initEVO;
+	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
+	publicVariable "EVO_sessionID";
+	["Initialize"] call BIS_fnc_dynamicGroups;
+};
+
+//init Client
 if (isDedicated || !hasInterface) exitWith {};
-//Client
 intro = true;
-nul = player execVM "scripts\intro.sqf";
-0 = [] execVM "scripts\player_markers.sqf";
+player execVM "scripts\intro.sqf";
+[] execVM "scripts\player_markers.sqf";
 ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
-//WaitUntil{scriptDone _intro};
+WaitUntil{!intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
@@ -170,7 +164,6 @@ _amb = [] spawn EVO_fnc_amb;
 [hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 handle = [] spawn {
-	//loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	while {true} do {
 		waitUntil {player distance hqbox < 5};
 	   	waitUntil {player distance hqbox > 5};
