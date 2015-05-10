@@ -13,10 +13,6 @@ while {_loop} do
 	if(count (_bombs) > 0) then
 	{
 		_radio allowDamage true;
-		sleep 5;
-		_bombs = _radio nearObjects ["satchelcharge_remote_ammo", 20];
-		if(count (_bombs) > 0) then {
-			_loop = false;
-		};
+		_loop = false;
 	};
 };

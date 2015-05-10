@@ -61,13 +61,13 @@ class Params
 		title = "# of Mechanized Squads at AO";
 		texts[] = {"1","2","3","4","5"};
 		values[] = {1,2,3,4,5};
-		default = 2;
+		default = 1;
 	};
 	class armorSquadsParam {
 		title = "# of Armor at AO";
 		texts[] = {"1","2","3","4","5"};
 		values[] = {1,2,3,4,5};
-		default = 2;
+		default = 1;
 	};
 	class pilotDressRequired {
 		title = "Require Pilot Loadout to Pilot";

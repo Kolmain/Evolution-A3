@@ -38,6 +38,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				sleep (random 15);
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
+				[aaHuntTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 				{
 					[_x] call EVO_fnc_wrapUp;
 				} forEach units _grp;
@@ -47,12 +48,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				deleteMarker currentSideMissionMarker;
 			};
 		};
+		_tskDisplayName = format ["Destroy AAA Battery"];
+		aaHuntTask = format ["aaHuntTask%1", floor(random(1000))];
+		[WEST, [aaHuntTask], [_tskDisplayName, _tskDisplayName, ""], (getMarkerPos currentSideMissionMarker), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
 	//client
-		aaTask = player createSimpleTask ["Destroy AAA Battery"];
-		aaTask setTaskState "Created";
-		aaTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
 		["TaskAssigned",["","Destroy AAA Battery"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report an AAA battery and have marked it on the map at HQ. Friendly air assets need that battery destroyed!";
 		handle = [] spawn {
@@ -65,7 +66,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			aaTask setTaskState "Succeeded";
 			CROSSROADS sideChat "Forward scouts report the AAA battery was destroyed. Outstanding job men!";
 			["TaskSucceeded",["","AAA Battery Destroyed"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";

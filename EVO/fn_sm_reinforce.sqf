@@ -85,22 +85,24 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if ({alive _x} count units reinforceSquad > 0) then {
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
+				[reinforceTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 			} else {
 				currentSideMissionStatus = "failed";
-				publicVariable "currentSideMissionStatus";	
+				publicVariable "currentSideMissionStatus";
+				[reinforceTask, "Failed", false] call bis_fnc_taskSetState;
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-				
+
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
+		_tskDisplayName = format ["Reinforce NATO Recon Units"];
+		reinforceTask = format ["reinforceTask%1", floor(random(1000))];
+		[WEST, [reinforceTask], [_tskDisplayName, _tskDisplayName, ""], (locationPosition defendTarget), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
 	//client
-		baseDefTask = player createSimpleTask ["Reinforce Recon Units"];
 		CROSSROADS sideChat "All units be advised, OPFOR ground assets are moving to engage our recon elements. All available teams move to reinforce them!";
-		baseDefTask setTaskState "Created";
-		baseDefTask setSimpleTaskDestination (locationPosition defendTarget);
 		["TaskAssigned",["","Reinforce Recon Units"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
@@ -114,12 +116,10 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
-				baseDefTask setTaskState "Succeeded";
 				CROSSROADS sideChat "The OPFOR advance on our recon element has been defeated. Nice job men!";
 				["TaskSucceeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
-				
+
 			} else {
-				baseDefTask setTaskState "Failed";
 				CROSSROADS sideChat "We've lost communications with our recon element, all units RTB and rearm.";
 				["TaskFailed",["","Recon Units Killed"]] call BIS_fnc_showNotification;
 			};

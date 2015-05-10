@@ -157,9 +157,11 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if (_complete) then {
 				currentSideMissionStatus = "failed";
 				publicVariable "currentSideMissionStatus";
+				[convoyTask, "failed", false] call bis_fnc_taskSetState;
 			} else {
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
+				[convoyTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
@@ -169,18 +171,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			deleteMarker convoyStartAoMarker;
 			deleteMarker convoyEndAoMarker;
 		};
+		_tskDisplayName = format ["Ambush Convoy"];
+		convoyTask = format ["convoyTask%1", floor(random(1000))];
+		[WEST, [convoyTask], [_tskDisplayName, _tskDisplayName, ""], (convoyArray select 0), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
 	//client
-		convoyTask = player createSimpleTask ["Ambush Convoy"];
-		convoyTask setTaskState "Created";
-		handle = [] spawn {
-			while {currentSideMission == "convoy";} do {
-			convoyTask setSimpleTaskDestination (getPos (convoyArray select 0));
-			sleep 120;
-			};
-		};
-
 		["TaskAssigned",["","Ambush Convoy"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR convoy activity. Check the map and ambush their supply route!";
 		handle = [] spawn {
@@ -195,11 +191,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
-				convoyTask setTaskState "Succeeded";
 				["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
 				CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
 			} else {
-				convoyTask setTaskState "Failed";
 				["TaskFailed",["","OPFOR Convoy Escaped"]] call BIS_fnc_showNotification;
 				CROSSROADS sideChat "Forward scouts report the convoy is out of reach, you missed your window- RTB.";
 			};

@@ -44,6 +44,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				sleep 15;
 			};
 			sleep (random 15);
+			[attackMilTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 			currentSideMissionStatus = "success";
 			publicVariable "currentSideMissionStatus";
 			currentSideMission = "none";
@@ -51,12 +52,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 			deleteMarker currentSideMissionMarker;
 		};
+		_tskDisplayName = format ["Attack OPFOR Installation"];
+		attackMilTask = format ["attackMilTask%1", floor(random(1000))];
+		[WEST, [attackMilTask], [_tskDisplayName, _tskDisplayName, ""], (position attackMilTarget), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
 	//client
-		milTask = player createSimpleTask ["Attack OPFOR Installation"];
-		milTask setTaskState "Created";
-		milTask setSimpleTaskDestination (getMarkerPos currentSideMissionMarker);
 		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
 		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at a military installation. Capture the military installation!";
 		handle = [] spawn {
@@ -66,10 +67,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				_score = player getVariable "EVO_score";
 				_score = _score + 10;
 				player setVariable ["EVO_score", _score, true];
-				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
+				["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			milTask setTaskState "Succeeded";
 			CROSSROADS sideChat "Forward scouts report OPFOR activity at the military installation is declining. Nice job men!";
 			["TaskSucceeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";

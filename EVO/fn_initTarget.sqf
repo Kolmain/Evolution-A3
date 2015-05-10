@@ -299,28 +299,27 @@ for "_i" from 1 to armorSquads do {
 sleep 1;
 
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
-
-
 [[[], {
 	if (!isDedicated) then {
 		_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
 		playSound _sound;
-		waitUntil {!intro};
-		[] call EVO_fnc_newTargetTasks;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
+[] call EVO_fnc_newTargetTasks;
+
+
 
 waitUntil {!RTonline};
 
 [[[], {
 	if (!isServer || !isMultiplayer) then {
-		towerTask setTaskState "Succeeded";
 		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
 		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-
+[towerTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
 [CROSSROADS, format ["We've received confirmation that the OPFOR communications tower has been destroyed, %1 will no longer be reinforced by OPFOR.", currentTargetName]] call EVO_fnc_globalSideChat;
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
@@ -350,21 +349,23 @@ while {currentTargetLeft > 9} do {
 _sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
+[attackTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+
+
+if ([officerTask] call bis_fnc_taskState != "Succeeded" || [officerTask] call bis_fnc_taskState != "Failed") then {
+	[officerTask, "Failed", false] call bis_fnc_taskSetState;
+	_tskName = format ["Colonel %1 Escaped.", name currentTargetOF];
+	["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;
+};
 [[[], {
 	if (!isServer || !isMultiplayer) then {
-		attackTask setTaskState "Succeeded";
 		_tskName = format ["%1 Secured.", currentTargetName];
 		_score = player getVariable "EVO_score";
-			_score = _score + 5;
-			player setVariable ["EVO_score", _score, true];
-			["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
+		_score = _score + 5;
+		player setVariable ["EVO_score", _score, true];
+		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
 		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
-		if (taskState officerTask != "Succeeded" || taskState officerTask != "Failed") then {
-			officerTask setTaskState "Failed";
-			_tskName = format ["Colonel %1 Escaped.", name currentTargetOF];
-			["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;
-		};
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 deleteMarker currentTargetMarkerName;

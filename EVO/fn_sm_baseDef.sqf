@@ -92,17 +92,18 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			publicVariable "currentSideMission";
 			currentSideMissionStatus = "success";
 			publicVariable "currentSideMissionStatus";
+			[baseDefTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
+		_tskDisplayName = format ["Defend NATO Staging Base"];
+		baseDefTask = format ["baseDefTask_%1", floor(random(1000))];
+		[WEST, [baseDefTask], [_tskDisplayName, _tskDisplayName, ""], (getPos spawnBuilding), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
-	//client
+		//client
 		"counter" setMarkerAlpha 1;
 		"counter_1" setMarkerAlpha 1;
-		baseDefTask = player createSimpleTask ["Defend NATO Staging Base"];
 		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";
-		baseDefTask setTaskState "Created";
-		baseDefTask setSimpleTaskDestination (getPos spawnBuilding);
 		["TaskAssigned",["","Defend NATO Staging Base"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
@@ -114,7 +115,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			baseDefTask setTaskState "Succeeded";
 			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
 			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
