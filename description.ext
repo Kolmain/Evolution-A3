@@ -9,6 +9,11 @@ respawnTemplates[] = {"MenuPosition", "Revive"};
 reviveDelay = 10;
 respawnOnStart = -1;
 enableDebugConsole = 1;
+taskManagement_markers2D = 1;
+taskManagement_markers3D = 1;
+taskManagement_propagate = 1;
+taskManagement_drawDist = 2500;
+
 
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"
