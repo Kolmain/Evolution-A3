@@ -26,8 +26,12 @@ if (!isNil "_vehicle") then {
 
 //base defence
 // 1 in 4 chance
-//_bool = [true, false, false, false] call BIS_fnc_selectRandom;
-_bool = true;
+_bool = false;
+if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
+	_bool = [true, false, false, false] call BIS_fnc_selectRandom;
+} else {
+	_bool = true;
+};
 if (_bool) then {
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
 	availableSideMissions = availableSideMissions + [
@@ -38,8 +42,12 @@ if (_bool) then {
 
 //military installation
 // 1 in 2 chance
-//_bool = [true, false] call BIS_fnc_selectRandom;
-_bool = true;
+_bool = false;
+if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
+	_bool = [true, false] call BIS_fnc_selectRandom;
+} else {
+	_bool = true;
+};
 if (_bool) then {
 	attackMilTarget = militaryLocations call BIS_fnc_selectRandom;
 	_pos = position attackMilTarget;
@@ -53,8 +61,12 @@ if (_bool) then {
 
 //convoy
 // 1 in 2 chance
-//_bool = [true, false] call BIS_fnc_selectRandom;
-_bool = true;
+_bool = false;
+if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
+	_bool = [true, false] call BIS_fnc_selectRandom;
+} else {
+	_bool = true;
+};
 if (_bool) then {
 	_locationArray = militaryLocations + targetLocations;
 	_locationArray = _locationArray - ([targetLocations select 0]) - ([targetLocations select 1]) - ([targetLocations select 2]);
@@ -81,8 +93,12 @@ if (_bool) then {
 
 //reinforce defense
 // 1 in 2 chance
-//_bool = [true, false] call BIS_fnc_selectRandom;
-_bool = true;
+_bool = false;
+if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
+	_bool = [true, false] call BIS_fnc_selectRandom;
+} else {
+	_bool = true;
+};
 if (_bool) then {
 	defendTarget = sideLocations call BIS_fnc_selectRandom;
 	_pos = locationPosition defendTarget;
