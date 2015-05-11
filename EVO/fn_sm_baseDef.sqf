@@ -92,7 +92,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			publicVariable "currentSideMission";
 			currentSideMissionStatus = "success";
 			publicVariable "currentSideMissionStatus";
-			[baseDefTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+			[baseDefTask, "Succeeded", false] call bis_fnc_taskSetState;
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 		};
 		_tskDisplayName = format ["Defend NATO Staging Base"];
@@ -116,7 +116,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			sleep (random 15);
 			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
-			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
+			["Succeeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			"counter" setMarkerAlpha 0;

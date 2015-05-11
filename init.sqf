@@ -138,6 +138,7 @@ _index = player addMPEventHandler ["MPRespawn", {
  	} else {
  		_newPlayer setDamage 0.5;
  		handle = [player, (profileNamespace getVariable "EVO_currentLoadout")] execVM "scripts\setloadout.sqf";
+ 		removeBackpack player;
  	};
 }];
 

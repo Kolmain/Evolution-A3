@@ -161,7 +161,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			} else {
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
-				[convoyTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+				[convoyTask, "Succeeded", false] call bis_fnc_taskSetState;
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
@@ -191,7 +191,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
-				["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
+				["Succeeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
 				CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
 			} else {
 				["TaskFailed",["","OPFOR Convoy Escaped"]] call BIS_fnc_showNotification;

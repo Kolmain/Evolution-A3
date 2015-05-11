@@ -38,7 +38,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				sleep (random 15);
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
-				[aaHuntTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+				[aaHuntTask, "Succeeded", false] call bis_fnc_taskSetState;
 				{
 					[_x] call EVO_fnc_wrapUp;
 				} forEach units _grp;
@@ -67,7 +67,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			sleep (random 15);
 			CROSSROADS sideChat "Forward scouts report the AAA battery was destroyed. Outstanding job men!";
-			["TaskSucceeded",["","AAA Battery Destroyed"]] call BIS_fnc_showNotification;
+			["Succeeded",["","AAA Battery Destroyed"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 		};

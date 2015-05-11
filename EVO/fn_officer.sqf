@@ -12,9 +12,8 @@ _grp = group currentTargetOF;
 		_msg = format ["Colonel %1 has been found, extract him!", name currentTargetOF];
 		["TaskUpdated",["OFFICER FOUND", _msg]] call BIS_fnc_showNotification;
 		waitUntil {(currentTargetOF distance spawnBuilding < 50)};
-		officerTask setTaskState "Succeeded";
 		_msg = format ["Colonel %1 has been secured.", name currentTargetOF];
-		["TaskSucceeded",["OFFICER SECURED", _msg]] call BIS_fnc_showNotification;
+		["Succeeded",["OFFICER SECURED", _msg]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 		_score = player getVariable "EVO_score";
 		_score = _score + 5;
@@ -28,6 +27,7 @@ _grp = group currentTargetOF;
 		};
 	};
 	if (isServer) then {
+		[officerTask, "Succeeded", false] call bis_fnc_taskSetState;
 		waitUntil {(currentTargetOF distance spawnBuilding < 50)};
 		sleep 5;
 		deleteVehicle currentTargetOF;

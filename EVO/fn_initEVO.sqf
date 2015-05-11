@@ -70,7 +70,6 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 		} forEach units _grp;
 		_vehicle addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
-		};
 	};
 } forEach vehicles;
 

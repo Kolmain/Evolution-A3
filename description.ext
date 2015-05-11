@@ -169,6 +169,7 @@ class CfgFunctions
 			class buildAmmoCrate {};
 			class newTargetTasks {};
 			class supportPoints {};
+			class basicRespawn {};
 		};
 	};
 };

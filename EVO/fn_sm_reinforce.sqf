@@ -85,7 +85,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if ({alive _x} count units reinforceSquad > 0) then {
 				currentSideMissionStatus = "success";
 				publicVariable "currentSideMissionStatus";
-				[reinforceTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+				[reinforceTask, "Succeeded", false] call bis_fnc_taskSetState;
 			} else {
 				currentSideMissionStatus = "failed";
 				publicVariable "currentSideMissionStatus";
@@ -117,7 +117,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				};
 				sleep (random 15);
 				CROSSROADS sideChat "The OPFOR advance on our recon element has been defeated. Nice job men!";
-				["TaskSucceeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
+				["Succeeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
 
 			} else {
 				CROSSROADS sideChat "We've lost communications with our recon element, all units RTB and rearm.";

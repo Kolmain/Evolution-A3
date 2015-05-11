@@ -34,7 +34,7 @@ while{ count _spawnPos < 1 } do
 	_max_distance = _max_distance + 50;
 };
 */
-_spawnPos = [location currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;  
+_spawnPos = [position currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
@@ -117,7 +117,7 @@ while{ count _spawnPos < 1 } do
 	_max_distance = _max_distance + 50;
 };
 */
-_spawnPos = [location currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;  
+_spawnPos = [position currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
@@ -148,7 +148,7 @@ handle = [currentTargetOF, currentTarget] spawn {
 				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
 	    		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
-			
+
 			_loop = false;
 		};
 		sleep 10;
@@ -325,13 +325,13 @@ sleep 1;
 waitUntil {!RTonline};
 
 [[[], {
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
-		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		["Succeeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-[towerTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+[towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
 [CROSSROADS, format ["We've received confirmation that the OPFOR communications tower has been destroyed, %1 will no longer be reinforced by OPFOR.", currentTargetName]] call EVO_fnc_globalSideChat;
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
@@ -361,7 +361,7 @@ while {currentTargetLeft > 9} do {
 _sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
-[attackTask, "TaskSucceeded", false] call bis_fnc_taskSetState;
+[attackTask, "Succeeded", false] call bis_fnc_taskSetState;
 
 
 if ([officerTask] call bis_fnc_taskState != "Succeeded" || [officerTask] call bis_fnc_taskState != "Failed") then {
@@ -376,7 +376,7 @@ if ([officerTask] call bis_fnc_taskState != "Succeeded" || [officerTask] call bi
 		_score = _score + 5;
 		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
-		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		["Succeeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
