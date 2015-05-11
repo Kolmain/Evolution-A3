@@ -5,10 +5,10 @@
 disableSerialization;
 
 if (bon_dynamic_list) then {
-_scripthandler =[] execVM "bon_recruit_units\recruitable_units.sqf"; 	//executes dynamic arrray builder to find units of player's subfaction
-waitUntil{ ScriptDone _scripthandler  };								//MUST wait for script to finish
+	_scripthandler =[] execVM "bon_recruit_units\recruitable_units.sqf"; 	//executes dynamic arrray builder to find units of player's subfaction
+	waitUntil{ ScriptDone _scripthandler  };								//MUST wait for script to finish
 } else {
-#include "recruitable_units_static.sqf"
+	if (isNil "bon_recruit_recruitableunits") then {bon_recruit_recruitableunits = ["B_Soldier_F"]};
 };
 
 _display = findDisplay BON_RECRUITING_DIALOG;
