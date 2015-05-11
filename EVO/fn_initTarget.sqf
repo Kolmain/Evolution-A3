@@ -37,7 +37,7 @@ while{ count _spawnPos < 1 } do
 _spawnPos = [location currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;  
 currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
-//handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
+handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
