@@ -129,23 +129,27 @@ _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
-/*
-handle = [currentTargetOF] spawn {
+
+handle = [currentTargetOF, currentTarget] spawn {
 	_OF = _this select 0;
+	_currentTarget = _this select 1;
 	_loop = true;
 	while {_loop} do {
-	    if (!officerAlive) then {
-	    	[officerTask, "Failed", false] call bis_fnc_taskSetState;
-	    	[{
-				_msg = format ["Colonel %1 has been killed.", name _OF];
+		if (_currentTarget != currentTarget) exitWith {_loop = false};
+		if (!alive _OF) then {
+	    		[officerTask, "Failed", false] call bis_fnc_taskSetState;
+	    		[[[_OF], {
+	    			_msg = format ["Colonel %1 has been killed.", name (_this select 0)];
 				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+	    		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
+			
 			_loop = false;
 		};
 		sleep 10;
 	};
 };
-*/
+
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
