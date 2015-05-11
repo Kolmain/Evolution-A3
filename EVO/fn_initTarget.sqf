@@ -253,6 +253,7 @@ for "_i" from 1 to infSquads do {
 			}  forEach units _grp;
 			_null = [(leader _grp), currentTargetMarkerName, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			waitUntil {({alive _x} count units _grp) < 2};
+			sleep random 120;
 		};
 	};
 };
@@ -278,6 +279,7 @@ for "_i" from 1 to (mechSquads) do {
 			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "NORMAL";
 			waitUntil {!canMove _tank || !alive _tank};
+			sleep random 120;
 		};
 	};
 };
@@ -301,6 +303,7 @@ for "_i" from 1 to armorSquads do {
 			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "LIMITED";
 			waitUntil {(({alive _x} count units _grp) == 0) || !alive _tank || !canMove _tank};
+			sleep random 120;
 		};
 	};
 };
