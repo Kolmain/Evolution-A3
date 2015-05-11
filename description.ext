@@ -98,6 +98,12 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
+	class randomSideMissions {
+		title = "Randomly Generate Side Missions";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
 	class r3fParam {
 		title = "R3F Logistics";
 		texts[] = {"Disabled","Enabled"};
