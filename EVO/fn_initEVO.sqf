@@ -35,8 +35,12 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 {
 	_vehicle = _x;
-	if ((faction _vehicle == "BLU_F") && !(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
-		_null = [_vehicle] spawn EVO_fnc_respawnRepair;
+	if (faction _vehicle == "BLU_F") then {
+		if (!(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
+			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
+		} else {
+			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
+		};
 	};
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
 		_markerName = format ["aa_%1", markerCounter];
@@ -60,11 +64,12 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 		_commander assignAsCommander _vehicle;
 		_gunner moveInGunner _vehicle;
 		_gunner assignAsGunner _vehicle;
-		handle = [_vehicle, _markerName] spawn {
-			_vehicle = _this select 0;
-			_markerName = _this select 1;
-			waitUntil {!alive _vehicle};
-			deleteMarker _markerName;
+		_vehicle lock true;
+		{
+			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+		} forEach units _grp;
+		_vehicle addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
 		};
 	};
 } forEach vehicles;
@@ -84,7 +89,7 @@ handle = [] spawn {
 		[_grp, 0] setWaypointCombatMode "RED";
 		[_grp, 0] setWaypointSpeed "FULL";
 		[_grp, 0] setWaypointType "HOLD";
-		[_grp, 0] setWPPos markerPos "opforair";
+		[_grp, 0] setWPPos getMarkerPos "opforair";
 		waitUntil {!canMove _plane || !alive _plane};
 		sleep 400;
 	};
