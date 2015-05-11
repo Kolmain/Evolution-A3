@@ -159,7 +159,7 @@ handle = [] spawn {
 		};
 		handle = [] call EVO_fnc_rank;
 		_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-		profileNamespace setVariable ["EVO_currentLoadout", _currentLoadout];
+		profileNamespace setVariable ["EVO_lastLoadout", _currentLoadout];
 		profileNamespace setVariable ["EVO_score", (player getVariable "EVO_score")];
 		profileNamespace setVariable ["EVO_lastPos", getPos player];
 		saveProfileNamespace;

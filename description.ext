@@ -96,7 +96,7 @@ class Params
 		title = "Mobile HQ Spawn Point";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class r3fParam {
 		title = "R3F Logistics";

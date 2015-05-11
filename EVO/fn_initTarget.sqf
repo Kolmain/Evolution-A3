@@ -34,7 +34,7 @@ while{ count _spawnPos < 1 } do
 };
 currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
-handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
+//handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
@@ -135,8 +135,7 @@ handle = [currentTargetOF] spawn {
 	_loop = true;
 	while {_loop} do {
 	    if (!officerAlive) then {
-		    [[[], {
-				officerTask setTaskState "Failed";
+	    	[officerTask, "Failed", false] call bis_fnc_taskSetState;
 				_msg = format ["Colonel %1 has been killed.", name currentTargetOF];
 				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
 			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;

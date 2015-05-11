@@ -9,7 +9,7 @@ _bombs = [];
 while {_loop} do
 {
 	sleep 1;
-	_bombs = _radio nearObjects ["satchelcharge_remote_ammo", 20];
+	_bombs = _radio nearObjects ["DemoCharge_Remote_Mag", 10];
 	if(count (_bombs) > 0) then
 	{
 		_radio allowDamage true;
