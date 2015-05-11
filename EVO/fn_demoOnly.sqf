@@ -1,18 +1,12 @@
-private ["_radio","_loop","_bombs"];
-
+private ["_radio"];
 
 _radio = _this select 0;
-_radio allowDamage false;
-_loop = true;
-_bombs = [];
 
-while {_loop} do
-{
-	sleep 1;
-	_bombs = _radio nearObjects ["DemoCharge_Remote_Mag", 10];
-	if(count (_bombs) > 0) then
-	{
-		_radio allowDamage true;
-		_loop = false;
-	};
-};
+_radio addEventHandler [ "HandleDamage", {
+    _tower = _this select 0;
+    _projectile = _this select 4;
+    
+    if !( _projectile isKindOf "PipeBombBase" ) then {
+        damage _tower;
+    };
+}];  
