@@ -34,6 +34,8 @@ rank7vehicles = ["b_plane_cas_01_f"];
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
 	MHQ = firstMHQ;
+} else {
+	MHQ = objNull;
 };
 
 if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
