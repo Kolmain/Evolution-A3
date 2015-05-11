@@ -107,7 +107,7 @@ if (HCconnected) then {
 
 
 
-
+/*
 _center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
 _spawnPos = [];
 _max_distance = 100;
@@ -116,6 +116,8 @@ while{ count _spawnPos < 1 } do
 	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
 	_max_distance = _max_distance + 50;
 };
+*/
+_spawnPos = [location currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;  
 _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
