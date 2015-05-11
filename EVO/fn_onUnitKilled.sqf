@@ -4,6 +4,7 @@ _killer = _this select 1;
 _scoreToAdd = 0;
 _score = 0;
 _notify = true;
+_vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 };
@@ -12,7 +13,6 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 	_score = _killer getVariable "EVO_score";
 	if (true) then {
 		if ((side _killed) != (side _killer)) then {
-			_vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
 				if (_killed isKindOf "Man" && typeOf _killed != "O_officer_F") then {
 					//npc kill
 					_score = _score + 1;
