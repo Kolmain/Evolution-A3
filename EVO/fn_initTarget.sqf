@@ -24,6 +24,7 @@ publicVariable "currentTargetSqkm";
 
 _towerClass = "Land_Communication_F";
 //_towerClass = ["Land_Communication_F", "Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
+/*
 _center = [ getMarkerPos currentTargetMarkerName, random 80 , random 360 ] call BIS_fnc_relPos;
 _spawnPos = [];
 _max_distance = 100;
@@ -32,6 +33,8 @@ while{ count _spawnPos < 1 } do
 	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
 	_max_distance = _max_distance + 50;
 };
+*/
+_spawnPos = [location currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;  
 currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
 //handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
