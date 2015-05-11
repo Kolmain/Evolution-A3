@@ -116,7 +116,7 @@ while{ count _spawnPos < 1 } do
 _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
-currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable officerAlive;}];
+currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
 _officer = currentTargetOF;
 _pos = (getPos _officer);
 _spawnPos = [];
@@ -129,14 +129,15 @@ _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
-
+/*
 handle = [currentTargetOF] spawn {
 	_OF = _this select 0;
 	_loop = true;
 	while {_loop} do {
 	    if (!officerAlive) then {
 	    	[officerTask, "Failed", false] call bis_fnc_taskSetState;
-				_msg = format ["Colonel %1 has been killed.", name currentTargetOF];
+	    	[{
+				_msg = format ["Colonel %1 has been killed.", name _OF];
 				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
 			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 			_loop = false;
@@ -144,7 +145,7 @@ handle = [currentTargetOF] spawn {
 		sleep 10;
 	};
 };
-
+*/
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 if (HCconnected) then {
