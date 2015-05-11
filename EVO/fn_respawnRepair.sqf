@@ -36,7 +36,6 @@ _veh addEventHandler ["Killed", {
 		} forEach (crew _veh);
 		sleep 120;
 		deleteVehicle _vehicle;
-		sleep 0.5;
 		_newVehicle = _classname createVehicle _pos;
 		if (_mhq) then {
 			handle= [_newVehicle, WEST] execVM "CHHQ.sqf";
