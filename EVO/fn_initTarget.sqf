@@ -1,6 +1,9 @@
 private ["_currentTarget","_targetType","_currentTargetMarker","_aoSize","_x1","_y1","_towerClass","_center","_spawnPos","_max_distance","_dir","_comp","_grp","_mortarGunner","_loop2","_obj","_newComp","_mortar","_officer","_pos","_pass","_msg","_null","_ret","_heli","_heliGrp","_class","_tank","_sound","_tskName","_locationType","_type","_nearUnits","_unit","_score"];
 
-
+currentTargetRT = nil;
+currentTargetOF = nil;
+RTonline = true;
+officerAlive = true;
 currentTargetName = text currentTarget;
 publicVariable "currentTargetName";
 _currentTarget = currentTarget;

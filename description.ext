@@ -177,6 +177,7 @@ class CfgFunctions
 			class newTargetTasks {};
 			class supportPoints {};
 			class basicRespawn {};
+			class sm_csar {};
 		};
 	};
 };

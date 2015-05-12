@@ -60,19 +60,19 @@ if (!(isServer) && !(hasInterface)) then {
 
 //init Server
 if (isServer) then {
-	["Initialize"] call BIS_fnc_dynamicGroups;
 	[] spawn EVO_fnc_initEVO;
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
+	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
 //init Client
 if (isDedicated || !hasInterface) exitWith {};
 _brief = [] execVM "briefing.sqf";
-["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 intro = true;
 player execVM "scripts\intro.sqf";
 [] execVM "scripts\player_markers.sqf";
+["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 WaitUntil{!intro};
 playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {

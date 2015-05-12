@@ -110,4 +110,23 @@ if (_bool) then {
 	];
 };
 
+//csar
+// 1 in 2 chance
+_bool = false;
+if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
+	_bool = [true, false] call BIS_fnc_selectRandom;
+} else {
+	_bool = true;
+};
+if (_bool) then {
+	csarLoc = sideLocations call BIS_fnc_selectRandom;
+	_pos = locationPosition csarLoc;
+	_array = nearestObjects [_pos, ["house"], 500];
+	_obj = _array select 0;
+	_img = getText(configFile >>  "CfgVehicles" >>  (["B_Heli_Light_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_stripped_F","B_Heli_Attack_01_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","B_Heli_Transport_03_unarmed_F","B_Heli_Transport_03_F","B_Heli_Transport_03_black_F","B_Heli_Transport_03_unarmed_green_F"] call bis_fnc_selectRandom) >> "picture");
+	availableSideMissions = availableSideMissions + [
+		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew","OPFOR AAA knocked a NATO helicopter out of the air, get out there and rescue the crew!","",_img,1,[]]
+	];
+};
+
 publicVariable "availableSideMissions";

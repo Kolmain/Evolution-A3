@@ -28,19 +28,18 @@ while {_loop && alive _obj} do {
 		};
 	} forEach playableUnits;
     {
-    	if (_x distance _obj) then {
+    	if (_x distance _obj < 1000) then {
     		_players = _players + 1;
     	};
     } forEach _allPlayers;
     if (_players == 0) then {
     	_loop = false;
     } else {
-    	if (_start && _obj isKindOf "Man") then {
+    	if (_start && _obj isKindOf "Man") exitWith {
     		_start = false;
     		_surrender = [true, false] call BIS_fnc_selectRandom;
     		if (_surrender) then {
     			//surrender unit
-
     		};
     	};
 	};
