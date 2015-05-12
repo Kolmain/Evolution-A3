@@ -106,7 +106,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		_lastRoad = _road;
 
 		{
-			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			if (_x distance position convoyStart > 300) then {
 
 				_lastRoad = _road;

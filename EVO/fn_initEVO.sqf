@@ -66,7 +66,7 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 		_gunner assignAsGunner _vehicle;
 		_vehicle lock true;
 		{
-			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 		} forEach units _grp;
 		_vehicle addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
@@ -80,7 +80,7 @@ handle = [] spawn {
 		_grp = _ret select 2;
 		_plane flyInHeight 350;
 		{
-			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 		}  forEach units _grp;
 		_plane addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_wp =_grp addWaypoint [getMarkerPos "opforair", 0];

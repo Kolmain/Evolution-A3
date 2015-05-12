@@ -22,8 +22,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-				_x addEventHandler ["Killed", {
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {
 					attackingUnits = attackingUnits - 1;
 				}];
 				attackingUnits = attackingUnits + 1;
@@ -39,8 +39,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
-				_x addEventHandler ["Killed", {
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {
 					attackingUnits = attackingUnits - 1;
 				}];
 				attackingUnits = attackingUnits + 1;
@@ -55,7 +55,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				} forEach units _heliGrp;
 			};
 			{
-			_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _heliGrp;
 			   {
 			   		_x assignAsCargo _heli;

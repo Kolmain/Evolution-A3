@@ -28,7 +28,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};

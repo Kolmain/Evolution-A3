@@ -101,7 +101,7 @@ if (HCconnected) then {
 
 
 {
-	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 [_grp, _spawnPos] call bis_fnc_taskDefend;
 
@@ -164,7 +164,7 @@ if (HCconnected) then {
 };
 
 {
-	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
@@ -177,7 +177,7 @@ if (HCconnected) then {
 };
 
 {
-	_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 }  forEach units _grp;
 
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
@@ -194,7 +194,7 @@ for "_i" from 1 to paraSquads do {
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 		    _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
@@ -206,7 +206,7 @@ for "_i" from 1 to paraSquads do {
 				} forEach units _heliGrp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _heliGrp;
 		    {
 		    	_x assignAsCargo _heli;
@@ -249,7 +249,7 @@ for "_i" from 1 to infSquads do {
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentTargetMarkerName, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			waitUntil {({alive _x} count units _grp) < 2};
@@ -274,7 +274,7 @@ for "_i" from 1 to (mechSquads) do {
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "NORMAL";
@@ -298,7 +298,7 @@ for "_i" from 1 to armorSquads do {
 				} forEach units _grp;
 			};
 			{
-				_x addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			}  forEach units _grp;
 			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			_grp setSpeedMode "LIMITED";
