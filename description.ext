@@ -1,6 +1,6 @@
 disabledAI=1;
 author="Kolmain";
-OnLoadName = "Evoluton";
+OnLoadName = "Evoluton-A3";
 OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
 respawn = 3;
