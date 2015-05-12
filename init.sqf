@@ -68,6 +68,7 @@ if (isServer) then {
 
 //init Client
 if (isDedicated || !hasInterface) exitWith {};
+_brief = [] execVM "briefing.sqf";
 ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 intro = true;
 player execVM "scripts\intro.sqf";

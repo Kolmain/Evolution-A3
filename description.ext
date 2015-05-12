@@ -13,7 +13,14 @@ taskManagement_markers2D = 1;
 taskManagement_markers3D = 1;
 taskManagement_propagate = 1;
 taskManagement_drawDist = 2500;
-
+corpseManagerMode = 1; //Type of removed bodies: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
+corpseLimit = 10; //Max number of bodies which can be available at the same time. When exceeded, start deleting immediately.
+corpseRemovalMinTime = 120; //Minimal time in seconds a body stays in the scene (can't be removed sooner).
+corpseRemovalMaxTime = 240; //Maximal time in seconds after which a dead body is removed (can't stay longer)
+wreckManagerMode = 1; //Type of removed wrecks: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
+wreckLimit = 5; //Max number of wrecks which can be available at the same time. When exceeded, start deleting immediately.
+wreckRemovalMinTime = 120; //Minimal time in seconds a wreck stays in the scene (can't be removed sooner).
+wreckRemovalMaxTime = 240; //Maximal time in seconds after which a wreck is removed (can't stay longer)
 
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"
