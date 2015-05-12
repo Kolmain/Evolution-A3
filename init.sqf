@@ -110,9 +110,9 @@ if (isNil "_profileSessionID") then {
 		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
 		player setPos _lastPos;
 		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
-		systemChat "Setting player loadout...";
+		systemChat "Setting player loadout to last known loadout...";
 		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
-		loadout = _lastLoadout;
+		//loadout = _lastLoadout;
 	} else {
 		_profileSessionID = EVO_sessionID;
 		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];

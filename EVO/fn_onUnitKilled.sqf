@@ -144,6 +144,11 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 			_score = _score - 7;
 			_scoreToAdd = -7;
+			if (_score < 0) then {
+				_subScore = 0 - _score;
+				_scoreToAdd = _scoreToAdd + _subScore;
+				_score = 0;
+			};
 			_killer setVariable ["EVO_score", _score, true];
 		};
 	} ;
