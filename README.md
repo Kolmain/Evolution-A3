@@ -33,6 +33,9 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 https://github.com/Kolmain/Evolution-A3/releases
 
+Also available on Steam Workshop:
+http://steamcommunity.com/sharedfiles/filedetails/?id=441868055&searchtext=Evolution
+
 ### Requirements
 
 Evolution-A3 uses no mods and is 100% Vanilla ArmA 3.
