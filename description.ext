@@ -178,6 +178,7 @@ class CfgFunctions
 			class supportPoints {};
 			class basicRespawn {};
 			class sm_csar {};
+			class playerNearby {};
 		};
 	};
 };
