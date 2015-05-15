@@ -129,6 +129,12 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
+	class persistentEVO {
+		title = "Persistence";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 1;
+	};
 
 };
 
