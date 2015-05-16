@@ -35,6 +35,14 @@ class Header
  maxPlayers = 30;            //Max # of players the mission supports
 };
 
+class CfgRespawnTemplates
+{
+	class EVO_respawn
+	{
+		onPlayerKilled = "EVO_fnc_reviveOnPlayerKilled";
+		onPlayerRespawn = "EVO_fnc_reviveOnPlayerRespawn";
+	};
+};
 
 class Params
 {
@@ -185,6 +193,19 @@ class CfgFunctions
 			class basicRespawn {};
 			class sm_csar {};
 			class playerNearby {};
+			class reviveControl {};
+			class reviveBleedOut {};
+			class reviveEnabled {};
+			class reviveExecuteTemplate {};
+			class reviveIconControl {};
+			class reviveIconManager {};
+			class reviveIncapacitate {};
+			class reviveInit {};
+			class reviveKeys {};
+			class reviveOnPlayerKilled {};
+			class reviveOnPlayerREspawn {};
+			class reviveProgress {};
+			class reviveSetStatus {};
 		};
 	};
 };
