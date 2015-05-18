@@ -1,7 +1,7 @@
 // by Bon_Inf*
 
 if(not local player) exitWith{};
-if((count (units group player) + count bon_recruit_queue) >= bon_max_units_allowed) exitWith {hint "You've reached the max. allowed group size."};
+if(({!isPlayer _x} count (units group player) + count bon_recruit_queue) >= bon_max_units_allowed) exitWith {hint "You've reached the max. allowed group size."};
 
 
 #include "dialog\definitions.sqf"
