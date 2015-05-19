@@ -1,7 +1,9 @@
 [] spawn {
-	CHVD_scriptRunning = true;
 	//Wait for mission init, in case there are variables defined some place else
 	waitUntil {time > 0};
+	
+	CHVD_scriptRunning = if (isNil "CHVD_scriptRunning") then {false} else {CHVD_scriptRunning};
+	if (CHVD_scriptRunning) exitWith {systemChat "CHVD script is running. Addon disabled"};
 	
 	//Define variables, load from profileNamespace
 	CHVD_allowNoGrass = if (isNil "CHVD_allowNoGrass") then {true} else {CHVD_allowNoGrass};

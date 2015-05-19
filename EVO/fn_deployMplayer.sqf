@@ -7,7 +7,14 @@ if (player distance spawnBuilding < 1000) exitWith {
 };
 
 
-
+_checkBoundingSize = {
+	_type = _this select 0;
+	_bbdummy = _type createVehicleLocal [0,0,0];
+	_boundingBox = (boundingBox _bbdummy) select 1;
+	deleteVehicle _bbdummy;
+	_boundingSize = if (_boundingBox select 0 > _boundingBox select 1) then {_boundingBox select 0} else {_boundingBox select 1};
+	_boundingSize
+};
 
 
 _pos = getPos player;

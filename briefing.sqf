@@ -6,90 +6,90 @@ player createDiaryRecord ["OPREP", ["Mission", "Eradicated CSAT prescence on the
 player createDiaryRecord ["OPREP", ["Execution", "NATO high command has issued orders to retake the island via a systematic approach. We will be receiving intel from our forward recon teams and leaders will be receiving new orders as we receive them. Infantry movement will be supported by light armor and air cover as we move towards the island."]];
 _index = player createDiarySubject ["Gamemode","Gamemode"];
 _rankString = "You are awarded field promotions based on your score:";
-_rankString = _rankString + format ["\n<img image='img\pvt.paa' width='32' height='32'> %1 points   = PRIVATE\n
-<img image='img\corp.paa' width='32' height='32'> %2 points  = CORPORAL\n
-<img image='img\sgt.paa' width='32' height='32'> %3 points  = SERGEANT\n
-<img image='img\ltn.paa' width='32' height='32'> %4 points  = LIEUTENANT\n
-<img image='img\cpt.paa' width='32' height='32'> %5 points = CAPTAIN\n
-<img image='img\mjr.paa' width='32' height='32'> %6 points = MAJOR\n
-<img image='img\col.paa' width='32' height='32'> %7 points = COLONEL\n\n", 0, rank1, rank2, rank3, rank4, rank5, rank6];
+_rankString = _rankString + format ["</br><img image='img\pvt.paa' width='32' height='32'> %1 points   = PRIVATE</br>
+<img image='img\corp.paa' width='32' height='32'> %2 points  = CORPORAL</br>
+<img image='img\sgt.paa' width='32' height='32'> %3 points  = SERGEANT</br>
+<img image='img\ltn.paa' width='32' height='32'> %4 points  = LIEUTENANT</br>
+<img image='img\cpt.paa' width='32' height='32'> %5 points = CAPTAIN</br>
+<img image='img\mjr.paa' width='32' height='32'> %6 points = MAJOR</br>
+<img image='img\col.paa' width='32' height='32'> %7 points = COLONEL</br></br>", 0, rank1, rank2, rank3, rank4, rank5, rank6];
 player createDiaryRecord ["Gamemode", ["Player Ranks", _rankString]];
 
 
 _assetString = "Each rank unlocks new vehicles for you to utilize:";
-_assetString = _assetString + "\n<img image='img\pvt.paa' width='32' height='32'>\n PRIVATE \n\n";
+_assetString = _assetString + "</br><img image='img\pvt.paa' width='32' height='32'></br> PRIVATE </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank1vehicles;
-_assetString = _assetString + "\n<img image='img\corp.paa' width='32' height='32'>\n CORPORAL \n\n";
+_assetString = _assetString + "</br><img image='img\corp.paa' width='32' height='32'></br> CORPORAL </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank2vehicles;
-_assetString = _assetString + "\n<img image='img\sgt.paa' width='32' height='32'>\n SERGEANT \n\n";
+_assetString = _assetString + "</br><img image='img\sgt.paa' width='32' height='32'></br> SERGEANT </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank3vehicles;
-_assetString = _assetString + "\n<img image='img\ltn.paa' width='32' height='32'>\n LIEUTENANT \n\n";
+_assetString = _assetString + "</br><img image='img\ltn.paa' width='32' height='32'></br> LIEUTENANT </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank4vehicles;
-_assetString = _assetString + "\n<img image='img\cpt.paa' width='32' height='32'>\n CAPTAIN \n\n";
+_assetString = _assetString + "</br><img image='img\cpt.paa' width='32' height='32'></br> CAPTAIN </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank5vehicles;
-_assetString = _assetString + "\n<img image='img\mjr.paa' width='32' height='32'>\n MAJOR \n\n";
+_assetString = _assetString + "</br><img image='img\mjr.paa' width='32' height='32'></br> MAJOR </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank6vehicles;
-_assetString = _assetString + "\n<img image='img\col.paa' width='32' height='32'>\n COLONEL \n\n";
+_assetString = _assetString + "</br><img image='img\col.paa' width='32' height='32'></br> COLONEL </br></br>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank7vehicles;
 player createDiaryRecord ["Gamemode", ["Assets", _assetString]];
 
 
 _assetString = "Each rank unlocks new weapons for you to use:";
-_assetString = _assetString + "\n<img image='img\pvt.paa' width='32' height='32'>\n PRIVATE \n\n";
+_assetString = _assetString + "</br><img image='img\pvt.paa' width='32' height='32'></br> PRIVATE </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank1weapons;
-_assetString = _assetString + "\n<img image='img\corp.paa' width='32' height='32'>\n CORPORAL \n\n";
+_assetString = _assetString + "</br><img image='img\corp.paa' width='32' height='32'></br> CORPORAL </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank2weapons;
-_assetString = _assetString + "\n<img image='img\sgt.paa' width='32' height='32'>\n SERGEANT \n\n";
+_assetString = _assetString + "</br><img image='img\sgt.paa' width='32' height='32'></br> SERGEANT </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank3weapons;
-_assetString = _assetString + "\n<img image='img\ltn.paa' width='32' height='32'>\n LIEUTENANT \n\n";
+_assetString = _assetString + "</br><img image='img\ltn.paa' width='32' height='32'></br> LIEUTENANT </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank4weapons;
-_assetString = _assetString + "\n<img image='img\cpt.paa' width='32' height='32'>\n CAPTAIN \n\n";
+_assetString = _assetString + "</br><img image='img\cpt.paa' width='32' height='32'></br> CAPTAIN </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank5weapons;
-_assetString = _assetString + "\n<img image='img\mjr.paa' width='32' height='32'>\n MAJOR \n\n";
+_assetString = _assetString + "</br><img image='img\mjr.paa' width='32' height='32'></br> MAJOR </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank6weapons;
-_assetString = _assetString + "\n<img image='img\col.paa' width='32' height='32'>\n COLONEL \n\n";
+_assetString = _assetString + "</br><img image='img\col.paa' width='32' height='32'></br> COLONEL </br></br>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-	_assetString = _assetString + format ["%1 \n", _displayName];
+	_assetString = _assetString + format ["%1 </br>", _displayName];
 } forEach rank7weapons;
 player createDiaryRecord ["Gamemode", ["Weapons", _assetString]];
 
@@ -97,48 +97,48 @@ player createDiaryRecord ["Gamemode", ["Weapons", _assetString]];
 
 
 player createDiaryRecord ["Gamemode", ["Hints", "You can Request a HALO drop from the staging base spawn area. It's free until you are a Corporal, after which will cost you 3 points.
-\n
-\n
+</br>
+</br>
 The Radio Towers can only be destroyed with explosives set by infantry.
-\n
-\n
+</br>
+</br>
 If you kill an unarmed enemy you will be fined 8 points.
-\n
-\n
+</br>
+</br>
 You can join or create squads at the spawn area in the staging base, or by pressing 'U' at anytime.
-\n
-\n
+</br>
+</br>
 As a commander you have many support assets available to you.
-\n
-\n
+</br>
+</br>
 You can recruit AI squadmates at the staging base spawn area, or in the field via the communication menu.
-\n
-\n
+</br>
+</br>
 You can choose a side mission for your platoon to take on at the spawn area in the staging base. Only one sidemission is active at a time.
-\n
-\n
+</br>
+</br>
 If you disconnect and reconnect your score and rank will be retained, and you will be moved to the last location with the loadout you had at the time.
-\n
-\n
+</br>
+</br>
 You can earn points by transporting friendly players.
-\n
-\n
+</br>
+</br>
 If you are in command of a vehicle, stop at the airbase, a FARP or a dock to be fully serviced.
-\n
-\n
+</br>
+</br>
 If you are a medic you can set up a MASH (Mobile Army Surgical Hospital). When players heal (enemy inflicted wounds) you get points. As a medic your priority must be healing.
-\n
-\n
+</br>
+</br>
 If you are an engineer you can set up a FARP (Forward Arming and Refueling Point) when you are near a repair vehicle. If you fully repair a marked vehicle at your farp you will earn points, As an engineer your priority must be repairing damaged vehicles.
-\n
-\n
+</br>
+</br>
 You can set your terrain detail (grass), View distance and Air view distance (How far you see in a plane or chopper) in the spawn area at the staging base.
-\n
-\n
+</br>
+</br>
 Each town contains a radio tower, If you destroy it you will receive 10 points, It also stops any further reinforcements being sent to the town under siege. Careful, there may be some on the way already.
-\n
-\n
+</br>
+</br>
 When each town falls, remaining troops drop their guns and can be captured and returned to base for 5 points. Never shoot unarmed soldiers as they may be someones prisoner.
-\n
-\n
+</br>
+</br>
 In each town is an officer, If you capture him and return him to base it is worth 20 points, To capture him you must first identify him (default right click) then choose the option capture. Never shoot the officer, he is always unarmed."]];

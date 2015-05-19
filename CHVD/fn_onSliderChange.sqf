@@ -1,11 +1,11 @@
 private ["_sliderPos","_updateType"];
 _varType1 = [_this, 0, "", [""]] call BIS_fnc_param;
-_slider1 = [_this, 1, controlNull, [0, controlNull]] call BIS_fnc_param;
+_slider1 = ctrlIDC ([_this, 1, 0, [0, controlNull]] call BIS_fnc_param);
 _sliderPos = [_this, 2, 0, [0]] call BIS_fnc_param;
-_text1 = [_this, 3, controlNull, [0, controlNull]] call BIS_fnc_param;
+_text1 = [_this, 3, 0, [0, controlNull]] call BIS_fnc_param;
 _varType2 = [_this, 4, "", [""]] call BIS_fnc_param;
-_slider2 = [_this, 5, controlNull, [0, controlNull]] call BIS_fnc_param;
-_text2 = [_this, 6, controlNull, [0, controlNull]] call BIS_fnc_param;
+_slider2 = [_this, 5, 0, [0, controlNull]] call BIS_fnc_param;
+_text2 = [_this, 6, 0, [0, controlNull]] call BIS_fnc_param;
 _syncVar = [_this, 7, "", [""]] call BIS_fnc_param;
 
 if (count _this < 8) then {
@@ -19,7 +19,7 @@ if (count _this < 8) then {
 };
 
 switch (_updateType) do {
-	case 1: {				
+	case 1: {
 		sliderSetPosition [_slider1, _sliderPos min CHVD_maxView];
 		ctrlSetText [_text1, str round (_sliderPos min CHVD_maxView)];
 		sliderSetRange [_slider2, 0, _sliderPos min CHVD_maxView];

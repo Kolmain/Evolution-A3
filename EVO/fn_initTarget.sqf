@@ -188,7 +188,7 @@ if (HCconnected) then {
 for "_i" from 1 to paraSquads do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
-		while { _currentTarget == currentTarget } do {
+		while { RTonline && _currentTarget == currentTarget } do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
 		    if (HCconnected) then {
@@ -218,10 +218,11 @@ for "_i" from 1 to paraSquads do {
 		    _heli doMove (getMarkerPos currentTargetMarkerName);
 		    //_wp = _heliGrp addWaypoint [getMarkerPos currentTargetMarkerName, 0];
 		    _heli flyInHeight 150;
-		    waitUntil {(_heli distance (getMarkerPos currentTargetMarkerName)) < 500};
+		    waitUntil {([_heli, currentTarget] call BIS_fnc_distance2D < 200)};
 		    handle = [_heli] spawn EVO_fnc_paradrop;
 		    doStop _heli;
 		    waitUntil {count (assignedCargo _heli) == 0};
+		    doStop _heli;
 		    _heli doMove _spawnPos;
 		    //_wp = _heliGrp addWaypoint [getPos server, 0];
 		    handle = [_heli, _spawnPos] spawn {
@@ -234,8 +235,8 @@ for "_i" from 1 to paraSquads do {
 		    	deleteVehicle _heli;
 			};
 			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			//waitUntil {({alive _x} count units _grp) < 3};
-			sleep 600;
+			waitUntil {({alive _x} count units _grp) < 3};
+			sleep 300;
 		};
 	};
 };

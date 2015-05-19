@@ -193,6 +193,7 @@ class CfgFunctions
 			class basicRespawn {};
 			class sm_csar {};
 			class playerNearby {};
+			/*
 			class reviveControl {};
 			class reviveBleedOut {};
 			class reviveEnabled {};
@@ -206,6 +207,7 @@ class CfgFunctions
 			class reviveOnPlayerREspawn {};
 			class reviveProgress {};
 			class reviveSetStatus {};
+			*/
 		};
 	};
 };
