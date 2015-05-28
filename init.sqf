@@ -86,6 +86,7 @@ handle = [] spawn {
 		waitUntil {player distance hqbox < 5};
 	   	waitUntil {player distance hqbox > 5};
 	   	if (isTouchingGround player) then {
+	   		sleep 5;
 			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 			profileNamespace setVariable ["EVO_loadout", loadout];
 			saveProfileNamespace;
