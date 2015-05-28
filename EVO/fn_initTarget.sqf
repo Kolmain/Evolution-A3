@@ -68,20 +68,6 @@ _comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "co
 _grp = createGroup EAST;
 _mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
 
-handle = [currentTarget, _mortarGunner] spawn {
-	_currentTarget = _this select 0;
-	_mortarGunner = _this select 1;
-	_loop2 = true;
-	while {_loop2} do {
-	    sleep 5;
-	    if (currentTarget != _currentTarget) then {
-	    	_loop2 = false;
-	    };
-	    if (!alive _mortarGunner) exitWith {};
-	};
-	[_mortarGunner, currentTarget] call EVO_fnc_wrapUp;
-};
-
 _newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
 _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
@@ -89,31 +75,16 @@ _mortarGunner moveInGunner _mortar;
 nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
 _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
 
-handle = [currentTarget, _grp] spawn {
-	_currentTarget = _this select 0;
-	_grp = _this select 1;
-	_loop2 = true;
-	while {_loop2} do {
-	    sleep 5;
-	    if (currentTarget != _currentTarget) then {
-	    	_loop2 = false;
-	    };
-	};
-	{
-		[_x, currentTarget] call EVO_fnc_wrapUp;
-	} forEach units _grp;
-};
-
-if (HCconnected) then {
-	{
-		handle = [_x] call EVO_fnc_sendToHC;
-	} forEach units _grp;
-};
-
 
 {
-	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-}  forEach units _grp;
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+			currentAOunits pushBack _x;
+			publicVariable "currentAOunits";
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
+		} forEach units _grp;
 [_grp, _spawnPos] call bis_fnc_taskDefend;
 
 
@@ -168,28 +139,28 @@ handle = [currentTargetOF, currentTarget] spawn {
 
 
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
-if (HCconnected) then {
-	{
-		handle = [_x] call EVO_fnc_sendToHC;
-	} forEach units _grp;
-};
-
 {
-	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-}  forEach units _grp;
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+			currentAOunits pushBack _x;
+			publicVariable "currentAOunits";
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
+		} forEach units _grp;
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
 
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
-if (HCconnected) then {
-	{
-		handle = [_x] call EVO_fnc_sendToHC;
-	} forEach units _grp;
-};
-
 {
-	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-}  forEach units _grp;
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+			currentAOunits pushBack _x;
+			publicVariable "currentAOunits";
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
+		} forEach units _grp;
 
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
 
