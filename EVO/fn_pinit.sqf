@@ -42,7 +42,7 @@ if (alive currentTargetOF) then {
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
-	player addaction ["Modify Loadout","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
+	player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
