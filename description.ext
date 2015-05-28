@@ -73,21 +73,15 @@ class Params
 	};
 	class infSquadsParam {
 		title = "# of Infantry Squads at AO";
-		texts[] = {"1","2","3","4","5"};
-		values[] = {1,2,3,4,5};
+		texts[] = {"4","5","6","7","8","9"};
+		values[] = {4,5,6,7,8,9};
 		default = 5;
-	};
-	class mechSquadsParam {
-		title = "# of Mechanized Squads at AO";
-		texts[] = {"1","2","3","4","5"};
-		values[] = {1,2,3,4,5};
-		default = 1;
 	};
 	class armorSquadsParam {
 		title = "# of Armor at AO";
-		texts[] = {"1","2","3","4","5"};
-		values[] = {1,2,3,4,5};
-		default = 1;
+		texts[] = {"0","2","3","4","5","6"};
+		values[] = {0,2,3,4,5,6};
+		default = 3;
 	};
 	class pilotDressRequired {
 		title = "Require Pilot Loadout to Pilot";

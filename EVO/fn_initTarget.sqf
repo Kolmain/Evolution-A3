@@ -2,6 +2,14 @@ private ["_currentTarget","_targetType","_currentTargetMarker","_aoSize","_x1","
 
 currentTargetRT = nil;
 currentTargetOF = nil;
+if (isNil "currentAOunits") then {
+	currentAOunits = [];
+	publicVariable "currentAOunits";
+};
+lastAOunits = currentAOunits;
+publicVariable "lastAOunits";
+currentAOunits = [];
+publicVariable "currentAOunits";
 RTonline = true;
 officerAlive = true;
 currentTargetName = text currentTarget;
@@ -185,130 +193,18 @@ if (HCconnected) then {
 
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
 
-for "_i" from 1 to paraSquads do {
-	_null = [_currentTarget] spawn {
-		_currentTarget = _this select 0;
-		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
-		    if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
-			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-			}  forEach units _grp;
-		    _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
-		    _heli = _ret select 0;
-		    _heliGrp = _ret select 2;
-		    if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _heliGrp;
-			};
-			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-			}  forEach units _heliGrp;
-		    {
-		    	_x assignAsCargo _heli;
-		    	_x moveInCargo _heli;
-		    } forEach units _grp;
-		    _heli doMove (getMarkerPos currentTargetMarkerName);
-		    //_wp = _heliGrp addWaypoint [getMarkerPos currentTargetMarkerName, 0];
-		    _heli flyInHeight 150;
-		    waitUntil {([_heli, currentTarget] call BIS_fnc_distance2D < 200)};
-		    handle = [_heli] spawn EVO_fnc_paradrop;
-		    doStop _heli;
-		    waitUntil {count (assignedCargo _heli) == 0};
-		    doStop _heli;
-		    _heli doMove _spawnPos;
-		    //_wp = _heliGrp addWaypoint [getPos server, 0];
-		    handle = [_heli, _spawnPos] spawn {
-		    	_spawnPos = _this select 1;
-		    	_heli = _this select 0;
-		    	waitUntil {(_heli distance _spawnPos) < 1000};
-		    	{
-		    		deleteVehicle _x;
-		    	} forEach units group driver _heli;
-		    	deleteVehicle _heli;
-			};
-			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			waitUntil {({alive _x} count units _grp) < 3};
-			sleep 300;
-		};
-	};
-};
-
 for "_i" from 1 to infSquads do {
 	_null = [_currentTarget] spawn {
-		_currentTarget = _this select 0;
-		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
-		    if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
-			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-			}  forEach units _grp;
-			_null = [(leader _grp), currentTargetMarkerName, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			waitUntil {({alive _x} count units _grp) < 2};
-			sleep random 120;
-		};
-	};
-};
-
-for "_i" from 1 to (mechSquads) do {
-	_null = [_currentTarget] spawn {
-		_currentTarget = _this select 0;
-		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			//_class = ["O_MRAP_02_gmg_F","O_MRAP_02_hmg_F"] select (random floor(1));
-			_class = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom; //returns one of the variables
-		    _ret = [_spawnPos, (floor (random 360)), _class, EAST] call bis_fnc_spawnvehicle;
-		    _tank = _ret select 0;
-		    _grp = _ret select 2;
-		    if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
-			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-			}  forEach units _grp;
-			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			_grp setSpeedMode "NORMAL";
-			waitUntil {!canMove _tank || !alive _tank};
-			sleep random 120;
-		};
+			_grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
+			waitUntil {({alive _x} count units _grp) < 5};
 	};
 };
 
 for "_i" from 1 to armorSquads do {
 	_null = [_currentTarget] spawn {
-		_currentTarget = _this select 0;
-		while { RTonline && _currentTarget == currentTarget } do {
-			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-		    _ret = [_spawnPos, (floor (random 360)), "O_MBT_02_cannon_F", EAST] call bis_fnc_spawnvehicle;
-		    _tank = _ret select 0;
-		    _grp = _ret select 2;
-		    if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
-			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-			}  forEach units _grp;
-			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			_grp setSpeedMode "LIMITED";
-			waitUntil {(({alive _x} count units _grp) == 0) || !alive _tank || !canMove _tank};
-			sleep random 120;
-		};
+			_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
+			_tank = vehicle leader _grp;
+			waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
 	};
 };
 
@@ -342,23 +238,7 @@ _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom
 playSound _sound;
 
 
-currentTargetLeft = 100;
-while {currentTargetLeft > 9} do {
-	_nearUnits = nearestObjects [getMarkerPos currentTargetMarkerName, ["Car","Tank","Man"], 500];
-	currentTargetLeft = 0;
-	{
-		_unit = _x;
-		if (_unit isKindOf "Man" && side _unit == EAST) then {
-			if (alive _unit) then {
-				currentTargetLeft = currentTargetLeft + 1
-			};
-		} else {
-			if(canMove _unit && side _unit == EAST) then {
-				currentTargetLeft = currentTargetLeft + 1
-			};
-		};
-	} foreach _nearUnits;
-	publicVariable "currentTargetLeft";
+while {count currentAOunits > 9} do {
 	sleep 10;
 };
 
