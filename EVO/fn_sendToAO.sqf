@@ -2,11 +2,11 @@ _currentTarget = [_this, 0, objNull] call BIS_fnc_param;
 _type = [_this, 1, "error"] call BIS_fnc_param;
 if (_unit == objNull || _type == "error") exitWith {["EVO_fnc_sendToAO called without parameters."] call BIS_fnc_error};
 if (!RTonline && !_currentTarget == currentTarget) exitWith {["EVO_fnc_sendToAO called after AO change."] call BIS_fnc_error};
-
+_nextAO = targetLocations select (targetCounter + 1);
 
 switch (_type) do {
     case "infantry": {
-    	_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    	_spawnPos = [position _nextAO, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
 		{
 			if (HCconnected) then {
@@ -61,7 +61,7 @@ switch (_type) do {
 		};
     };
     case "armor": {
-    		_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    		_spawnPos = [position _nextAO, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 		    _ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call bis_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
