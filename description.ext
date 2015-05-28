@@ -138,10 +138,10 @@ class Params
 		default = 1;
 	};
 	class persistentEVO {
-		title = "Persistence";
+		title = "Remember Player Positions";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 
 };
