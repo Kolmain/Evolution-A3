@@ -176,6 +176,7 @@ class CfgFunctions
 			class sm_attackMil {};
 			class sm_convoy {};
 			class sm_reinforce {};
+			class sm_csar {};
 			class buildSideMissionArray {};
 			class osm {};
 			class wrapUp {};
@@ -185,8 +186,8 @@ class CfgFunctions
 			class newTargetTasks {};
 			class supportPoints {};
 			class basicRespawn {};
-			class sm_csar {};
 			class playerNearby {};
+			class sendToAO {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

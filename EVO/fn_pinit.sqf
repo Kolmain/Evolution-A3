@@ -19,22 +19,6 @@ player addaction ["<t color='#CCCC00'>HALO Drop</t>","ATM_airdrop\atm_airdrop.sq
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 
 
-if (alive currentTargetOF) then {
-	currentTargetOF addAction [format["Capture %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
-} else {
-	[] spawn {
-		_loop = true;
-		while {_loop} do {
-		    sleep 10;
-		    if (alive currentTargetOF) then {
-		    	currentTargetOF addAction [format["Capture Colonel %1", name currentTargetOF],"_this spawn EVO_fnc_officer",nil,1,false,true,"","alive currentTargetOF"];
-		    	_loop = false;
-		    };
-		};
-	};
-};
-
-
 [[[player], {
 	if (isServer) then {
 		_this select 0 addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
@@ -42,7 +26,8 @@ if (alive currentTargetOF) then {
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
-	player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
+	//player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
+	0 = ["AmmoboxInit",[hqbox, true]] spawn BIS_fnc_arsenal;
 };
 
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {

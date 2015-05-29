@@ -1,10 +1,10 @@
 [] spawn {
 	//Wait for mission init, in case there are variables defined some place else
 	waitUntil {time > 0};
-	
+
 	CHVD_scriptRunning = if (isNil "CHVD_scriptRunning") then {false} else {CHVD_scriptRunning};
 	if (CHVD_scriptRunning) exitWith {systemChat "CHVD script is running. Addon disabled"};
-	
+
 	//Define variables, load from profileNamespace
 	CHVD_allowNoGrass = if (isNil "CHVD_allowNoGrass") then {true} else {CHVD_allowNoGrass};
 	CHVD_maxView = if (isNil "CHVD_maxView") then {12000} else {CHVD_maxView};
@@ -29,11 +29,11 @@
 	//Begin initialization
 	waitUntil {!isNull player};
 	waitUntil {!isNull findDisplay 46};
-
+	/*
 	_actionText = if (isLocalized "STR_chvd_title") then {localize "STR_chvd_title"} else {"View Distance Settings"};
 	player addAction [_actionText, CHVD_fnc_openDialog, [], -99, false, true];
 	player addEventHandler ["Respawn", format ["player addAction ['%1', CHVD_fnc_openDialog, [], -99, false, true]", _actionText]];
-
+	*/
 	//Detect when to change setting type
 	[] spawn {
 		for "_i" from 0 to 1 step 0 do {
@@ -41,7 +41,7 @@
 			_currentVehicle = vehicle player;
 			waitUntil {_currentVehicle != vehicle player};
 		};
-	};	
+	};
 	[] spawn {
 		for "_i" from 0 to 1 step 0 do {
 			waitUntil {UAVControl (getConnectedUAV player) select 1 != ""};

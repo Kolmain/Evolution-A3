@@ -33,6 +33,23 @@ currentTargetSqkm = (_x1 * _y1);
 publicVariable "currentTargetSqkm";
 "opforair" setMarkerPos (getMarkerPos currentTargetMarkerName);
 
+_nextTargetMarker = createMarker [nextTargetMarkerName, position _currentTarget];
+nextTargetMarkerName setMarkerShape "ELLIPSE";
+nextTargetMarkerName setMarkerBrush "FDiagonal";
+nextTargetMarkerName setMarkerDir direction (targetLocations select (targetCounter + 1));
+_aoSize = [(((size (targetLocations select (targetCounter + 1))) select 0) + 200), (((size (targetLocations select (targetCounter + 1))) select 1) + 200)];
+nextTargetMarkerName setMarkerSize _aoSize;
+nextTargetMarkerName setMarkerColor "ColorEAST";
+nextTargetMarkerName setMarkerPos (position (targetLocations select (targetCounter + 1)));
+
+
+_pos = (position (targetLocations select (targetCounter + 1)));
+_array = nearestObjects [_pos, ["house"], 500];
+_obj = _array select 0;
+"opforArrow" setMarkerPos (getPos _obj);
+"opforArrow" setMarkerDir (([_obj, getMarkerPos currentTargetMarkerName] call bis_fnc_relativeDirTo) + 90);
+
+
 _towerClass = "Land_Communication_F";
 //_towerClass = ["Land_Communication_F", "Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
 /*
@@ -166,16 +183,25 @@ _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 
 for "_i" from 1 to infSquads do {
 	_null = [_currentTarget] spawn {
-			_grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
+			_grp = [_this select 0, "infantry", true] call EVO_fnc_sendToAO;
 			waitUntil {({alive _x} count units _grp) < 5};
+			while {RTonline} do {
+			    _grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
+				waitUntil {({alive _x} count units _grp) < 5};
+			};
 	};
 };
 
 for "_i" from 1 to armorSquads do {
 	_null = [_currentTarget] spawn {
-			_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
+			_grp = [_this select 0, "armor", true] call EVO_fnc_sendToAO;
 			_tank = vehicle leader _grp;
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
+			while {RTonline} do {
+				_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
+				_tank = vehicle leader _grp;
+				waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
+			};
 	};
 };
 

@@ -2614,7 +2614,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=5;
+		items=6;
 		class Item0
 		{
 			position[]={26418.945,-185.97,5467.5107};
@@ -2659,6 +2659,16 @@ class Mission
 			a=2;
 			b=2;
 			angle=-112.05207;
+		};
+		class Item5
+		{
+			position[]={20592.398,32.735397,8833.9648};
+			name="opforArrow";
+			type="mil_arrow";
+			colorName="ColorEAST";
+			a=3;
+			b=3;
+			angle=-194.033;
 		};
 	};
 };
