@@ -186,10 +186,11 @@ class CfgFunctions
 			class newTargetTasks {};
 			class supportPoints {};
 			class basicRespawn {};
-			class playerNearby {};
 			class sendToAO {};
 			class spawnGroup {};
 			class spawnVehicle {};
+			class playersNearby {};
+			class surrender {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

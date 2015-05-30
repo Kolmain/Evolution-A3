@@ -1,11 +1,11 @@
 private ["_msg","_truck","_pos","_composition","_sortedByDist","_frstNum","_secNum","_biggestOffset","_biggestOffsetAbs","_boundingSize","_checkBoundingSize","_radius","_sortedBySize","_flatPos","_nearMen","_mash","_damage","_obj","_mark","_mssg","_medmark"];
 
-
+/*
 if (player distance spawnBuilding < 1000) exitWith {
 	_msg = format ["You can't deploy a MASH in the base."];
 	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
-
+*/
 
 _checkBoundingSize = {
 	_type = _this select 0;
@@ -43,21 +43,22 @@ _flatPos = _pos isFlatEmpty [
 	false,			//--- Has to have shore nearby!
 	objNull			//--- Ignored object
 ];
-
+/*
 if (count _flatPos isEqualTo 0) exitWith {
 	_msg = format ["You can't deploy a MASH on uneven terrain."];
 	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 
 
-
+*/
 
 
 //Land_Medevac_house_V1_F
 
 player playMove "Acts_carFixingWheel";
 _respawnPoint = player getVariable "EVO_mashRespawn";
-_respawnPoint call BIS_fnc_removeRespawnPosition;
+if (!isNil "_respawnPoint") then {_respawnPoint call BIS_fnc_removeRespawnPosition};
+
 
 {
 	deleteVehicle _x;

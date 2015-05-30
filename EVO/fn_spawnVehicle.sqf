@@ -4,7 +4,7 @@ _grp = _ret select 2;
 {
 	_x setSkill ["aimingspeed", 0.15];
 	_x setSkill ["spotdistance", 0.15];
-	_x setSkill ["aimingaccuracy", 0.1];
+	_x setSkill ["aimingaccuracy", 0.15];
 	_x setSkill ["aimingshake", 0.1];
 	_x setSkill ["spottime", 0.3];
 	_x setSkill ["spotdistance", 0.5];
@@ -14,5 +14,6 @@ _grp = _ret select 2;
 } foreach units _grp;
 
 _veh addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+_veh allowCrewInImmobile true;
 
 _ret;

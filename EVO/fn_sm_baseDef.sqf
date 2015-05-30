@@ -113,7 +113,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			sleep (random 15);
 			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
-			["Succeeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
+			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			"counter" setMarkerAlpha 0;

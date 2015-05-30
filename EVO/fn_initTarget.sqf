@@ -94,14 +94,10 @@ _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Inf
 
 
 {
-			if (HCconnected) then {
-				handle = [_x] call EVO_fnc_sendToHC;
-			};
-			currentAOunits pushBack _x;
-			publicVariable "currentAOunits";
-
-			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
-		} forEach units _grp;
+	if (HCconnected) then {
+		handle = [_x] call EVO_fnc_sendToHC;
+	};
+} forEach units _grp;
 [_grp, _spawnPos] call bis_fnc_taskDefend;
 
 
@@ -155,7 +151,7 @@ handle = [currentTargetOF, currentTarget] spawn {
 };
 
 
-_grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
+_grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
@@ -168,7 +164,7 @@ _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
 
-_grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
+_grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
@@ -224,7 +220,7 @@ waitUntil {!RTonline};
 [[[], {
 	if (!isDedicated) then {
 		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
-		["Succeeded",["",_tskName]] call BIS_fnc_showNotification;
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
@@ -234,11 +230,40 @@ sleep (random 15);
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 
-
-while {count currentAOunits > 9} do {
+_loop = true;
+_count = 0;
+while {_loop} do {
+	_count = 0;
 	sleep 10;
+	{
+		if (alive _x) then {
+			_count = _count + 1;
+		};
+	} forEach currentAOunits;
+	if (_count < 9) then {
+		_loop = false;
+	};
 };
 
+if (_count > 0) then {
+	{
+		if ([true, false] call bis_fnc_selectRandom) then {
+			[_x] spawn EVO_fnc_surrender;
+		} else {
+			[_x] spawn {
+				_unit = _this select 0;
+				_loop = true;
+				while {_loop} do {
+					_players = [_unit, 1000] call EVO_fnc_playersNearby;
+					if (!_players || !alive _unit) then {
+						_loop = false;
+					};
+				};
+				deleteVehicle _unit;
+			};
+		};
+	} forEach currentAOunits;
+};
 _sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
@@ -251,16 +276,26 @@ if ([officerTask] call bis_fnc_taskState != "Succeeded" || [officerTask] call bi
 	["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;
 };
 [[[], {
-	if (!isServer || !isMultiplayer) then {
+	if (!isDedicated) then {
 		_tskName = format ["%1 Secured.", currentTargetName];
 		_score = player getVariable "EVO_score";
 		_score = _score + 5;
 		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
-		["Succeeded",["",_tskName]] call BIS_fnc_showNotification;
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+_finishedMarkerName = format ["%1_ao_done", currentTargetName];
+_finishedMarker = createMarker [_finishedMarkerName, position _currentTarget];
+_finishedMarkerName setMarkerShape "ELLIPSE";
+_finishedMarkerName setMarkerBrush "SOLID";
+_finishedMarkerName setMarkerDir direction currentTarget;
+_aoSize = [(((size currentTarget) select 0) + 200), (((size currentTarget) select 1) + 200)];
+_finishedMarkerName setMarkerSize _aoSize;
+_finishedMarkerName setMarkerColor "ColorWEST";
+_finishedMarkerName setMarkerPos (position currentTarget);
+
 deleteMarker currentTargetMarkerName;
 sleep random 30;
 deleteVehicle currentTargetOF;

@@ -117,7 +117,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				};
 				sleep (random 15);
 				CROSSROADS sideChat "The OPFOR advance on our recon element has been defeated. Nice job men!";
-				["Succeeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
+				["TaskSucceeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
 
 			} else {
 				CROSSROADS sideChat "We've lost communications with our recon element, all units RTB and rearm.";

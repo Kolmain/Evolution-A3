@@ -26,6 +26,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\pvt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			sleep 5;
 			/*
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
@@ -53,6 +54,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\corp.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			sleep 5;
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
@@ -78,6 +80,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\sgt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			sleep 5;
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
@@ -101,6 +104,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			sleep 5;
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
@@ -124,6 +128,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			sleep 5;
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
@@ -146,7 +151,8 @@ if (isNil "_EVOrank") then {
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
-			playsound "Paycall"; {
+			playsound "Paycall";
+			sleep 5; {
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");
@@ -168,7 +174,8 @@ if (isNil "_EVOrank") then {
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;
-			playsound "Paycall"; {
+			playsound "Paycall";
+			sleep 5; {
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
 				_pic = getText(configFile >> "CfgWeapons" >> _x >> "picture");

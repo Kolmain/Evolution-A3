@@ -12,4 +12,4 @@ if (count _players > 0) then {
   _return = true;
 };
 
-_return
+_return;

@@ -9,11 +9,12 @@ _checkBoundingSize = {
 	_boundingSize = if (_boundingBox select 0 > _boundingBox select 1) then {_boundingBox select 0} else {_boundingBox select 1};
 	_boundingSize
 };
-
+/*
 if (player distance spawnBuilding < 1000) exitWith {
 	_msg = format ["You can't deploy a FARP in the base."];
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
+*/
 _truck = nearestObject [player, "B_Truck_01_Repair_F"];
 if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	_msg = format ["You can't deploy a FARP without a Repair Truck."];
@@ -46,11 +47,12 @@ _flatPos = (getPosASL _veh) isFlatEmpty [
 	false,			//--- Has to have shore nearby!
 	objNull			//--- Ignored object
 ];
-
+/*
 if (count _flatPos isEqualTo 0) exitWith {
 	_msg = format ["You can't deploy a FARP on uneven terrain."];
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
+*/
 
 _h = nearestObject [_pos, "Land_HelipadSquare_F"];
 [[_h],{
@@ -72,7 +74,8 @@ _h = nearestObject [_pos, "Land_HelipadSquare_F"];
 
 
 player playMove "Acts_carFixingWheel";
-FARPRespawn call BIS_fnc_removeRespawnPosition;
+_respawnPoint = player getVariable "EVO_farpRespawn";
+if (!isNil "_respawnPoint") then {_respawnPoint call BIS_fnc_removeRespawnPosition};
 {
 	deleteVehicle _x;
 } forEach playerStructures;
@@ -83,7 +86,8 @@ WaitUntil {animationState player != "Acts_carFixingWheel"};
 _mark = format["%1FARP",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-FARPRespawn = [(side player), getPos player] spawn BIS_fnc_addRespawnPosition;
+farpRespawn = [(side player), getPos player] spawn BIS_fnc_addRespawnPosition;
+player setVariable ["EVO_farpRespawn", farpRespawn, true];
 _mssg = format["%1's FARP",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";

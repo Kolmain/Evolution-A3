@@ -71,7 +71,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			sleep (random 15);
 			CROSSROADS sideChat "Forward scouts report OPFOR activity at the military installation is declining. Nice job men!";
-			["Succeeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
+			["TaskSucceeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 		};

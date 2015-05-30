@@ -191,7 +191,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
-				["Succeeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
+				["TaskSucceeded",["","OPFOR Convoy Destroyed"]] call BIS_fnc_showNotification;
 				CROSSROADS sideChat "Forward scouts report the convoy is retreating, nice job men!";
 			} else {
 				["TaskFailed",["","OPFOR Convoy Escaped"]] call BIS_fnc_showNotification;

@@ -38,7 +38,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
          	};
          	csarUnits = units csarGrp;
          	{
-         		_x addAction [format["Rescue %1", name currentTargetOF],"[_this select 0] join _this select 1; _this select 0 setCaptive false;",nil,1,false,true,"","group _x == csarGrp"];
+         		_x addAction [format["Rescue %1", name _x],"[_this select 0] join _this select 1; _this select 0 setCaptive false;",nil,1,false,true,"","group _x == csarGrp"];
          	} forEach csarUnits;
 		for "_i" from 1 to (floor(random 4) + 1) do {
 			_spawnPos = [locationPosition defendTarget, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
@@ -108,7 +108,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				};
 				sleep (random 15);
 				CROSSROADS sideChat "Our downed crew made it home safely. Nice job men!";
-				["Succeeded",["","NATO Helo Crew Survived"]] call BIS_fnc_showNotification;
+				["TaskSucceeded",["","NATO Helo Crew Survived"]] call BIS_fnc_showNotification;
 			} else {
 				CROSSROADS sideChat "We've lost communications with our downed crew, all units RTB and rearm.";
 				["TaskFailed",["","NATO Helo Crew KIA"]] call BIS_fnc_showNotification;
