@@ -1,9 +1,7 @@
-private ["_officer","_caller","_grp","_msg","_score"];
-
 _pow = _this select 0;
 _capturer = _this select 1;
 _id = _this select 2;
-[_pow] join _caller;
+[_pow] join _capturer;
 
 if (_pow == currentTargetOF) then {
 	[[[], {

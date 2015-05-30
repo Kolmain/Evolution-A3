@@ -282,7 +282,7 @@ playSound _sound;
 [attackTask, "Succeeded", false] call bis_fnc_taskSetState;
 
 
-if ([officerTask] call bis_fnc_taskState != "Succeeded" || [officerTask] call bis_fnc_taskState != "Failed") then {
+if (alive currentTargetOF) then {
 	[officerTask, "Failed", false] call bis_fnc_taskSetState;
 	_tskName = format ["Colonel %1 Escaped.", name currentTargetOF];
 	["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;

@@ -40,7 +40,14 @@ lbSetCurSel [2903, 0];
 	onMapSingleClick "ATM_Jump_clickpos = _pos; ATM_Jump_mapclick = true; onMapSingleClick ''; true;";
 	waitUntil {ATM_Jump_mapclick or !(visiblemap)};
 	if (!visibleMap) exitwith {
-		systemChat "Halo jump canceled.";
+		if (player getVariable "EVOrank" != "PRIVATE") then {
+			_score = player getVariable "EVO_score";
+			_score = _score + 3;
+			player setVariable ["EVO_score", _score, true];
+			["PointsAdded",["HALO insertion canceled.", 3]] call BIS_fnc_showNotification;
+		} else {
+			["PointsAdded",["HALO insertion canceled.", 0]] call BIS_fnc_showNotification;
+		};
 		breakOut "main";
 	};
 	_pos = ATM_Jump_clickpos;

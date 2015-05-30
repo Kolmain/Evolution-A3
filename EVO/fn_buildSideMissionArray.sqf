@@ -3,6 +3,8 @@ private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationA
 
 currentSideMission = "none";
 currentSideMissionStatus = "ip";
+curreSidemissionUnits = [];
+publicVariable "curreSidemissionUnits";
 publicVariable "currentSideMission";
 publicVariable "currentSideMissionStatus";
 //build AA hunt

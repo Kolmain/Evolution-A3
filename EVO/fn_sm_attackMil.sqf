@@ -22,26 +22,52 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		for "_i" from 1 to 5 do {
 			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
-			if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
 			{
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+			curreSidemissionUnits pushBack _x;
+			publicVariable "curreSidemissionUnits";
 
-			}  forEach units _grp;
+			_x AddMPEventHandler ["mpkilled", {
+					curreSidemissionUnits = curreSidemissionUnits - [_this select 1];
+					publicVariable "curreSidemissionUnits";
+				}];
+		} forEach units _grp;
+			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+		};
+		if ([true, false] call bis_fnc_selectRandom) then {
+			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+		    _tank = _ret select 0;
+		    _grp = _ret select 2;
+		    {
+				if (HCconnected) then {
+					handle = [_x] call EVO_fnc_sendToHC;
+				};
+				curreSidemissionUnits pushBack _x;
+				publicVariable "curreSidemissionUnits";
+				_x AddMPEventHandler ["mpkilled", {
+					curreSidemissionUnits = curreSidemissionUnits - [_this select 1];
+					publicVariable "curreSidemissionUnits";
+				}];
+			} forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};
 		handle = [] spawn {
-			_eastUnits = 100;
-			while {_eastUnits > 8} do {
-				_allUnits = (position attackMilTarget) nearEntities [["Man", "Car", "Tank"], 300];
+			_loop = true;
+			_count = 0;
+			while {_loop} do {
+				_count = 0;
+				sleep 10;
 				{
-					if ((side _x == EAST || side _x == independent) && alive _x) then {
-						_eastUnits = _eastUnits + 1;
-					}
-				} forEach _allUnits;
-				sleep 15;
+					if (alive _x) then {
+						_count = _count + 1;
+					};
+				} forEach curreSidemissionUnits;
+				if (_count < 9) then {
+					_loop = false;
+				};
 			};
 			sleep (random 15);
 			[attackMilTask, "Succeeded", false] call bis_fnc_taskSetState;

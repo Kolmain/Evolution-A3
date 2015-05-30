@@ -191,6 +191,7 @@ class CfgFunctions
 			class spawnVehicle {};
 			class playersNearby {};
 			class surrender {};
+			class paraInsert {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
