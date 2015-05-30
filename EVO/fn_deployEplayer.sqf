@@ -74,8 +74,7 @@ _h = nearestObject [_pos, "Land_HelipadSquare_F"];
 
 
 player playMove "Acts_carFixingWheel";
-_respawnPoint = player getVariable "EVO_farpRespawn";
-if (!isNil "_respawnPoint") then {_respawnPoint call BIS_fnc_removeRespawnPosition};
+
 {
 	deleteVehicle _x;
 } forEach playerStructures;
@@ -86,8 +85,6 @@ WaitUntil {animationState player != "Acts_carFixingWheel"};
 _mark = format["%1FARP",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-farpRespawn = [(side player), getPos player] spawn BIS_fnc_addRespawnPosition;
-player setVariable ["EVO_farpRespawn", farpRespawn, true];
 _mssg = format["%1's FARP",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";

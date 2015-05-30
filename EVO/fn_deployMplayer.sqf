@@ -56,8 +56,6 @@ if (count _flatPos isEqualTo 0) exitWith {
 //Land_Medevac_house_V1_F
 
 player playMove "Acts_carFixingWheel";
-_respawnPoint = player getVariable "EVO_mashRespawn";
-if (!isNil "_respawnPoint") then {_respawnPoint call BIS_fnc_removeRespawnPosition};
 
 
 {
@@ -100,8 +98,6 @@ if (!alive player || player distance _pos > 4) exitWith {};
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-mashRespawn = [(side player), getPos player] spawn BIS_fnc_addRespawnPosition;
-player setVariable ["EVO_mashRespawn", mashRespawn, true];
 _mssg = format["%1's MASH",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";
