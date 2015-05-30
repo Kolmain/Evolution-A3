@@ -42,28 +42,28 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
          	} forEach csarUnits;
 		for "_i" from 1 to (floor(random 4) + 1) do {
 			_spawnPos = [locationPosition defendTarget, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
 				} forEach units _grp;
 			};
 			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 				opforUnits = opforUnits + [_x];
 			}  forEach units _grp;
 			handle = [_grp, csarLoc] call BIS_fnc_taskAttack;
 		};
 		for "_i" from 1 to 2 do {
 			_spawnPos = [locationPosition defendTarget, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
 				} forEach units _grp;
 			};
 			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 				opforUnits = opforUnits + [_x];
 			}  forEach units _grp;
 		};

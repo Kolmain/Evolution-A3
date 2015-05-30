@@ -22,14 +22,14 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		publicVariable "currentSideMissionMarker";
 		for "_i" from 1 to 2 do {
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
 				} forEach units _grp;
 			};
 			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			}  forEach units _grp;
 			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 			handle = [_grp] spawn {

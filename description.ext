@@ -188,6 +188,8 @@ class CfgFunctions
 			class basicRespawn {};
 			class playerNearby {};
 			class sendToAO {};
+			class spawnGroup {};
+			class spawnVehicle {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

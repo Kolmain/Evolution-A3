@@ -11,14 +11,14 @@ switch (_type) do {
     	} else {
     		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
     	};
-		_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call BIS_fnc_spawnGroup;
+		_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 		{
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			_x AddMPEventHandler ["mpkilled", {
 					currentAOunits = currentAOunits - [_this select 1];
 					publicVariable "currentAOunits";
@@ -33,20 +33,18 @@ switch (_type) do {
 					//insert via land
 					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					//_veh = createVehicle [ call bis_fnc_selectRandom, _spawnPos2, [], 0, "NONE"];
-					_ret = [_spawnPos2, (floor (random 360)), (["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"] call BIS_fnc_selectRandom), EAST] call bis_fnc_spawnvehicle;
+					_ret = [_spawnPos2, (floor (random 360)), (["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
 					{
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
 						};
-						_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 						_x AddMPEventHandler ["mpkilled", {
 							currentAOunits = currentAOunits - [_this select 1];
 							publicVariable "currentAOunits";
 						}];
 					} forEach units _grp;
-					_transport AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 					{
 				    	_x assignAsCargo _transport;
 				    	_x moveInCargo _transport;
@@ -75,15 +73,13 @@ switch (_type) do {
 				} else {
 					//insert via air
 					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-				    _ret = [_spawnPos2, (floor (random 360)), (["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"] call BIS_fnc_selectRandom), EAST] call bis_fnc_spawnvehicle;
+				    _ret = [_spawnPos2, (floor (random 360)), (["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _heli = _ret select 0;
 				    _heliGrp = _ret select 2;
-				    _heli AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 				    {
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
 						};
-						_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 					} forEach units _heliGrp;
 				    {
 				    	_x assignAsCargo _heli;
@@ -141,7 +137,7 @@ switch (_type) do {
 	    	} else {
 	    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	    	};
-		    _ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call bis_fnc_spawnvehicle;
+		    _ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _tank = _ret select 0;
 		    _grp = _ret select 2;
 		    {
@@ -150,7 +146,6 @@ switch (_type) do {
 				};
 				currentAOunits pushBack _x;
 				publicVariable "currentAOunits";
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 				_x AddMPEventHandler ["mpkilled", {
 					currentAOunits = currentAOunits - [_this select 1];
 					publicVariable "currentAOunits";

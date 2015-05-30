@@ -72,7 +72,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		for "_i" from 1 to 3 do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_classname = ["O_APC_Tracked_02_cannon_F","O_APC_Tracked_02_AA_F","O_MBT_02_cannon_F","O_MRAP_02_F","O_MRAP_02_F","O_MRAP_02_hmg_F","O_MRAP_02_hmg_F","O_MRAP_02_gmg_F","O_APC_Wheeled_02_rcws_F"] call bis_fnc_selectRandom;
-			_ret = [_spawnPos, 0, _classname, _grp] call bis_fnc_spawnvehicle;
+			_ret = [_spawnPos, 0, _classname, _grp] call EVO_fnc_spawnvehicle;
 			_vehicle = _ret select 0;
 			convoyArray = convoyArray + [_vehicle];
 		};
@@ -80,7 +80,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		for "_i" from 1 to (1 + (floor(random 3))) do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_classname = ["O_Truck_02_Ammo_F","O_Truck_02_fuel_F","O_Truck_02_medical_F","O_Truck_02_box_F","O_Truck_03_device_F","O_Truck_03_medical_F","O_Truck_03_fuel_F","O_Truck_03_ammo_F","O_Truck_03_repair_F","O_MBT_02_arty_F"] call bis_fnc_selectRandom;
-			_ret = [_spawnPos, 0, _classname, _grp] call bis_fnc_spawnvehicle;
+			_ret = [_spawnPos, 0, _classname, _grp] call EVO_fnc_spawnvehicle;
 			_vehicle = _ret select 0;
 			convoyTargets = convoyTargets + [_vehicle];
 			convoyArray = convoyArray + [_vehicle];
@@ -89,7 +89,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		for "_i" from 1 to (1 + (floor(random 3))) do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_classname = ["O_APC_Tracked_02_cannon_F","O_APC_Tracked_02_AA_F","O_MBT_02_cannon_F","O_MRAP_02_F","O_MRAP_02_F","O_MRAP_02_hmg_F","O_MRAP_02_hmg_F","O_MRAP_02_gmg_F","O_APC_Wheeled_02_rcws_F"] call bis_fnc_selectRandom;
-			_ret = [_spawnPos, 0, _classname, _grp] call bis_fnc_spawnvehicle;
+			_ret = [_spawnPos, 0, _classname, _grp] call EVO_fnc_spawnvehicle;
 			_vehicle = _ret select 0;
 			convoyArray = convoyArray + [_vehicle];
 		};
@@ -106,7 +106,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		_lastRoad = _road;
 
 		{
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			if (_x distance position convoyStart > 300) then {
 
 				_lastRoad = _road;

@@ -11,18 +11,18 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (isServer) then {
 		attackingUnits = 0;
          	//server
-         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "West" >> "Guerilla" >> "Infantry" >> "IRG_InfTeam_AT")] call BIS_fnc_spawnGroup;
+         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "West" >> "Guerilla" >> "Infantry" >> "IRG_InfTeam_AT")] call EVO_fnc_spawnGroup;
          	handle = [reinforceSquad, locationPosition defendTarget] call BIS_fnc_taskDefend;
 		for "_i" from 1 to 4 do {
 			_spawnPos = [locationPosition defendTarget, 500, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call BIS_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
 				} forEach units _grp;
 			};
 			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 				_x AddMPEventHandler ["mpkilled", {
 					attackingUnits = attackingUnits - 1;
 				}];
@@ -32,21 +32,21 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		};
 		for "_i" from 1 to 2 do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call BIS_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
 				} forEach units _grp;
 			};
 			{
-				_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 				_x AddMPEventHandler ["mpkilled", {
 					attackingUnits = attackingUnits - 1;
 				}];
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
 			   _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			   _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call bis_fnc_spawnvehicle;
+			   _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call EVO_fnc_spawnvehicle;
 			   _heli = _ret select 0;
 			   _heliGrp = _ret select 2;
 			   if (HCconnected) then {
@@ -55,7 +55,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				} forEach units _heliGrp;
 			};
 			{
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			}  forEach units _heliGrp;
 			   {
 			   		_x assignAsCargo _heli;

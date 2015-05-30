@@ -90,7 +90,7 @@ _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
 _mortarGunner moveInGunner _mortar;
 nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
-_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
 
 
 {
@@ -99,7 +99,7 @@ _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Inf
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
 		} forEach units _grp;
 [_grp, _spawnPos] call bis_fnc_taskDefend;
@@ -155,27 +155,27 @@ handle = [currentTargetOF, currentTarget] spawn {
 };
 
 
-_grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+_grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
 {
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
 		} forEach units _grp;
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
 
-_grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call BIS_fnc_spawnGroup;
+_grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
 {
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+
 			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
 		} forEach units _grp;
 
