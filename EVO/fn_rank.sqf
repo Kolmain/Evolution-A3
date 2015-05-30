@@ -26,6 +26,7 @@ if (isNil "_EVOrank") then {
 			_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 			["promoted",["img\pvt.paa", _msg]] call BIS_fnc_showNotification;
 			playsound "Paycall";
+			/*
 			{
 				_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 				_txt = format["You now have access to the %1.", _dn];
@@ -38,6 +39,7 @@ if (isNil "_EVOrank") then {
 				_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 				["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 			} forEach rank1vehicles;
+			*/
 			[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 
 
