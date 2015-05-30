@@ -162,7 +162,7 @@ class CfgFunctions
 			class pinit {};
 			class respawnRepair {};
 			class amb {};
-			class officer {};
+			class capture {};
 			class sendToHC {};
 			class sendToServer {};
 			class vehicleCheck {};

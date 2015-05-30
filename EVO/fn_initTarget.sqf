@@ -100,7 +100,17 @@ _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Inf
 } forEach units _grp;
 [_grp, _spawnPos] call bis_fnc_taskDefend;
 
+[_newComp, _grp, _mortarGunner, currentTarget] spawn {
+	waitUntil {; sleep 10; _this select 3 != currentTarget};
+	{
+		[_x] call EVO_fnc_wrapUp;
+	} forEach _this select 0;
 
+	{
+		[_x] call EVO_fnc_wrapUp;
+	} forEach units _this select 1;
+	[_this select 2] call EVO_fnc_wrapUp;
+};
 
 /*
 _center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
@@ -129,7 +139,9 @@ _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
-
+[[[], {
+	currentTargetOF addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 handle = [currentTargetOF, currentTarget] spawn {
 	_OF = _this select 0;
 	_currentTarget = _this select 1;
@@ -296,7 +308,8 @@ _finishedMarkerName setMarkerSize _aoSize;
 _finishedMarkerName setMarkerColor "ColorWEST";
 _finishedMarkerName setMarkerPos (position currentTarget);
 
-deleteMarker currentTargetMarkerName;
+//deleteMarker currentTargetMarkerName;
+currentTargetMarkerName setMarkerAlpha 0;
 sleep random 30;
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;

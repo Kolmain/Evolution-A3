@@ -3,7 +3,7 @@ _unit = _this select 0;
 [[[_unit], {
 	_unit = _this select 0;
 	_unit playMoveNow "AmovPercMstpSsurWnonDnon";
-	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"[_this select 0] joinSilent _this select 1",nil,1,false,true,"","true"];
+	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 _unit disableAI "ANIM";
 _unit disableAI "FSM";
