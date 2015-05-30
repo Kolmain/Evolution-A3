@@ -2,6 +2,9 @@ _pow = _this select 0;
 _capturer = _this select 1;
 _id = _this select 2;
 [_pow] join _capturer;
+_pow enableAI "ANIM";
+_pow enableAI "FSM";
+[[[], {_pow swtichMove ""}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 if (_pow == currentTargetOF) then {
 	[[[], {
