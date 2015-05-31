@@ -83,7 +83,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		};
 
 		handle = [] spawn {
-			waitUntil {attackingUnits < 5};
+			waitUntil {attackingUnits < 2};
 			sleep (random 15);
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
