@@ -152,7 +152,13 @@ switch (_type) do {
 				}];
 			} forEach units _grp;
 			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			_grp setSpeedMode "LIMITED";
+			_grp setSpeedMode "FULL";
+			[_grp] spawn {
+				_grp = _this select 0;
+				waitUntil {leader _grp distance getMarkerPos currentTargetMarkerName < 800};
+				_grp setSpeedMode "LIMITED";
+			};
+
     };
     default {
      	["EVO_fnc_sendToAO threw DEFAULT switch."] call BIS_fnc_error;
