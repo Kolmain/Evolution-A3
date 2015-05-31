@@ -11,10 +11,16 @@ if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = true;
 };
 if (isPlayer _killer || isPlayer (leader group _killer)) then {
-	if (!isPlayer _killer) then {_killer == leader group _killer};
+	if (isPlayer _killer && vehicle _killer != _killer && isPlayer driver vehicle _killer) then {
+		[_killed, driver vehicle _killer] spawn EVO_fnc_onUnitKilled;
+	};
+	if (isPlayer _killer && vehicle _killer != _killer && isPlayer commander vehicle _killer) then {
+		[_killed, commander vehicle _killer] spawn EVO_fnc_onUnitKilled;
+	};
+	if (!isPlayer _killer) then {_killer = leader group _killer};
 	_score = _killer getVariable "EVO_score";
 	if (true) then {
-		if ((side _killed) != (side _killer)) then {
+		if ((side _killed) != (side _killer) && (side _killed != civilian)) then {
 				if (_killed isKindOf "Man" && toLower(typeOf _killed) != toLower("O_officer_F")) then {
 					//npc kill
 					_score = _score + 1;

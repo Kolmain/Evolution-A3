@@ -21,7 +21,7 @@ if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 
-
+_pos = getPos player;
 //check for flat land from CHHQ
 _composition = call (compile (preprocessFileLineNumbers "Comps\farp.sqf"));
 _sortedByDist = [_composition,[],{
@@ -74,14 +74,17 @@ _h = nearestObject [_pos, "Land_HelipadSquare_F"];
 
 
 player playMove "Acts_carFixingWheel";
-
-{
-	deleteVehicle _x;
-} forEach playerStructures;
-sleep 3.0;
+if (!isNil "playerStructures") then {
+	{
+		deleteVehicle _x;
+	} forEach playerStructures;
+	sleep 3.0;
+};
 
 WaitUntil {animationState player != "Acts_carFixingWheel"};
 
+
+if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1FARP",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));

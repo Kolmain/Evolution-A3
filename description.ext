@@ -192,6 +192,7 @@ class CfgFunctions
 			class playersNearby {};
 			class surrender {};
 			class paraInsert {};
+			class protectBase {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

@@ -69,7 +69,16 @@ availableHeadgear = [
     "H_PilotHelmetHeli_B",
     "H_CrewHelmetHeli_B",
     "H_PilotHelmetFighter_B",
-    "H_HelmetCrew_B"
+    "H_HelmetCrew_B",
+    "H_Cap_marshal",
+    "H_Watchcap_sgg",
+    "H_Watchcap_camo",
+    "H_Watchcap_khk",
+    "H_Watchcap_cbr",
+    "H_Beret_02",
+    "H_BandMask_demon",
+    "H_BandMask_reaper",
+    "H_HelmetB_light_snakeskin"
 ];
 availableGoggles = [
     "G_Combat",
@@ -92,7 +101,16 @@ availableUniforms = [
     "U_B_HeliPilotCoveralls",
     "U_B_CTRG_1",
     "U_B_CTRG_2",
-    "U_B_CTRG_3"
+    "U_B_CTRG_3",
+    "V_PlateCarrierIAGL_oli",
+    "V_PlateCarrierSpec_mtp",
+    "V_PlateCarrierSpec_blk",
+    "V_PlateCarrierGL_mtp",
+    "V_PlateCarrierGL_blk",
+    "U_B_FullGhillie_ard",
+    "U_B_FullGhillie_sard",
+    "U_B_FullGhillie_lsh",
+    "U_BG_Guerilla2_1"
 ];
 availableVests = [
     "V_BandollierB_khk",
@@ -160,6 +178,7 @@ if (isServer) then {
 	[] spawn EVO_fnc_initEVO;
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
+    [] spawn EVO_fnc_protectBase;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
@@ -228,6 +247,12 @@ handle = [player,
 loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 profileNamespace setVariable ["EVO_loadout", loadout];
 saveProfileNamespace;
+deadloadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+player addEventHandler ["Killed",{
+    _player = _this select 0;
+    _killer = _this select 1;
+    deadloadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+}];
 
 _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;
@@ -238,9 +263,9 @@ _index = player addMPEventHandler ["MPRespawn", {
  	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {
  		handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf";
  	} else {
- 		//_newPlayer setDamage 0.5;
- 		//handle = [player, (profileNamespace getVariable "EVO_currentLoadout")] execVM "scripts\setloadout.sqf";
- 		//removeBackpack player;
+ 	    _newPlayer setDamage 0.5;
+ 		handle = [player, deadloadout] execVM "scripts\setloadout.sqf";
+ 		removeBackpack player;
  	};
 }];
 

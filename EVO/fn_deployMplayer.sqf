@@ -57,14 +57,15 @@ if (count _flatPos isEqualTo 0) exitWith {
 
 player playMove "Acts_carFixingWheel";
 
-
-{
-	deleteVehicle _x;
-} forEach playerStructures;
-sleep 3.0;
+if (!isNil "playerStructures") then {
+	{
+		deleteVehicle _x;
+	} forEach playerStructures;
+	sleep 3.0;
+};
 
 WaitUntil {animationState player != "Acts_carFixingWheel"};
-if (!alive player || player distance _pos > 4) exitWith {};
+if (!alive player || player distance _pos > 1) exitWith {};
 
 
 [[_pos],{
