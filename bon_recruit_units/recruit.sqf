@@ -1,8 +1,16 @@
 // by Bon_Inf*
 
 if(not local player) exitWith{};
-_precount = count units group player + count bon_recruit_queue;
-if (_precount >= bon_max_units_allowed) exitWith {hint "You've reached the max allowed group size."};
+_count = 0;
+{
+	if (!isPlayer _x) then {
+		_count = _count + 1;
+	};
+} forEach units group player;
+_count = _count + count bon_recruit_queue;
+//_precount = count units group player + count bon_recruit_queue;
+//if (_precount >= bon_max_units_allowed) exitWith {hint "You've reached the max allowed group size."};
+if (_count >= bon_max_units_allowed) exitWith {hint "You've reached the maximum allowed group size for your rank."};
 
 
 #include "dialog\definitions.sqf"
