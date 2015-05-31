@@ -7,4 +7,7 @@ while {_loop} do {
     };
 };
 
+_veh = obj
+if (vehicle _obj != _obj) then {_veh = vehicle _obj};
 deleteVehicle _obj;
+deleteVehicle _veh;

@@ -248,7 +248,7 @@ while {_loop} do {
 	_count = 0;
 	sleep 10;
 	{
-		if (alive _x) then {
+		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000))) then {
 			_count = _count + 1;
 		};
 	} forEach currentAOunits;
