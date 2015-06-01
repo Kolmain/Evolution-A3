@@ -391,7 +391,7 @@ class CfgHints
 		{
 			displayName = "Main Airbase";
 			displayNameShort = "HQ";
-			description = "Welcome to the battlefield, %11. This is your main base of operations. This is where reinforcements arrive before being transported to the Area of Operations, as well as the location of any support units used during the battle. You also have supplies available here to restructure your loadout.";
+			description = "Welcome to the battlefield, %11. This is your main base of operations, and reinforcements arrive before being transported to the Area of Operations, as well as the location of any support units used during the battle. You also have supplies available here to restructure your loadout.";
             tip = "You are not forced to respawn at the Airbase. You may choose to respawn at another friendly position instead.";
 			arguments[] = {
 				"name player"
@@ -399,21 +399,11 @@ class CfgHints
 			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
 			noImage = false;
 		};
-		class revive
-		{
-			displayName = "Incapacitation";
-			displayNameShort = "Reviving Allies";
-			description = "If an infantry unit receives too much damage, they may become incapacitated before bleeding out. Once incapacitated, a friendly unit can approach the individual and select %3First Aid%4 from their action menu to begin brining the unit back to a combat effective state. Going into an incapacitated state does not count as a death. Friendly units can also %3Drag%4 and %3Carry%4 an incapacitated unit from the action menu. ";
-            tip = "While incapacitated, enemies may ignore you if you lay still. However, if you attempt to move or fire your weapon, you will become an active target again.";
-			arguments[] = {};
-			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
-			noImage = false;
-		};
 		class farp
 		{
 			displayName = "Forward Arming and Refueling Point";
 			displayNameShort = "FARP";
-			description = "While at the Forward Arming and Refueling Point, players have the option to modify their loadout by approaching supplies and using their action menu to select %3Change Loadout%4. Additional equipment will become available as you accrue points during the operation.";
+			description = "While at the Forward Arming and Refueling Point, players have the option to modify their loadout by approaching supplies and using their action menu to select %Arsenal%4. Additional equipment will become available as you accrue points during the operation.";
             tip = "As you gain points on the battlefield, special equipment will become available for your use such as UAVs and long barreled rifles.";
 			arguments[] = {};
 			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
@@ -423,7 +413,7 @@ class CfgHints
 		{
 			displayName = "Mobile Army Surgical Hospital";
 			displayNameShort = "MASH";
-			description = "While at the Mobile Army Surgical Hospital, players have the option to heal themselves by approaching the MASH tent and using their action menu to select %Heal at MASH%4. The player who deployed the MASH will receive the points for healing the individual.";
+			description = "While at the Mobile Army Surgical Hospital, players will automatically be healed over time. The player who deployed the MASH will receive the points for healing the individuals at the MASH.";
             tip = "As you gain points on the battlefield, special equipment will become available for your use such as UAVs and long barreled rifles.";
 			arguments[] = {};
 			image = "\a3\ui_f\data\gui\cfg\hints\Miss_icon_ca.paa";
