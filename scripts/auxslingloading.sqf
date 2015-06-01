@@ -10,7 +10,7 @@
 
 /*DEFINABLE*/
 if (isNil "AuxSling_Weight") then {
-AuxSling_Weight = 1; //Does the sling weight matter? If 0 this means a LittleBird can Lift a tank, If 1 then no
+AuxSling_Weight = 0; //Does the sling weight matter? If 0 this means a LittleBird can Lift a tank, If 1 then no
 };
 if (isNil "AuxSling_slingSlingableVehicles") then {
 AuxSling_slingSlingableVehicles = 0; //Include vehicles that can be sling loaded with the chopper. e.g. Huron can lift Offroad, you can use this script if set to 1 to
@@ -19,7 +19,7 @@ if (isNil "AuxSling_EveryVehicles") then {
 AuxSling_EveryVehicles = 0; //If AuxSling_Weight = 1, Allow for EVERY VEHICLE/OBJECT to be lifted, ignores AuxSling_x_config
 };
 if (isNil "AuxSling_indestructibleLoad") then {
-AuxSling_indestructibleLoad = 1; //If AuxSling_indestructibleLoad = 1, The sling load will become indestructible while being slinged until no longer being slinged
+AuxSling_indestructibleLoad = 0; //If AuxSling_indestructibleLoad = 1, The sling load will become indestructible while being slinged until no longer being slinged
 };
 if (isNil "AuxSling_allowDeadCarry") then {
 AuxSling_allowDeadCarry = 1; //if AuxSling_allowDeadCarry = 1, Allowed to sling dead vehicles
