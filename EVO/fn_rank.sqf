@@ -16,8 +16,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
 			_player setUnitRank "PRIVATE";
 			_player setVariable ["EVOrank", "PRIVATE", true];
-
-
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 2;
 			bon_recruit_recruitableunits = ["B_Soldier_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -48,6 +47,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 			_player setUnitRank "CORPORAL";
 			_player setVariable ["EVOrank", "CORPORAL", true];
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 4;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_exp_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -73,7 +73,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 			_player setUnitRank "SERGEANT";
 			_player setVariable ["EVOrank", "SERGEANT", true];
-
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 6;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -98,6 +98,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then {
 			_player setUnitRank "LIEUTENANT";
 			_player setVariable ["EVOrank", "LIEUTENANT", true];
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 8;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -122,6 +123,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 			_player setUnitRank "CAPTAIN";
 			_player setVariable ["EVOrank", "CAPTAIN", true];
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 10;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -146,6 +148,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 			_player setUnitRank "MAJOR";
 			_player setVariable ["EVOrank", "MAJOR", true];
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 12;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
@@ -169,6 +172,7 @@ if (isNil "_EVOrank") then {
 		if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 			_player setUnitRank "COLONEL";
 			_player setVariable ["EVOrank", "COLONEL", true];
+			[_player,rank _player] call BIS_fnc_setUnitInsignia;
 			bon_max_units_allowed = 14;
 			bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F","B_ghillie_lsh_F","B_Recon_Sharpshooter_F","B_HeavyGunner_F","B_recon_JTAC_F","B_recon_M_F","B_recon_medic_F","B_recon_exp_F","B_recon_LAT_F","B_recon_F"];
 			handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
