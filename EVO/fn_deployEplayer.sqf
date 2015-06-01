@@ -58,3 +58,9 @@ _medmark setMarkerText _mssg;
 _medmark setMarkerSize [1, 1];
 _msg = format ["Your FARP has been deployed at map grid %1.", mapGridPosition player];
 ["deployed",["FARP DEPLOYED", _msg]] call BIS_fnc_showNotification;
+_crate = nearestObject [_pos, "CargoNet_01_box_F"];
+[[_crate],{
+	if (!isDedicated) then {
+		[_this select 0, rank player] call EVO_fnc_buildAmmoCrate;
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
