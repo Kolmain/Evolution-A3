@@ -149,8 +149,10 @@ availableMagazines = [];
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
 	MHQ = firstMHQ;
+	_null = [MHQ] spawn EVO_fnc_basicRespawn;
 } else {
 	MHQ = objNull;
+	_null = [firstMHQ] spawn EVO_fnc_basicRespawn;
 };
 
 if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
