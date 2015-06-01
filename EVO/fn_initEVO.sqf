@@ -13,6 +13,8 @@ _mil = [];
 } foreach _locs;
 militaryLocations = _mil;
 targetCounter = 2;
+totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
+if (totalTargets == 999) then {totalTarget = count targetLocations};
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
 currentTargetRT = nil;
