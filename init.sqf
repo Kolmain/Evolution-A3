@@ -203,14 +203,12 @@ if (!isNil "currentTargetOF") then {
 handle = [] spawn {
 	while {true} do {
 		waitUntil {player distance hqbox < 5};
-	   	waitUntil {player distance hqbox > 5};
-	   	if (isTouchingGround player) then {
-	   		sleep 5;
-			loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-			profileNamespace setVariable ["EVO_loadout", loadout];
-			saveProfileNamespace;
-			systemChat "Loadout saved to profile...";
-		};
+	   	waitUntil {player distance hqbox > 5 && (isTouchingGround player)};
+   		sleep 5;
+		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+		profileNamespace setVariable ["EVO_loadout", loadout];
+		saveProfileNamespace;
+		systemChat "Loadout saved to profile...";
 	};
 };
 _lastPos = [];
