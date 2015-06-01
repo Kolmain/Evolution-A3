@@ -13,7 +13,7 @@ _unit removeWeapon handgunWeapon _unit;
 _unit setCaptive true;
 _grp = createGroup side _unit;
 [_unit] joinSilent _grp;
-
+_players = true;
 _loop = true;
 while {_loop} do {
 	_players = [_unit, 1000] call EVO_fnc_playersNearby;
@@ -32,4 +32,5 @@ while {_loop} do {
 		["PointsAdded",["You captured a POW.", 3]] call BIS_fnc_showNotification;
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
 deleteVehicle _unit;

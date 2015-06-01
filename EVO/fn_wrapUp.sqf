@@ -9,5 +9,6 @@ while {_loop} do {
 
 _veh = obj
 if (vehicle _obj != _obj) then {_veh = vehicle _obj};
+sleep 30;
 deleteVehicle _obj;
 deleteVehicle _veh;
