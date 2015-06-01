@@ -1,55 +1,4 @@
-/*
-if (player distance spawnBuilding < 1000) exitWith {
-	_msg = format ["You can't deploy a MASH in the base."];
-	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
-};
-*/
-
-_checkBoundingSize = {
-	_type = _this select 0;
-	_bbdummy = _type createVehicleLocal [0,0,0];
-	_boundingBox = (boundingBox _bbdummy) select 1;
-	deleteVehicle _bbdummy;
-	_boundingSize = if (_boundingBox select 0 > _boundingBox select 1) then {_boundingBox select 0} else {_boundingBox select 1};
-	_boundingSize
-};
-
-
 _pos = getPos player;
-//check for flat land from CHHQ
-_composition = call (compile (preprocessFileLineNumbers "Comps\mash.sqf"));
-_sortedByDist = [_composition,[],{
-	_frstNum = abs (_x select 1 select 0);
-	_secNum = abs (_x select 1 select 1);
-	if (_frstNum > _secNum) then {_frstNum} else {_secNum}
-},"DESCEND"] call BIS_fnc_sortBy;
-_biggestOffset = (_sortedByDist select 0) select 1;
-_biggestOffsetAbs = if (abs (_biggestOffset select 0) > abs (_biggestOffset select 1)) then {abs (_biggestOffset select 0)} else {abs (_biggestOffset select 1)};
-_boundingSize = [_sortedByDist select 0 select 0] call _checkBoundingSize;
-_radius = _biggestOffsetAbs + _boundingSize;
-_sortedBySize = [_composition,[],{sizeOf (_x select 0)},"DESCEND"] call BIS_fnc_sortBy;
-_boundingSize = [_sortedBySize select 0 select 0] call _checkBoundingSize;
-if (_boundingSize > _radius) then {
-	_radius = _boundingSize;
-};
-_flatPos = _pos isFlatEmpty [
-	_radius,	//--- Minimal distance from another object
-	0,				//--- If 0, just check position. If >0, select new one
-	0.4,			//--- Max gradient
-	_radius max 5,	//--- Gradient area
-	0,				//--- 0 for restricted water, 2 for required water,
-	false,			//--- Has to have shore nearby!
-	objNull			//--- Ignored object
-];
-/*
-if (count _flatPos isEqualTo 0) exitWith {
-	_msg = format ["You can't deploy a MASH on uneven terrain."];
-	["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
-};
-
-
-*/
-
 
 //Land_Medevac_house_V1_F
 
@@ -98,9 +47,6 @@ if (!alive player || player distance _pos > 1) exitWith {};
 		};
 	};
 },"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
-
-
-
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
