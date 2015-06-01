@@ -366,7 +366,7 @@ class CfgCommunicationMenu
         text = "Infantry Reinforcements";
         submenu = "";
         expression = "_this execVM 'bon_recruit_units\open_dialog.sqf';";
-        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\call_ca.paa";
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa";
         cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa";
         enable = "1";
         removeAfterExpressionCall = 0;
