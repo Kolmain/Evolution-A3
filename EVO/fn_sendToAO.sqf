@@ -152,9 +152,9 @@ switch (_type) do {
 				}];
 			} forEach units _grp;
 			if ((typeOf _tank == "O_MRAP_02_gmg_F" || typeOf _tank == "O_MRAP_02_hmg_F" || typeOf _tank == "O_UGV_01_rcws_F") && !_init) then {
-				spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				_ret = [_spawnPos, (floor (random 360)), "O_Heli_Transport_04_F", EAST] call EVO_fnc_spawnvehicle;
-				heli = _ret select 0;
+				_heli = _ret select 0;
 				[_heli, _tank] spawn {
 					_heli = _this select 0;
 					_tank = _this select 1;
@@ -162,9 +162,9 @@ switch (_type) do {
 					driver _heli disableAI "FSM";
 					driver _heli disableAI "TARGET";
 					driver _heli disableAI "AUTOTARGET";
-					group driver _heli setBehaviour "AWARE";
-					group driver _heli setCombatMode "RED";
-					group driver _heli setSpeedMode "NORMAL";
+					group driver _heli setBehaviour "CARELESS";
+					group driver _heli setCombatMode "BLUE";
+					group driver _heli setSpeedMode "FULL";
 					_lz = [position currentTarget, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					driver _heli doMove _lz;
 					_heli flyInHeight 50;
@@ -176,10 +176,10 @@ switch (_type) do {
 					{
 						ropeCut [ _x, 5];
 					} forEach ropes _heli;
-					_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-					_grp setSpeedMode "LIMITED";
+					_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+					group driver _tank setSpeedMode "LIMITED";
 					_heli land "NONE";
-					_heliDriver doMove getPos server;
+					driver _heli doMove getPos server;
 					_heli flyInHeight 50;
 					[_heli] spawn {
 						_heli = _this select 0;

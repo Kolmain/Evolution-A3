@@ -11,9 +11,12 @@ _grp = _ret select 2;
 	_x setSkill ["commanding", 0.5];
 	_x setSkill ["general", 0.6];
 	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+	if (HCconnected) then {
+		handle = [_x] call EVO_fnc_sendToHC;
+	};
 } foreach units _grp;
 
-_veh addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
+_veh AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 _veh allowCrewInImmobile true;
 
 _ret;

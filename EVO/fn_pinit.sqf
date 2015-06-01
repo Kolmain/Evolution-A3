@@ -19,11 +19,7 @@ player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 
 
-[[[player], {
-	if (isServer) then {
-		_this select 0 addEventHandler ["HandleScore", {[] spawn EVO_fnc_handleScore}];
-	};
-}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+[[[player], {(_this select 0) addEventHandler ["HandleScore", {false}]}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
 	//player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];

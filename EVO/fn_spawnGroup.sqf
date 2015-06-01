@@ -9,6 +9,10 @@ _grp = _this call BIS_fnc_spawnGroup;
 	_x setSkill ["commanding", 0.5];
 	_x setSkill ["general", 0.6];
 	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+	if (HCconnected) then {
+		handle = [_x] call EVO_fnc_sendToHC;
+	};
 } foreach units _grp;
 
 _grp;
+

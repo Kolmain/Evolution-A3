@@ -1,4 +1,3 @@
-private ["_killed","_killer","_scoreToAdd","_score","_notify","_vis","_displayName","_fLetter","_pre","_string"];
 _killed = _this select 0;
 _killer = _this select 1;
 _scoreToAdd = 0;
@@ -6,6 +5,7 @@ _score = 0;
 _notify = true;
 _vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
 _string = "";
+//systemChat format ["%1 (%2) killed %3 (%4).", name _killer, side group _killer, name _killed, side group _killed];
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 } else {
@@ -21,7 +21,7 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 	if (!isPlayer _killer) then {_killer = leader group _killer};
 	_score = _killer getVariable "EVO_score";
 	if (true) then {
-		if ((side _killed) != (side _killer) && (side _killed != civilian)) then {
+		if ((side group _killed) != (side _killer)) then {
 				if (_killed isKindOf "Man" && toLower(typeOf _killed) != toLower("O_officer_F")) then {
 					//npc kill
 					_score = _score + 1;
@@ -133,7 +133,7 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 				};
 		} else {
 			[[[_string, _scoreToAdd, _killer], {
-				if (player == _killer) then {["PointsRemoved",["Friendly Fire Kill", 7]] call BIS_fnc_showNotification};
+				if (player == _this select 2) then {["PointsRemoved",["Friendly Fire Kill", 7]] call BIS_fnc_showNotification};
 			}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 			_score = _score - 7;
 			_scoreToAdd = -7;
@@ -149,4 +149,4 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 
 [_killer, _scoreToAdd] call BIS_fnc_addScore;
 
-false
+false;

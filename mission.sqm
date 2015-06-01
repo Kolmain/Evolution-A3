@@ -1001,6 +1001,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Offroad_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item22
 		{
@@ -1419,6 +1420,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Offroad_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item65
 		{
@@ -1429,6 +1431,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Offroad_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item66
 		{
@@ -1439,6 +1442,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Offroad_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item67
 		{
@@ -1449,6 +1453,7 @@ class Mission
 			side="EMPTY";
 			vehicle="C_Offroad_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item68
 		{

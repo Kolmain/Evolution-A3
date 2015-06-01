@@ -5,9 +5,10 @@ while {true} do {
 	    {
 	    	if (side _x == EAST && !isPlayer leader group _x) then {
 		    	[_x] spawn {
-			    	_this select 0 setDamage 1;
+		    		_ent = _this select 0;
+			    	_ent setDamage 1;
 			    	sleep 30;
-			    	deleteVehicle _this select 0;
+			    	deleteVehicle _ent;
 			    };
 			};
 		} forEach _list;
