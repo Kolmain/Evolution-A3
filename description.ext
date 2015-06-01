@@ -202,6 +202,7 @@ class CfgFunctions
 			class protectBase {};
 			class healMen {};
 			class endgame {};
+			class nearestTownName {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
