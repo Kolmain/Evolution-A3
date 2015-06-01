@@ -22,7 +22,7 @@ WaitUntil {animationState player != "Acts_carFixingWheel"};
 if (!alive player || player distance _pos > 1) exitWith {};
 
 
-[[_pos, _radius],"EVO_fnc_healNearMen",false] call BIS_fnc_MP;  
+[[_pos, 25],"EVO_fnc_healNearMen",false] call BIS_fnc_MP;  
 
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
@@ -37,3 +37,9 @@ _medmark setMarkerText _mssg;
 _medmark setMarkerSize [1, 1];
 _msg = format ["Your MASH has been deployed at map grid %1.", mapGridPosition player];
 ["deployed",["MASH DEPLOYED", _msg]] call BIS_fnc_showNotification;
+_crate = nearestObject [_pos, "CargoNet_01_box_F"];
+[[_crate],{
+	if (!isDedicated) then {
+		[_this select 0, rank player] call EVO_fnc_buildAmmoCrate;
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
