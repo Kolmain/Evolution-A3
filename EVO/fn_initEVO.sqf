@@ -33,6 +33,7 @@ nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
 handle = [] spawn EVO_fnc_buildSideMissionArray;
+handle = [] spawn EVO_fnc_endgame;
 
 {
 	_vehicle = _x;
