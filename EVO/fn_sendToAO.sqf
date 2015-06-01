@@ -152,6 +152,9 @@ switch (_type) do {
 				}];
 			} forEach units _grp;
 			if ((typeOf _tank == "O_MRAP_02_gmg_F" || typeOf _tank == "O_MRAP_02_hmg_F" || typeOf _tank == "O_UGV_01_rcws_F") && !_init) then {
+				spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				_ret = [_spawnPos, (floor (random 360)), "O_Heli_Transport_04_F", EAST] call EVO_fnc_spawnvehicle;
+				heli = _ret select 0;
 				[_heli, _tank] spawn {
 					_heli = _this select 0;
 					_tank = _this select 1;
