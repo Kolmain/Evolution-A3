@@ -137,10 +137,10 @@ switch (_type) do {
 	    	} else {
 	    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	    	};
-		    _ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
-		    _tank = _ret select 0;
-		    _grp = _ret select 2;
-		    {
+		    	_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+			_tank = _ret select 0;
+			_grp = _ret select 2;
+			{
 				if (HCconnected) then {
 					handle = [_x] call EVO_fnc_sendToHC;
 				};
@@ -151,12 +151,50 @@ switch (_type) do {
 					publicVariable "currentAOunits";
 				}];
 			} forEach units _grp;
-			_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			_grp setSpeedMode "FULL";
-			[_grp] spawn {
-				_grp = _this select 0;
-				waitUntil {leader _grp distance getMarkerPos currentTargetMarkerName < 800};
-				_grp setSpeedMode "LIMITED";
+			if ((typeOf _tank == "O_MRAP_02_gmg_F" || typeOf _tank == "O_MRAP_02_hmg_F" || typeOf _tank == "O_UGV_01_rcws_F") && !_init) then {
+				[_heli, _tank] spawn {
+					_heli = _this select 0;
+					_tank = _this select 1;
+					_heli setSlingLoad _tank;
+					driver _heli disableAI "FSM";
+					driver _heli disableAI "TARGET";
+					driver _heli disableAI "AUTOTARGET";
+					group driver _heli setBehaviour "AWARE";
+					group driver _heli setCombatMode "RED";
+					group driver _heli setSpeedMode "NORMAL";
+					_lz = [position currentTarget, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					driver _heli doMove _lz;
+					_heli flyInHeight 50;
+					_heli lock 3;
+					waitUntil {([_heli, _lz] call BIS_fnc_distance2D < 100)};
+					_heli flyInHeight 0;
+					_heli land "LAND";
+					waitUntil {(isTouchingGround _tank)};
+					{
+						ropeCut [ _x, 5];
+					} forEach ropes _heli;
+					_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+					_grp setSpeedMode "LIMITED";
+					_heli land "NONE";
+					_heliDriver doMove getPos server;
+					_heli flyInHeight 50;
+					[_heli] spawn {
+						_heli = _this select 0;
+						waitUntil {([_heli, getPos server] call BIS_fnc_distance2D < 500)};
+						{
+							deleteVehicle _x;
+						} forEach crew _heli;
+						deleteVehicle _heli;
+					};
+				};
+			} else {
+				_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				_grp setSpeedMode "FULL";
+				[_grp] spawn {
+					_grp = _this select 0;
+					waitUntil {leader _grp distance getMarkerPos currentTargetMarkerName < 800 || !alive leader _grp};
+					_grp setSpeedMode "LIMITED";
+				};
 			};
 
     };
