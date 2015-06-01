@@ -46,12 +46,19 @@ class CfgRespawnTemplates
 
 class Params
 {
-    class initialWeatherParam {
-        title = "Starting Weather";
-        values[] = {0,1,2,3,4};
-        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-        default = 4;
-       };
+	class numberOfAOs {
+	        title = "Number of Targets to Clear";
+	        values[] = {1,5,10,15,20,999};
+	        texts[] = {"1","5","10","15","20","All Available"};
+	        default = 999;
+	};
+
+	class initialWeatherParam {
+	        title = "Starting Weather";
+	        values[] = {0,1,2,3,4};
+	        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
+	        default = 4;
+	};
 	class Daytime {
 		title = "Starting Time";
 		texts[] = {"Morning","Day","Evening","Night"};
