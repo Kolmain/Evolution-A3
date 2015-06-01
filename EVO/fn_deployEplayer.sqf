@@ -37,7 +37,7 @@ if (!isNil "playerStructures") then {
 
 
 if (!isNil "playerRespawnPoint") then {
-	//playerRespawnPoint call BIS_fnc_removeRespawnPosition;
+	playerRespawnPoint call BIS_fnc_removeRespawnPosition;
 };
 
 
@@ -48,7 +48,7 @@ if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1FARP",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-//playerRespawnPoint = [(group player), (getPos player)] spawn BIS_fnc_addRespawnPosition;
+playerRespawnPoint = [(group player), (getPos player)] call BIS_fnc_addRespawnPosition;
 _mssg = format["%1's FARP",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";
