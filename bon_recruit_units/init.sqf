@@ -3,7 +3,7 @@
 
 BON_RECRUIT_PATH = "bon_recruit_units\";
 
-bon_max_units_allowed = 0;
+bon_max_units_allowed = 12;
 
 bon_recruit_queue = [];
 
