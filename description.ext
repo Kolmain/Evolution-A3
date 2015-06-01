@@ -201,6 +201,7 @@ class CfgFunctions
 			class paraInsert {};
 			class protectBase {};
 			class healMen {};
+			class endgame {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
