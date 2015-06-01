@@ -22,31 +22,8 @@ WaitUntil {animationState player != "Acts_carFixingWheel"};
 if (!alive player || player distance _pos > 1) exitWith {};
 
 
-[[_pos],{
-	_pos = _this select 0;
-	if (isServer) then
-	{
-		_nearMen = [];
-		_mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
-		while {alive _mash} do
-		{
-			{
-				if (alive _x && side _x == WEST && damage _x != 0) then
-				{
-					_damage = damage _x;
-					_damage = _damage - 0.01;
-					if (_damage < 0) then
-					{
-						_damage = 0;
-					};
-					_x setDamage _damage;
-				};
-			}
-			forEach ((getPos _obj) nearEntities [["Man"], _radius]);
-			sleep 2;
-		};
-	};
-},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+[[_pos, _radius],"EVO_fnc_healNearMen",false] call BIS_fnc_MP;  
+
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
