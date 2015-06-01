@@ -37,18 +37,18 @@ if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 };
 
 if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
-	_respawnPos = [(side player), player] spawn BIS_fnc_addRespawnPosition;
+	_respawnPos = [(group player), player] spawn BIS_fnc_addRespawnPosition;
 };
 
 if (typeOf player == "B_medic_F") then {
 	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
-	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player"];
+	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
 	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 if (typeOf player == "B_soldier_repair_F") then {
 	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
-	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player"];
+	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 

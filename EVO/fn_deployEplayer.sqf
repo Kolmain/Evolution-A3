@@ -1,6 +1,3 @@
-private ["_checkBoundingSize","_type","_bbdummy","_boundingBox","_boundingSize","_msg","_truck","_composition","_sortedByDist","_frstNum","_secNum","_biggestOffset","_biggestOffsetAbs","_radius","_sortedBySize","_flatPos","_veh","_h","_pos","_nearVehicles","_mark","_mssg","_medmark"];
-
-
 _checkBoundingSize = {
 	_type = _this select 0;
 	_bbdummy = _type createVehicleLocal [0,0,0];
@@ -78,8 +75,15 @@ if (!isNil "playerStructures") then {
 	{
 		deleteVehicle _x;
 	} forEach playerStructures;
-	sleep 3.0;
+	_msg = format ["Your previous FARP has been removed."];
+	["deployed",["FARP REMOVED", _msg]] call BIS_fnc_showNotification;
 };
+
+
+if (!isNil "playerRespawnPoint") then {
+	//playerRespawnPoint call BIS_fnc_removeRespawnPosition;
+};
+
 
 WaitUntil {animationState player != "Acts_carFixingWheel"};
 
@@ -88,6 +92,7 @@ if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1FARP",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+//playerRespawnPoint = [(group player), (getPos player)] spawn BIS_fnc_addRespawnPosition;
 _mssg = format["%1's FARP",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";

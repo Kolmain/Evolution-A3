@@ -5,6 +5,7 @@ _scoreToAdd = 0;
 _score = 0;
 _notify = true;
 _vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
+_string = "";
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 } else {

@@ -1,5 +1,3 @@
-private ["_msg","_truck","_pos","_composition","_sortedByDist","_frstNum","_secNum","_biggestOffset","_biggestOffsetAbs","_boundingSize","_checkBoundingSize","_radius","_sortedBySize","_flatPos","_nearMen","_mash","_damage","_obj","_mark","_mssg","_medmark"];
-
 /*
 if (player distance spawnBuilding < 1000) exitWith {
 	_msg = format ["You can't deploy a MASH in the base."];
@@ -61,8 +59,15 @@ if (!isNil "playerStructures") then {
 	{
 		deleteVehicle _x;
 	} forEach playerStructures;
-	sleep 3.0;
+	_msg = format ["Your previous MASH has been removed."];
+	["deployed",["MASH REMOVED", _msg]] call BIS_fnc_showNotification;
 };
+
+if (!isNil "playerRespawnPoint") then {
+	//playerRespawnPoint call BIS_fnc_removeRespawnPosition;
+};
+
+
 
 WaitUntil {animationState player != "Acts_carFixingWheel"};
 if (!alive player || player distance _pos > 1) exitWith {};
@@ -99,6 +104,7 @@ if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+//playerRespawnPoint = [(group player), (getPos player)] spawn BIS_fnc_addRespawnPosition;
 _mssg = format["%1's MASH",(name player)];
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";

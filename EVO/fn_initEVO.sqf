@@ -74,16 +74,11 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 handle = [] spawn {
 	while {true} do {
-		_ret = [(getPos server), (floor (random 360)), "O_Plane_CAS_02_F", EAST] call EVO_fnc_spawnvehicle;
+		_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		_plane = _ret select 0;
 		_grp = _ret select 2;
-		_plane flyInHeight 350;
-		_wp =_grp addWaypoint [getMarkerPos "opforair", 0];
-		[_grp, 0] setWaypointBehaviour "COMBAT";
-		[_grp, 0] setWaypointCombatMode "RED";
-		[_grp, 0] setWaypointSpeed "FULL";
-		[_grp, 0] setWaypointType "HOLD";
-		[_grp, 0] setWPPos getMarkerPos "opforair";
+		//_plane flyInHeight 400;
+		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		waitUntil {!canMove _plane || !alive _plane};
 		sleep 400;
 	};

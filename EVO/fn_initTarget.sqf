@@ -248,7 +248,7 @@ while {_loop} do {
 	_count = 0;
 	sleep 10;
 	{
-		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000))) then {
+		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
 			_count = _count + 1;
 		};
 	} forEach currentAOunits;
@@ -298,18 +298,11 @@ if (alive currentTargetOF) then {
 		playsound "goodjob";
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-_finishedMarkerName = format ["%1_ao_done", currentTargetName];
-_finishedMarker = createMarker [_finishedMarkerName, position _currentTarget];
-_finishedMarkerName setMarkerShape "ELLIPSE";
-_finishedMarkerName setMarkerBrush "SOLID";
-_finishedMarkerName setMarkerDir direction currentTarget;
-_aoSize = [(((size currentTarget) select 0) + 200), (((size currentTarget) select 1) + 200)];
-_finishedMarkerName setMarkerSize _aoSize;
-_finishedMarkerName setMarkerColor "ColorWEST";
-_finishedMarkerName setMarkerPos (position currentTarget);
 
+currentTargetMarkerName setMarkerBrush "SOLID";
+currentTargetMarkerName setMarkerColor "ColorWEST";
 //deleteMarker currentTargetMarkerName;
-currentTargetMarkerName setMarkerAlpha 0;
+//currentTargetMarkerName setMarkerAlpha 0;
 sleep random 30;
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
