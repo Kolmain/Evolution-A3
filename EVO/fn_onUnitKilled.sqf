@@ -29,17 +29,14 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 					_killer setVariable ["EVO_score", _score, true];
 					if(!_vis) then {
 						_displayName = (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"));
-						_fLetter = str(_displayName select [0,1]);
-						_pre = "a";
+						_fLetter = _displayName select [0,1];
 						_fLetter = toUpper(_fLetter);
-						if (_fLetter == "A" || _fLetter == "E" || _fLetter == "I" || _fLetter == "O" || _fLetter == "U") then {
-							_pre = "an";
-						};
+						_pre = if (_fLetter in ["A", "E", "I", "O", "U"]) then {"an"} else {"a"};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							[[[_string, _scoreToAdd, _killer], {
-								if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
-							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+						    [[[_string, _scoreToAdd, _killer], {
+						        if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+						    }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -50,17 +47,14 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 					_killer setVariable ["EVO_score", _score, true];
 					if(!_vis) then {
 						_displayName = (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"));
-						_fLetter = str(_displayName select [0,1]);
-						_pre = "a";
+						_fLetter = _displayName select [0,1];
 						_fLetter = toUpper(_fLetter);
-						if (_fLetter == "A" || _fLetter == "E" || _fLetter == "I" || _fLetter == "O" || _fLetter == "U") then {
-							_pre = "an";
-						};
+						_pre = if (_fLetter in ["A", "E", "I", "O", "U"]) then {"an"} else {"a"};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							[[[_string, _scoreToAdd, _killer], {
-								if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
-							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+						    [[[_string, _scoreToAdd, _killer], {
+						        if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+						    }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -71,17 +65,14 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 					_killer setVariable ["EVO_score", _score, true];
 					if(!_vis) then {
 						_displayName = (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"));
-						_fLetter = str(_displayName select [0,1]);
-						_pre = "a";
+						_fLetter = _displayName select [0,1];
 						_fLetter = toUpper(_fLetter);
-						if (_fLetter == "A" || _fLetter == "E" || _fLetter == "I" || _fLetter == "O" || _fLetter == "U") then {
-							_pre = "an";
-						};
+						_pre = if (_fLetter in ["A", "E", "I", "O", "U"]) then {"an"} else {"a"};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							[[[_string, _scoreToAdd, _killer], {
-								if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
-							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+						    [[[_string, _scoreToAdd, _killer], {
+						        if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+						    }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -92,16 +83,14 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 					_killer setVariable ["EVO_score", _score, true];
 					if(!_vis) then {
 						_displayName = (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"));
-						_fLetter = str(_displayName select [0,1]);
-						_pre = "a";
-						if (_fLetter == "A" || _fLetter == "E" || _fLetter == "I" || _fLetter == "O" || _fLetter == "U") then {
-							_pre = "an";
-						};
+						_fLetter = _displayName select [0,1];
+						_fLetter = toUpper(_fLetter);
+						_pre = if (_fLetter in ["A", "E", "I", "O", "U"]) then {"an"} else {"a"};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							[[[_string, _scoreToAdd, _killer], {
-								if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
-							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+						    [[[_string, _scoreToAdd, _killer], {
+						        if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+						    }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
@@ -112,17 +101,14 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 					_killer setVariable ["EVO_score", _score, true];
 					if(!_vis) then {
 						_displayName = (getText(configFile >>  "CfgVehicles" >>  (typeOf _killed) >> "displayName"));
-						_fLetter = str(_displayName select [0,1]);
-						_pre = "a";
+						_fLetter = _displayName select [0,1];
 						_fLetter = toUpper(_fLetter);
-						if (_fLetter == "A" || _fLetter == "E" || _fLetter == "I" || _fLetter == "O" || _fLetter == "U") then {
-							_pre = "an";
-						};
+						_pre = if (_fLetter in ["A", "E", "I", "O", "U"]) then {"an"} else {"a"};
 						_string = format["You killed %1 %2.", _pre, _displayName];
 						if (_notify) then {
-							[[[_string, _scoreToAdd, _killer], {
-								if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
-							}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+						    [[[_string, _scoreToAdd, _killer], {
+						        if (player == _this select 2) then {["PointsAdded",[(_this select 0), (_this select 1)]] call BIS_fnc_showNotification};
+						    }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 						};
 					};
 				};
