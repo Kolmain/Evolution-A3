@@ -193,6 +193,7 @@ class CfgFunctions
 			class surrender {};
 			class paraInsert {};
 			class protectBase {};
+			class healMen {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
