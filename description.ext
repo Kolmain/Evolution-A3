@@ -443,3 +443,16 @@ class CfgHints
 		};
 	};
 };
+
+class CfgDebriefing
+{  
+	class complete
+	{
+		title = "MISSION ACCOMPLISHED";
+		subtitle = "";
+		description = "NATO units successfully captured all designated villages and cities, forcing the OPFOR assets to retreat.";
+		pictureBackground = "";
+		picture = "b_inf";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+};
