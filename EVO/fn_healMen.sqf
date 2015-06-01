@@ -1,0 +1,17 @@
+_pos = _this select 0;
+_radius = _this select 1;
+_nearMen = [];
+_mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
+while {alive _mash} do {
+  {
+    if (alive _x && side _x == west && damage _x != 0) then    {
+      _damage = damage _x;
+      _damage = _damage - 0.01;
+      if (_damage < 0) then {
+        _damage = 0;
+      };
+      _x setDamage _damage;
+    };
+  } forEach ((getPos _mash) nearEntities [["Man"], _radius]);
+  sleep 2;
+};
