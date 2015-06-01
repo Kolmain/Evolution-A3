@@ -20,9 +20,14 @@ _vehicle = _options call BIS_fnc_selectRandom;
 if (!isNil "_vehicle") then {
 	aaHuntTarget = _vehicle;
 	publicVariable "aaHuntTarget";
+	_ret = [getPos _vehicle] call EVO_fnc_nearestTownName;
+	_name = _ret select 0;
+	_distance = _ret select 1;
+	_descrip = format ["Eliminate the OPFOR anti-air threat near %1 to enable BLUFOR support to continue.", _name];
 	_img = getText(configFile >>  "CfgVehicles" >>  (typeOf _vehicle) >> "picture");
+	
 	availableSideMissions = availableSideMissions + [
-		[getPos aaHuntTarget, EVO_fnc_sm_aaHunt,"Destroy AAA Battery","Eliminate the OPFOR anti-air threat to enable BLUFOR support to continue.","", _img, 1,[]]
+		[getPos aaHuntTarget, EVO_fnc_sm_aaHunt, "Destroy AAA Battery", _descrip, "", _img, 1,[]]
 	];
 };
 
@@ -56,8 +61,12 @@ if (_bool) then {
 	_array = nearestObjects [_pos, ["house"], 200];
 	_obj = _array select 0;
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Attack" >> "icon");
+	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
+	_name = _ret select 0;
+	_distance = _ret select 1;
+	_descrip = format ["We discovered an OPFOR installation with fortified defences near %1. Seize it to weaken the OPFOR foothold.", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_attackMil,"Attack Installation","We discovered an OPFOR installation with fortified defences. Seize it to weaken their foothold.","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_attackMil,"Attack Installation", _descrip,"",_img,1,[]]
 	];
 };
 
@@ -107,8 +116,12 @@ if (_bool) then {
 	_array = nearestObjects [_pos, ["house"], 500];
 	_obj = _array select 0;
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
+	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
+	_name = _ret select 0;
+	_distance = _ret select 1;
+	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element","OPFOR squads have discovered our forward recon units. They're sending squads to seek and destroy our men, get out there and help them!","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
 	];
 };
 
@@ -126,8 +139,12 @@ if (_bool) then {
 	_array = nearestObjects [_pos, ["house"], 500];
 	_obj = _array select 0;
 	_img = getText(configFile >>  "CfgVehicles" >>  (["B_Heli_Light_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_stripped_F","B_Heli_Attack_01_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","B_Heli_Transport_03_unarmed_F","B_Heli_Transport_03_F","B_Heli_Transport_03_black_F","B_Heli_Transport_03_unarmed_green_F"] call bis_fnc_selectRandom) >> "picture");
+	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
+	_name = _ret select 0;
+	_distance = _ret select 1;
+	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew","OPFOR AAA knocked a NATO helicopter out of the air, get out there and rescue the crew!","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew","","",_img,1,[]]
 	];
 };
 
