@@ -17,7 +17,9 @@ player addaction ["<t color='#CCCC00'>Select Side Mission</t>","[] spawn EVO_fnc
 player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10 && ((leader group player) == player)"];
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
-
+if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
+	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "player moveInCargo MHQ", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ"];
+};
 
 [[[player], {(_this select 0) addEventHandler ["HandleScore", {false}]}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 

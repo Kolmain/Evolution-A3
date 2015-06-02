@@ -16,8 +16,7 @@ _dir = _vehicle getVariable "EVO_respawnDir";
 _newVehicle = _classname createVehicle _pos;
 _newVehicle setDir _dir;
 if (MHQ == _vehicle) then {
-	mhq = _newVehicle;
-	handle= [_newVehicle, WEST] execVM "CHHQ.sqf";
+	_null = [_newVehicle] call EVO_fnc_mhq;
 };
 [_newVehicle] spawn EVO_fnc_basicRespawn;
 deleteVehicle _vehicle;

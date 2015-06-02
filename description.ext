@@ -203,6 +203,7 @@ class CfgFunctions
 			class healMen {};
 			class endgame {};
 			class nearestTownName {};
+			class mhq {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
@@ -444,7 +445,7 @@ class CfgHints
 };
 
 class CfgDebriefing
-{  
+{
 	class complete
 	{
 		title = "MISSION ACCOMPLISHED";

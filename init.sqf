@@ -147,12 +147,12 @@ availableWeapons = [];
 availableMagazines = [];
 
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	null = [firstMHQ, WEST] execVM "CHHQ.sqf";
-	MHQ = firstMHQ;
-	_null = [MHQ] spawn EVO_fnc_basicRespawn;
+	//MHQ = firstMHQ;
+    _null = [firstMHQ] call EVO_fnc_mhq;
+	_null = [firstMHQ] spawn EVO_fnc_basicRespawn;
 } else {
 	MHQ = objNull;
-	_null = [firstMHQ] spawn EVO_fnc_basicRespawn;
+    deleteVehicle firstMHQ;
 };
 
 if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
@@ -181,6 +181,7 @@ if (isServer) then {
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
     [] spawn EVO_fnc_protectBase;
+    [WEST, spawnBuilding, "Staging Base"] call BIS_fnc_addRespawnPosition;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
