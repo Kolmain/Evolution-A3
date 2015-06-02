@@ -33,6 +33,8 @@ For latest release, check the [GitHub release section](https://github.com/Kolmai
 
 Also available on [Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=441868055).
 
+Discussion available at [Bohemia Interactive Forums](http://forums.bistudio.com/showthread.php?191210-(Co30)-Evolution-A3).
+
 
 ### Requirements
 
