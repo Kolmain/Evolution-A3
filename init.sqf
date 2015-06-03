@@ -8,6 +8,15 @@ CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
 
+
+if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
+	EVO_Debug = true;
+	publicVariable "EVO_Debug";
+} else {
+	EVO_Debug = false;
+	publicVariable "EVO_Debug";
+};
+
 if (isMultiplayer) then {enableSaving [false, false]};
 
 //Init Common Variables
