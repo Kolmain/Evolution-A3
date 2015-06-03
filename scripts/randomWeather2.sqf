@@ -48,7 +48,7 @@ class Params
 rw2Debug = 0;
 
 // If you are using settings in your description.ext to allow parameter settings for initial weather, you must update the # below to match which parameter you are using.  Remember, the ordering starts with 0 and goes up from there.
-rw2Param = 0;
+rw2Param = 1;
 
 // Setup Weather Types Array [Weather Name, Possible Weather Forecasts, Weather Settings] - Suggested that they are left as is.
 
