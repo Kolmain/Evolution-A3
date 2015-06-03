@@ -138,6 +138,12 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
+	class evo_debug {
+		title = "Debug Mode";
+		texts[] = {"Disabled","Enabled"};
+		values[] = {0,1};
+		default = 0;
+	};
 	class persistentEVO {
 		title = "Remember Player Positions";
 		texts[] = {"Disabled","Enabled"};
