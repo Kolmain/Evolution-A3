@@ -5,7 +5,9 @@ _score = 0;
 _notify = true;
 _vis = lineIntersects [eyePos _killer, eyePos _killed, _killer, _killed];
 _string = "";
-//systemChat format ["%1 (%2) killed %3 (%4).", name _killer, side group _killer, name _killed, side group _killed];
+if (EVO_Debug) then {
+	systemChat format ["%1 (%2) killed %3 (%4).", name _killer, side group _killer, name _killed, side group _killed];
+};
 if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 	_notify = false;
 } else {
