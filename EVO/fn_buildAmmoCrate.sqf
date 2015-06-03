@@ -4,41 +4,41 @@ if (("fullArsenal" call BIS_fnc_getParamValue) == 0) exitWith {};
 
 switch (_EVOrank) do {
     case "PRIVATE": {
-   		availableWeapons = availableWeapons + rank1weapons;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
-		availableItems = availableItems + rank1items;
+           availableWeapons = availableWeapons + rank1weapons;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+        availableItems = availableItems + rank1items;
 
     };
     case "CORPORAL": {
-    		availableWeapons = availableWeapons + rank1weapons + rank2weapons;
-		availableItems = availableItems + rank1items + rank2items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+            availableWeapons = availableWeapons + rank1weapons + rank2weapons;
+        availableItems = availableItems + rank1items + rank2items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
 
     };
     case "SERGEANT": {
-		availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons;
-		availableItems = availableItems + rank1items + rank2items + rank3items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+        availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons;
+        availableItems = availableItems + rank1items + rank2items + rank3items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
     };
     case "LIEUTENANT": {
-    		availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons;
-    		availableItems = availableItems + rank1items + rank2items + rank3items + rank4items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+            availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons;
+            availableItems = availableItems + rank1items + rank2items + rank3items + rank4items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
     };
     case "CAPTAIN": {
-    		availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons;
-		availableItems = availableItems + rank1items + rank2items + rank3items + rank4items + rank5items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+            availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons;
+        availableItems = availableItems + rank1items + rank2items + rank3items + rank4items + rank5items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
     };
     case "MAJOR": {
-    		availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank6weapons;
-		availableItems = availableItems + + rank1items rank2items + rank3items + rank4items + rank5items + rank6items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+            availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons + rank6weapons;
+        availableItems = availableItems + rank1items + rank2items + rank3items + rank4items + rank5items + rank6items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
     };
     case "COLONEL": {
-    		availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank7weapons;
-		availableItems = availableItems + + rank1items rank2items + rank3items + rank4items + rank5items + rank6items;
-		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+            availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons + rank6weapons + rank7weapons;
+        availableItems = availableItems + rank1items + rank2items + rank3items + rank4items + rank5items + rank6items;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
     };
 };
 
