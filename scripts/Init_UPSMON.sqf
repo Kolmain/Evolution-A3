@@ -7,7 +7,8 @@ if (!isServer && hasInterface ) exitWith {};
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //1=Enable or 0=disable debug. In debug could see a mark positioning de leader and another mark of the destination of movement, very useful for editing mission
-UPSMON_Debug = 0;
+UPSMON_Debug = "evo_debug" call BIS_fnc_getParamValue;
+
 
 //Max waiting is the maximum time patrol groups will wait when arrived to target for doing another target.
 UPSMON_maxwaiting = 10;
