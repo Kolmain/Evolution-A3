@@ -6,6 +6,7 @@ switch (_EVOrank) do {
     case "PRIVATE": {
    		availableWeapons = availableWeapons + rank1weapons;
 		availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+		availableItems = availableItems + rank1items;
 
     };
     case "CORPORAL": {
