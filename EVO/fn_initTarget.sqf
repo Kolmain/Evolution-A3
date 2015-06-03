@@ -306,6 +306,10 @@ currentTargetMarkerName setMarkerColor "ColorWEST";
 sleep random 30;
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
+//for Altis
+if (targetCounter == 9) then {
+	targetCounter = targetCounter + 1;
+};
 publicVariable "targetCounter";
 currentTarget = targetLocations select targetCounter;
 publicVariable "currentTarget";

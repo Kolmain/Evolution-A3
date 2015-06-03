@@ -38,7 +38,6 @@ _veh addEventHandler ["Killed", {
 		deleteVehicle _vehicle;
 		_newVehicle = _classname createVehicle _pos;
 		if (_mhq) then {
-			handle= [_newVehicle, WEST] execVM "CHHQ.sqf";
 			MHQ = _newVehicle;
 		};
 		_newVehicle setDir _dir;

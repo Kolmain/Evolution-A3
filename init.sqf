@@ -3,7 +3,6 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
-CHHQ_showMarkers = true;
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
@@ -161,6 +160,7 @@ if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	_null = [firstMHQ] spawn EVO_fnc_basicRespawn;
 } else {
 	MHQ = objNull;
+    "mhqMarker" setMarkerAlpha 0;
     deleteVehicle firstMHQ;
 };
 

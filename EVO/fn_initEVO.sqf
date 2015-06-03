@@ -33,6 +33,7 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
+
 if (EVO_Debug) then {
 	systemChat format["EVO_init found %1 AO's.", count targetLocations];
 	_counter = 1;
@@ -40,7 +41,7 @@ if (EVO_Debug) then {
 		_markerName = format ["debug_ao_%1", markerCounter];
 		_aaMarker = createMarker [_markerName, position _x ];
 		_markerName setMarkerShape "ICON";
-		_markerName setMarkerBrush "DOT";
+		_markerName setMarkerType "mil_dot";
 		_markerName setMarkerColor "ColorWEST";
 		_markerName setMarkerPos (position _x);
 		_markerName setMarkerText format["AO %1", _counter];

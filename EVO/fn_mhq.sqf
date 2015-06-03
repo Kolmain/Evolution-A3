@@ -4,7 +4,7 @@ _vehicle = _this select 0;
 MHQ = _vehicle;
 publicVariable "MHQ";
 [WEST, MHQ, "Mobile HQ"] call BIS_fnc_addRespawnPosition;
-mhqMarker setMarkerAlpha 1;
+"mhqMarker" setMarkerAlpha 1;
 [[],{
   sleep 5;
   _msg = format ["The MHQ is available at map grid %1.", mapGridPosition MHQ];
@@ -13,10 +13,10 @@ mhqMarker setMarkerAlpha 1;
 [MHQ] spawn {
   _mhq = _this select 0;
   while {alive _mhq} do {
-    mhqMarker setMarkerPos (getPos _mhq);
+    "mhqMarker" setMarkerPos (getPos _mhq);
     sleep 1;
   };
-  mhqMarker setMarkerAlpha 0;
+  "mhqMarker" setMarkerAlpha 0;
   [[],{
     sleep 5;
     _msg = format ["The MHQ has been destroyed at map grid %1.", mapGridPosition MHQ];
