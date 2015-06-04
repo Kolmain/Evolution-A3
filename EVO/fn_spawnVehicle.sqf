@@ -16,6 +16,10 @@ _grp = _ret select 2;
 	};
 } foreach units _grp;
 
+if(getNumber(configFile >> "CfgVehicles" >> typeof _veh >> "isUav")==1) then {
+    createVehicleCrew _veh;     
+};  
+
 _veh AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 _veh allowCrewInImmobile true;
 
