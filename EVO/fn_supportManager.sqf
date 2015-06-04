@@ -1,6 +1,6 @@
+_spendable = 0;
 while {true} do {
   sleep 10;
-  _spendable = 0;
   _spendable = [player] call EVO_fnc_supportPoints;
   
   if (_spendable >= 5) then {
