@@ -146,7 +146,9 @@ handle = [] spawn {
 				} forEach units group player;
 			};
 		};
-		handle = [] call EVO_fnc_rank;
+		if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
+			handle = [] call EVO_fnc_rank;
+		};
 		if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
 			_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 			profileNamespace setVariable ["EVO_lastLoadout", _currentLoadout];
