@@ -22,7 +22,7 @@ if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "player moveInCargo MHQ", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ"];
 };
 
-[[[player], {(_this select 0) addEventHandler ["HandleScore", {false}]}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
+// [[[player], {(_this select 0) addEventHandler ["HandleScore", {false}]}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
 	//player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
