@@ -22,7 +22,7 @@ if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "player moveInCargo MHQ", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ"];
 };
 
-/[[[player], {(_this select 0) addEventHandler ["HandleScore", {
+[[[player], {(_this select 0) addEventHandler ["HandleScore", {
 	_player = _this select 0;
 	_source = _this select 1;
 	_scoreToAdd = _this select 2;
@@ -30,6 +30,12 @@ if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
 	_player setVariable ["EVO_score", _score, true];
 	_vis = lineIntersects [eyePos _player, eyePos _source, _player, _source];
 	_notify = true;
+	if (vehicle _player != _player && isPlayer driver vehicle _player) then {
+		[driver vehicle _player, _scoreToAdd] call BIS_fnc_addScore;
+	};
+	if (vehicle _player != _player && isPlayer commander vehicle _player) then {
+		[commander vehicle _player, _scoreToAdd] call BIS_fnc_addScore;
+	};
 	if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 		_notify = false;
 	} else {
