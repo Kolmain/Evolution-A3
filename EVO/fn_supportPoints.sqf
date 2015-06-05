@@ -1,3 +1,5 @@
+private ["_unit","_score","_rank","_minimum","_pointsToSpend"];
+
 _unit = player;
 _score = _unit getVariable "EVO_score";
 _rank = _unit getVariable "EVOrank";

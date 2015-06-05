@@ -1,6 +1,5 @@
 private ["_randomMission","_parentDisplay","_mapCenter","_ORBAT","_markers","_images","_overcast","_isNight","_scale","_simul"];
 
-
 disableserialization;
 _randomMission = availableSideMissions call BIS_fnc_selectRandom;
 _parentDisplay 	= [] call bis_fnc_displayMission;

@@ -1,3 +1,4 @@
+private ["_pow","_capturer","_msg","_score"];
 _pow = _this select 0;
 _capturer = _this select 1;
 _id = _this select 2;

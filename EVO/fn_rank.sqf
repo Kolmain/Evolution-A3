@@ -1,5 +1,4 @@
-private ["_player","_score","_newScore","_rank","_EVOrank","_scoreToAdd","_msg","_txt","_pic"];
-
+private ["_player","_score","_newScore","_rank","_EVOrank","_scoreToAdd","_msg","_dn","_txt","_pic"];
 
 _player = player;
 //_score = score _player;

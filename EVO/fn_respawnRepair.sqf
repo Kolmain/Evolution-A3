@@ -1,5 +1,4 @@
-private ["_veh","_displayName","_markerName","_vehMarker","_vehicle","_killer","_mhq","_classname","_dir","_pos","_vehPos","_posDriverExit","_posCommanderExit","_posCargoExit","_posDriver","_posCommander","_posCargo","_driverExitOffset","_deadPos","_deadExitPos","_newVehicle","_null"];
-
+private ["_veh","_vehicle","_killer","_mhq","_classname","_dir","_pos","_vehPos","_posDriverExit","_posCommanderExit","_posCargoExit","_posDriver","_posCommander","_posCargo","_driverExitOffset","_deadPos","_deadExitPos","_newVehicle","_null","_displayName","_markerName","_vehMarker"];
 
 _veh = _this select 0;
 
@@ -8,7 +7,7 @@ _veh addEventHandler ["Killed", {
 		_vehicle = _this select 0;
 		_killer = _this select 1;
 		_mhq = false;
-		if (_vehicle == MHQ) exitWith {[_vehicle] call EVO_fnc_basicRespawn};
+		if (_vehicle == MHQ) exitWith {["_vehicle cannot be MHQ."] call BIS_fnc_error};
 		_classname = typeOf _vehicle;
 		_dir = getDir _vehicle;
 		_pos = getPosASL _vehicle;

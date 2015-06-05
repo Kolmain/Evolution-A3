@@ -1,4 +1,4 @@
-private ["_locTypes","_locs","_mil","_vehicle","_null","_markerName","_aaMarker","_grp","_driver","_commander","_gunner","_ret","_plane","_wp"];
+private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehicle","_null","_grp","_driver","_commander","_gunner","_ret","_plane"];
 
 _locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
 targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];

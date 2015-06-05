@@ -1,4 +1,4 @@
-private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","_aoSize","_grp","_lastVehicle","_spawnPos","_dir","_classname","_ret","_vehicle","_road","_lastRoad","_wp","_score"];
+private ["_startLocation","_endLocation","_startMarker","_currentTargetMarker","_aoSize","_grp","_lastVehicle","_spawnPos","_dir","_classname","_ret","_vehicle","_road","_lastRoad","_wp","_complete","_veh","_crew","_tskDisplayName","_score"];
 if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 

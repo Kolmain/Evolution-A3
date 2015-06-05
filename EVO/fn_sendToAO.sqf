@@ -1,3 +1,4 @@
+private ["_currentTarget","_type","_init","_grp","_spawnPos","_null","_spawnPos2","_veh","_ret","_transport","_transGrp","_goTo","_heli","_heliGrp","_tank","_lz"];
 _currentTarget = [_this, 0, objNull] call BIS_fnc_param;
 _type = [_this, 1, "error"] call BIS_fnc_param;
 _init = [_this, 2, false] call BIS_fnc_param;

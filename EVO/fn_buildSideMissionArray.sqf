@@ -1,4 +1,4 @@
-private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip"];
+private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip","_ret","_distance"];
 
 
 currentSideMission = "none";
@@ -25,7 +25,7 @@ if (!isNil "_vehicle") then {
 	_distance = _ret select 1;
 	_descrip = format ["Eliminate the OPFOR anti-air threat near %1 to enable BLUFOR support to continue.", _name];
 	_img = getText(configFile >>  "CfgVehicles" >>  (typeOf _vehicle) >> "picture");
-	
+
 	availableSideMissions = availableSideMissions + [
 		[getPos aaHuntTarget, EVO_fnc_sm_aaHunt, "Destroy AAA Battery", _descrip, "", _img, 1,[]]
 	];

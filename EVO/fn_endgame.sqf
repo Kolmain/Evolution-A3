@@ -1,3 +1,4 @@
+private ["_loop"];
 _loop = true;
 while {_loop} do {
   sleep 30;

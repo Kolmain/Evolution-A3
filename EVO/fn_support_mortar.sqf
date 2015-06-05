@@ -1,3 +1,4 @@
+private ["_caller","_pos","_is3D","_ID","_grpSide","_mortar","_busy","_isInRange","_eta","_newMortarStrike","_arty"];
 /*[caller,pos,target,is3D,ID]
 caller: Object - unit which called the item, usually player
 pos: Array in format Position - cursor position
@@ -54,7 +55,7 @@ if(!_busy || isNil "_busy") then {
 		[_mortar, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
 	};
-	
+
 	} else {
 		[_caller, format["%1, this is %2, adjust fire, over.", groupID (group _mortar), groupID (group _caller)]] call KOL_fnc_globalSideChat;
 		sleep 3.5;

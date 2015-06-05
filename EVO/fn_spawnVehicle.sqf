@@ -1,3 +1,4 @@
+private ["_ret","_veh","_grp"];
 _ret = _this call BIS_fnc_spawnvehicle;
 _veh = _ret select 0;
 _grp = _ret select 2;

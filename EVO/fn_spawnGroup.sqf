@@ -1,3 +1,4 @@
+private ["_grp"];
 _grp = _this call BIS_fnc_spawnGroup;
 {
 	_x setSkill ["aimingspeed", 0.15];

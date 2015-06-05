@@ -1,3 +1,4 @@
+private ["_spendable","_score","_txt"];
 _spendable = [player] call EVO_fnc_supportPoints;
 
 if (player getVariable "EVOrank" == "PRIVATE" || _spendable > 2) then {

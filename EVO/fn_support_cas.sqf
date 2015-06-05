@@ -1,3 +1,4 @@
+private ["_caller","_pos","_is3D","_ID","_grpSide","_planeClass","_pilot","_dis","_center","_cas","_newCasStrike"];
 /*[caller,pos,target,is3D,ID]
 caller: Object - unit which called the item, usually player
 pos: Array in format Position - cursor position
@@ -29,11 +30,11 @@ if ( _dis > 1000) then {
 
 	[_pilot, format["Grid %3 confirmed, en route, over.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
-	_center = createCenter sideLogic;    
-	_group = createGroup _center;  
-	_cas = _group createUnit ["ModuleCAS_F", _pos , [], 0, ""];   
+	_center = createCenter sideLogic;
+	_group = createGroup _center;
+	_cas = _group createUnit ["ModuleCAS_F", _pos , [], 0, ""];
 	_cas setDir 0;
-	_cas setVariable ["vehicle", _planeClass , true]; 
+	_cas setVariable ["vehicle", _planeClass , true];
 	_cas setVariable ["type", 2, true];
 	waituntil {isnull _cas};
 	[_pilot, format["Fixed wing CAS support request completed, %2 out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;

@@ -1,3 +1,4 @@
+private ["_object","_distance","_return","_players"];
 _object = _this select 0;
 _distance = _this select 1;
 _return = false;

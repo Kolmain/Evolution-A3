@@ -1,3 +1,4 @@
+private ["_weaponArray","_return","_weapon","_muzzles","_mags"];
 _weaponArray = _this;
 _return = [];
 {

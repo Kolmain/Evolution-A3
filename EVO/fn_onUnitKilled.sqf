@@ -1,3 +1,4 @@
+private ["_killed","_killer","_scoreToAdd","_score","_notify","_vis","_string","_displayName","_fLetter","_pre","_subScore"];
 _killed = _this select 0;
 _killer = _this select 1;
 _scoreToAdd = 0;

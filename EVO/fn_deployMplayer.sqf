@@ -1,3 +1,4 @@
+private ["_pos","_msg","_mark","_mssg","_medmark","_crate"];
 _pos = getPos player;
 
 //Land_Medevac_house_V1_F

@@ -1,3 +1,4 @@
+private ["_score","_player","_respawnPos","_ret","_vehicle","_displayName","_txt","_hitID","_handleHealID","_string","_currentLoadout"];
 
 _score = 0;
 if (isMultiplayer) Then {

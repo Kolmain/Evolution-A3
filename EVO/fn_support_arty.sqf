@@ -1,3 +1,4 @@
+private ["_caller","_pos","_is3D","_ID","_grpSide","_arty","_busy","_isInRange","_eta","_newartyStrike"];
 /*[caller,pos,target,is3D,ID]
 caller: Object - unit which called the item, usually player
 pos: Array in format Position - cursor position

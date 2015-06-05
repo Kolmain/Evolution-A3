@@ -1,3 +1,4 @@
+private ["_pos","_radius","_nearMen","_mash","_damage"];
 _pos = _this select 0;
 _radius = _this select 1;
 _nearMen = [];

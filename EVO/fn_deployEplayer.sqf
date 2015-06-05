@@ -1,3 +1,4 @@
+private ["_truck","_msg","_pos","_h","_nearVehicles","_mark","_mssg","_medmark","_crate"];
 
 _truck = nearestObject [player, "B_Truck_01_Repair_F"];
 if (isNil "_truck" || (player distance _truck > 25)) exitWith {

@@ -1,4 +1,4 @@
-private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
+private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_tskDisplayName","_score"];
 if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{

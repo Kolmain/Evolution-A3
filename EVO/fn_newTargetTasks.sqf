@@ -1,3 +1,4 @@
+private ["_type","_tskDisplayName","_tskDescription","_pos"];
 _type = "";
 if (currentTargetType == "NameVillage") then {
 	_type = "village";
