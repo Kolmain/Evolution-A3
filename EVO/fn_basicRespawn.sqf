@@ -1,4 +1,4 @@
-private ["_vehicle","_classname","_pos","_dir","_loop","_newVehicle","_null"];
+private ["_vehicle","_mhq","_classname","_pos","_dir","_loop","_newVehicle","_null"];
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
 _mhq = [_this, 1, false] call BIS_fnc_param;
