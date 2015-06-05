@@ -1,6 +1,8 @@
-private ["_vehicle","_classname","_pos","_dir","_newVehicle"];
+private ["_vehicle","_classname","_pos","_dir","_loop","_newVehicle","_null"];
 
-_vehicle = _this select 0;
+_vehicle = [_this, 0, objNull] call BIS_fnc_param;
+_mhq = [_this, 1, false] call BIS_fnc_param;
+if (isNull "_vehicle") exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
 _classname = typeOf _vehicle;
 _pos = getPos _vehicle;
 _dir = getDir _vehicle;
@@ -11,11 +13,13 @@ while {_loop} do {
 		_loop = false;
 	};
 };
-
+deleteVehicle _vehicle;
 _newVehicle = _classname createVehicle _pos;
 _newVehicle setDir _dir;
-if (MHQ == _vehicle) then {
-	_null = [_newVehicle] call EVO_fnc_mhq;
+if (_mhq) then {
+	MHQ = _newVehicle;
+	publicVariable "MHQ";
+	_null = [_newVehicle] spawn EVO_fnc_mhq;
 };
 [_newVehicle] spawn EVO_fnc_basicRespawn;
-deleteVehicle _vehicle;
+
