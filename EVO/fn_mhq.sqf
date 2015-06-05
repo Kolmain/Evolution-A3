@@ -1,3 +1,4 @@
+private ["_vehicle","_msg","_mhq"];
 if (!isServer) exitWith {};
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
