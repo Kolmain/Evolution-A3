@@ -29,7 +29,6 @@ while {_loop} do {
 			_unit switchMove "";
 			_unit enableAI "ANIM";
 			_unit enableAI "FSM";
-			};
 		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 		_captured = true;
 	};

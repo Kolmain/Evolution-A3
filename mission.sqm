@@ -1352,6 +1352,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item63
 		{
@@ -1362,6 +1363,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item64
 		{
@@ -1681,6 +1683,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item97
 		{
@@ -1691,6 +1694,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item98
 		{
@@ -1701,6 +1705,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item99
 		{
@@ -1711,6 +1716,7 @@ class Mission
 			side="EMPTY";
 			vehicle="B_MRAP_01_F";
 			skill=0.60000002;
+			init="nul = [this] spawn EVO_fnc_basicRespawn";
 		};
 		class Item100
 		{
@@ -2571,7 +2577,7 @@ class Mission
 	};
 	class Markers
 	{
-		items=7;
+		items=6;
 		class Item0
 		{
 			position[]={26418.945,-185.97,5467.5107};
@@ -2593,12 +2599,6 @@ class Mission
 		};
 		class Item2
 		{
-			position[]={20774.813,29.201462,7215.9575};
-			name="ammobox";
-			type="Empty";
-		};
-		class Item3
-		{
 			position[]={20805.525,35.536366,6795.0591};
 			name="counter";
 			type="mil_arrow2";
@@ -2607,7 +2607,7 @@ class Mission
 			b=2;
 			angle=3;
 		};
-		class Item4
+		class Item3
 		{
 			position[]={21611.893,15.228076,7567.0405};
 			name="counter_1";
@@ -2617,7 +2617,7 @@ class Mission
 			b=2;
 			angle=-112.05207;
 		};
-		class Item5
+		class Item4
 		{
 			position[]={20592.398,32.735397,8833.9648};
 			name="opforArrow";
@@ -2627,7 +2627,7 @@ class Mission
 			b=3;
 			angle=-194.033;
 		};
-		class Item6
+		class Item5
 		{
 			position[]={20770.146,28.308184,7252.9453};
 			name="mhqMarker";

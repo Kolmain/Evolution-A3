@@ -2,7 +2,7 @@ private ["_vehicle","_msg","_mhq"];
 if (!isServer) exitWith {};
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
-if (isNull "_vehicle") exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
+if (_vehicle == objNull) exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
 MHQ = _vehicle;
 publicVariable "MHQ";
 [WEST, MHQ, "Mobile HQ"] call BIS_fnc_addRespawnPosition;

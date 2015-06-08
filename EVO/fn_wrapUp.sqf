@@ -11,5 +11,7 @@ while {_loop} do {
 _veh = vehicle _obj;
 sleep 30;
 deleteVehicle _obj;
-deleteVehicleCrew _veh;
+{
+	deleteVehicle _x;
+} forEach crew _veh;
 deleteVehicle _veh;

@@ -2,7 +2,7 @@ private ["_vehicle","_mhq","_classname","_pos","_dir","_loop","_newVehicle","_nu
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
 _mhq = [_this, 1, false] call BIS_fnc_param;
-if (isNull "_vehicle") exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
+if (_vehicle == objNull) exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
 _classname = typeOf _vehicle;
 _pos = getPos _vehicle;
 _dir = getDir _vehicle;

@@ -15,7 +15,7 @@ _grpSide = side _caller;
 _arty = _caller;
 
 
-_arty = arty_west
+_arty = arty_west;
 _busy = false;
 _busy = _arty getVariable ["EVO_support_busy", false];
 

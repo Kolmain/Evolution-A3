@@ -210,6 +210,10 @@ class CfgFunctions
 			class endgame {};
 			class nearestTownName {};
 			class mhq {};
+			class support_arty {};
+			class support_cas {};
+			class support_mortar {};
+			class supporManager {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
