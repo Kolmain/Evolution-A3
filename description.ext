@@ -250,6 +250,7 @@ class CfgFunctions
 			class deathFX {};
 			class hitFX {};
 			class getNearest {};
+			class hasLOS {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

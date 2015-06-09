@@ -19,18 +19,25 @@ switch (_type) do {
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-
 			_x AddMPEventHandler ["mpkilled", {
-					currentAOunits = currentAOunits - [_this select 1];
-					publicVariable "currentAOunits";
-				}];
+				currentAOunits = currentAOunits - [_this select 1];
+				publicVariable "currentAOunits";
+			}];
 		} forEach units _grp;
 		if (_init) then {
 			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    	} else {
-			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			    	};
+				if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+				} else {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+				};
+			} else {
+				if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+					_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				} else {
+					_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				};
+			};
 		} else {
 			[_grp] spawn {
 				_grp = _this select 0;
@@ -67,7 +74,7 @@ switch (_type) do {
 				    _grp leaveVehicle _transport;
 				    waitUntil {count crew _transport == count units _transGrp};
 					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-						if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
 						} else {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];

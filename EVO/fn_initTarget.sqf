@@ -187,7 +187,7 @@ for "_i" from 1 to (["Infantry", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_grp = [_this select 0, "infantry", true] call EVO_fnc_sendToAO;
 		waitUntil {({alive _x} count units _grp) < 5};
-		while {RTonline} do {
+		while {RTonline && (_this select 0 == currentTarget)} do {
 			_grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
 			waitUntil {({alive _x} count units _grp) < 4};
 			_delay = ["Infantry"] call EVO_fnc_calculateDelay;
@@ -199,11 +199,11 @@ for "_i" from 1 to (["Infantry", "Main"] call EVO_fnc_calculateOPFOR) do {
 //OPFOR ARMOR
 //////////////////////////////////////
 for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
-		_null = [_currentTarget] spawn {
+	_null = [_currentTarget] spawn {
 		_grp = [_this select 0, "armor", true] call EVO_fnc_sendToAO;
 		_tank = vehicle leader _grp;
 		waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
-		while {RTonline} do {
+		while {RTonline && (_this select 0 == currentTarget)} do {
 			_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
 			_tank = vehicle leader _grp;
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
@@ -226,7 +226,7 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 			} else {
 			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};
-		while {RTonline} do {
+		while {RTonline && (_this select 0 == currentTarget)} do {
 			_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
@@ -242,6 +242,50 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 		};
 	};
 };
+//////////////////////////////////////
+//OPFOR Minefield - Infantry
+//////////////////////////////////////
+for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
+		for "_i" from 1 to (8 + random(7)) step 1 do {
+			_minePos = [_startPos, (random(10)) , random 360 ] call BIS_fnc_relPos;
+		    _mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
+		    _mine setDir (random 360);
+		};
+		for "_i" from 1 to 3 step 1 do {
+			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
+		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
+		    _sign setDir (random 360);
+		};
+	};
+};
+//////////////////////////////////////
+//OPFOR Minefield - Roads
+//////////////////////////////////////
+for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		_roads = _startPos nearRoads 100;
+		_nearestRoad = [_startPos, _roads] call EVO_fnc_getNearest;
+		_startPos = getPos _nearestRoad;
+		//_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
+		_mineClass = "ATMine";
+		for "_i" from 1 to (8 + random(7)) step 1 do {
+			_minePos = [_startPos, (random(2)) , getDir _nearestRoad] call BIS_fnc_relPos;
+		    _mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
+		    _mine setDir (random 360);
+		};
+		for "_i" from 1 to 3 step 1 do {
+			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
+		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
+		    _sign setDir (random 360);
+		};
+	};
+};
+
+
 
 sleep 1;
 
