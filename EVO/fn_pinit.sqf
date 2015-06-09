@@ -165,7 +165,7 @@ handle = [] spawn {
 				} forEach units group player;
 			};
 		};
-		if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
+		if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
 			handle = [] call EVO_fnc_rank;
 		};
 		if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {

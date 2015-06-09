@@ -335,15 +335,8 @@ if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
     _amb = [] spawn EVO_fnc_amb;
 };
-
-//[hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 _nil = [] spawn EVO_fnc_supportManager;
-/*
-if (!isNil "currentTargetOF") then {
-    currentTargetOF addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
-};
-*/
 handle = [] spawn {
 	while {true} do {
 		waitUntil {player distance hqbox < 5};

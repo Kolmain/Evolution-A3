@@ -44,6 +44,16 @@ class CfgRespawnTemplates
 	};
 };
 
+class CfgRadio
+{
+	sounds[] = {};
+	class squelch {
+		name = "";
+		sound[] = {"\sound\null.ogg", db-100, 1.0};
+		title = "";
+	};
+};
+
 class Params
 {
 	class aiSystem {

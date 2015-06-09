@@ -67,9 +67,16 @@ while{ count _spawnPos < 1 } do
 	_max_distance = _max_distance + 50;
 };
 */
-_spawnPos = [position currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
-currentTargetRT = _towerClass createVehicle _spawnPos;
-publicVariable "currentTargetRT";
+_spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
+_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_objectMapper;
+{
+	if (toLower(typeOf _x) == toLower(_towerClass)) then {
+		currentTargetRT = _x;
+		PublicVariable "currentTargetRT";
+	};
+} forEach _radioTowerComp;
+//currentTargetRT = _towerClass createVehicle _spawnPos;
+//publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
@@ -77,14 +84,14 @@ RTonline = true;
 publicVariable "RTonline";
 _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
-			if (HCconnected) then {
-				handle = [_x] call EVO_fnc_sendToHC;
-			};
-			currentAOunits pushBack _x;
-			publicVariable "currentAOunits";
+	if (HCconnected) then {
+		handle = [_x] call EVO_fnc_sendToHC;
+	};
+	currentAOunits pushBack _x;
+	publicVariable "currentAOunits";
 
-			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
-		} forEach units _grp;
+	_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
+} forEach units _grp;
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
 
@@ -94,8 +101,7 @@ _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 _center = [ getMarkerPos currentTargetMarkerName, (600 + random 500) , random 360 ] call BIS_fnc_relPos;
 _spawnPos = [];
 _max_distance = 100;
-while{ count _spawnPos < 1 } do
-{
+while{ count _spawnPos < 1 } do {
 	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , "Land_Cargo_Patrol_V3_F" ];
 	_max_distance = _max_distance + 50;
 };
@@ -103,8 +109,8 @@ _dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
 _comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
 _grp = createGroup EAST;
 _mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
-
-_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+//_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_objectMapper;
 _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
 _mortarGunner moveInGunner _mortar;
@@ -165,38 +171,36 @@ _officer setPosASL _spawnPos;
 removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
-[[[], {
-	currentTargetOF addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
-}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+[[[currentTargetOF], {
+	(_this select 0) addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
 handle = [currentTargetOF, currentTarget] spawn {
-	_OF = _this select 0;
-	_currentTarget = _this select 1;
-	_loop = true;
-	while {_loop} do {
-		if (_currentTarget != currentTarget) exitWith {_loop = false};
+_OF = _this select 0;
+_currentTarget = _this select 1;
+_loop = true;
+while {_loop} do {
+	if (_currentTarget != currentTarget) exitWith {_loop = false};
 		if (!alive _OF) then {
-	    		[officerTask, "Failed", false] call bis_fnc_taskSetState;
-	    		[[[_OF], {
-	    			_msg = format ["Colonel %1 has been killed.", name (_this select 0)];
+			[officerTask, "Failed", false] call bis_fnc_taskSetState;
+			[[[_OF], {
+				_msg = format ["Colonel %1 has been killed.", name (_this select 0)];
 				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-	    		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-
-
-			_loop = false;
+			}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
+		_loop = false;
 		};
-		sleep 10;
+	sleep 10;
 	};
 };
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
-			if (HCconnected) then {
-				handle = [_x] call EVO_fnc_sendToHC;
-			};
-			currentAOunits pushBack _x;
-			publicVariable "currentAOunits";
+	if (HCconnected) then {
+		handle = [_x] call EVO_fnc_sendToHC;
+	};
+	currentAOunits pushBack _x;
+	publicVariable "currentAOunits";
 
-			_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
-		} forEach units _grp;
+	_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
+} forEach units _grp;
 
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
 
@@ -204,59 +208,59 @@ _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 //////////////////////////////////////
 //OPFOR INFANTRY
 //////////////////////////////////////
-for "_i" from 1 to (["Infantry"] call EVO_fnc_calculateOPFOR) do {
+for "_i" from 1 to (["Infantry", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-			_grp = [_this select 0, "infantry", true] call EVO_fnc_sendToAO;
-			waitUntil {({alive _x} count units _grp) < 5};
-			while {RTonline} do {
-			    _grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
-				waitUntil {({alive _x} count units _grp) < 5};
-				_delay = ["Infantry"] call EVO_fnc_calculateDelay;
-				sleep _delay;
-			};
+		_grp = [_this select 0, "infantry", true] call EVO_fnc_sendToAO;
+		waitUntil {({alive _x} count units _grp) < 5};
+		while {RTonline} do {
+			_grp = [_this select 0, "infantry"] call EVO_fnc_sendToAO;
+			waitUntil {({alive _x} count units _grp) < 4};
+			_delay = ["Infantry"] call EVO_fnc_calculateDelay;
+			sleep _delay;
+		};
 	};
 };
 //////////////////////////////////////
 //OPFOR ARMOR
 //////////////////////////////////////
-for "_i" from 1 to (["Armor"] call EVO_fnc_calculateOPFOR) do {
-	_null = [_currentTarget] spawn {
-			_grp = [_this select 0, "armor", true] call EVO_fnc_sendToAO;
+for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
+		_null = [_currentTarget] spawn {
+		_grp = [_this select 0, "armor", true] call EVO_fnc_sendToAO;
+		_tank = vehicle leader _grp;
+		waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
+		while {RTonline} do {
+			_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
 			_tank = vehicle leader _grp;
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
-			while {RTonline} do {
-				_grp = [_this select 0, "armor"] call EVO_fnc_sendToAO;
-				_tank = vehicle leader _grp;
-				waitUntil {({alive _x} count units _grp) < 1 || !canMove _tank || !alive _tank};
-				_delay = ["Armor"] call EVO_fnc_calculateDelay;
-				sleep _delay;
-			};
+			_delay = ["Armor"] call EVO_fnc_calculateDelay;
+			sleep _delay;
+		};
 	};
 };
 //////////////////////////////////////
 //OPFOR CAS
 //////////////////////////////////////
-for "_i" from 1 to (["CAS"] call EVO_fnc_calculateOPFOR) do {
+for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		_plane = _ret select 0;
 		_grp = _ret select 2;
-		//_plane flyInHeight 400;
-		if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-    	} else {
-    		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-    	};
+			//_plane flyInHeight 400;
+			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			} else {
+			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+		};
 		while {RTonline} do {
 			_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
-			//_plane flyInHeight 400;
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-	    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-	    	} else {
-	    		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-	    	};
+				//_plane flyInHeight 400;
+				if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+				} else {
+				_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			};
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _plane || !alive _plane};
 			_delay = ["CAS"] call EVO_fnc_calculateDelay;
 			sleep _delay;
@@ -271,15 +275,13 @@ sleep 1;
 //////////////////////////////////////
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
 [[[], {
-	if (!isDedicated) then {
-		_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
-		playSound _sound;
-	};
+if (!isDedicated) then {
+	_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
+	playSound _sound;
+};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 [] call EVO_fnc_newTargetTasks;
-
-
 
 //////////////////////////////////////
 //Hold Until Radio Tower Offline
@@ -287,11 +289,11 @@ sleep 1;
 waitUntil {!RTonline};
 
 [[[], {
-	if (!isDedicated) then {
-		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
-		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-		playsound "goodjob";
-	};
+if (!isDedicated) then {
+	_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
+	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+	playsound "goodjob";
+};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 [towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
@@ -307,35 +309,35 @@ while {_loop} do {
 	_count = 0;
 	sleep 10;
 	{
-		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
-			_count = _count + 1;
-		};
-	} forEach currentAOunits;
-	if (_count < 9) then {
-		_loop = false;
+	if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
+		_count = _count + 1;
 	};
+} forEach currentAOunits;
+if (_count < 9) then {
+	_loop = false;
+};
 };
 //////////////////////////////////////
 //Force existing OPFOR to choose to surrender or fight
 //////////////////////////////////////
 if (_count > 0) then {
 	{
-		if ([true, false] call bis_fnc_selectRandom) then {
-			[_x] spawn EVO_fnc_surrender;
-		} else {
-			[_x] spawn {
-				_unit = _this select 0;
-				_loop = true;
-				while {_loop} do {
-					_players = [_unit, 1000] call EVO_fnc_playersNearby;
-					if (!_players || !alive _unit) then {
-						_loop = false;
-					};
-				};
-				deleteVehicle _unit;
-			};
+	if ([true, false] call bis_fnc_selectRandom) then {
+		[_x] spawn EVO_fnc_surrender;
+	} else {
+	[_x] spawn {
+	_unit = _this select 0;
+	_loop = true;
+	while {_loop} do {
+		_players = [_unit, 1000] call EVO_fnc_playersNearby;
+		if (!_players || !alive _unit) then {
+			_loop = false;
 		};
-	} forEach currentAOunits;
+	};
+	deleteVehicle _unit;
+};
+};
+} forEach currentAOunits;
 };
 //////////////////////////////////////
 //Complete Current AO & Set Tasks
@@ -355,15 +357,15 @@ if (alive currentTargetOF) then {
 //Give BLUFOR Points
 //////////////////////////////////////
 [[[], {
-	if (!isDedicated) then {
-		_tskName = format ["%1 Secured.", currentTargetName];
-		_score = player getVariable "EVO_score";
-		_score = _score + 5;
-		player setVariable ["EVO_score", _score, true];
-		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
-		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-		playsound "goodjob";
-	};
+if (!isDedicated) then {
+	_tskName = format ["%1 Secured.", currentTargetName];
+	_score = player getVariable "EVO_score";
+	_score = _score + 5;
+	player setVariable ["EVO_score", _score, true];
+	["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
+	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+	playsound "goodjob";
+};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 //////////////////////////////////////
 //Set Marker Color

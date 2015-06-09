@@ -7,10 +7,10 @@ if (player getVariable "EVOrank" == "PRIVATE" || _spendable > 2) then {
 		["PointsRemoved",["HALO insertion initiated.", 0]] call BIS_fnc_showNotification;
 	} else {
 		_score = player getVariable "EVO_score";
-		_score = _score - 3;
+		_score = _score - 2;
 		player setVariable ["EVO_score", _score, true];
 		null = [] execVM "ATM_airdrop\atm_airdrop.sqf";
-		["PointsRemoved",["HALO insertion initiated.", 3]] call BIS_fnc_showNotification;
+		["PointsRemoved",["HALO insertion initiated.", 2]] call BIS_fnc_showNotification;
 	};
 } else {
 	_txt = "You don't have enough points to HALO drop.";

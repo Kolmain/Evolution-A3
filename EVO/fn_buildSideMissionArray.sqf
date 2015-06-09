@@ -119,7 +119,7 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
+	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!", _name];
 	availableSideMissions = availableSideMissions + [
 		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
 	];
@@ -142,9 +142,9 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
+	_descrip = format ["OPFOR taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew","","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew", _descrip,"",_img,1,[]]
 	];
 };
 

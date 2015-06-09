@@ -31,5 +31,5 @@ switch (_rank) do {
     };
 };
 _pointsToSpend = _score - _minimum;
-if (!(_pointsToSpend > -1)) then { _pointsToSpend = 0};
+if (_pointsToSpend < 0) then { _pointsToSpend = 0};
 _pointsToSpend;
