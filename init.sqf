@@ -171,6 +171,52 @@ rank3 = 60;
 rank4 = 100;
 rank5 = 150;
 rank6 = 200;
+switch (EVO_difficulty) do {
+                        case 1: {
+                            //////////////////////////////////////
+                            //EASY
+                            //////////////////////////////////////
+                            rank1 = 5;
+                            rank2 = 15;
+                            rank3 = 30;
+                            rank4 = 50;
+                            rank5 = 75;
+                            rank6 = 100;
+                        };
+                        case 2: {
+                            //////////////////////////////////////
+                            //NORMAL
+                            //////////////////////////////////////
+                            rank1 = 10;
+                            rank2 = 30;
+                            rank3 = 60;
+                            rank4 = 100;
+                            rank5 = 150;
+                            rank6 = 200;
+                        };
+                        case 3: {
+                            //////////////////////////////////////
+                            //HARD
+                            //////////////////////////////////////
+                            rank1 = 15;
+                            rank2 = 35;
+                            rank3 = 65;
+                            rank4 = 105;
+                            rank5 = 155;
+                            rank6 = 205;
+                        };
+                        case 4: {
+                            //////////////////////////////////////
+                            //ALTIS ON FIRE
+                            //////////////////////////////////////
+                            rank1 = 20;
+                            rank2 = 40;
+                            rank3 = 75;
+                            rank4 = 120;
+                            rank5 = 175;
+                            rank6 = 225;
+                        };
+                    };
 HCconnected = false;
 CROSSROADS = [West,"HQ"];
 rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];

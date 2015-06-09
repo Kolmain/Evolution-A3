@@ -286,7 +286,16 @@ for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 		};
 	};
 };
-
+//////////////////////////////////////
+//OPFOR EMPLACEMENTS
+//////////////////////////////////////
+for "_i" from 1 to (["Comps", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_currentTarget = _this select 0;
+		_pos = [position _currentTarget, (random 300) , (random 360)] call BIS_fnc_relPos;
+		_newComp = [_pos, ([] call BIS_fnc_selectRandom)] call EVO_fnc_createComposition;
+	};
+};
 
 
 sleep 1;
@@ -351,35 +360,35 @@ while {_loop} do {
 	_count = 0;
 	sleep 10;
 	{
-	if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
+		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
 		_count = _count + 1;
+		};
+	} forEach currentAOunits;
+	if (_count < 9) then {
+		_loop = false;
 	};
-} forEach currentAOunits;
-if (_count < 9) then {
-	_loop = false;
-};
 };
 //////////////////////////////////////
 //Force existing OPFOR to choose to surrender or fight
 //////////////////////////////////////
 if (_count > 0) then {
 	{
-	if ([true, false] call bis_fnc_selectRandom) then {
-		[_x] spawn EVO_fnc_surrender;
-	} else {
-	[_x] spawn {
-	_unit = _this select 0;
-	_loop = true;
-	while {_loop} do {
-		_players = [_unit, 1000] call EVO_fnc_playersNearby;
-		if (!_players || !alive _unit) then {
-			_loop = false;
+		if ([true, false] call bis_fnc_selectRandom) then {
+			[_x] spawn EVO_fnc_surrender;
+		} else {
+			[_x] spawn {
+				_unit = _this select 0;
+				_loop = true;
+				while {_loop} do {
+					_players = [_unit, 1000] call EVO_fnc_playersNearby;
+					if (!_players || !alive _unit) then {
+						_loop = false;
+					};
+				};
+				deleteVehicle _unit;
+			};
 		};
-	};
-	deleteVehicle _unit;
-};
-};
-} forEach currentAOunits;
+	} forEach currentAOunits;
 };
 //////////////////////////////////////
 //Complete Current AO & Set Tasks
