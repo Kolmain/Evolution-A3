@@ -277,7 +277,8 @@ availableItems = [
     "NVGoggles",
     "FirstAidKit",
     "Medikit",
-    "ToolKit"
+    "ToolKit",
+    "Item_MineDetector"
 ];
 availableBackpacks = [
     "B_AssaultPack_rgr",
@@ -286,7 +287,7 @@ availableBackpacks = [
     "B_Kitbag_mcamo",
     "B_TacticalPack_blk",
     "B_TacticalPack_mcamo"
-    ];
+];
 availableWeapons = [];
 availableMagazines = [];
 
