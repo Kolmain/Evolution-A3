@@ -305,6 +305,27 @@ if (!isDedicated) then {
 [] call EVO_fnc_newTargetTasks;
 
 //////////////////////////////////////
+//Mortar Flare Detection
+//////////////////////////////////////
+_null = [_currentTarget] spawn {
+	_currentTarget = _this select 0;
+	while {RTonline && (_currentTarget == currentTarget)} do {
+		sleep 10;
+	    _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
+	    _gunner = gunner _mortar;
+	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
+	    	_mortar setDamage 1;
+	    } else {
+	    	if (daytime > 20 && daytime < 6) then {
+	    		_mortar doArtilleryFire [position _currentTarget, "8Rnd_82mm_Mo_Flare_white", (3 + random(floor(3)))];
+	    		_s = 60 + random(floor(30));
+	    		sleep _s;
+	    	};
+		};
+	};
+};
+
+//////////////////////////////////////
 //Hold Until Radio Tower Offline
 //////////////////////////////////////
 waitUntil {!RTonline};
