@@ -1,4 +1,4 @@
-private ["_currentTarget","_currentTargetMarker","_aoSize","_x1","_y1","_nextTargetMarker","_pos","_array","_obj","_towerClass","_center","_spawnPos","_max_distance","_dir","_comp","_grp","_mortarGunner","_newComp","_mortar","_officer","_OF","_loop","_msg","_null","_tank","_sound","_tskName","_count","_unit","_players","_score"];
+private ["_currentTarget","_currentTargetMarker","_aoSize","_x1","_y1","_nextTargetMarker","_pos","_array","_obj","_towerClass","_spawnPos","_radioTowerComp","_grp","_officer","_max_distance","_OF","_loop","_msg","_null","_center","_dir","_comp","_mortarGunner","_newComp","_mortar","_delay","_tank","_ret","_plane","_sound","_tskName","_count","_unit","_players","_score"];
 
 //////////////////////////////////////
 //Init Variables
@@ -56,17 +56,6 @@ _obj = _array select 0;
 //Target AO Radio Tower
 //////////////////////////////////////
 _towerClass = "Land_Communication_F";
-//_towerClass = ["Land_Communication_F", "Land_TTowerBig_2_F", "Land_TTowerBig_1_F"] call BIS_fnc_selectRandom;
-/*
-_center = [ getMarkerPos currentTargetMarkerName, random 80 , random 360 ] call BIS_fnc_relPos;
-_spawnPos = [];
-_max_distance = 100;
-while{ count _spawnPos < 1 } do
-{
-	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
-	_max_distance = _max_distance + 50;
-};
-*/
 _spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 _radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_objectMapper;
 {
@@ -75,8 +64,6 @@ _radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFil
 		PublicVariable "currentTargetRT";
 	};
 } forEach _radioTowerComp;
-//currentTargetRT = _towerClass createVehicle _spawnPos;
-//publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
@@ -95,62 +82,7 @@ _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 
 [_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
 
-//////////////////////////////////////
-//Target AO Mortar Camp
-//////////////////////////////////////
-_center = [ getMarkerPos currentTargetMarkerName, (600 + random 500) , random 360 ] call BIS_fnc_relPos;
-_spawnPos = [];
-_max_distance = 100;
-while{ count _spawnPos < 1 } do {
-	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , "Land_Cargo_Patrol_V3_F" ];
-	_max_distance = _max_distance + 50;
-};
-_dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
-_comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
-_grp = createGroup EAST;
-_mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
-//_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_objectMapper;
-_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
-_mortarGunner assignAsGunner _mortar;
-_mortarGunner moveInGunner _mortar;
-if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-	(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
-} else {
-	nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
-};
-_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
 
-
-{
-	if (HCconnected) then {
-		handle = [_x] call EVO_fnc_sendToHC;
-	};
-} forEach units _grp;
-[_grp, _spawnPos] call bis_fnc_taskDefend;
-
-[_newComp, _grp, _mortarGunner, currentTarget] spawn {
-	waitUntil {; sleep 10; _this select 3 != currentTarget};
-	{
-		[_x] call EVO_fnc_wrapUp;
-	} forEach _this select 0;
-
-	{
-		[_x] call EVO_fnc_wrapUp;
-	} forEach units _this select 1;
-	[_this select 2] call EVO_fnc_wrapUp;
-};
-
-/*
-_center = [ getMarkerPos currentTargetMarkerName, random 150 , random 360 ] call BIS_fnc_relPos;
-_spawnPos = [];
-_max_distance = 100;
-while{ count _spawnPos < 1 } do
-{
-	_spawnPos = _center findEmptyPosition[ 30 , _max_distance , _towerClass ];
-	_max_distance = _max_distance + 50;
-};
-*/
 //////////////////////////////////////
 //Target AO Officer
 //////////////////////////////////////
@@ -203,8 +135,51 @@ _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 } forEach units _grp;
 
 [_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
+//////////////////////////////////////
+//OPFOR MORTAR EMPLACEMENT
+//////////////////////////////////////
+for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_center = [ getMarkerPos currentTargetMarkerName, (600 + random 500) , random 360 ] call BIS_fnc_relPos;
+		_spawnPos = [];
+		_max_distance = 100;
+		while{ count _spawnPos < 1 } do {
+			_spawnPos = _center findEmptyPosition[ 30 , _max_distance , "Land_Cargo_Patrol_V3_F" ];
+			_max_distance = _max_distance + 50;
+		};
+		_dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
+		_comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
+		_grp = createGroup EAST;
+		_mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
+		_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_objectMapper;
+		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
+		_mortarGunner assignAsGunner _mortar;
+		_mortarGunner moveInGunner _mortar;
+		if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
+		} else {
+			nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
+		};
+		_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
+		{
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+		} forEach units _grp;
+		[_grp, _spawnPos] call bis_fnc_taskDefend;
+		[_newComp, _grp, _mortarGunner, currentTarget] spawn {
+			waitUntil {; sleep 10; _this select 3 != currentTarget};
+			{
+				[_x] call EVO_fnc_wrapUp;
+			} forEach _this select 0;
 
-
+			{
+				[_x] call EVO_fnc_wrapUp;
+			} forEach units _this select 1;
+			[_this select 2] call EVO_fnc_wrapUp;
+		};
+	};
+};
 //////////////////////////////////////
 //OPFOR INFANTRY
 //////////////////////////////////////
@@ -380,10 +355,15 @@ sleep random 30;
 //////////////////////////////////////
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
-//For Altis' Strange Island "City"
+		//
+	//For Altis' Strange Island "City" TODO
+//
 if (targetCounter == 9) then {
 	targetCounter = targetCounter + 1;
 };
+//
+	//
+		//
 publicVariable "targetCounter";
 currentTarget = targetLocations select targetCounter;
 publicVariable "currentTarget";

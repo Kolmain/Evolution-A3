@@ -70,7 +70,7 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
 	if (faction _vehicle == "BLU_F") then {
-		if (!(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
+		if (!(_vehicle isKindOf "Plane")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 		} else {
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
@@ -88,7 +88,6 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 		_markerName setMarkerColor "ColorEAST";
 		_markerName setMarkerPos (GetPos _vehicle);
 		markerCounter = markerCounter + 1;
-		//O_crew_F
 		_grp = createGroup east;
 		_driver = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
 		_commander = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];

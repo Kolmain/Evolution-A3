@@ -1,3 +1,7 @@
+_vehicle = [_this, 0, objNull] call BIS_fnc_param;
+_nil = [_vehicle] call NSLVR_fnc_vehRespawn;
+
+/*
 private ["_vehicle","_mhq","_classname","_pos","_dir","_loop","_newVehicle","_null"];
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
@@ -22,3 +26,4 @@ if (_mhq) then {
 	_null = [_newVehicle] spawn EVO_fnc_mhq;
 };
 [_newVehicle] spawn EVO_fnc_basicRespawn;
+*/
