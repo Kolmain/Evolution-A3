@@ -94,18 +94,18 @@ if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
         // How far should air units be called in to support attacks.
         MCC_GAIA_MAX_FAST_SPEED_RANGE  = 80000;
         // How logn should mortars and artillery wait (in seconds) between fire support missions.
-        MCC_GAIA_MORTAR_TIMEOUT              = 300;
+        MCC_GAIA_MORTAR_TIMEOUT        = 120;
         // DANGEROUS SETTING!!!
         // If set to TRUE gaia will even send units that she does NOT control into attacks. Be aware ONLy for attacks.
         // They will not suddenly patrol if set to true.
         MCC_GAIA_ATTACKS_FOR_NONGAIA     = false;
 
         // If set to false, ai will not use smoke and flares (during night)
-        MCC_GAIA_AMBIANT                             = true;
+        MCC_GAIA_AMBIANT                 = true;
 
         // Influence how high the chance is (when applicaple) that units do smokes and flare (so not robotic style)
         // Default is 20 that is a chance of 1 out of 20 when they are applicable to use smokes and flares
-        MCC_GAIA_AMBIANT_CHANCE              = 20;
+        MCC_GAIA_AMBIANT_CHANCE          = 20;
         // The seconds of rest a transporter takes after STARTING his last order
         MCC_GAIA_TRANSPORT_RESTTIME     = 40;
         call compile preprocessfile "gaia\gaia_init.sqf";
