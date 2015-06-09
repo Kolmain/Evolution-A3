@@ -251,6 +251,7 @@ class CfgFunctions
 			class hitFX {};
 			class getNearest {};
 			class hasLOS {};
+			class createComposition {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

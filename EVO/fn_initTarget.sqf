@@ -57,7 +57,8 @@ _obj = _array select 0;
 //////////////////////////////////////
 _towerClass = "Land_Communication_F";
 _spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
-_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_objectMapper;
+//_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_objectMapper;
+_radioTowerComp = [_spawnPos, "Comps\radiotower_griffz.sqf"] call EVO_fnc_createComposition;
 {
 	if (toLower(typeOf _x) == toLower(_towerClass)) then {
 		currentTargetRT = _x;
@@ -151,7 +152,8 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
 		_grp = createGroup EAST;
 		_mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
-		_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_objectMapper;
+		//_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_objectMapper;
+		_newComp = [_spawnPos, _comp] call EVO_fnc_createComposition;
 		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
