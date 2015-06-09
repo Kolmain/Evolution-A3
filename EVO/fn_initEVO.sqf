@@ -1,5 +1,7 @@
 private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehicle","_null","_grp","_driver","_commander","_gunner","_ret","_plane"];
-
+//////////////////////////////////////
+//Init Global EVO Variables
+//////////////////////////////////////
 _locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
 targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
 _locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
@@ -49,11 +51,24 @@ if (EVO_Debug) then {
 		_counter = _counter + 1;
 	} forEach targetLocations
 };
-handle = [] spawn EVO_fnc_buildSideMissionArray;
+//////////////////////////////////////
+//Spawn End Game Loop
+//////////////////////////////////////
 handle = [] spawn EVO_fnc_endgame;
 
+//////////////////////////////////////
+//Build Available Side Missions
+//////////////////////////////////////
+handle = [] spawn EVO_fnc_buildSideMissionArray;
+
+//////////////////////////////////////
+//Check All Vehicles on Map
+//////////////////////////////////////
 {
 	_vehicle = _x;
+	//////////////////////////////////////
+	//Setup BLUFOR Vehicle Respawn/Repair Systems
+	//////////////////////////////////////
 	if (faction _vehicle == "BLU_F") then {
 		if (!(_vehicle isKindOf "Plane") && ((typeOf _vehicle) != "B_MRAP_01_F")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
@@ -61,6 +76,9 @@ handle = [] spawn EVO_fnc_endgame;
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
 		};
 	};
+	//////////////////////////////////////
+	//Setup OPFOR AAA
+	//////////////////////////////////////
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
 		_markerName = format ["aa_%1", markerCounter];
 		_aaMarker = createMarker [_markerName, position _x ];
@@ -85,29 +103,27 @@ handle = [] spawn EVO_fnc_endgame;
 		_gunner assignAsGunner _vehicle;
 		_vehicle lock true;
 		{
-
+			_x setSkill ["spotdistance", 1.0];
+			_x setSkill ["aimingspeed", 0.15];
+			_x setSkill ["aimingaccuracy", 0.1];
+			_x setSkill ["aimingshake", 0.15];
+			_x setSkill ["spottime", 0.5];
+			_x setSkill ["commanding", 0.8];
+			_x setSkill ["general", 0.8];
+			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+			if (HCconnected) then {
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
 		} forEach units _grp;
 		_vehicle addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
+		_vehicle allowCrewInImmobile true;
 	};
 } forEach vehicles;
 
-handle = [] spawn {
-	while {true} do {
-		_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
-		_plane = _ret select 0;
-		_grp = _ret select 2;
-		//_plane flyInHeight 400;
-		if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-    	} else {
-    		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-    	};
-		waitUntil {!canMove _plane || !alive _plane};
-		sleep 400;
-	};
-};
-
+//////////////////////////////////////
+//Init First Target
+//////////////////////////////////////
 handle = [] spawn EVO_fnc_initTarget;
 
 

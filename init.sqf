@@ -1,4 +1,6 @@
+//////////////////////////////////////
 //Init Third Party Scripts
+//////////////////////////////////////
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
@@ -6,6 +8,12 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
+if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
+    execVM "R3F_LOG\init.sqf";
+};
+//////////////////////////////////////
+//Init OPFOR AI System
+//////////////////////////////////////
 if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
     if (isServer) then
     {
@@ -72,6 +80,9 @@ if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
     call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 };
 
+//////////////////////////////////////
+//Init EVO_Debug
+//////////////////////////////////////
 if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
 	EVO_Debug = true;
 	publicVariable "EVO_Debug";
@@ -80,10 +91,13 @@ if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
 	publicVariable "EVO_Debug";
 };
 
-if (isMultiplayer) then {enableSaving [false, false]};
 
+
+//////////////////////////////////////
 //Init Common Variables
-debug=false;
+//////////////////////////////////////
+EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
+enableSaving [false, false];
 arsenalCrates = [];
 militaryInstallations = [];
 rank1 = 10;
@@ -101,25 +115,18 @@ rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_arme
 rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
 rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
 rank7vehicles = ["b_plane_cas_01_f"];
-
 rank1weapons = ["arifle_MX_F","launch_NLAW_F","launch_RPG32_F"];
 rank1items = ["optic_Aco","optic_ACO_grn","acc_flashlight"];
-
 rank2weapons = ["launch_B_Titan_short_F","launch_B_Titan_F","hgun_ACPC2_F","arifle_MXC_F","arifle_MX_GL_F","arifle_MX_SW_F"];
 rank2items = ["optic_Hamr","optic_Aco_smg","optic_ACO_grn_smg","optic_Holosight","optic_Holosight_smg","bipod_01_F_snd","bipod_01_F_blk","bipod_01_F_mtp"];
-
 rank3weapons = ["arifle_MXM_F","arifle_Mk20C_F","arifle_Mk20C_plain_F","arifle_Mk20_GL_F","hgun_Pistol_heavy_02_F","LMG_Mk200_F"];
 rank3items = ["B_UavTerminal","Laserdesignator","acc_pointer_IR","optic_MRCO","NVGoggles"];
-
 rank4weapons = ["hgun_ACPC2_snds_F","arifle_MXM_Black_F","arifle_TRG21_F","arifle_TRG21_GL_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black_F","arifle_MX_SW_Black_F","hgun_PDW2000_F","SMG_01_F","SMG_02_F"];
 rank4items = ["muzzle_snds_H","muzzle_snds_L","muzzle_snds_M","muzzle_snds_B","muzzle_snds_H_MG","muzzle_snds_H_SW","muzzle_snds_acp","muzzle_snds_338_black","muzzle_snds_338_green","muzzle_snds_338_sand","muzzle_snds_93mmg","muzzle_snds_93mmg_tan"];
-
 rank5weapons = ["srifle_EBR_F","srifle_DMR_02_F","srifle_DMR_02_camo_F","srifle_DMR_02_sniper_F","srifle_DMR_03_F","srifle_DMR_03_khaki_F","srifle_DMR_03_tan_F","srifle_DMR_03_multicam_F","srifle_DMR_03_woodland_F","srifle_DMR_06_camo_F","srifle_DMR_06_olive_F","srifle_DMR_06_camo_khs_F","MMG_02_camo_F","MMG_02_black_F","MMG_02_sand_F"];
 rank5items = ["optic_SOS","optic_NVS","optic_Nightstalker","optic_tws","optic_tws_mg","optic_Yorris","optic_MRD","optic_DMS","optic_LRPS"];
-
 rank6weapons = ["srifle_LRR_F","srifle_GM6_F","srifle_LRR_camo_F"];
 rank6items = ["optic_AMS","optic_AMS_khk","optic_AMS_snd"];
-
 rank7weapons = [];
 availableHeadgear = [
     "H_HelmetB",
@@ -218,27 +225,10 @@ availableBackpacks = [
 availableWeapons = [];
 availableMagazines = [];
 
-if (!isNil "MHQ") then {
-    _null = [MHQ] spawn EVO_fnc_mhq;
-	_null = [MHQ] spawn EVO_fnc_basicRespawn;
-} else {
-	MHQ = objNull;
-    "mhqMarker" setMarkerAlpha 0;
-};
 
-if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
-	execVM "R3F_LOG\init.sqf";
-};
-
-if (!isMultiplayer) then {
-	_nearUnits = nearestObjects [spawnBuilding, ["Man"], 100];
-	{
-		_unit = _x;
-		if (!isPlayer _unit) then {
-			deleteVehicle _unit;
-		};
-	} foreach _nearUnits;
-};
+//////////////////////////////////////
+//Init Headless Client
+//////////////////////////////////////
 
 if (!(isServer) && !(hasInterface)) then {
 	HCconnected = true;
@@ -246,8 +236,17 @@ if (!(isServer) && !(hasInterface)) then {
 };
 
 
-//init Server
+//////////////////////////////////////
+//Init Server
+//////////////////////////////////////
 if (isServer) then {
+    if (!isNil "MHQ") then {
+        _null = [MHQ] spawn EVO_fnc_mhq;
+        _null = [MHQ] spawn EVO_fnc_basicRespawn;
+    } else {
+        MHQ = objNull;
+        "mhqMarker" setMarkerAlpha 0;
+    };
 	[] spawn EVO_fnc_initEVO;
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
@@ -256,7 +255,9 @@ if (isServer) then {
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
-//init Client
+//////////////////////////////////////
+//Init Clients
+//////////////////////////////////////
 if (isDedicated || !hasInterface) exitWith {};
 _brief = [] execVM "briefing.sqf";
 intro = true;
@@ -268,13 +269,18 @@ playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
-_amb = [] spawn EVO_fnc_amb;
+if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
+    _amb = [] spawn EVO_fnc_amb;
+};
+
 //[hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 _nil = [] spawn EVO_fnc_supportManager;
+/*
 if (!isNil "currentTargetOF") then {
     currentTargetOF addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
 };
+*/
 handle = [] spawn {
 	while {true} do {
 		waitUntil {player distance hqbox < 5};
