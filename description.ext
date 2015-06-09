@@ -230,6 +230,7 @@ class CfgFunctions
 			class calculateOPOR {};
 			class deathFX {};
 			class hitFX {};
+			class getNearest {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

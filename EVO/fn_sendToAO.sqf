@@ -41,6 +41,9 @@ switch (_type) do {
 					_ret = [_spawnPos2, (floor (random 360)), (["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
+				    _roads = _transport nearRoads 100;
+				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
+				    _transport setPos getPos _nearestRoad;
 					{
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
@@ -54,7 +57,7 @@ switch (_type) do {
 				    	_x assignAsCargo _transport;
 				    	_x moveInCargo _transport;
 				    } forEach units _grp;
-				    _goTo = [position currentTarget, 100, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				    _goTo = [position currentTarget, 100, 250, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				    _transport doMove _goTo;
 				    waitUntil {_transport distance _goTo < 100};
 				    doStop _transport;
@@ -64,9 +67,17 @@ switch (_type) do {
 				    _grp leaveVehicle _transport;
 				    waitUntil {count crew _transport == count units _transGrp};
 					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+						if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+						} else {
+							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+						};
 			    	} else {
-			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			    		if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						} else {
+							_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						};
 			    	};
 				    doStop _transport;
 				    _transport doMove _spawnPos2;
