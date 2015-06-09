@@ -8,6 +8,69 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
+if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
+    // Bodyfall SFX
+    mrg_unit_sfx_bodyfall_concrete = [
+        "MRG_bodyfall_concrete_1",
+        "MRG_bodyfall_concrete_2",
+        "MRG_bodyfall_concrete_3"
+    ];
+    mrg_unit_sfx_bodyfall_grass = [
+        "MRG_bodyfall_grass_1",
+        "MRG_bodyfall_grass_2",
+        "MRG_bodyfall_grass_3"
+    ];
+    mrg_unit_sfx_bodyfall_drygrass = [
+        "MRG_bodyfall_drygrass_1",
+        "MRG_bodyfall_drygrass_2",
+        "MRG_bodyfall_drygrass_3"
+    ];
+    mrg_unit_sfx_bodyfall_sand = [
+        "MRG_bodyfall_sand_1",
+        "MRG_bodyfall_sand_2",
+        "MRG_bodyfall_sand_3"
+    ];
+
+    // Hit scream SFX
+    mrg_unit_sfx_scream = [
+        "MRG_scream_1",
+        "MRG_scream_2",
+        "MRG_scream_3",
+        "MRG_scream_4",
+        "MRG_scream_5",
+        "MRG_scream_6",
+        "MRG_scream_7",
+        "MRG_scream_8",
+        "MRG_scream_9",
+        "MRG_scream_10",
+        "MRG_scream_11",
+        "MRG_scream_12",
+        "MRG_scream_13",
+        "MRG_scream_14",
+        "MRG_scream_15"
+    ];
+    mrg_unit_sfx_deathScream = [
+        "MRG_deathScream_1",
+        "MRG_deathScream_2",
+        "MRG_deathScream_3",
+        "MRG_deathScream_4",
+        "MRG_deathScream_5",
+        "MRG_deathScream_6",
+        "MRG_deathScream_7",
+        "MRG_deathScream_8",
+        "MRG_deathScream_9",
+        "MRG_deathScream_10"
+    ];
+    // Array sizes (saves having to calculate them later)
+    mrg_unit_sfx_bodyfall_concrete_size = count mrg_unit_sfx_bodyfall_concrete;
+    mrg_unit_sfx_bodyfall_grass_size = count mrg_unit_sfx_bodyfall_grass;
+    mrg_unit_sfx_bodyfall_drygrass_size = count mrg_unit_sfx_bodyfall_drygrass;
+    mrg_unit_sfx_bodyfall_sand_size = count mrg_unit_sfx_bodyfall_sand;
+    mrg_unit_sfx_scream_size = count mrg_unit_sfx_scream;
+    mrg_unit_sfx_deathScream_size = count mrg_unit_sfx_deathScream;
+};
+
+
 if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
     execVM "R3F_LOG\init.sqf";
 };

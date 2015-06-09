@@ -378,7 +378,7 @@ sleep random 30;
 //////////////////////////////////////
 deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
-//for Altis
+//For Altis' Strange Island "City"
 if (targetCounter == 9) then {
 	targetCounter = targetCounter + 1;
 };

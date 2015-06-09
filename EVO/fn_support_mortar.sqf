@@ -45,7 +45,7 @@ if(!_busy || isNil "_busy") then {
 		//fire!
 		_eta = 0;
 		_mortar doArtilleryFire [_pos, currentMagazine _mortar, 5];
-		_eta = _mortar getArtilleryETA [_pos, currentMagazine _mortar];
+		_eta = floor(_mortar getArtilleryETA [_pos, currentMagazine _mortar]);
 		[_caller, "Shot, out."] call EVO_fnc_globalSideChat;
 		sleep 3.5;
 		_mortar setVariable ["KOL_support_busy", false, true];

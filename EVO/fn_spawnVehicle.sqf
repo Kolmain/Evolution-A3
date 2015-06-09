@@ -11,6 +11,10 @@ _grp = _ret select 2;
 	_x setSkill ["commanding", 0.8];
 	_x setSkill ["general", 0.8];
 	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+		if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
+		_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_deathFX}];
+		_x AddMPEventHandler ["mphit", {_this spawn EVO_fnc_hitFX}];
+	};
 	if (HCconnected) then {
 		handle = [_x] call EVO_fnc_sendToHC;
 	};

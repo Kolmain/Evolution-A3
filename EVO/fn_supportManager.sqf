@@ -27,8 +27,9 @@ while {true} do {
       _hasCas = true;
     };
 
-    if (_spendable >= 8) then {
-      //rocket?
+    if (_spendable >= 8 && !_hasRocket) then {
+      rocketStrikeComm = [player, "rocketStrike"] call BIS_fnc_addCommMenuItem;
+      _hasRocket = true;
     };
 
     if (_spendable >= 9) then {
@@ -59,7 +60,8 @@ while {true} do {
     };
 
     if (_spendable < 8) then {
-
+      [player, rocketStrikeComm] call BIS_fnc_removeCommMenuItem;
+      _hasRocket = false;
     };
 
     if (_spendable < 9) then {
