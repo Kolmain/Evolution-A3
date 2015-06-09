@@ -121,7 +121,7 @@ if (_bool) then {
 	_distance = _ret select 1;
 	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_reinforce,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
 	];
 };
 
