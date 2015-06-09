@@ -46,6 +46,18 @@ class CfgRespawnTemplates
 
 class Params
 {
+	class aiSystem {
+	        title = "AI System";
+	        values[] = {1,2};
+	        texts[] = {"UPSMON","GAIA"};
+	        default = 2;
+	};
+	class initialWeatherParam {
+	        title = "Starting Weather";
+	        values[] = {0,1,2,3,4};
+	        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
+	        default = 4;
+	};
 	class numberOfAOs {
 	        title = "Number of Targets to Clear";
 	        values[] = {1,5,10,15,20,999};
@@ -53,12 +65,6 @@ class Params
 	        default = 999;
 	};
 
-	class initialWeatherParam {
-	        title = "Starting Weather";
-	        values[] = {0,1,2,3,4};
-	        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-	        default = 4;
-	};
 	class Daytime {
 		title = "Starting Time";
 		texts[] = {"Morning","Day","Evening","Night"};
@@ -213,7 +219,7 @@ class CfgFunctions
 			class support_arty {};
 			class support_cas {};
 			class support_mortar {};
-			class supporManager {};
+			class supportManager {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

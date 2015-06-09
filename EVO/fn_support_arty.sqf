@@ -18,7 +18,10 @@ _arty = _caller;
 _arty = arty_west;
 _busy = false;
 _busy = _arty getVariable ["EVO_support_busy", false];
-
+_score = player getVariable "EVO_score";
+_score = _score - 6;
+player setVariable ["EVO_score", _score, true];
+["PointsRemoved",["Artillery support initiated.", 6]] call BIS_fnc_showNotification;
 if(!_busy || isNil "_busy") then {
 
 	_arty setVariable ["EVO_support_busy", true, true];
@@ -62,5 +65,9 @@ if(!_busy || isNil "_busy") then {
 		sleep 3.5;
 		[_arty, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call KOL_fnc_globalSideChat;
 		_newartyStrike = [_caller, "artyStrike"] call BIS_fnc_addCommMenuItem;
+		_score = player getVariable "EVO_score";
+		_score = _score + 6;
+		player setVariable ["EVO_score", _score, true];
+		["PointsAdded",["Artillery support canceled.", 6]] call BIS_fnc_showNotification;
 
 };

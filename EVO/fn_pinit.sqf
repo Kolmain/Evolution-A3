@@ -165,10 +165,9 @@ handle = [] spawn {
 
 [[[player], {
 	if (isServer) then {
-		(_this select 0) addEventHandler ["HandleScore", {_this call EVO_fnc_handleScore}]
+		(_this select 0) addEventHandler ["HandleScore", {_this call EVO_fnc_handleScore}];
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-
 
 
 

@@ -18,7 +18,10 @@ _mortar = mortar_west;
 
 _busy = false;
 _busy = _mortar getVariable ["KOL_support_busy", false];
-
+_score = player getVariable "EVO_score";
+_score = _score - 5;
+player setVariable ["EVO_score", _score, true];
+["PointsRemoved",["Mortar support initiated.", 5]] call BIS_fnc_showNotification;
 if(!_busy || isNil "_busy") then {
 	[_caller, format["%1, this is %2, adjust fire, over.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
@@ -61,5 +64,9 @@ if(!_busy || isNil "_busy") then {
 		sleep 3.5;
 		[_mortar, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
+		_score = player getVariable "EVO_score";
+		_score = _score + 5;
+		player setVariable ["EVO_score", _score, true];
+		["PointAdded",["Mortar support canceled.", 5]] call BIS_fnc_showNotification;
 
 };

@@ -17,13 +17,16 @@ _pilot = _caller;
 
 _planeClass = "B_Plane_CAS_01_F";
 _pilot = pilot_west;
-
+_score = player getVariable "EVO_score";
+_score = _score - 7;
+player setVariable ["EVO_score", _score, true];
+["PointsRemoved",["CAS support initiated.", 7]] call BIS_fnc_showNotification;
 _dis = _pos distance _pilot;
 [_caller, format["%2, this is %1, requesting immediate fixed wing CAS support, over.", groupID (group _caller), groupID (group _pilot)]] call EVO_fnc_globalSideChat;
 sleep 3.5;
 [_pilot, format["%1, this is %2, send grid coordinates, over.", groupID (group _caller), groupID (group _pilot)]] call EVO_fnc_globalSideChat;
 sleep 3.5;
-[_caller, format["Grid %3, over.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call KOL_fnc_globalSideChat;
+[_caller, format["Grid %3, over.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 sleep 3.5;
 
 if ( _dis > 1000) then {
@@ -44,4 +47,8 @@ if ( _dis > 1000) then {
 	[_pilot, format["Grid %3 is too close to friendly forces, request denied, out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 5;
 	_newCasStrike = [_caller, "fixedCasStrike"] call BIS_fnc_addCommMenuItem;
+	_score = player getVariable "EVO_score";
+	_score = _score + 7;
+	player setVariable ["EVO_score", _score, true];
+	["PointsAdded",["CAS support canceled.", 7]] call BIS_fnc_showNotification;
 };

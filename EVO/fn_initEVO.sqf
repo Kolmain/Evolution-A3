@@ -98,7 +98,11 @@ handle = [] spawn {
 		_plane = _ret select 0;
 		_grp = _ret select 2;
 		//_plane flyInHeight 400;
-		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+		if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+    	} else {
+    		_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+    	};
 		waitUntil {!canMove _plane || !alive _plane};
 		sleep 400;
 	};

@@ -17,7 +17,7 @@ publicVariable "currentTargetName";
 _currentTarget = currentTarget;
 currentTargetType = type currentTarget;
 publicVariable "currentTargetType";
-currentTargetMarkerName = format ["%1_ao", currentTargetName];
+currentTargetMarkerName = format ["%1", targetCounter];
 publicVariable "currentTargetMarkerName";
 _currentTargetMarker = createMarker [currentTargetMarkerName, position _currentTarget];
 currentTargetMarkerName setMarkerShape "ELLIPSE";
@@ -89,7 +89,11 @@ _newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumb
 _mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 _mortarGunner assignAsGunner _mortar;
 _mortarGunner moveInGunner _mortar;
-nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
+if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+	(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
+} else {
+	nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
+};
 _grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
 
 
