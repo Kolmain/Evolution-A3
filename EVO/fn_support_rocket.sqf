@@ -21,6 +21,7 @@ _busy = _arty getVariable ["EVO_support_busy", false];
 _score = player getVariable "EVO_score";
 _score = _score - 6;
 player setVariable ["EVO_score", _score, true];
+[player, -6] call bis_fnc_addScore;
 ["PointsRemoved",["Rocket support initiated.", 6]] call BIS_fnc_showNotification;
 if(!_busy || isNil "_busy") then {
 
@@ -58,6 +59,10 @@ if(!_busy || isNil "_busy") then {
 	} else {
 		[_arty, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _arty), groupID (group _caller)]] call KOL_fnc_globalSideChat;
 		_newartyStrike = [_caller, "rocketStrike"] call BIS_fnc_addCommMenuItem;
+		_score = player getVariable "EVO_score";
+		_score = _score + 6;
+		player setVariable ["EVO_score", _score, true];
+		[player, 6] call bis_fnc_addScore;
 	};
 
 	} else {
@@ -68,6 +73,7 @@ if(!_busy || isNil "_busy") then {
 		_score = player getVariable "EVO_score";
 		_score = _score + 6;
 		player setVariable ["EVO_score", _score, true];
+		[player, 6] call bis_fnc_addScore;
 		["PointsAdded",["Rocket support canceled.", 6]] call BIS_fnc_showNotification;
 
 };

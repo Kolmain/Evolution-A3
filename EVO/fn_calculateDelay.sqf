@@ -4,7 +4,7 @@ private ["_type","_delay"];
 //Calculate Delay of Reinforcements
 //////////////////////////////////////
 _type = _this select 0;
-if (isNull "_type") exitWith {};
+if (isNil "_type") exitWith {};
 _delay = 0;
 switch (_type) do {
     case "CAS": {

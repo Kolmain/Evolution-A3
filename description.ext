@@ -244,6 +244,7 @@ class CfgFunctions
 			class support_arty {};
 			class support_cas {};
 			class support_mortar {};
+			class support_rocket {};
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};

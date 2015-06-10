@@ -1,7 +1,7 @@
 _killed = _this select 0;
 _killer = _this select 1;
 _unit = _killed;
-_unit spawn mrg_fnc_unit_sfx_hit;
+[_unit] spawn EVO_fnc_hitFX;
 
 if (player distance _unit > 50) exitWith {};
 

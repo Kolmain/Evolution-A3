@@ -78,7 +78,7 @@ class Mission
 	randomSeed=13408;
 	class Intel
 	{
-		briefingName="(CO30) Evolution-A3";
+		briefingName="(CO30) Evolution-A3 [v1.1-beta]";
 		overviewText="Based on the classic Armed Assault mission, Evolution Blue.";
 		resistanceWest=0;
 		resistanceEast=1;
@@ -757,7 +757,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="arty_west";
-					init="this allowDamage false; doStop this";
+					init="this allowDamage false; doStop this; this disableAI ""MOVE""; group this setGroupID [""Haymaker 1-1""];";
 				};
 			};
 		};
@@ -770,7 +770,7 @@ class Mission
 				class Item0
 				{
 					position[]={20770.781,30.115618,7199.1675};
-					azimut=374.28217;
+					azimut=374.28201;
 					special="NONE";
 					id=33;
 					side="WEST";
@@ -778,7 +778,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="mortar_west";
-					init="this allowDamage false; doStop this";
+					init="this allowDamage false; doStop this; this disableAI ""MOVE""; group this setGroupID [""Grumpy 3-1""];";
 				};
 			};
 		};
@@ -790,8 +790,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={20797.164,29.080307,7210.2173};
-					azimut=335;
+					position[]={14524.835,9.6812773,6273.937};
+					azimut=368.08401;
 					special="NONE";
 					id=34;
 					side="WEST";
@@ -799,7 +799,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="pilot_west";
-					init="this allowDamage false; doStop this";
+					init="this allowDamage false; doStop this; group this setGroupID [""Eagle 2-1""];";
 				};
 			};
 		};
@@ -820,7 +820,7 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					text="rocket_west";
-					init="this allowDamage false; doStop this";
+					init="this allowDamage false; doStop this; this disableAI ""MOVE""; group this setGroupID [""Zues 2-1""];";
 				};
 			};
 		};
@@ -2132,7 +2132,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item135
 		{
@@ -2143,7 +2143,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item136
 		{
@@ -2154,7 +2154,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item137
 		{
@@ -2165,7 +2165,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item138
 		{
@@ -2176,7 +2176,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item139
 		{
@@ -2187,7 +2187,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item140
 		{
@@ -2198,7 +2198,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item141
 		{
@@ -2209,7 +2209,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item142
 		{
@@ -2220,7 +2220,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item143
 		{
@@ -2231,7 +2231,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item144
 		{
@@ -2242,7 +2242,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item145
 		{
@@ -2253,7 +2253,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item146
 		{
@@ -2264,7 +2264,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item147
 		{
@@ -2275,7 +2275,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item148
 		{
@@ -2286,7 +2286,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item149
 		{
@@ -2297,7 +2297,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item150
 		{
@@ -2308,7 +2308,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item151
 		{
@@ -2319,7 +2319,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item152
 		{
@@ -2330,7 +2330,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item153
 		{
@@ -2341,7 +2341,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item154
 		{
@@ -2352,7 +2352,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item155
 		{
@@ -2363,7 +2363,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item156
 		{
@@ -2374,7 +2374,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item157
 		{
@@ -2385,7 +2385,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item158
 		{
@@ -2396,7 +2396,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item159
 		{
@@ -2407,7 +2407,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item160
 		{
@@ -2418,7 +2418,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item161
 		{
@@ -2429,7 +2429,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item162
 		{
@@ -2440,7 +2440,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item163
 		{
@@ -2451,7 +2451,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item164
 		{
@@ -2462,7 +2462,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item165
 		{
@@ -2473,7 +2473,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item166
 		{
@@ -2484,7 +2484,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item167
 		{
@@ -2495,7 +2495,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item168
 		{
@@ -2506,7 +2506,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item169
 		{
@@ -2517,7 +2517,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item170
 		{
@@ -2528,7 +2528,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item171
 		{
@@ -2539,7 +2539,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item172
 		{
@@ -2550,7 +2550,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item173
 		{
@@ -2561,7 +2561,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item174
 		{
@@ -2572,7 +2572,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item175
 		{
@@ -2583,7 +2583,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item176
 		{
@@ -2594,7 +2594,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item177
 		{
@@ -2605,7 +2605,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item178
 		{
@@ -2616,7 +2616,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item179
 		{
@@ -2627,7 +2627,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item180
 		{
@@ -2638,7 +2638,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item181
 		{
@@ -2649,7 +2649,7 @@ class Mission
 			vehicle="Land_ClutterCutter_large_F";
 			leader=1;
 			skill=0.5;
-			init="this setDir (random 360); _newComp = [getpos this, (getDir this), ""comps\aa.sqf"", false] call (compile (preprocessFileLineNumbers ""scripts\otl7_Mapper.sqf"")); ";
+			init="this setDir (random 360); _newComp = [getpos this, ""comps\aa.sqf""] call EVO_fnc_createComposition; ";
 		};
 		class Item182
 		{

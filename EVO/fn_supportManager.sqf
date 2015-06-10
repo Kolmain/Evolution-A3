@@ -2,6 +2,7 @@ private ["_spendable","_lastSpendable"];
 _hasCas = false;
 _hasArty = false;
 _hasMortar = false;
+_hasRocket = false;
 _spendable = 0;
 _lastSpendable = 0;
 while {true} do {

@@ -20,6 +20,7 @@ _pilot = pilot_west;
 _score = player getVariable "EVO_score";
 _score = _score - 7;
 player setVariable ["EVO_score", _score, true];
+[player, -7] call bis_fnc_addScore;
 ["PointsRemoved",["CAS support initiated.", 7]] call BIS_fnc_showNotification;
 _dis = _pos distance _pilot;
 [_caller, format["%2, this is %1, requesting immediate fixed wing CAS support, over.", groupID (group _caller), groupID (group _pilot)]] call EVO_fnc_globalSideChat;
@@ -50,5 +51,6 @@ if ( _dis > 1000) then {
 	_score = player getVariable "EVO_score";
 	_score = _score + 7;
 	player setVariable ["EVO_score", _score, true];
+	[player, 7] call bis_fnc_addScore;
 	["PointsAdded",["CAS support canceled.", 7]] call BIS_fnc_showNotification;
 };

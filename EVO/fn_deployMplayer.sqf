@@ -28,7 +28,7 @@ if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 //playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-playerStructures = [(getPos player), (getDir player), call (compile (preprocessFileLineNumbers "Comps\mash.sqf"))] call BIS_fnc_ObjectsMapper;
+playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf"] call BIS_fnc_ObjectsMapper;
 _mssg = format["%1's MASH",(name player)];
 playerRespawnPoint = [(group player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;
 _medmark = createMarker [_mark, getPos player];
@@ -49,7 +49,7 @@ _crate = nearestObject [_pos, "CargoNet_01_box_F"];
 
 _mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
 while {alive _mash} do {
-	_pts = _player getVariable ["EVO_healingPts", 0];
+	_pts = player getVariable ["EVO_healingPts", 0];
 	if (_pts >= 1) then {
 		player setVariable ["EVO_healingPts", 0, true];
 		[player, 1] call bis_fnc_addScore;

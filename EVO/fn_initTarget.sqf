@@ -58,14 +58,14 @@ _obj = _array select 0;
 _towerClass = "Land_Communication_F";
 _spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 //_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_ObjectsMapper;
-/*_radioTowerComp = [_spawnPos, "Comps\radiotower_griffz.sqf"] call EVO_fnc_createComposition;
+_radioTowerComp = [_spawnPos, "Comps\radiotower.sqf"] call EVO_fnc_createComposition;
 {
 	if (toLower(typeOf _x) == toLower(_towerClass)) then {
 		currentTargetRT = _x;
 		PublicVariable "currentTargetRT";
 	};
-} forEach _radioTowerComp;*/
-currentTargetRT = _towerClass createVehicle _spawnPos;
+} forEach _radioTowerComp;
+//currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
 currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
@@ -155,8 +155,8 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_grp = createGroup EAST;
 		_mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
 		//_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_ObjectsMapper;
-		//_newComp = [_spawnPos, _comp] call EVO_fnc_createComposition;
-		_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
+		_newComp = [_spawnPos, _comp] call EVO_fnc_createComposition;
+		//_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
 		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
@@ -255,9 +255,20 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
 		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(10)) , random 360 ] call BIS_fnc_relPos;
-		    _mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
+			_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
+		    _mine = createMine [_mineClass, _minePos, [], 0];
+		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
 		    _mine setDir (random 360);
+		    if (EVO_Debug) then {
+				_markerName = format ["mine_%1", markerCounter];
+				_aaMarker = createMarker [_markerName, _minePos ];
+				_markerName setMarkerShape "ICON";
+				_markerName setMarkerType "mil_dot";
+				_markerName setMarkerColor "ColorEAST";
+				_markerName setMarkerPos _minePos;
+				_markerName setMarkerText format["Mine"];
+				markerCounter = markerCounter + 1;
+		    };
 		};
 		for "_i" from 1 to 3 step 1 do {
 			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
@@ -272,15 +283,26 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
-		_roads = _startPos nearRoads 100;
+		_roads = _startPos nearRoads 250;
 		_nearestRoad = [_startPos, _roads] call EVO_fnc_getNearest;
 		_startPos = getPos _nearestRoad;
 		//_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
 		_mineClass = "ATMine";
 		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(2)) , getDir _nearestRoad] call BIS_fnc_relPos;
-		    _mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
+			_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
+		    _mine = createMine [_mineClass, _minePos, [], 0];
+		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
 		    _mine setDir (random 360);
+		    if (EVO_Debug) then {
+				_markerName = format ["mine_%1", markerCounter];
+				_aaMarker = createMarker [_markerName, _minePos ];
+				_markerName setMarkerShape "ICON";
+				_markerName setMarkerType "mil_dot";
+				_markerName setMarkerColor "ColorEAST";
+				_markerName setMarkerPos _minePos;
+				_markerName setMarkerText format["Mine"];
+				markerCounter = markerCounter + 1;
+		    };
 		};
 		for "_i" from 1 to 3 step 1 do {
 			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
@@ -296,7 +318,17 @@ for "_i" from 1 to (["Comps", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_currentTarget = _this select 0;
 		_pos = [position _currentTarget, (random 300) , (random 360)] call BIS_fnc_relPos;
-		_newComp = [_pos, ([] call BIS_fnc_selectRandom)] call EVO_fnc_createComposition;
+		//_newComp = [_pos, ([] call BIS_fnc_selectRandom)] call EVO_fnc_createComposition;
+		if (EVO_Debug) then {
+				_markerName = format ["mine_%1", markerCounter];
+				_aaMarker = createMarker [_markerName, _pos ];
+				_markerName setMarkerShape "ICON";
+				_markerName setMarkerType "mil_dot";
+				_markerName setMarkerColor "ColorEAST";
+				_markerName setMarkerPos _pos;
+				_markerName setMarkerText format["EMPLACEMENT"];
+				markerCounter = markerCounter + 1;
+		    };
 	};
 };
 
