@@ -1,4 +1,16 @@
 //////////////////////////////////////
+//Init EVO_Debug
+//////////////////////////////////////
+if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
+    EVO_Debug = true;
+    publicVariable "EVO_Debug";
+    NSLVR_DEBUG = true;
+} else {
+    EVO_Debug = false;
+    publicVariable "EVO_Debug";
+    NSLVR_DEBUG = false;
+};
+//////////////////////////////////////
 //Init Third Party Scripts
 //////////////////////////////////////
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
@@ -143,18 +155,7 @@ if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
     call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 };
 
-//////////////////////////////////////
-//Init EVO_Debug
-//////////////////////////////////////
-if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
-	EVO_Debug = true;
-	publicVariable "EVO_Debug";
-    NSLVR_DEBUG = true;
-} else {
-	EVO_Debug = false;
-	publicVariable "EVO_Debug";
-    NSLVR_DEBUG = false;
-};
+
 
 
 

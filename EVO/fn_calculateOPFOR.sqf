@@ -5,7 +5,7 @@ private ["_type","_mission","_qty","_weight"];
 //////////////////////////////////////
 _type = _this select 0;
 _mission = _this select 1;
-if (isNull "_type") exitWith {};
+if (isNil "_type") exitWith {};
 _qty = 0;
 _weight = targetCounter;
 if (_weight > 10) then {
@@ -57,21 +57,21 @@ switch (_mission) do {
                             //////////////////////////////////////
                             //NORMAL
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 3) then {_qty = 3};
                         };
                         case 3: {
                             //////////////////////////////////////
                             //HARD
                             //////////////////////////////////////
-                            _qty = ((floor(random(2))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
                             if (_qty > 4) then {_qty = 4};
                         };
                         case 4: {
                             //////////////////////////////////////
                             //ALTIS ON FIRE
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 5) then {_qty = 5};
                         };
                     };
@@ -88,21 +88,21 @@ switch (_mission) do {
                             //////////////////////////////////////
                             //NORMAL
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 3) then {_qty = 3};
                         };
                         case 3: {
                             //////////////////////////////////////
                             //HARD
                             //////////////////////////////////////
-                            _qty = ((floor(random(2))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
                             if (_qty > 4) then {_qty = 4};
                         };
                         case 4: {
                             //////////////////////////////////////
                             //ALTIS ON FIRE
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 5) then {_qty = 5};
                         };
                     };
@@ -119,21 +119,21 @@ switch (_mission) do {
                             //////////////////////////////////////
                             //NORMAL
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 3) then {_qty = 3};
                         };
                         case 3: {
                             //////////////////////////////////////
                             //HARD
                             //////////////////////////////////////
-                            _qty = ((floor(random(2))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
                             if (_qty > 4) then {_qty = 4};
                         };
                         case 4: {
                             //////////////////////////////////////
                             //ALTIS ON FIRE
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)))
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
                             if (_qty > 5) then {_qty = 5};
                         };
                     };

@@ -246,7 +246,7 @@ class CfgFunctions
 			class support_mortar {};
 			class supportManager {};
 			class calculateDelay {};
-			class calculateOPOR {};
+			class calculateOPFOR {};
 			class deathFX {};
 			class hitFX {};
 			class getNearest {};

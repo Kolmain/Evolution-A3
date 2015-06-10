@@ -2,7 +2,8 @@ private ["_pos","_composition","_sortedByDist","_frstNum","_secNum","_biggestOff
 
 _pos = _this select 0;
 _composition = _this select 1;
-
+/*
+_biggestOffset = [];
 _sortedByDist = [_composition,[],{
 	_frstNum = abs (_x select 1 select 0);
 	_secNum = abs (_x select 1 select 1);
@@ -34,6 +35,7 @@ if (_boundingSize > _radius) then {
 
 
 _safePosition = [_pos, 1, 100, _radius, 0, 20, 0] call BIS_fnc_findSafePos;
-_compComplete = [_safePosition, (random(floor(360))), call (compile (preprocessFileLineNumbers _composition))] call BIS_fnc_objectMapper;
+*/
+_compComplete = [_pos, (random(floor(360))), call (compile (preprocessFileLineNumbers _composition))] call BIS_fnc_objectMapper;
 
 _compComplete;
