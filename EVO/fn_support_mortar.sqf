@@ -45,13 +45,15 @@ if(!_busy || isNil "_busy") then {
 		[_mortar, "Shot, over."] call EVO_fnc_globalSideChat;
 		//fire!
 		_eta = 0;
-		_mortar doArtilleryFire [_pos, currentMagazine _mortar, 5];
+		[[[_mortar, _pos], {
+			_this select 0 doArtilleryFire [_this select 1, currentMagazine _this select 0, 5];
+		}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 		_eta = floor(_mortar getArtilleryETA [_pos, currentMagazine _mortar]);
 		[_caller, "Shot, out."] call EVO_fnc_globalSideChat;
 		sleep 3.5;
 		_mortar setVariable ["KOL_support_busy", false, true];
 		[_mortar, format["Splash in %1 seconds, over.", _eta]] call EVO_fnc_globalSideChat;
-		sleep _eta;
+		sleep (_eta + 10);
 		[_caller, "Splash, over."] call EVO_fnc_globalSideChat;
 		sleep 3.5;
 		[_mortar, "Splash, out."] call EVO_fnc_globalSideChat;

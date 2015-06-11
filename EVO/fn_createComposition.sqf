@@ -32,7 +32,7 @@ if (_boundingSize > _radius) then {
 };
 
 
-_safePosition = [_pos, 1, 100, _radius, 0, 20, 0] call BIS_fnc_findSafePos;
+_safePosition = [_pos, 1, 100, _radius, 0, 3, 0] call BIS_fnc_findSafePos;
 _compComplete = [_pos, random 360, _composition] call BIS_fnc_ObjectsMapper;
 
 _compComplete;
