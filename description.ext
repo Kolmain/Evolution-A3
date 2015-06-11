@@ -57,22 +57,22 @@ class CfgRadio
 class Params
 {
 	class aiSystem {
-	        title = "AI System";
-	        values[] = {1,2};
-	        texts[] = {"UPSMON","GAIA"};
-	        default = 2;
+	    title = "AI System";
+	    values[] = {1,2};
+	    texts[] = {"UPSMON","GAIA"};
+	    default = 2;
 	};
 	class initialWeatherParam {
-	        title = "Starting Weather";
-	        values[] = {0,1,2,3,4};
-	        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-	        default = 4;
+	    title = "Starting Weather";
+	    values[] = {0,1,2,3,4};
+	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
+	    default = 4;
 	};
 	class numberOfAOs {
-	        title = "Number of Targets to Clear";
-	        values[] = {1,5,10,15,20,999};
-	        texts[] = {"1","5","10","15","20","All Available"};
-	        default = 999;
+		title = "Number of Targets to Clear";
+	    values[] = {1,5,10,15,20,999};
+	    texts[] = {"1","5","10","15","20","All Available"};
+	    default = 999;
 	};
 
 	class Daytime {
@@ -245,6 +245,8 @@ class CfgFunctions
 			class support_cas {};
 			class support_mortar {};
 			class support_rocket {};
+			class support_uav {};
+			class support_ugv {};
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};
@@ -614,6 +616,26 @@ class CfgCommunicationMenu
         text = "Rocket Support"; // Text displayed in the menu and in a notification
         submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
         expression = "_this spawn EVO_fnc_support_rocket;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+    class ugvRequest
+    {
+        text = "UGV Support"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_ugv;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+    class uavRequest
+    {
+        text = "UAV Support"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_uav;"; // Code executed upon activation
         icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
         cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
         enable = "1"; // Simple expression condition for enabling the item
