@@ -35,7 +35,19 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
-
+EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+{
+	_x addEventHandler ["HandleScore", {
+		_supportAsset = _this select 0;
+		_source = _this select 1;
+		_scoreToAdd = _this select 2;
+		_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
+		[_player, _scoreToAdd] call bis_fnc_addScore;
+		if (EVO_Debug) then {
+			systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
+		};
+	}];
+} forEach EVO_supportUnits;
 if (EVO_Debug) then {
 	systemChat format["EVO_init found %1 AO's.", count targetLocations];
 	_counter = 1;
