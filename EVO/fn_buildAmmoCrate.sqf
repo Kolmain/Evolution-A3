@@ -1,3 +1,4 @@
+private ["_crate","_EVOrank"];
 _crate = _this select 0;
 _EVOrank = _this select 1;
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) exitWith {};

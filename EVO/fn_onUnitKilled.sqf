@@ -1,5 +1,7 @@
+private ["_killed","_killer","_scoreToAdd","_score","_notify","_vis","_string","_displayName","_fLetter","_pre","_subScore"];
 _killed = _this select 0;
 _killer = _this select 1;
+_killerOrg = _killer;
 _scoreToAdd = 0;
 _score = 0;
 _notify = true;
@@ -13,6 +15,7 @@ if (("killNotificationParam " call BIS_fnc_getParamValue) == 0) then {
 } else {
 	_notify = true;
 };
+/*
 if (isPlayer _killer || isPlayer (leader group _killer)) then {
 	if (isPlayer _killer && vehicle _killer != _killer && isPlayer driver vehicle _killer) then {
 		[_killed, driver vehicle _killer] spawn EVO_fnc_onUnitKilled;
@@ -151,4 +154,4 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 
 [_killer, _scoreToAdd] call BIS_fnc_addScore;
 
-false;
+*/

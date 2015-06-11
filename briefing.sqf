@@ -6,28 +6,28 @@ player createDiaryRecord ["OPREP", ["Mission", "Eradicated CSAT prescence on the
 player createDiaryRecord ["OPREP", ["Execution", "NATO high command has issued orders to retake the island via a systematic approach. We will be receiving intel from our forward recon teams and leaders will be receiving new orders as we receive them. Infantry movement will be supported by light armor and air cover as we move towards the island."]];
 _index = player createDiarySubject ["Gamemode","Gamemode"];
 _rankString = "You are awarded field promotions based on your score:";
-_rankString = _rankString + format ["<br/><img image='img\pvt.paa' width='32' height='32'> %1 points   = PRIVATE<br/>
-<img image='img\corp.paa' width='32' height='32'> %2 points  = CORPORAL<br/>
-<img image='img\sgt.paa' width='32' height='32'> %3 points  = SERGEANT<br/>
-<img image='img\ltn.paa' width='32' height='32'> %4 points  = LIEUTENANT<br/>
-<img image='img\cpt.paa' width='32' height='32'> %5 points = CAPTAIN<br/>
-<img image='img\mjr.paa' width='32' height='32'> %6 points = MAJOR<br/>
-<img image='img\col.paa' width='32' height='32'> %7 points = COLONEL<br/><br/>", 0, rank1, rank2, rank3, rank4, rank5, rank6];
+_rankString = _rankString + format ["<br/><img image='img\pvt.paa' width='32' height='32'/> %1 points   = PRIVATE<br/>
+<img image='img\corp.paa' width='32' height='32'/> %2 points  = CORPORAL<br/>
+<img image='img\sgt.paa' width='32' height='32'/> %3 points  = SERGEANT<br/>
+<img image='img\ltn.paa' width='32' height='32'/> %4 points  = LIEUTENANT<br/>
+<img image='img\cpt.paa' width='32' height='32'/> %5 points = CAPTAIN<br/>
+<img image='img\mjr.paa' width='32' height='32'/> %6 points = MAJOR<br/>
+<img image='img\col.paa' width='32' height='32'/> %7 points = COLONEL<br/><br/>", 0, rank1, rank2, rank3, rank4, rank5, rank6];
 player createDiaryRecord ["Gamemode", ["Player Ranks", _rankString]];
 
 
 _assetString = "Each rank unlocks new vehicles for you to utilize:";
-_assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='32'><br/> PRIVATE <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='32'/><br/> PRIVATE <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank1vehicles;
-_assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'><br/> CORPORAL <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'/><br/> CORPORAL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank2vehicles;
-_assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'><br/> SERGEANT <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'/><br/> SERGEANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
@@ -37,7 +37,7 @@ _assetString = _assetString + "<br/><img image='img\ltn.paa' width='32' height='
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank4vehicles;
-_assetString = _assetString + "<br/><img image='img\cpt.paa' width='32' height='32'><br/> CAPTAIN <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\cpt.paa' width='32' height='32'/><br/> CAPTAIN <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
@@ -47,7 +47,7 @@ _assetString = _assetString + "<br/><img image='img\mjr.paa' width='32' height='
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank6vehicles;
-_assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'><br/> COLONEL <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'/><br/> COLONEL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
@@ -56,22 +56,22 @@ player createDiaryRecord ["Gamemode", ["Assets", _assetString]];
 
 
 _assetString = "Each rank unlocks new weapons for you to use:";
-_assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='32'><br/> PRIVATE <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='32'/><br/> PRIVATE <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank1weapons;
-_assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'><br/> CORPORAL <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'/><br/> CORPORAL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank2weapons;
-_assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'><br/> SERGEANT <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'/><br/> SERGEANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank3weapons;
-_assetString = _assetString + "<br/><img image='img\ltn.paa' width='32' height='32'><br/> LIEUTENANT <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\ltn.paa' width='32' height='32'/><br/> LIEUTENANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
@@ -81,12 +81,12 @@ _assetString = _assetString + "<br/><img image='img\cpt.paa' width='32' height='
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank5weapons;
-_assetString = _assetString + "<br/><img image='img\mjr.paa' width='32' height='32'><br/> MAJOR <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\mjr.paa' width='32' height='32'/><br/> MAJOR <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
 } forEach rank6weapons;
-_assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'><br/> COLONEL <br/><br/>";
+_assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'/><br/> COLONEL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";

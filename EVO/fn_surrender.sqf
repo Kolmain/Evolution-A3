@@ -1,3 +1,5 @@
+private ["_unit","_grp","_players","_loop","_captured","_msg","_score"];
+
 _unit = _this select 0;
 
 [[[_unit], {
@@ -16,9 +18,19 @@ _grp = createGroup side _unit;
 _players = true;
 _loop = true;
 while {_loop} do {
+	_captured = false;
 	_players = [_unit, 1000] call EVO_fnc_playersNearby;
 	if (!_players || !alive _unit || (_unit distance spawnBuilding < 50)) then {
 		_loop = false;
+	};
+	if (isPlayer(leader group _unit) && !_captured) then {
+		[[[_unit], {
+			_unit = _this select 0;
+			_unit switchMove "";
+			_unit enableAI "ANIM";
+			_unit enableAI "FSM";
+		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+		_captured = true;
 	};
 };
 [[[_unit], {

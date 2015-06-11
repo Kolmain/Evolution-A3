@@ -112,7 +112,7 @@ while {(getPos _target select 2) > 2} do {
 	};
 };
 
-	hint Localize "STR_ATM_hintload";
+	//hint Localize "STR_ATM_hintload";
 		_target removeAction RedOn;
 		_target removeAction BlueOn;
 		_target removeAction YellowOn;
@@ -122,7 +122,7 @@ while {(getPos _target select 2) > 2} do {
 		deletevehicle (_target getvariable "lgtarray"); _target setvariable ["lgtarray",nil,true];
 		(findDisplay 46) displayRemoveEventHandler ["KeyDown", Cut_Rope];
 sleep 3;
-hintsilent "";
+//hintsilent "";
 sleep 1;
 
 	0=[_target,_loadout] call Setloadout;

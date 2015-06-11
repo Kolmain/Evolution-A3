@@ -1,4 +1,4 @@
-private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip"];
+private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip","_ret","_distance"];
 
 
 currentSideMission = "none";
@@ -25,7 +25,7 @@ if (!isNil "_vehicle") then {
 	_distance = _ret select 1;
 	_descrip = format ["Eliminate the OPFOR anti-air threat near %1 to enable BLUFOR support to continue.", _name];
 	_img = getText(configFile >>  "CfgVehicles" >>  (typeOf _vehicle) >> "picture");
-	
+
 	availableSideMissions = availableSideMissions + [
 		[getPos aaHuntTarget, EVO_fnc_sm_aaHunt, "Destroy AAA Battery", _descrip, "", _img, 1,[]]
 	];
@@ -119,9 +119,9 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
+	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_attackMil,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_reinforce,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
 	];
 };
 
@@ -142,9 +142,9 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!, _name];
+	_descrip = format ["OPFOR taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew","","",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew", _descrip,"",_img,1,[]]
 	];
 };
 

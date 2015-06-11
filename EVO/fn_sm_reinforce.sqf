@@ -1,4 +1,5 @@
-private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_heliGrp","_score"];
+private ["_spawnPos","_grp","_ret","_heli","_heliGrp","_tskDisplayName","_score"];
+
 if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{

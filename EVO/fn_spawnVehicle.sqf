@@ -1,24 +1,30 @@
+private ["_ret","_veh","_grp"];
 _ret = _this call BIS_fnc_spawnvehicle;
 _veh = _ret select 0;
 _grp = _ret select 2;
 {
+	_x setSkill ["spotdistance", 0.75];
 	_x setSkill ["aimingspeed", 0.15];
-	_x setSkill ["spotdistance", 0.15];
-	_x setSkill ["aimingaccuracy", 0.15];
-	_x setSkill ["aimingshake", 0.1];
-	_x setSkill ["spottime", 0.3];
-	_x setSkill ["spotdistance", 0.5];
-	_x setSkill ["commanding", 0.5];
-	_x setSkill ["general", 0.6];
+	_x setSkill ["aimingaccuracy", 0.2];
+	_x setSkill ["aimingshake", 0.15];
+	_x setSkill ["spottime", 0.4];
+	_x setSkill ["commanding", 0.8];
+	_x setSkill ["general", 0.8];
 	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
+	if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
+		_x addEventHandler ["killed", {
+			//_this spawn EVO_fnc_deathFX;
+			[_this,"EVO_fnc_deathFX", true] call BIS_fnc_MP;
+		}];
+		_x addEventHandler ["hit", {
+			//_this spawn EVO_fnc_hitFX;
+			[_this,"EVO_fnc_hitFX", true] call BIS_fnc_MP;
+		}];
+	};
 	if (HCconnected) then {
 		handle = [_x] call EVO_fnc_sendToHC;
 	};
 } foreach units _grp;
-
-if(getNumber(configFile >> "CfgVehicles" >> typeof _veh >> "isUav")==1) then {
-    createVehicleCrew _veh;     
-};  
 
 _veh AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 _veh allowCrewInImmobile true;

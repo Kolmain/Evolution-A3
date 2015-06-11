@@ -1,16 +1,18 @@
-private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_score"];
+private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_tskDisplayName","_score"];
 if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{
 	titleCut ["","BLACK IN", 0];
 	currentSideMission = "aaHunt";
 	currentSideMissionStatus = "ip";
+	currentSideMissionsUnits = [];
+	publicVariable "currentSideMissionsUnits";
 	publicVariable "currentSideMissionStatus";
 	publicVariable "currentSideMission";
 	if (isServer) then {
 	//server
 		_vehicle = aaHuntTarget;
-		currentSideMissionMarker = format ["sidemission_%1", markerCounter];
+		currentSideMissionMarker = format ["%1", (markerCounter + 100)];
 		publicVariable "currentSideMissionMarker";
 		_aaMarker = createMarker [currentSideMissionMarker, position _vehicle ];
 		currentTargetMarkerName setMarkerShape "ELLIPSE";
@@ -20,37 +22,60 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		currentSideMissionMarker setMarkerPos (GetPos _vehicle);
 		markerCounter = markerCounter + 1;
 		publicVariable "currentSideMissionMarker";
-		for "_i" from 1 to 2 do {
+		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
-			if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
+			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
+				} else {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
+				};
+			} else {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				} else {
+					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				};
 			};
 			{
-
-			}  forEach units _grp;
-			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			handle = [_grp] spawn {
-				_grp = _this select 0;
-				waitUntil {!alive aaHuntTarget};
-				sleep (random 15);
-				currentSideMissionStatus = "success";
-				publicVariable "currentSideMissionStatus";
-				[aaHuntTask, "Succeeded", false] call bis_fnc_taskSetState;
-				{
-					[_x] call EVO_fnc_wrapUp;
-				} forEach units _grp;
-				currentSideMission = "none";
-				publicVariable "currentSideMission";
-				handle = [] spawn EVO_fnc_buildSideMissionArray;
-				deleteMarker currentSideMissionMarker;
-			};
+				currentSideMissionsUnits pushBack _x;
+			} forEach units _grp;
 		};
 		_tskDisplayName = format ["Destroy AAA Battery"];
 		aaHuntTask = format ["aaHuntTask%1", floor(random(1000))];
 		[WEST, [aaHuntTask], [_tskDisplayName, _tskDisplayName, ""], (getMarkerPos currentSideMissionMarker), 1, 2, true] call BIS_fnc_taskCreate;
+		handle = [] spawn {
+			waitUntil {!alive aaHuntTarget};
+			sleep (random 15);
+			currentSideMissionStatus = "success";
+			publicVariable "currentSideMissionStatus";
+			[aaHuntTask, "Succeeded", false] call bis_fnc_taskSetState;
+			_count = {alive _x} count currentSideMissionsUnits;
+			if (_count > 0) then {
+				{
+					if ([true, false] call bis_fnc_selectRandom) then {
+						[_x] spawn EVO_fnc_surrender;
+					} else {
+						[_x] spawn {
+							_unit = _this select 0;
+							_loop = true;
+							while {_loop} do {
+								_players = [_unit, 1000] call EVO_fnc_playersNearby;
+								if (!_players || !alive _unit) then {
+									_loop = false;
+								};
+							};
+							deleteVehicle _unit;
+						};
+					};
+				} forEach currentSideMissionsUnits;
+			};
+			currentSideMission = "none";
+			publicVariable "currentSideMission";
+			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			deleteMarker currentSideMissionMarker;
+		};
 	};
 	if (!isDedicated) then {
 	//client

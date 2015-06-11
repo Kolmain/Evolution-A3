@@ -1,4 +1,7 @@
-
+private ["_score","_player","_respawnPos","_ret","_vehicle","_displayName","_txt","_hitID","_handleHealID","_string","_currentLoadout"];
+//////////////////////////////////////
+//Catch Player Score
+//////////////////////////////////////
 _score = 0;
 if (isMultiplayer) Then {
 	_score = score player;
@@ -9,20 +12,22 @@ if (isMultiplayer) Then {
 	}
 };
 player setVariable ["EVO_score", _score, true];
-//handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 
-
+//////////////////////////////////////
+//Setup Player Actions
+//////////////////////////////////////
 player addaction ["<t color='#CCCC00'>View Distance Settings</t>", CHVD_fnc_openDialog, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Select Side Mission</t>","[] spawn EVO_fnc_osm;",nil,1,false,true,"","(player distance spawnBuilding) < 10 && currentSideMission == 'none'"];
 player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10 && ((leader group player) == player)"];
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "player moveInCargo MHQ", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ"];
+	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ"];
 };
 
-[[[player], {(_this select 0) addEventHandler ["HandleScore", {false}]}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
-
+//////////////////////////////////////
+//Setup Player-centric Parameters
+//////////////////////////////////////
 if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
 	//player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
 	0 = ["AmmoboxInit",[hqbox, true]] spawn BIS_fnc_arsenal;
@@ -36,18 +41,6 @@ if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 
 if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
 	_respawnPos = [(group player), player] spawn BIS_fnc_addRespawnPosition;
-};
-
-if (typeOf player == "B_medic_F") then {
-	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
-	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
-	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
-};
-
-if (typeOf player == "B_soldier_repair_F") then {
-	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
-	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
-	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
 if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
@@ -109,17 +102,40 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 		};
 	};
 };
+
+//////////////////////////////////////
+//Add MASH/FARP to Player
+//////////////////////////////////////
+if (typeOf player == "B_medic_F") then {
+	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
+	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
+	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+};
+if (typeOf player == "B_soldier_repair_F") then {
+	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
+	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
+	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
+};
+
+
+
+//////////////////////////////////////
+//Player Hint Inits
+//////////////////////////////////////
 _ret = [] spawn {
 	_hitID = player addEventHandler ["Hit",{
 		if (alive player) then {
 			player setVariable ["hint_hit", true, true];
 		};
 	}];
-	waitUntil {(player getVariable "hint_hit")};
+	waitUntil {(player getVariable ["hint_hit", false])};
 	player removeEventHandler ["Hit", _hitID];
 	[["damage","fak"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 
+//////////////////////////////////////
+//Player Healing Points
+//////////////////////////////////////
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1, _this select 0], {
 		if (player == (_this select 0) && player != _this select 1) then {
@@ -133,6 +149,9 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 }];
 
+//////////////////////////////////////
+//Player Rank/Vehicle Loop
+//////////////////////////////////////
 
 handle = [] spawn {
 	while {alive player} do {
@@ -146,7 +165,9 @@ handle = [] spawn {
 				} forEach units group player;
 			};
 		};
-		handle = [] call EVO_fnc_rank;
+		if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
+			handle = [] call EVO_fnc_rank;
+		};
 		if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
 			_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 			profileNamespace setVariable ["EVO_lastLoadout", _currentLoadout];
@@ -158,7 +179,17 @@ handle = [] spawn {
 	};
 };
 
+//////////////////////////////////////
+//Add Handle Score to Server
+//////////////////////////////////////
 
+
+[[[player], {
+	_unit = _this select 0;
+	if (isServer) then {
+		_unit addEventHandler ["HandleScore", {_this call EVO_fnc_handleScore}];
+	};
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 
 

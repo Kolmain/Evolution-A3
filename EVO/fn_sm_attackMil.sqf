@@ -1,4 +1,4 @@
-private ["_location","_aaMarker","_spawnPos","_grp","_null","_eastUnits","_allUnits","_score"];
+private ["_location","_aaMarker","_spawnPos","_grp","_null","_ret","_tank","_loop","_count","_tskDisplayName","_score"];
 if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
 
 [{
@@ -19,41 +19,60 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		currentSideMissionMarker setMarkerPos (position _location);
 		markerCounter = markerCounter + 1;
 		publicVariable "currentSideMissionMarker";
-		for "_i" from 1 to 5 do {
-			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
-			{
-			if (HCconnected) then {
-				handle = [_x] call EVO_fnc_sendToHC;
-			};
-			curreSidemissionUnits pushBack _x;
-			publicVariable "curreSidemissionUnits";
-
-			_x AddMPEventHandler ["mpkilled", {
-					curreSidemissionUnits = curreSidemissionUnits - [_this select 1];
-					publicVariable "curreSidemissionUnits";
-				}];
-		} forEach units _grp;
-			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-		};
-		if ([true, false] call bis_fnc_selectRandom) then {
-			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
-		    _tank = _ret select 0;
-		    _grp = _ret select 2;
-		    {
-				if (HCconnected) then {
-					handle = [_x] call EVO_fnc_sendToHC;
+		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
+			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			//_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
+			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
+				} else {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
 				};
-				curreSidemissionUnits pushBack _x;
-				publicVariable "curreSidemissionUnits";
+			} else {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				} else {
+					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				};
+			};
+			{
+				currentSidemissionUnits pushBack _x;
+				publicVariable "currentSidemissionUnits";
 				_x AddMPEventHandler ["mpkilled", {
-					curreSidemissionUnits = curreSidemissionUnits - [_this select 1];
-					publicVariable "curreSidemissionUnits";
+					currentSidemissionUnits = currentSidemissionUnits - [_this select 1];
+					publicVariable "currentSidemissionUnits";
 				}];
 			} forEach units _grp;
-			_null = [(leader _grp), currentSideMissionMarker, "RANDOM", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};
+
+		for "_i" from 1 to (["Armor", "Side"] call EVO_fnc_calculateOPFOR) do {
+			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+		    _grp = _ret select 2;
+			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
+				} else {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
+				};
+			} else {
+				if ([true, false] call bis_fnc_selectRandom) then {
+					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				} else {
+					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				};
+			};
+			{
+				currentSidemissionUnits pushBack _x;
+				publicVariable "currentSidemissionUnits";
+				_x AddMPEventHandler ["mpkilled", {
+					currentSidemissionUnits = currentSidemissionUnits - [_this select 1];
+					publicVariable "currentSidemissionUnits";
+				}];
+			} forEach units _grp;
+		};
+
+
 		handle = [] spawn {
 			_loop = true;
 			_count = 0;
@@ -61,13 +80,32 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				_count = 0;
 				sleep 10;
 				{
-					if (alive _x) then {
-						_count = _count + 1;
+					if (alive _x && ([_x, getMarkerPos currentSidemissionUnits] call BIS_fnc_distance2D < 1000)) then {
+					_count = _count + 1;
 					};
-				} forEach curreSidemissionUnits;
-				if (_count < 9) then {
+				} forEach currentSidemissionUnits;
+				if (_count < 6) then {
 					_loop = false;
 				};
+			};
+			if (_count > 0) then {
+				{
+					if ([true, false] call bis_fnc_selectRandom) then {
+						[_x] spawn EVO_fnc_surrender;
+					} else {
+						[_x] spawn {
+							_unit = _this select 0;
+							_loop = true;
+							while {_loop} do {
+								_players = [_unit, 1000] call EVO_fnc_playersNearby;
+								if (!_players || !alive _unit) then {
+									_loop = false;
+								};
+							};
+							deleteVehicle _unit;
+						};
+					};
+				} forEach currentSidemissionUnits;
 			};
 			sleep (random 15);
 			[attackMilTask, "Succeeded", false] call bis_fnc_taskSetState;

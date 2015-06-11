@@ -1,3 +1,4 @@
+private ["_list","_ent"];
 while {true} do {
     sleep 30;
     if (!(currentSideMission == "baseDef")) then {

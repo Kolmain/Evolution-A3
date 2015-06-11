@@ -1,3 +1,4 @@
+private ["_currentTarget","_type","_init","_grp","_spawnPos","_null","_spawnPos2","_veh","_ret","_transport","_transGrp","_goTo","_heli","_heliGrp","_tank","_lz"];
 _currentTarget = [_this, 0, objNull] call BIS_fnc_param;
 _type = [_this, 1, "error"] call BIS_fnc_param;
 _init = [_this, 2, false] call BIS_fnc_param;
@@ -18,14 +19,25 @@ switch (_type) do {
 			};
 			currentAOunits pushBack _x;
 			publicVariable "currentAOunits";
-
 			_x AddMPEventHandler ["mpkilled", {
-					currentAOunits = currentAOunits - [_this select 1];
-					publicVariable "currentAOunits";
-				}];
+				currentAOunits = currentAOunits - [_this select 1];
+				publicVariable "currentAOunits";
+			}];
 		} forEach units _grp;
 		if (_init) then {
-			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+				} else {
+					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+				};
+			} else {
+				if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+					_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				} else {
+					_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				};
+			};
 		} else {
 			[_grp] spawn {
 				_grp = _this select 0;
@@ -36,6 +48,9 @@ switch (_type) do {
 					_ret = [_spawnPos2, (floor (random 360)), (["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
+				    _roads = _transport nearRoads 100;
+				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
+				    _transport setPos getPos _nearestRoad;
 					{
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
@@ -49,7 +64,7 @@ switch (_type) do {
 				    	_x assignAsCargo _transport;
 				    	_x moveInCargo _transport;
 				    } forEach units _grp;
-				    _goTo = [position currentTarget, 100, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				    _goTo = [position currentTarget, 100, 250, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				    _transport doMove _goTo;
 				    waitUntil {_transport distance _goTo < 100};
 				    doStop _transport;
@@ -58,7 +73,19 @@ switch (_type) do {
 				    } forEach units _grp;
 				    _grp leaveVehicle _transport;
 				    waitUntil {count crew _transport == count units _transGrp};
-				    _null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+						} else {
+							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+						};
+			    	} else {
+			    		if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						} else {
+							_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						};
+			    	};
 				    doStop _transport;
 				    _transport doMove _spawnPos2;
 				    handle = [_transport, _spawnPos2] spawn {
@@ -103,7 +130,11 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-						_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    	} else {
+			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			    	};
 					} else {
 						//land
 						 _goTo = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
@@ -125,7 +156,11 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-						_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+						if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    	} else {
+			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			    	};
 					};
 				};
 			};
@@ -176,7 +211,11 @@ switch (_type) do {
 					{
 						ropeCut [ _x, 5];
 					} forEach ropes _heli;
-					_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			    		(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    	} else {
+			    		_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			    	};
 					group driver _tank setSpeedMode "LIMITED";
 					_heli land "NONE";
 					driver _heli doMove getPos server;
@@ -191,7 +230,11 @@ switch (_type) do {
 					};
 				};
 			} else {
-				_null = [(leader _grp), currentTargetMarkerName, "ONROAD", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+				if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			    	(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    } else {
+			    	_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
+			    };
 				_grp setSpeedMode "FULL";
 				[_grp] spawn {
 					_grp = _this select 0;

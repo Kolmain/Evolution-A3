@@ -1,3 +1,4 @@
+private ["_obj","_loop","_players","_veh"];
 _obj = _this select 0;
 _loop = true;
 while {_loop} do {
@@ -8,7 +9,9 @@ while {_loop} do {
 };
 
 _veh = vehicle _obj;
-if (vehicle _obj != _obj) then {_veh = vehicle _obj};
 sleep 30;
 deleteVehicle _obj;
+{
+	deleteVehicle _x;
+} forEach crew _veh;
 deleteVehicle _veh;

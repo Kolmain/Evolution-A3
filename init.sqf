@@ -1,4 +1,18 @@
+//////////////////////////////////////
+//Init EVO_Debug
+//////////////////////////////////////
+if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
+    EVO_Debug = true;
+    publicVariable "EVO_Debug";
+    NSLVR_DEBUG = true;
+} else {
+    EVO_Debug = false;
+    publicVariable "EVO_Debug";
+    NSLVR_DEBUG = false;
+};
+//////////////////////////////////////
 //Init Third Party Scripts
+//////////////////////////////////////
 call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
@@ -6,20 +20,150 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
+if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
+    // Bodyfall SFX
+    mrg_unit_sfx_bodyfall_concrete = [
+        "MRG_bodyfall_concrete_1",
+        "MRG_bodyfall_concrete_2",
+        "MRG_bodyfall_concrete_3"
+    ];
+    mrg_unit_sfx_bodyfall_grass = [
+        "MRG_bodyfall_grass_1",
+        "MRG_bodyfall_grass_2",
+        "MRG_bodyfall_grass_3"
+    ];
+    mrg_unit_sfx_bodyfall_drygrass = [
+        "MRG_bodyfall_drygrass_1",
+        "MRG_bodyfall_drygrass_2",
+        "MRG_bodyfall_drygrass_3"
+    ];
+    mrg_unit_sfx_bodyfall_sand = [
+        "MRG_bodyfall_sand_1",
+        "MRG_bodyfall_sand_2",
+        "MRG_bodyfall_sand_3"
+    ];
 
-
-if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
-	EVO_Debug = true;
-	publicVariable "EVO_Debug";
-} else {
-	EVO_Debug = false;
-	publicVariable "EVO_Debug";
+    // Hit scream SFX
+    mrg_unit_sfx_scream = [
+        "MRG_scream_1",
+        "MRG_scream_2",
+        "MRG_scream_3",
+        "MRG_scream_4",
+        "MRG_scream_5",
+        "MRG_scream_6",
+        "MRG_scream_7",
+        "MRG_scream_8",
+        "MRG_scream_9",
+        "MRG_scream_10",
+        "MRG_scream_11",
+        "MRG_scream_12",
+        "MRG_scream_13",
+        "MRG_scream_14",
+        "MRG_scream_15"
+    ];
+    mrg_unit_sfx_deathScream = [
+        "MRG_deathScream_1",
+        "MRG_deathScream_2",
+        "MRG_deathScream_3",
+        "MRG_deathScream_4",
+        "MRG_deathScream_5",
+        "MRG_deathScream_6",
+        "MRG_deathScream_7",
+        "MRG_deathScream_8",
+        "MRG_deathScream_9",
+        "MRG_deathScream_10"
+    ];
+    // Array sizes (saves having to calculate them later)
+    mrg_unit_sfx_bodyfall_concrete_size = count mrg_unit_sfx_bodyfall_concrete;
+    mrg_unit_sfx_bodyfall_grass_size = count mrg_unit_sfx_bodyfall_grass;
+    mrg_unit_sfx_bodyfall_drygrass_size = count mrg_unit_sfx_bodyfall_drygrass;
+    mrg_unit_sfx_bodyfall_sand_size = count mrg_unit_sfx_bodyfall_sand;
+    mrg_unit_sfx_scream_size = count mrg_unit_sfx_scream;
+    mrg_unit_sfx_deathScream_size = count mrg_unit_sfx_deathScream;
 };
 
-if (isMultiplayer) then {enableSaving [false, false]};
 
+if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
+    execVM "R3F_LOG\init.sqf";
+};
+//////////////////////////////////////
+//Init OPFOR AI System
+//////////////////////////////////////
+if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+    if (isServer) then
+    {
+        // From what range away from closest player should units be cached (in meters or what every metric system arma uses)?
+        // To test this set it to 20 meters. Then make sure you get that close and move away.
+        // You will notice 2 levels of caching 1 all but leader, 2 completely away
+        // Stage 2 is 2 x GAIA_CACHE_STAGE_1. So default 2000, namely 2 x 1000
+        GAIA_CACHE_STAGE_1             = 1000;
+        // The follow 3 influence how close troops should be to known conflict to be used. (so they wont travel all the map to support)
+        // How far should footmobiles be called in to support attacks.
+        // This is also the range that is used by the transport system. If futher then the below setting from a zone, they can get transport.
+        MCC_GAIA_MAX_SLOW_SPEED_RANGE  = 600;
+        // How far should vehicles be called in to support attacks. (including boats)
+        MCC_GAIA_MAX_MEDIUM_SPEED_RANGE= 4500;
+        // How far should air units be called in to support attacks.
+        MCC_GAIA_MAX_FAST_SPEED_RANGE  = 80000;
+        // How logn should mortars and artillery wait (in seconds) between fire support missions.
+        MCC_GAIA_MORTAR_TIMEOUT        = 120;
+        // DANGEROUS SETTING!!!
+        // If set to TRUE gaia will even send units that she does NOT control into attacks. Be aware ONLy for attacks.
+        // They will not suddenly patrol if set to true.
+        MCC_GAIA_ATTACKS_FOR_NONGAIA     = false;
+
+        // If set to false, ai will not use smoke and flares (during night)
+        MCC_GAIA_AMBIANT                 = true;
+
+        // Influence how high the chance is (when applicaple) that units do smokes and flare (so not robotic style)
+        // Default is 20 that is a chance of 1 out of 20 when they are applicable to use smokes and flares
+        MCC_GAIA_AMBIANT_CHANCE          = 20;
+        // The seconds of rest a transporter takes after STARTING his last order
+        MCC_GAIA_TRANSPORT_RESTTIME     = 40;
+        call compile preprocessfile "gaia\gaia_init.sqf";
+        [] spawn {
+            _gaia_respawn = [];
+            while {true} do
+            {
+                //player globalchat "Deleting started..............";
+
+                {
+                    _gaia_respawn = (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_x),[] ]);
+                    //Store ALL original group setups
+                    if (count(_gaia_respawn)==0) then {[(_x)] call fn_cache_original_group;};
+
+                    if ((({alive _x} count units _x) == 0) ) then
+                    {
+                        //Before we send him to heaven check if he should be reincarnated
+                        if (count(_gaia_respawn)==2) then { [_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call fn_uncache_original_group;};
+
+                        //Remove the respawn group content before the group is re-used
+                        missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];
+
+                        deleteGroup _x;
+                    };
+
+                    sleep .1;
+
+                } foreach allGroups;
+
+                sleep 2;
+            };
+        };
+    };
+} else {
+    call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
+};
+
+
+
+
+
+//////////////////////////////////////
 //Init Common Variables
-debug=false;
+//////////////////////////////////////
+EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
+enableSaving [false, false];
 arsenalCrates = [];
 militaryInstallations = [];
 rank1 = 10;
@@ -28,6 +172,52 @@ rank3 = 60;
 rank4 = 100;
 rank5 = 150;
 rank6 = 200;
+switch (EVO_difficulty) do {
+                        case 1: {
+                            //////////////////////////////////////
+                            //EASY
+                            //////////////////////////////////////
+                            rank1 = 5;
+                            rank2 = 15;
+                            rank3 = 30;
+                            rank4 = 50;
+                            rank5 = 75;
+                            rank6 = 100;
+                        };
+                        case 2: {
+                            //////////////////////////////////////
+                            //NORMAL
+                            //////////////////////////////////////
+                            rank1 = 10;
+                            rank2 = 30;
+                            rank3 = 60;
+                            rank4 = 100;
+                            rank5 = 150;
+                            rank6 = 200;
+                        };
+                        case 3: {
+                            //////////////////////////////////////
+                            //HARD
+                            //////////////////////////////////////
+                            rank1 = 15;
+                            rank2 = 35;
+                            rank3 = 65;
+                            rank4 = 105;
+                            rank5 = 155;
+                            rank6 = 205;
+                        };
+                        case 4: {
+                            //////////////////////////////////////
+                            //ALTIS ON FIRE
+                            //////////////////////////////////////
+                            rank1 = 20;
+                            rank2 = 40;
+                            rank3 = 75;
+                            rank4 = 120;
+                            rank5 = 175;
+                            rank6 = 225;
+                        };
+                    };
 HCconnected = false;
 CROSSROADS = [West,"HQ"];
 rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
@@ -37,25 +227,18 @@ rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_arme
 rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
 rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
 rank7vehicles = ["b_plane_cas_01_f"];
-
 rank1weapons = ["arifle_MX_F","launch_NLAW_F","launch_RPG32_F"];
 rank1items = ["optic_Aco","optic_ACO_grn","acc_flashlight"];
-
 rank2weapons = ["launch_B_Titan_short_F","launch_B_Titan_F","hgun_ACPC2_F","arifle_MXC_F","arifle_MX_GL_F","arifle_MX_SW_F"];
 rank2items = ["optic_Hamr","optic_Aco_smg","optic_ACO_grn_smg","optic_Holosight","optic_Holosight_smg","bipod_01_F_snd","bipod_01_F_blk","bipod_01_F_mtp"];
-
 rank3weapons = ["arifle_MXM_F","arifle_Mk20C_F","arifle_Mk20C_plain_F","arifle_Mk20_GL_F","hgun_Pistol_heavy_02_F","LMG_Mk200_F"];
 rank3items = ["B_UavTerminal","Laserdesignator","acc_pointer_IR","optic_MRCO","NVGoggles"];
-
 rank4weapons = ["hgun_ACPC2_snds_F","arifle_MXM_Black_F","arifle_TRG21_F","arifle_TRG21_GL_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black_F","arifle_MX_SW_Black_F","hgun_PDW2000_F","SMG_01_F","SMG_02_F"];
 rank4items = ["muzzle_snds_H","muzzle_snds_L","muzzle_snds_M","muzzle_snds_B","muzzle_snds_H_MG","muzzle_snds_H_SW","muzzle_snds_acp","muzzle_snds_338_black","muzzle_snds_338_green","muzzle_snds_338_sand","muzzle_snds_93mmg","muzzle_snds_93mmg_tan"];
-
 rank5weapons = ["srifle_EBR_F","srifle_DMR_02_F","srifle_DMR_02_camo_F","srifle_DMR_02_sniper_F","srifle_DMR_03_F","srifle_DMR_03_khaki_F","srifle_DMR_03_tan_F","srifle_DMR_03_multicam_F","srifle_DMR_03_woodland_F","srifle_DMR_06_camo_F","srifle_DMR_06_olive_F","srifle_DMR_06_camo_khs_F","MMG_02_camo_F","MMG_02_black_F","MMG_02_sand_F"];
 rank5items = ["optic_SOS","optic_NVS","optic_Nightstalker","optic_tws","optic_tws_mg","optic_Yorris","optic_MRD","optic_DMS","optic_LRPS"];
-
 rank6weapons = ["srifle_LRR_F","srifle_GM6_F","srifle_LRR_camo_F"];
 rank6items = ["optic_AMS","optic_AMS_khk","optic_AMS_snd"];
-
 rank7weapons = [];
 availableHeadgear = [
     "H_HelmetB",
@@ -141,7 +324,8 @@ availableItems = [
     "NVGoggles",
     "FirstAidKit",
     "Medikit",
-    "ToolKit"
+    "ToolKit",
+    "Item_MineDetector"
 ];
 availableBackpacks = [
     "B_AssaultPack_rgr",
@@ -150,33 +334,14 @@ availableBackpacks = [
     "B_Kitbag_mcamo",
     "B_TacticalPack_blk",
     "B_TacticalPack_mcamo"
-    ];
+];
 availableWeapons = [];
 availableMagazines = [];
 
-if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	//MHQ = firstMHQ;
-    _null = [firstMHQ] call EVO_fnc_mhq;
-	_null = [firstMHQ] spawn EVO_fnc_basicRespawn;
-} else {
-	MHQ = objNull;
-    "mhqMarker" setMarkerAlpha 0;
-    deleteVehicle firstMHQ;
-};
 
-if (("r3fParam" call BIS_fnc_getParamValue) == 1) then {
-	execVM "R3F_LOG\init.sqf";
-};
-
-if (!isMultiplayer) then {
-	_nearUnits = nearestObjects [spawnBuilding, ["Man"], 100];
-	{
-		_unit = _x;
-		if (!isPlayer _unit) then {
-			deleteVehicle _unit;
-		};
-	} foreach _nearUnits;
-};
+//////////////////////////////////////
+//Init Headless Client
+//////////////////////////////////////
 
 if (!(isServer) && !(hasInterface)) then {
 	HCconnected = true;
@@ -184,8 +349,17 @@ if (!(isServer) && !(hasInterface)) then {
 };
 
 
-//init Server
+//////////////////////////////////////
+//Init Server
+//////////////////////////////////////
 if (isServer) then {
+    if (!isNil "MHQ") then {
+        _null = [MHQ] spawn EVO_fnc_mhq;
+        _null = [MHQ] spawn EVO_fnc_basicRespawn;
+    } else {
+        MHQ = objNull;
+        "mhqMarker" setMarkerAlpha 0;
+    };
 	[] spawn EVO_fnc_initEVO;
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
@@ -194,7 +368,9 @@ if (isServer) then {
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
-//init Client
+//////////////////////////////////////
+//Init Clients
+//////////////////////////////////////
 if (isDedicated || !hasInterface) exitWith {};
 _brief = [] execVM "briefing.sqf";
 intro = true;
@@ -206,21 +382,21 @@ playsound "Recall";
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
-_amb = [] spawn EVO_fnc_amb;
-//[hqbox, "PRIVATE"] call EVO_fnc_buildAmmoCrate;
-recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-if (!isNil "currentTargetOF") then {
-    currentTargetOF addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
+    _amb = [] spawn EVO_fnc_amb;
 };
+recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
+_nil = [] spawn EVO_fnc_supportManager;
 handle = [] spawn {
 	while {true} do {
 		waitUntil {player distance hqbox < 5};
-	   	waitUntil {player distance hqbox > 5 && (isTouchingGround player)};
-   		sleep 5;
-		loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-		profileNamespace setVariable ["EVO_loadout", loadout];
-		saveProfileNamespace;
-		systemChat "Loadout saved to profile...";
+	   	waitUntil {player distance hqbox > 5};
+   		if (isTouchingGround player) then {
+            loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+            profileNamespace setVariable ["EVO_loadout", loadout];
+            saveProfileNamespace;
+            systemChat "Loadout saved to profile...";
+        };
 	};
 };
 _lastPos = [];
