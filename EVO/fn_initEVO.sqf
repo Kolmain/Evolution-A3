@@ -82,7 +82,7 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
 	if (faction _vehicle == "BLU_F") then {
-		if (!(_vehicle isKindOf "Plane")) then {
+		if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 		} else {
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
