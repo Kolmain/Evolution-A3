@@ -74,7 +74,6 @@ class Params
 	    texts[] = {"1","5","10","15","20","All Available"};
 	    default = 999;
 	};
-
 	class Daytime {
 		title = "Starting Time";
 		texts[] = {"Morning","Day","Evening","Night"};

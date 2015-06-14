@@ -255,10 +255,10 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
 		for "_i" from 1 to (8 + random(7)) step 1 do {
-			//_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _startPos, [], 10];
+			_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
+		    _mine = createMine [_mineClass, _minePos, [], 0];
 		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    //_mine setDir (random 360);
+		    _mine setDir (random 360);
 		    if (EVO_Debug) then {
 				_markerName = format ["mine_%1", markerCounter];
 				_aaMarker = createMarker [_markerName, _minePos ];
@@ -289,10 +289,10 @@ for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 		//_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
 		_mineClass = "ATMine";
 		for "_i" from 1 to (8 + random(7)) step 1 do {
-			//_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _startPos, [], 10];
+			_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
+		    _mine = createMine [_mineClass, _minePos, [], 0];
 		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    //_mine setDir (random 360);
+		    _mine setDir (random 360);
 		    if (EVO_Debug) then {
 				_markerName = format ["mine_%1", markerCounter];
 				_aaMarker = createMarker [_markerName, _minePos ];
@@ -343,6 +343,7 @@ sleep 1;
 if (!isDedicated) then {
 	_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
 	playSound _sound;
+	[] call BIS_fnc_drawMinefields;
 };
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
@@ -357,10 +358,10 @@ _null = [_currentTarget] spawn {
 		sleep 10;
 	    _mortar = nearestObject [position currentTarget, "O_Mortar_01_F"];
 	    _gunner = gunner _mortar;
-	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST && alive _mortar) then {
+	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
 	    	_mortar setDamage 1;
 	    } else {
-	    	if (daytime > 20 || daytime < 6) then {
+	    	if (daytime > 20 && daytime < 6) then {
 	    		_mortar doArtilleryFire [position _currentTarget, "8Rnd_82mm_Mo_Flare_white", (3 + random(floor(3)))];
 	    		_s = 60 + random(floor(30));
 	    		sleep _s;

@@ -1,7 +1,7 @@
 _unit = _this select 0;
 _causedBy = _this select 1;
 _damage = _this select 2;
-if (![_unit, 150] call EVO_fnc_playersNearby]) exitWith {};
+if (![_unit, 150] call EVO_fnc_playersNearby) exitWith {};
 if (ceil random 2 == 1) exitWith {};
 
 _hitRecently = _unit getVariable ["mrg_unit_sfx_hitRecently", false];
