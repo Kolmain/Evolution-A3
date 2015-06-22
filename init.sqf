@@ -355,7 +355,6 @@ if (!(isServer) && !(hasInterface)) then {
 if (isServer) then {
     if (!isNil "MHQ") then {
         _null = [MHQ] spawn EVO_fnc_mhq;
-        _null = [MHQ] spawn EVO_fnc_basicRespawn;
     } else {
         MHQ = objNull;
         "mhqMarker" setMarkerAlpha 0;
