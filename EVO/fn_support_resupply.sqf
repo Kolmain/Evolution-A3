@@ -55,11 +55,15 @@ _vehicle attachTo [_chute, [0, 0, -1.3]];
 _heli allowDamage true;
 _vehicle allowDamage true;
 [(leader _grp), format["Be advised, supply drop complete, out."]] call EVO_fnc_globalSideChat;
+_heliDriver doMove _spawnPos;
 waitUntil {position _vehicle select 2 < 0.5 || isNull _chute};
 detach _vehicle;
 _vehicle setPos [position _vehicle select 0, position _vehicle select 1, 0];
-_heli land "NONE";
-_heliDriver doMove _spawnPos;
+[[_vehicle, _caller getVariable ["EVO_rank", "PRIVATE"]],{
+	if (!isDedicated) then {
+		[(_this select 0), _this select 1] call EVO_fnc_buildAmmoCrate;
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
 _heli flyInHeight 50;
 waitUntil {([_heli, _pos] call BIS_fnc_distance2D < 200)};
 {
