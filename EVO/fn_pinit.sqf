@@ -236,3 +236,17 @@ handle = [] spawn {
 		_unit addEventHandler ["HandleScore", {_this call EVO_fnc_handleScore}];
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
+
+
+//////////////////////////////////////
+//Rebuild FARP/MASH Crate on all Clients
+//////////////////////////////////////
+
+
+_rank = player getVariable ["EVO_rank", "PRIVATE"];
+[[PlayerCrate, _rank],{
+	if (!isDedicated) then {
+		[(_this select 0), _this select 1] call EVO_fnc_buildAmmoCrate;
+	};
+},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
