@@ -3,6 +3,7 @@ _hasCas = false;
 _hasArty = false;
 _hasMortar = false;
 _hasRocket = false;
+_hasRessuply = false;
 _spendable = 0;
 _lastSpendable = 0;
 while {true} do {
@@ -10,7 +11,8 @@ while {true} do {
   _spendable = [player] call EVO_fnc_supportPoints;
   if (_spendable != _lastSpendable) then {
     if (_spendable >= 5 && !_hasMortar) then {
-      //ammo?
+      resupplyComm = [player, "resupply"] call BIS_fnc_addCommMenuItem;
+      _hasRessuply = true;
       //transport?
       mortarStrikeComm = [player, "mortarStrike"] call BIS_fnc_addCommMenuItem;
       _hasMortar = true;
@@ -48,6 +50,8 @@ while {true} do {
     if (_spendable < 5) then {
       [player, mortarStrikeComm] call BIS_fnc_removeCommMenuItem;
       _hasMortar = false;
+      [player, resupplyComm] call BIS_fnc_removeCommMenuItem;
+      _hasRessuply = false;
     };
 
     if (_spendable < 6) then {
