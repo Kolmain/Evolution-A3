@@ -150,6 +150,52 @@ _handleHealID = player addEventHandler ["HandleHeal",{
 }];
 
 //////////////////////////////////////
+//Player RT/OF LOS Check
+//////////////////////////////////////
+handle = [] spawn {
+	_LOS = false;
+	_seen = false;
+	while {alive player} do {
+		sleep 10;
+		if (!alive currentTargetRT) then {
+			//
+		} else {
+			_LOS = [player, currentTargetRT, 800, 100] call EVO_fnc_hasLOS;
+			_seen = currentTargetRT getVariable ["EVO_seen", false];
+			if (_seen) then {
+				//
+			} else {
+				if (_LOS) then {
+					currentTargetRT setVariable ["EVO_seen, true, true];
+					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
+					sleep 4;
+					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
+					["towerTask", currentTargetRT] call BIS_fnc_taskSetDestination
+				};
+			};
+		};
+		if (!alive currentTargetOF) then {
+			//
+		} else {
+			_LOS = [player, currentTargetOF, 800, 100] call EVO_fnc_hasLOS;
+			_seen = currentTargetOF getVariable ["EVO_seen", false];
+			if (_seen) then {
+				//
+			} else {
+				if (_LOS) then {
+					currentTargetOF setVariable ["EVO_seen, true, true];
+					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
+					sleep 4;
+					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
+					["officerTask", currentTargetOF] call BIS_fnc_taskSetDestination
+				};
+			};
+		};
+		
+	};
+};
+
+//////////////////////////////////////
 //Player Rank/Vehicle Loop
 //////////////////////////////////////
 
