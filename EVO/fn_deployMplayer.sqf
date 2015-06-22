@@ -41,9 +41,9 @@ _medmark setMarkerSize [1, 1];
 sleep 5;
 _msg = format ["Your MASH has been deployed at map grid %1.", mapGridPosition player];
 ["deployed",["MASH DEPLOYED", _msg]] call BIS_fnc_showNotification;
-_crate = nearestObject [_pos, "CargoNet_01_box_F"];
+PlayerCrate = nearestObject [_pos, "CargoNet_01_box_F"];
 _rank = player getVariable ["EVO_rank", "PRIVATE"];
-[[_crate _rank],{
+[[PlayerCrate _rank],{
 	if (!isDedicated) then {
 		[(_this select 0), _this select 1] call EVO_fnc_buildAmmoCrate;
 	};
