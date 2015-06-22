@@ -340,11 +340,11 @@ sleep 1;
 //////////////////////////////////////
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
 [[[], {
-if (!isDedicated) then {
-	_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
-	playSound _sound;
-	[] call BIS_fnc_drawMinefields;
-};
+	if (!isDedicated) then {
+		_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
+		playSound _sound;
+		[] call BIS_fnc_drawMinefields;
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 [] call EVO_fnc_newTargetTasks;
@@ -355,7 +355,7 @@ if (!isDedicated) then {
 _null = [_currentTarget] spawn {
 	_currentTarget = _this select 0;
 	while {RTonline && (_currentTarget == currentTarget)} do {
-		sleep 10;
+	    sleep 10;
 	    _mortar = nearestObject [position currentTarget, "O_Mortar_01_F"];
 	    _gunner = gunner _mortar;
 	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
@@ -365,22 +365,32 @@ _null = [_currentTarget] spawn {
 	    		_mortar doArtilleryFire [position _currentTarget, "8Rnd_82mm_Mo_Flare_white", (3 + random(floor(3)))];
 	    		_s = 60 + random(floor(30));
 	    		sleep _s;
-	    	};
-		};
+	        };
+   	    };
 	};
 };
 
 //////////////////////////////////////
 //Hold Until Radio Tower Offline
 //////////////////////////////////////
-waitUntil {!RTonline};
-
-[[[], {
-if (!isDedicated) then {
-	_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
-	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-	playsound "goodjob";
+_loop = true;
+_count = 0;
+while {_loop} do {
+	sleep 10;
+	if (!RTonline) then {
+		_loop = false;
+	};
 };
+
+//////////////////////////////////////
+//Radio Tower Offline
+//////////////////////////////////////
+[[[], {
+	if (!isDedicated) then {
+		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 [towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
@@ -421,6 +431,8 @@ if (_count > 0) then {
 						_loop = false;
 					};
 				};
+				sleep 60;
+				sleep (random 60);
 				deleteVehicle _unit;
 			};
 		};
@@ -434,8 +446,7 @@ playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
 [attackTask, "Succeeded", false] call bis_fnc_taskSetState;
 
-
-if (alive currentTargetOF) then {
+if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 	[officerTask, "Failed", false] call bis_fnc_taskSetState;
 	_tskName = format ["Colonel %1 Escaped.", name currentTargetOF];
 	["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;
@@ -444,15 +455,15 @@ if (alive currentTargetOF) then {
 //Give BLUFOR Points
 //////////////////////////////////////
 [[[], {
-if (!isDedicated) then {
-	_tskName = format ["%1 Secured.", currentTargetName];
-	_score = player getVariable "EVO_score";
-	_score = _score + 5;
-	player setVariable ["EVO_score", _score, true];
-	["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
-	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-	playsound "goodjob";
-};
+	if (!isDedicated) then {
+		_tskName = format ["%1 Secured.", currentTargetName];
+		_score = player getVariable "EVO_score";
+		_score = _score + 5;
+		player setVariable ["EVO_score", _score, true];
+		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 //////////////////////////////////////
 //Set Marker Color
@@ -465,7 +476,7 @@ sleep random 30;
 //////////////////////////////////////
 //Reset for Next AO
 //////////////////////////////////////
-deleteVehicle currentTargetOF;
+if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 targetCounter = targetCounter + 1;
 		//
 	//For Altis' Strange Island "City" TODO
