@@ -51,7 +51,7 @@ deleteMarker _mark;
 //playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
 playerStructures = [(getPos player), (getDir player), "Comps\farp.sqf"] call BIS_fnc_ObjectsMapper;
 
-_mssg = format["%1's FARP",(name player)];
+_mssg = format["%2 %1's FARP",(name player), (rank player)];
 playerRespawnPoint = [(group player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";
