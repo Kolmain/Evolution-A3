@@ -4,6 +4,7 @@ if (!isServer) exitWith {};
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
 if (_vehicle == objNull) exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
 MHQ = _vehicle;
+MHQ addaction ["<t color='#CCCC00'>Go to HQ</t>", "[_this select 1, spawnBuilding] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","alive MHQ && isTouchingGround MHQ"];
 publicVariable "MHQ";
 [WEST, MHQ, "Mobile HQ"] call BIS_fnc_addRespawnPosition;
 "mhqMarker" setMarkerAlpha 0.75;
