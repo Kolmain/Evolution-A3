@@ -13,9 +13,6 @@ _is3D = _this select 3;
 _ID = _this select 4;
 _grpSide = side _caller;
 _planeClass = "B_Plane_CAS_01_F";
-_pilot = _caller;
-
-_planeClass = "B_Plane_CAS_01_F";
 _pilot = pilot_west;
 _score = player getVariable "EVO_score";
 _score = _score - 7;
@@ -40,6 +37,31 @@ if ( _dis > 1000) then {
 	_cas setDir 0;
 	_cas setVariable ["vehicle", _planeClass , true];
 	_cas setVariable ["type", 2, true];
+	_loop = true;
+	_plane = objNull;
+	while {_loop} do {
+		sleep 1;
+		_plane = nearestObject [_pos, "B_Plane_CAS_01_F"];
+	    if (!isPlayer driver _plane) then {
+	    	_loop = false;
+	    	driver _plane setVariable ["EVO_playerRequester", player];
+	    	[[[_plane,], {
+				driver _this select 0 addEventHandler ["HandleScore", {
+					_supportAsset = _this select 0;
+					_source = _this select 1;
+					_scoreToAdd = _this select 2;
+					_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
+					_score = _player getVariable "EVO_score";
+					_score = _score + _scoreToAdd;
+					_player setVariable ["EVO_score", _score, true];
+					[_player, _scoreToAdd] call bis_fnc_addScore;
+					if (EVO_Debug) then {
+						systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
+					};
+				}];
+			}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
+	    };
+	};
 	waituntil {isnull _cas};
 	[_pilot, format["Fixed wing CAS support request completed, %2 out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 

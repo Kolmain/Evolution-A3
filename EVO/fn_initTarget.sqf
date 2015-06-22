@@ -107,7 +107,7 @@ removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
 [[[currentTargetOF], {
-	(_this select 0) addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+	(_this select 0) addaction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF], "_this spawn EVO_fnc_capture", nil,1,false,true,"","!(side leader group currentTargetOF == WEST)"];
 }], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
 handle = [currentTargetOF, currentTarget] spawn {
 _OF = _this select 0;

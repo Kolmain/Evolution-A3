@@ -47,7 +47,8 @@ if(!_busy || isNil "_busy") then {
 		//fire!
 		_eta = 0;
 		[[[_mortar, _pos], {
-			_this select 0 doArtilleryFire [_this select 1, currentMagazine _this select 0, 5];
+			_this select 0 setVehicleAmmoDef 1;
+			_this select 0 doArtilleryFire [_this select 1, "Sh_82mm_AMOS", 5];
 		}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 		_eta = floor(_mortar getArtilleryETA [_pos, currentMagazine _mortar]);
 		[_caller, "Shot, out."] call EVO_fnc_globalSideChat;

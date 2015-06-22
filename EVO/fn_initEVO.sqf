@@ -37,7 +37,7 @@ availableSideMissions = [];
 currentSideMissionStatus = "ip";
 EVO_supportUnits = [arty_west, mortar_west, rocket_west];
 {
-	_x addEventHandler ["HandleScore", {
+	gunner _x addEventHandler ["HandleScore", {
 		_supportAsset = _this select 0;
 		_source = _this select 1;
 		_scoreToAdd = _this select 2;

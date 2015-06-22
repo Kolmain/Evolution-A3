@@ -173,27 +173,27 @@ rank4 = 100;
 rank5 = 150;
 rank6 = 200;
 switch (EVO_difficulty) do {
-                        case 1: {
-                            //////////////////////////////////////
-                            //EASY
-                            //////////////////////////////////////
-                            rank1 = 5;
-                            rank2 = 15;
-                            rank3 = 30;
-                            rank4 = 50;
-                            rank5 = 75;
-                            rank6 = 100;
-                        };
-                        case 2: {
-                            //////////////////////////////////////
-                            //NORMAL
-                            //////////////////////////////////////
-                            rank1 = 10;
-                            rank2 = 30;
-                            rank3 = 60;
-                            rank4 = 100;
-                            rank5 = 150;
-                            rank6 = 200;
+    case 1: {
+        //////////////////////////////////////
+        //EASY
+        //////////////////////////////////////
+        rank1 = 5;
+        rank2 = 15;
+        rank3 = 30;
+        rank4 = 50;
+        rank5 = 75;
+        rank6 = 100;
+    };
+    case 2: {
+        //////////////////////////////////////
+        //NORMAL
+        //////////////////////////////////////
+        rank1 = 10;
+        rank2 = 30;
+        rank3 = 60;
+        rank4 = 100;
+        rank5 = 150;
+        rank6 = 200;
                         };
                         case 3: {
                             //////////////////////////////////////
@@ -378,11 +378,23 @@ player execVM "scripts\intro.sqf";
 ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 WaitUntil{!intro};
 playsound "Recall";
+//////////////////////////////////////
+//BIS Jukebox
+//////////////////////////////////////
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
+//////////////////////////////////////
+//BIS Ambient Combat Sounds
+//////////////////////////////////////
 if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
     _amb = [] spawn EVO_fnc_amb;
+};
+//////////////////////////////////////
+//EVO Sector Markers
+//////////////////////////////////////
+if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
+    _mrkrs = [] spawn EVO_fnc_gridMarkers;
 };
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 _nil = [] spawn EVO_fnc_supportManager;
