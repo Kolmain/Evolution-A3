@@ -55,6 +55,8 @@ if (_veh == MHQ) then {
 				waitUntil {canMove _newVehicle || !alive _newVehicle};
 				[_newVehicle] spawn EVO_fnc_mhq;
 				deleteMarker _markerName;
+				MHQ = _newVehicle;
+				publicVariable "MHQ";
 				_null = [_newVehicle] spawn EVO_fnc_respawnRepair;
 			};
 		};
