@@ -564,7 +564,7 @@ class CfgNotifications
 	};
 	class vehDesertion
 	{
-		title = "Vehicle Abandoned"; // Tile displayed as text on black background. Filled by arguments.
+		title = "VEHICLE ABANDOND"; // Tile displayed as text on black background. Filled by arguments.
 		iconPicture = "%2"; // Small icon displayed in left part. Colored by "color", filled by arguments.
 		description = "Abandond %3 vehicle nearby, respawning in %1 seconds"; // Brief description displayed as structured text. Colored by "color", filled by arguments.
 		color[] = {1,1,1,1}; // Icon and text color
