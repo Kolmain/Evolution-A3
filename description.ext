@@ -70,8 +70,8 @@ class Params
 	};
 	class numberOfAOs {
 		title = "Number of Targets to Clear";
-	    values[] = {1,5,10,15,20,999};
-	    texts[] = {"1","5","10","15","20","All Available"};
+	    values[] = {0,1,5,10,15,20,999};
+	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
 	    default = 999;
 	};
 	class Daytime {

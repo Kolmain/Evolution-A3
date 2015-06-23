@@ -138,7 +138,10 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 //////////////////////////////////////
 //Init First Target
 //////////////////////////////////////
-handle = [] spawn EVO_fnc_initTarget;
+if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
+	handle = [] spawn EVO_fnc_initTarget;
+};
+
 
 
 
