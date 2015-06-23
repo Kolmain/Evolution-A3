@@ -166,7 +166,7 @@ handle = [] spawn {
 				//
 			} else {
 				if (_LOS) then {
-					currentTargetRT setVariable ["EVO_seen, true, true];
+					currentTargetRT setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
@@ -183,7 +183,7 @@ handle = [] spawn {
 				//
 			} else {
 				if (_LOS) then {
-					currentTargetOF setVariable ["EVO_seen, true, true];
+					currentTargetOF setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
@@ -191,7 +191,7 @@ handle = [] spawn {
 				};
 			};
 		};
-		
+
 	};
 };
 
