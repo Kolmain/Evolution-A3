@@ -48,7 +48,7 @@ if(!_busy) then {
 	sleep 3;
 	_isInRange = _pos inRangeOfArtillery [[_arty], currentMagazine _arty];
 	if (_isInRange) then {
-		_arty setVariable ["EVO_playerRequester", player];
+		_arty setVariable ["EVO_playerRequester", player, true];
 		[_arty, format["Grid %1, out.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 		sleep 3;
 		[_caller, "Fire for effect, over."] call EVO_fnc_globalSideChat;

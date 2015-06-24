@@ -59,7 +59,7 @@ if ( _dis > 1000) then {
 		_plane = nearestObject [_pos, "B_Plane_CAS_01_F"];
 	    if (!isPlayer driver _plane) then {
 	    	_loop = false;
-	    	driver _plane setVariable ["EVO_playerRequester", player];
+	    	driver _plane setVariable ["EVO_playerRequester", player, true];
 	    	[[[_plane], {
 				driver _this select 0 addEventHandler ["HandleScore", {
 					_supportAsset = _this select 0;

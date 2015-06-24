@@ -46,7 +46,7 @@ if(!_busy || isNil "_busy") then {
 
 	_isInRange = _pos inRangeOfArtillery [[_mortar], currentMagazine _mortar];
 	if (_isInRange) then {
-		_mortar setVariable ["EVO_playerRequester", player];
+		_mortar setVariable ["EVO_playerRequester", player, true];
 		[_mortar, format["Grid %1, out.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 		sleep 3;
 		[_caller, "Fire for effect, over."] call EVO_fnc_globalSideChat;
