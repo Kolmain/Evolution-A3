@@ -94,6 +94,14 @@ _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
+_ofName = name currentTargetOF;
+currentTargetOF AddMPEventHandler ["mpkilled", {
+	[officerTask, "Failed", false] call bis_fnc_taskSetState;
+	[[[_ofName], {
+		_msg = format ["Colonel %1 has been killed.", (_this select 0)];
+		["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
+	}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
+}];
 _officer = currentTargetOF;
 _pos = (getPos _officer);
 _spawnPos = [];
@@ -107,25 +115,9 @@ removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
 [[[currentTargetOF], {
-	(_this select 0) addaction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF], "_this spawn EVO_fnc_capture", nil,1,false,true,"","!(side leader group currentTargetOF == WEST)"];
+	(_this select 0) addaction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF], "_this spawn EVO_fnc_capture", nil,1,false,true,"","!(side leader group currentTargetOF == WEST) && alive currentTargetOF"];
 }], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
-handle = [currentTargetOF, currentTarget] spawn {
-_OF = _this select 0;
-_currentTarget = _this select 1;
-_loop = true;
-while {_loop} do {
-	if (_currentTarget != currentTarget) exitWith {_loop = false};
-		if (!alive _OF) then {
-			[officerTask, "Failed", false] call bis_fnc_taskSetState;
-			[[[_OF], {
-				_msg = format ["Colonel %1 has been killed.", name (_this select 0)];
-				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-			}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
-		_loop = false;
-		};
-	sleep 10;
-	};
-};
+
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
 	if (HCconnected) then {

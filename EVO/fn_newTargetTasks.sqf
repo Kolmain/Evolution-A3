@@ -21,3 +21,7 @@ officerTask = format ["%1_OFtask", currentTargetName];
 _pos = [position currentTarget , 100, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 _tskDescription = format ["Find and capture Colonel %1. Once he is in custody at the NATO staging base we will gather any intel we can and distribute it to our deployed units.", name currentTargetOF];
 [WEST, [officerTask, attackTask], [_tskDescription, _tskDisplayName, currentTargetMarkerName], _pos, 1, 2, true] call BIS_fnc_taskCreate;
+
+publicVariable "attackTask";
+publicVariable "towerTask";
+publicVariable "officerTask";
