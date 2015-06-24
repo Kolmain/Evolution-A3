@@ -38,7 +38,7 @@ while {_loop} do {
 	if (leader group _unit == player) then {
 		_msg = format ["%2 %1 has been secured.", name _unit, rank _unit];
 		playsound "goodjob";
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 3;
 		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["You captured a POW.", 3]] call BIS_fnc_showNotification;

@@ -1,4 +1,4 @@
-private ["_caller","_pos","_is3D","_ID","_grpSide","_grp","_ugvArray","_ugv","_pos2","_spawnPos","_retArray","_retArray2","_vehicle","_crew","_heli","_heliCrew","_heliGrp","_heliDriver","_dis","_newQrf","_pos","_distanceToLz","_shortestDistance"];
+private ["_caller","_pos","_is3D","_ID","_grpSide","_grp","_score","_newUGVrequest","_spawnPos","_pos2","_retArray","_retArray2","_vehicle","_crew","_heli","_heliCrew","_heliGrp","_heliDriver"];
 
 _caller = _this select 0;
 _pos = _this select 1;
@@ -41,6 +41,27 @@ _heliDriver = driver _heli;
 sleep 3;
 [(leader _grp), format["%1, this is %2, copy your last. Send landing grid, over.", groupID (group _caller), groupID _grp]] call EVO_fnc_globalSideChat;
 sleep 3;
+["supportMapClickEH", "onMapSingleClick", {
+		supportMapClick = _pos;
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	}] call BIS_fnc_addStackedEventHandler;
+	openMap true;
+	hint "Designate coordinates by left-clicking on the map.";
+	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	_pos = supportMapClick;
+	if (!visiblemap) exitWith {
+		[_caller, format["Crossroads, this is %1, scratch that last request, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		_newUGVrequest = [_caller, "ugvRequest"] call BIS_fnc_addCommMenuItem;
+		_score = _caller getVariable "EVO_score";
+		_score = _score + 10;
+		_caller setVariable ["EVO_score", _score, true];
+		[_caller, 10] call bis_fnc_addScore;
+		["PointsAdded",["UGV request canceled.", 10]] call BIS_fnc_showNotification;
+	};
+	openMap false;
 [_caller, format["Grid %1, over.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 sleep 3;
 [(leader _grp), format["Copy that %1, dispatching to requested coordinates, out.", groupID (group _caller), groupID _grp]] call EVO_fnc_globalSideChat;

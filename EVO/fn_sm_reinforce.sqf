@@ -110,7 +110,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if (currentSideMissionStatus == "success") then {
 				if (player distance defendTarget < 1000) then {
 					playsound "goodjob";
-					_score = player getVariable "EVO_score";
+					_score = player getVariable ["EVO_score", 0];
 					_score = _score + 10;
 					player setVariable ["EVO_score", _score, true];
 					[player, 10] call BIS_fnc_addScore;

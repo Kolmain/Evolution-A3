@@ -16,12 +16,12 @@ if (_pow == currentTargetOF) then {
 			_msg = format ["Colonel %1 has been secured.", name currentTargetOF];
 			["TaskSucceeded",["OFFICER SECURED", _msg]] call BIS_fnc_showNotification;
 			playsound "goodjob";
-			_score = player getVariable "EVO_score";
+			_score = player getVariable ["EVO_score", 0];
 			_score = _score + 5;
 			player setVariable ["EVO_score", _score, true];
 			["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
 			if (leader group currentTargetOF == player) then {
-				_score = player getVariable "EVO_score";
+				_score = player getVariable ["EVO_score", 0];
 				_score = _score + 5;
 				player setVariable ["EVO_score", _score, true];
 				["PointsAdded",[format["You captured Colonel %1.", name currentTargetOF], 5]] call BIS_fnc_showNotification;

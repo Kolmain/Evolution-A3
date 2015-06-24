@@ -1,10 +1,4 @@
-private ["_caller","_pos","_is3D","_ID","_grpSide","_arty","_busy","_isInRange","_eta","_newartyStrike"];
-/*[caller,pos,target,is3D,ID]
-caller: Object - unit which called the item, usually player
-pos: Array in format Position - cursor position
-target: Object - cursor target
-is3D: Boolean - true when in 3D scene, false when in map
-ID: String - item ID as returned by BIS_fnc_addCommMenuItem function*/
+private ["_caller","_pos","_is3D","_ID","_grpSide","_arty","_busy","_score","_newartyStrike","_isInRange","_eta"];
 
 _caller = _this select 0;
 _pos = _this select 1;
@@ -14,22 +8,42 @@ _ID = _this select 4;
 _grpSide = side _caller;
 _arty = _caller;
 
-
 _arty = arty_west;
 _busy = false;
 _busy = _arty getVariable ["EVO_support_busy", false];
-_score = player getVariable "EVO_score";
+_score = player getVariable ["EVO_score", 0];
 _score = _score - 6;
 player setVariable ["EVO_score", _score, true];
 [player, -6] call bis_fnc_addScore;
 ["PointsRemoved",["Artillery support initiated.", 6]] call BIS_fnc_showNotification;
-if(!_busy || isNil "_busy") then {
+if(!_busy) then {
 
 	_arty setVariable ["EVO_support_busy", true, true];
 	[_caller, format["%1, this is %2, adjust fire, over.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	[_arty, format["%2 this is %1, adjust fire, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
+	["supportMapClickEH", "onMapSingleClick", {
+		supportMapClick = _pos;
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	}] call BIS_fnc_addStackedEventHandler;
+	openMap true;
+	hint "Designate coordinates by left-clicking on the map.";
+	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	_pos = supportMapClick;
+	if (!visiblemap) exitWith {
+		[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		[_arty, format["Copy that %2, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		_newartyStrike = [_caller, "artyStrike"] call BIS_fnc_addCommMenuItem;
+		_score = player getVariable ["EVO_score", 0];
+		_score = _score + 6;
+		player setVariable ["EVO_score", _score, true];
+		[player, 6] call bis_fnc_addScore;
+		["PointsAdded",["Artillery support canceled.", 6]] call BIS_fnc_showNotification;
+	};
+	openMap false;
 	[_caller, format["Grid %1, over.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 3;
 	_isInRange = _pos inRangeOfArtillery [[_arty], currentMagazine _arty];
@@ -62,7 +76,7 @@ if(!_busy || isNil "_busy") then {
 	} else {
 		[_arty, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		_newartyStrike = [_caller, "artyStrike"] call BIS_fnc_addCommMenuItem;
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 6;
 		player setVariable ["EVO_score", _score, true];
 		[player, 6] call bis_fnc_addScore;
@@ -73,9 +87,10 @@ if(!_busy || isNil "_busy") then {
 	sleep 3.5;
 	[_arty, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	_newartyStrike = [_caller, "artyStrike"] call BIS_fnc_addCommMenuItem;
-	_score = player getVariable "EVO_score";
+	_score = player getVariable ["EVO_score", 0];
 	_score = _score + 6;
 	player setVariable ["EVO_score", _score, true];
 	[player, 6] call bis_fnc_addScore;
 	["PointsAdded",["Artillery support canceled.", 6]] call BIS_fnc_showNotification;
 };
+supportMapClick = [0,0,0];

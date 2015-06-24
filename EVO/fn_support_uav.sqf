@@ -31,13 +31,34 @@ _uav = _retArray select 0;
 sleep 3;
 [Crossroads, format["%1, this is Crossroads, copy your last. Send arrival grid, over.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 sleep 3;
+["supportMapClickEH", "onMapSingleClick", {
+		supportMapClick = _pos;
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	}] call BIS_fnc_addStackedEventHandler;
+	openMap true;
+	hint "Designate coordinates by left-clicking on the map.";
+	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	_pos = supportMapClick;
+	if (!visiblemap) exitWith {
+		[_caller, format["Crossroads, this is %1, scratch that last request, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		_newUaVrequest = [_caller, "uavRequest"] call BIS_fnc_addCommMenuItem;
+	_score = _caller getVariable "EVO_score";
+	_score = _score + 10;
+	_caller setVariable ["EVO_score", _score, true];
+	[_caller, 10] call bis_fnc_addScore;
+	["PointsAdded",["UAV request canceled.", 10]] call BIS_fnc_showNotification;
+	};
+	openMap false;
 [_caller, format["Grid %1, over.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 sleep 3;
 [Crossroads, format["Copy that %1, dispatching to requested coordinates, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 sleep 3;
-
+supportMapClick = [0,0,0];
 waitUntil {([_uav, _pos] call BIS_fnc_distance2D < 250)};
 _caller connectTerminalToUAV _vehicle;
-
+supportMapClick = [0,0,0];
 
 

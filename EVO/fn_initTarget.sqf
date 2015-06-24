@@ -172,17 +172,6 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 			};
 		} forEach units _grp;
 		[_grp, _spawnPos] call bis_fnc_taskDefend;
-		[_newComp, _grp, _mortarGunner, currentTarget] spawn {
-			waitUntil {; sleep 10; _this select 3 != currentTarget};
-			{
-				[_x] call EVO_fnc_wrapUp;
-			} forEach _this select 0;
-
-			{
-				[_x] call EVO_fnc_wrapUp;
-			} forEach units _this select 1;
-			[_this select 2] call EVO_fnc_wrapUp;
-		};
 	};
 };
 //////////////////////////////////////
@@ -457,7 +446,7 @@ if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 [[[], {
 	if (!isDedicated) then {
 		_tskName = format ["%1 Secured.", currentTargetName];
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 5;
 		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;

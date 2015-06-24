@@ -1,10 +1,4 @@
-private ["_caller","_pos","_is3D","_ID","_grpSide","_mortar","_busy","_isInRange","_eta","_newMortarStrike","_arty"];
-/*[caller,pos,target,is3D,ID]
-caller: Object - unit which called the item, usually player
-pos: Array in format Position - cursor position
-target: Object - cursor target
-is3D: Boolean - true when in 3D scene, false when in map
-ID: String - item ID as returned by BIS_fnc_addCommMenuItem function*/
+private ["_caller","_pos","_is3D","_ID","_grpSide","_mortar","_busy","_score","_newMortarStrike","_isInRange","_eta","_arty"];
 
 _caller = _this select 0;
 _pos = _this select 1;
@@ -14,11 +8,9 @@ _ID = _this select 4;
 _grpSide = side _caller;
 _mortar = _caller;
 _mortar = mortar_west;
-
-
 _busy = false;
-_busy = _mortar getVariable ["KOL_support_busy", false];
-_score = player getVariable "EVO_score";
+_busy = _mortar getVariable ["EVO_support_busy", false];
+_score = player getVariable ["EVO_score", 0];
 _score = _score - 5;
 player setVariable ["EVO_score", _score, true];
 [player, -5] call bis_fnc_addScore;
@@ -26,9 +18,29 @@ player setVariable ["EVO_score", _score, true];
 if(!_busy || isNil "_busy") then {
 	[_caller, format["%1, this is %2, adjust fire, over.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
-
 	[_mortar, format["%2 this is %1, adjust fire, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
+	["supportMapClickEH", "onMapSingleClick", {
+		supportMapClick = _pos;
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	}] call BIS_fnc_addStackedEventHandler;
+	openMap true;
+	hint "Designate coordinates by left-clicking on the map.";
+	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	_pos = supportMapClick;
+	if (!visiblemap) exitWith {
+		[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		[_mortar, format["Copy that %2, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+		sleep 3.5;
+		_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
+		_score = player getVariable ["EVO_score", 0];
+		_score = _score + 5;
+		player setVariable ["EVO_score", _score, true];
+		[player, 5] call bis_fnc_addScore;
+		["PointAdded",["Mortar support canceled.", 5]] call BIS_fnc_showNotification;
+	};
+	openMap false;
 	[_caller, format["Grid %1, over.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 3;
 
@@ -53,7 +65,7 @@ if(!_busy || isNil "_busy") then {
 		_eta = floor(_mortar getArtilleryETA [_pos, currentMagazine _mortar]);
 		[_caller, "Shot, out."] call EVO_fnc_globalSideChat;
 		sleep 3.5;
-		_mortar setVariable ["KOL_support_busy", false, true];
+		_mortar setVariable ["EVO_support_busy", false, true];
 		[_mortar, format["Splash in %1 seconds, over.", _eta]] call EVO_fnc_globalSideChat;
 		sleep (_eta + 10);
 		[_caller, "Splash, over."] call EVO_fnc_globalSideChat;
@@ -62,7 +74,7 @@ if(!_busy || isNil "_busy") then {
 	} else {
 		[_mortar, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 5;
 		player setVariable ["EVO_score", _score, true];
 		[player, 5] call bis_fnc_addScore;
@@ -73,10 +85,11 @@ if(!_busy || isNil "_busy") then {
 		sleep 3.5;
 		[_mortar, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 5;
 		player setVariable ["EVO_score", _score, true];
 		[player, 5] call bis_fnc_addScore;
 		["PointAdded",["Mortar support canceled.", 5]] call BIS_fnc_showNotification;
 
 };
+supportMapClick = [0,0,0];

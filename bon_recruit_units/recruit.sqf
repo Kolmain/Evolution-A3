@@ -88,7 +88,7 @@ _unit setRank "PRIVATE";
 		_source = _this select 1;
 		_scoreToAdd = _this select 2;
 		_player = leader group _ai;
-		_score = _player getVariable "EVO_score";
+		_score = _player getVariable ["EVO_score", 0];
 		_score = _score + _scoreToAdd;
 		_player setVariable ["EVO_score", _score, true];
 		[_player, _scoreToAdd] call bis_fnc_addScore;

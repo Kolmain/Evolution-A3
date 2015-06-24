@@ -6,7 +6,7 @@ _score = 0;
 if (isMultiplayer) Then {
 	_score = score player;
 } else {
-	_score = player getVariable "EVO_score";
+	_score = player getVariable ["EVO_score", 0];
 	if (isNil "_score") then {
 	_score = 0;
 	}
@@ -140,7 +140,7 @@ _ret = [] spawn {
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1, _this select 0], {
 		if (player == (_this select 0) && player != _this select 1) then {
-			_score = player getVariable "EVO_score";
+			_score = player getVariable ["EVO_score", 0];
 			_score = _score + 1;
 			player setVariable ["EVO_score", _score, true];
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];

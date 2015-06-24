@@ -42,7 +42,7 @@ EVO_supportUnits = [arty_west, mortar_west, rocket_west];
 		_source = _this select 1;
 		_scoreToAdd = _this select 2;
 		_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
-		_score = _player getVariable "EVO_score";
+		_score = _player getVariable ["EVO_score", 0];
 		_score = _score + _scoreToAdd;
 		_player setVariable ["EVO_score", _score, true];
 		[_player, _scoreToAdd] call bis_fnc_addScore;

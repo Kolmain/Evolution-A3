@@ -41,7 +41,7 @@ lbSetCurSel [2903, 0];
 	waitUntil {ATM_Jump_mapclick or !(visiblemap)};
 	if (!visibleMap) exitwith {
 		if (player getVariable "EVOrank" != "PRIVATE") then {
-			_score = player getVariable "EVO_score";
+			_score = player getVariable ["EVO_score", 0];
 			_score = _score + 3;
 			player setVariable ["EVO_score", _score, true];
 			["PointsAdded",["HALO insertion canceled.", 3]] call BIS_fnc_showNotification;
