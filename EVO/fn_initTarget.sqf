@@ -238,6 +238,7 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 		for "_i" from 1 to (8 + random(7)) step 1 do {
 			_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
 		    _mine = createMine [_mineClass, _minePos, [], 0];
+		    EAST revealMine _mine;
 		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
 		    _mine setDir (random 360);
 		    if (EVO_Debug) then {
@@ -272,6 +273,7 @@ for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 		for "_i" from 1 to (8 + random(7)) step 1 do {
 			_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
 		    _mine = createMine [_mineClass, _minePos, [], 0];
+		    EAST revealMine _mine;
 		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
 		    _mine setDir (random 360);
 		    if (EVO_Debug) then {
