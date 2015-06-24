@@ -22,8 +22,8 @@ player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\o
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ"];
-	player addaction ["<t color='#CCCC00'>Go to HQ</t>", "[player, spawnBuilding] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance MHQ) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ"];
+	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
+	player addaction ["<t color='#CCCC00'>Go to HQ</t>", "[player, spawnBuilding] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance MHQ) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
 };
 
 //////////////////////////////////////

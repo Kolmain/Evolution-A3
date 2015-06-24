@@ -44,7 +44,8 @@ lbSetCurSel [2903, 0];
 		["atmMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
 	waitUntil {ATM_Jump_mapclick or !(visiblemap)};
-	if (!visibleMap) exitwith {
+		if (!visiblemap) exitWith {
+		["atmMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		if (player getVariable "EVOrank" != "PRIVATE") then {
 			_score = player getVariable ["EVO_score", 0];
 			_score = _score + 3;

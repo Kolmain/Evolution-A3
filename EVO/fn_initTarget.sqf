@@ -5,10 +5,6 @@ private ["_currentTarget","_currentTargetMarker","_aoSize","_x1","_y1","_nextTar
 //////////////////////////////////////
 currentTargetRT = nil;
 currentTargetOF = nil;
-if (isNil "currentAOunits") then {
-	currentAOunits = [];
-	publicVariable "currentAOunits";
-};
 lastAOunits = currentAOunits;
 publicVariable "lastAOunits";
 currentAOunits = [];
@@ -465,6 +461,7 @@ targetCounter = targetCounter + 1;
 //
 if (targetCounter == 9) then {
 	targetCounter = targetCounter + 1;
+};
 //
 	//
 		//

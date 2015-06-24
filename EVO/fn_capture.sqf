@@ -5,7 +5,7 @@ _id = _this select 2;
 [_pow] join _capturer;
 _pow enableAI "ANIM";
 _pow enableAI "FSM";
-[[[], {_pow switchMove ""}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+[[[_pow], {_this select 0 switchMove ""}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 if (_pow == currentTargetOF) then {
 	[[[], {
@@ -23,6 +23,7 @@ if (_pow == currentTargetOF) then {
 			if (leader group currentTargetOF == player) then {
 				_score = player getVariable ["EVO_score", 0];
 				_score = _score + 5;
+				[player, 5] call bis_fnc_addScore;
 				player setVariable ["EVO_score", _score, true];
 				["PointsAdded",[format["You captured Colonel %1.", name currentTargetOF], 5]] call BIS_fnc_showNotification;
 			};

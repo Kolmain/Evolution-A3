@@ -36,6 +36,8 @@ nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
 EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+currentAOunits = [];
+publicVariable "currentAOunits";
 {
 	gunner _x addEventHandler ["HandleScore", {
 		_supportAsset = _this select 0;

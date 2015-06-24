@@ -119,8 +119,7 @@ switch (_type) do {
 					    _heli flyInHeight 150;
 					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 200)};
 					    handle = [_heli] spawn EVO_fnc_paradrop;
-					    _heli doMove getPos server;
-					    //waitUntil {count crew _heli == count units _heliGrp};
+					    doStop _heli;
 					    _heli doMove getPos server;
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;

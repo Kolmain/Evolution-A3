@@ -43,13 +43,16 @@ sleep 3;
 sleep 3;
 ["supportMapClickEH", "onMapSingleClick", {
 		supportMapClick = _pos;
+		supportClicked = true;
+		supportClicked = true;
 		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
 	openMap true;
-	hint "Designate coordinates by left-clicking on the map.";
-	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
+	waitUntil {supportClicked || !(visiblemap)};
 	_pos = supportMapClick;
-	if (!visiblemap) exitWith {
+		if (!visiblemap) exitWith {
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		[_caller, format["Crossroads, this is %1, scratch that last request, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		sleep 3.5;
 		[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;

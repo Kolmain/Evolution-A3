@@ -25,13 +25,16 @@ if(!_busy) then {
 	sleep 3.5;
 	["supportMapClickEH", "onMapSingleClick", {
 		supportMapClick = _pos;
+		supportClicked = true;
+		supportClicked = true;
 		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	}] call BIS_fnc_addStackedEventHandler;
 	openMap true;
-	hint "Designate coordinates by left-clicking on the map.";
-	waitUntil {supportMapClick != [0,0,0] || !(visiblemap)};
+	["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
+	waitUntil {supportClicked || !(visiblemap)};
 	_pos = supportMapClick;
-	if (!visiblemap) exitWith {
+		if (!visiblemap) exitWith {
+		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 		sleep 3.5;
 		[_arty, format["Copy that %2, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
@@ -61,9 +64,13 @@ if(!_busy) then {
 		//fire!
 		_eta = 0;
 		[[[_arty, _pos], {
-			_this select 0 setVehicleAmmoDef 1;
-			_this select 0 doArtilleryFire [_this select 1, "Sh_155mm_AMOS", 5];
-		}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
+			_gun = _this select 0;
+			_pos = _this select 1;
+			if (local (gunner _gun)) then {
+				_gun setVehicleAmmoDef 1;
+				_gun doArtilleryFire [_pos, (currentMagazine _gun), 5];
+			};
+		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 		_eta = floor(_arty getArtilleryETA [_pos, currentMagazine _arty]);
 		[_caller, "Shot, out."] call EVO_fnc_globalSideChat;
 		sleep 3.5;
@@ -94,3 +101,4 @@ if(!_busy) then {
 	["PointsAdded",["Artillery support canceled.", 6]] call BIS_fnc_showNotification;
 };
 supportMapClick = [0,0,0];
+["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;

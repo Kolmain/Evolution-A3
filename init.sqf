@@ -373,6 +373,8 @@ if (isServer) then {
 if (isDedicated || !hasInterface) exitWith {};
 _brief = [] execVM "briefing.sqf";
 intro = true;
+supportMapClick = [0,0,0];
+supportClicked = false;
 player execVM "scripts\intro.sqf";
 [] execVM "scripts\player_markers.sqf";
 ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
