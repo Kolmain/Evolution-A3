@@ -45,7 +45,7 @@ if ( _dis > 1000) then {
 	    if (!isPlayer driver _plane) then {
 	    	_loop = false;
 	    	driver _plane setVariable ["EVO_playerRequester", player];
-	    	[[[_plane,], {
+	    	[[[_plane], {
 				driver _this select 0 addEventHandler ["HandleScore", {
 					_supportAsset = _this select 0;
 					_source = _this select 1;

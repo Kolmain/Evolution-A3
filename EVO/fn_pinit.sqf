@@ -245,8 +245,10 @@ handle = [] spawn {
 
 
 _rank = player getVariable ["EVO_rank", "PRIVATE"];
-[[PlayerCrate, _rank],{
-	if (!isDedicated) then {
-		[(_this select 0), _this select 1] call EVO_fnc_buildAmmoCrate;
-	};
-},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+if (!isNil "PlayerCrate") then {
+	[[PlayerCrate, _rank],{
+		if (!isDedicated) then {
+			[(_this select 0), _this select 1] call EVO_fnc_buildAmmoCrate;
+		};
+	},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+};

@@ -28,7 +28,7 @@ if (!alive player || player distance _pos > 1) exitWith {};
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
 //playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf", false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-playerStructures = [(getPos player), (getDir player), "Comps\mash.sqf"] call BIS_fnc_ObjectsMapper;
+playerStructures = [(getPos player), (getDir player), call (compile (preprocessFileLineNumbers ("Comps\mash.sqf")))] call BIS_fnc_ObjectsMapper;
 
 _mssg = format["%2 %1's MASH",(name player), (rank player)];
 playerRespawnPoint = [(group player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;

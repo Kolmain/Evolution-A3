@@ -29,7 +29,10 @@ _sound = switch (_surfaceType) do {
 //systemChat format["Killed | Process time: %1s", diag_tickTime - _sT];
 
 waitUntil {(ASLToATL(eyePos _unit) select 2) < 0.8 || time > (_time + 2.5)};
-_obj say _sound;
+[[[_obj, _sound], {
+    _this select 0 say _this select 1;
+}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+
 
 sleep 2;
 deleteVehicle _obj;

@@ -407,7 +407,7 @@ while {_loop} do {
 	sleep 10;
 	{
 		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
-		_count = _count + 1;
+			_count = _count + 1;
 		};
 	} forEach currentAOunits;
 	if (_count < 9) then {
@@ -476,14 +476,12 @@ sleep random 30;
 //////////////////////////////////////
 //Reset for Next AO
 //////////////////////////////////////
-if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 targetCounter = targetCounter + 1;
 		//
 	//For Altis' Strange Island "City" TODO
 //
 if (targetCounter == 9) then {
 	targetCounter = targetCounter + 1;
-};
 //
 	//
 		//
