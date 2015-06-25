@@ -17,6 +17,11 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
+0 = [] execvm "scripts\tpw_core.sqf";
+0 = [0,1,60] execvm "tpw_radio.sqf";
+0 = [25,300,150,20,10] execvm "tpw_park.sqf";
+0 = [5,1000,15,2] execvm "tpw_boats.sqf";
+0 = [10,300,2,[50,250,500],0] execvm "tpw_air.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
@@ -198,27 +203,27 @@ switch (EVO_difficulty) do {
     };
     case 3: {
         //////////////////////////////////////
-                            //HARD
-                            //////////////////////////////////////
-                            rank1 = 15;
-                            rank2 = 35;
-                            rank3 = 65;
-                            rank4 = 105;
-                            rank5 = 155;
-                            rank6 = 205;
-                        };
-                        case 4: {
-                            //////////////////////////////////////
-                            //ALTIS ON FIRE
-                            //////////////////////////////////////
-                            rank1 = 20;
-                            rank2 = 40;
-                            rank3 = 75;
-                            rank4 = 120;
-                            rank5 = 175;
-                            rank6 = 225;
-                        };
-                    };
+        //HARD
+        //////////////////////////////////////
+        rank1 = 15;
+        rank2 = 35;
+        rank3 = 65;
+        rank4 = 105;
+        rank5 = 155;
+        rank6 = 205;
+    };
+    case 4: {
+        //////////////////////////////////////
+        //ALTIS ON FIRE
+        //////////////////////////////////////
+        rank1 = 20;
+        rank2 = 40;
+        rank3 = 75;
+        rank4 = 120;
+        rank5 = 175;
+        rank6 = 225;
+    };
+ };
 HCconnected = false;
 CROSSROADS = [West,"HQ"];
 rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];

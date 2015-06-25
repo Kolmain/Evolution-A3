@@ -12,12 +12,11 @@ _score = _caller getVariable "EVO_score";
 _score = _score - 5;
 _caller setVariable ["EVO_score", _score, true];
 [_caller, -5] call bis_fnc_addScore;
-["PointsRemoved",["Resupply request canceled.", 5]] call BIS_fnc_showNotification;
+["PointsRemoved",["Resupply request initiated.", 5]] call BIS_fnc_showNotification;
 
-_spawnPos = [(getMarkerPos "arespawn_west"), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-_pos2 = getMarkerPos "arespawn_west";
+_spawnPos = [getPos spawnBuilding, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 _vehicle = createVehicle ["CargoNet_01_box_F", _spawnPos, [], 0, "NONE"]
-_spawnPos = [(getMarkerPos "arespawn_west"), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+_spawnPos = [getPos spawnBuilding, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 _retArray2 = [_spawnPos, 180, "B_Heli_Transport_03_F", WEST] call EVO_fnc_spawnvehicle;
 _heli = _retArray2 select 0;
 _heliCrew = _retArray2 select 1;
@@ -31,9 +30,9 @@ sleep 3;
 openMap true;
 sleep 3;
 ["supportMapClickEH", "onMapSingleClick", {
-supportMapClick = _pos;
-supportClicked = true;
-["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	supportMapClick = _pos;
+	supportClicked = true;
+	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 }] call BIS_fnc_addStackedEventHandler;
 ["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
 waitUntil {supportClicked || !(visiblemap)};
