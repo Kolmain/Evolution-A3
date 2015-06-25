@@ -66,11 +66,11 @@ if (_isInRange) then {
 		//fire!
 		_eta = 0;
 		[[[_mortar, _pos], {
-		_gun = _this select 0;
-		_pos = _this select 1;
-		if (local (gunner _gun)) then {
-			_gun setVehicleAmmoDef 1;
-			_gun doArtilleryFire [_pos, (currentMagazine _gun), 5];
+			_gun = _this select 0;
+			_pos = _this select 1;
+			if (local (gunner _gun)) then {
+				_gun setVehicleAmmoDef 1;
+				_gun doArtilleryFire [_pos, (currentMagazine _gun), 5];
 		};
 	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 	_eta = floor(_arty getArtilleryETA [_pos, currentMagazine _arty]);

@@ -93,7 +93,7 @@ _unit setRank "PRIVATE";
 		_player setVariable ["EVO_score", _score, true];
 		[_player, _scoreToAdd] call bis_fnc_addScore;
 		if (EVO_Debug) then {
-			systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
+			systemChat format ["%1 got points from %2. Sending points to %3.", _ai, _source, _player];
 		};
 	}];
 }], "BIS_fnc_spawn", false] call BIS_fnc_MP;
