@@ -162,6 +162,7 @@ if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
 //////////////////////////////////////
 //Init Common Variables
 //////////////////////////////////////
+EVOp_scoreArray = [];
 EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
 enableSaving [false, false];
 arsenalCrates = [];
@@ -337,7 +338,7 @@ availableBackpacks = [
 ];
 availableWeapons = [];
 availableMagazines = [];
-
+EVO_vaCrates = [];
 
 //////////////////////////////////////
 //Init Headless Client
@@ -348,7 +349,20 @@ if (!(isServer) && !(hasInterface)) then {
 	publicVariable "HCconnected";
 };
 
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+    _lastWorld = profileNamespace getVariable ["EVO_world", "nil"];
+    if (_lastWorld == "nil") then {
 
+    } else {
+        if (_lastWorld == worldName) then {
+            targetCounter = profileNamespace getVariable ["EVO_currentTargetCounter", 2];
+            EVOp_scoreArray = profileNamespace getVariable ["EVO_scoreArray", []];
+            publicVariable "EVOp_scoreArray";
+        };
+
+    };
+
+};
 //////////////////////////////////////
 //Init Server
 //////////////////////////////////////
@@ -370,8 +384,25 @@ if (isServer) then {
 //////////////////////////////////////
 //Init Clients
 //////////////////////////////////////
+
 if (isDedicated || !hasInterface) exitWith {};
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1 && score player == 0) then {
+    {
+        _playerData = _x;
+        _puid = player getPlayerUID;
+        if (_puid == (_playerData select 0)) then {
+            [player, (_playerData select 1)] call BIS_fnc_addScore;
+        };
+    } forEach EVOp_scoreArray;
+};
 _brief = [] execVM "briefing.sqf";
+"EVO_vaCrates" addPublicVariableEventHandler {
+    {
+        if (alive (_x select 0)) then {
+            [(_x select 0), rank (_x select 1)] call EVO_fnc_buildAmmoCrate;
+        };
+    } forEach EVO_vaCrates;
+};
 intro = true;
 supportMapClick = [0,0,0];
 supportClicked = false;
@@ -412,34 +443,6 @@ handle = [] spawn {
         };
 	};
 };
-_lastPos = [];
-_profileSessionID = profileNamespace getVariable "EVO_sessionID";
-if (isNil "_profileSessionID") then {
-	_profileSessionID = EVO_sessionID;
-	profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
-} else {
-	if (_profileSessionID == EVO_sessionID) then {
-		systemChat "PERSISTENT EVOLUTION DETECTED.";
-		systemChat "Moving player to last location...";
-		_lastPos = profileNamespace getVariable "EVO_lastPos";
-		if (isNIl "_lastPos") then {
-			_lastPos = getPos player;
-			profileNamespace setVariable ["EVO_lastPos", _lastPos];
-			saveProfileNamespace;
-		};
-		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
-		player setPos _lastPos;
-		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
-		systemChat "Setting player loadout to last known loadout...";
-		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
-		//loadout = _lastLoadout;
-	} else {
-		_profileSessionID = EVO_sessionID;
-		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
-		saveProfileNamespace;
-	};
-};
-
 
 handle = [player,
 [["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";

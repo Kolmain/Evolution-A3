@@ -3,9 +3,15 @@ _pos = getPos player;
 
 //Land_Medevac_house_V1_F
 
-player playMove "Acts_carFixingWheel";
+player playMoveNow "Acts_carFixingWheel";
 
 if (!isNil "playerStructures") then {
+	{
+		if ((_x select 0) == PlayerCrate) then {
+			EVO_vaCrates = EVO_vaCrates - [_x];
+			publicVariable "EVO_vaCrates";
+		};
+	} forEach EVO_vaCrates;
 	{
 		deleteVehicle _x;
 	} forEach playerStructures;
@@ -48,13 +54,10 @@ PlayerCrate = objNull;
 		PlayerCrate = _x;
 	};
 } forEach playerStructures;
-
-_rank = player getVariable ["EVO_rank", "PRIVATE"];
-[[PlayerCrate, rank player],{
-	_rank = _this select 1;
-	_crate = _this select 0;
-	[_crate, _rank] call EVO_fnc_buildAmmoCrate;
-},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+_array = [PlayerCrate, player];
+EVO_vaCrates pushBack _array;
+publicVariable "EVO_vaCrates";
+[PlayerCrate, rank player] call EVO_fnc_buildAmmoCrate;
 
 _mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
 while {alive _mash} do {

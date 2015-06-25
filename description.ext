@@ -160,10 +160,10 @@ class Params
 		default = 0;
 	};
 	class persistentEVO {
-		title = "Remember Player Positions";
+		title = "Mission Persistence";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 0;
+		default = 1;
 	};
 	class hitFX {
 		title = "Unit On-Hit SFX";

@@ -475,6 +475,22 @@ publicVariable "RTonline";
 //////////////////////////////////////
 //Start Next AO
 //////////////////////////////////////
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+	profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
+	profileNamespace setVariable ["EVO_world", worldName];
+	_scoreArray = [];
+	{
+		if (isPlayer _x) then
+		{
+			_push = [];
+			_push pushBack (getPlayerUID _x);
+			_push pushBack (score _x);
+			_scoreArray pushBack _push;
+		};
+	} forEach playableUnits;
+	profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
+	saveProfileNamespace;
+};
 handle = [] spawn EVO_fnc_initTarget;
 
 

@@ -215,13 +215,6 @@ handle = [] spawn {
 		if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
 			handle = [] call EVO_fnc_rank;
 		};
-		if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-			_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-			profileNamespace setVariable ["EVO_lastLoadout", _currentLoadout];
-			profileNamespace setVariable ["EVO_score", (player getVariable "EVO_score")];
-			profileNamespace setVariable ["EVO_lastPos", getPos player];
-			saveProfileNamespace;
-		};
 		sleep 1;
 	};
 };

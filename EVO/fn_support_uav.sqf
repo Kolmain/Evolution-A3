@@ -1,6 +1,7 @@
 private ["_caller","_pos","_is3D","_ID","_grpSide","_grp","_score","_newUaVrequest","_spawnPos","_retArray","_uav","_vehicle"];
 
 _caller = _this select 0;
+_caller playMoveNow "Acts_listeningToRadio_Loop";
 _pos = _this select 1;
 _target = _this select 2;
 _is3D = _this select 3;
@@ -13,7 +14,7 @@ _score = _score - 10;
 _caller setVariable ["EVO_score", _score, true];
 [_caller, -10] call bis_fnc_addScore;
 ["PointsRemoved",["UAV request initiated.", 10]] call BIS_fnc_showNotification;
-if ("B_UavTerminal" in (assignedItems _caller)) exitWith {
+if (!"B_UavTerminal" in (assignedItems _caller)) exitWith {
 	[_caller, format["Crossroads, this is %1, requesting UAV support, over.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	[Crossroads, format["%1, this is Crossroads, you're not deployed with a UAV terminal, RTB and pick it up at the staging base, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
@@ -31,39 +32,41 @@ _uav = _retArray select 0;
 sleep 3;
 [Crossroads, format["%1, this is Crossroads, copy your last. Send arrival grid, over.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 sleep 3;
+openMap true;
+sleep 3;
 ["supportMapClickEH", "onMapSingleClick", {
-		supportMapClick = _pos;
-		supportClicked = true;
-		supportClicked = true;
-		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
-	}] call BIS_fnc_addStackedEventHandler;
-	openMap true;
-	["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
-	waitUntil {supportClicked || !(visiblemap)};
-	_pos = supportMapClick;
-		if (!visiblemap) exitWith {
-		["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
-		[_caller, format["Crossroads, this is %1, scratch that last request, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
-		sleep 3.5;
-		[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
-		sleep 3.5;
-		_newUaVrequest = [_caller, "uavRequest"] call BIS_fnc_addCommMenuItem;
+supportMapClick = _pos;
+supportClicked = true;
+["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+}] call BIS_fnc_addStackedEventHandler;
+["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
+waitUntil {supportClicked || !(visiblemap)};
+_pos = supportMapClick;
+if (!visiblemap) exitWith {
+	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	[_caller, format["Crossroads, this is %1, scratch that last request, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+	sleep 3.5;
+	[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
+	sleep 3.5;
+	_newUaVrequest = [_caller, "uavRequest"] call BIS_fnc_addCommMenuItem;
 	_score = _caller getVariable "EVO_score";
 	_score = _score + 10;
 	_caller setVariable ["EVO_score", _score, true];
 	[_caller, 10] call bis_fnc_addScore;
 	["PointsAdded",["UAV request canceled.", 10]] call BIS_fnc_showNotification;
-	};
-	openMap false;
+};
+openMap false;
 [_caller, format["Grid %1, over.", mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 sleep 3;
 [Crossroads, format["Copy that %1, dispatching to requested coordinates, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 sleep 3;
 supportMapClick = [0,0,0];
+supportClicked = false;
 ["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 waitUntil {([_uav, _pos] call BIS_fnc_distance2D < 250)};
 _caller connectTerminalToUAV _vehicle;
 supportMapClick = [0,0,0];
+supportClicked = false;
 ["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 
 

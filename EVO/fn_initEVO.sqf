@@ -14,7 +14,10 @@ _mil = [];
 	};
 } foreach _locs;
 militaryLocations = _mil;
-targetCounter = 2;
+if (isNil "targetCounter") then {
+	targetCounter = 2;
+};
+//targetCounter = 2;
 totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
 if (totalTargets == 999) then {totalTargets = count targetLocations};
 totalTargets = totalTargets + targetCounter;
@@ -141,6 +144,22 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 //Init First Target
 //////////////////////////////////////
 if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
+	if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+		profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
+		profileNamespace setVariable ["EVO_world", worldName];
+		_scoreArray = [];
+		{
+			if (isPlayer _x) then
+			{
+				_push = [];
+				_push pushBack (getPlayerUID _x);
+				_push pushBack (score _x);
+				_scoreArray pushBack _push;
+			};
+		} forEach playableUnits;
+		profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
+		saveProfileNamespace;
+	};
 	handle = [] spawn EVO_fnc_initTarget;
 };
 

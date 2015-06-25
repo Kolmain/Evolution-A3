@@ -27,8 +27,14 @@ _h = nearestObject [_pos, "Land_HelipadSquare_F"];
 
 
 
-player playMove "Acts_carFixingWheel";
+player playMoveNow "Acts_carFixingWheel";
 if (!isNil "playerStructures") then {
+	{
+		if ((_x select 0) == PlayerCrate) then {
+			EVO_vaCrates = EVO_vaCrates - [_x];
+			publicVariable "EVO_vaCrates";
+		};
+	} forEach EVO_vaCrates;
 	{
 		deleteVehicle _x;
 	} forEach playerStructures;
@@ -62,10 +68,13 @@ _medmark setMarkerSize [1, 1];
 sleep 5;
 _msg = format ["Your FARP has been deployed at map grid %1.", mapGridPosition player];
 ["deployed",["FARP DEPLOYED", _msg]] call BIS_fnc_showNotification;
-PlayerCrate = nearestObject [_pos, "CargoNet_01_box_F"];
-_rank = player getVariable ["EVO_rank", "PRIVATE"];
-[[PlayerCrate, _rank],{
-	if (!isDedicated) then {
-		[_this select 0, _this select 1] call EVO_fnc_buildAmmoCrate;
+PlayerCrate = objNull;
+{
+	if (typeOf _x == "CargoNet_01_box_F") then {
+		PlayerCrate = _x;
 	};
-},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+} forEach playerStructures;
+_array = [PlayerCrate, player];
+EVO_vaCrates pushBack _array;
+publicVariable "EVO_vaCrates";
+[PlayerCrate, rank player] call EVO_fnc_buildAmmoCrate;
