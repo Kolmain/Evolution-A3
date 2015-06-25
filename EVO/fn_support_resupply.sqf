@@ -15,7 +15,7 @@ _caller setVariable ["EVO_score", _score, true];
 ["PointsRemoved",["Resupply request initiated.", 5]] call BIS_fnc_showNotification;
 
 _spawnPos = [getPos spawnBuilding, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-_vehicle = createVehicle ["CargoNet_01_box_F", _spawnPos, [], 0, "NONE"]
+_vehicle = createVehicle ["CargoNet_01_box_F", _spawnPos, [], 0, "NONE"];
 _spawnPos = [getPos spawnBuilding, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 _retArray2 = [_spawnPos, 180, "B_Heli_Transport_03_F", WEST] call EVO_fnc_spawnvehicle;
 _heli = _retArray2 select 0;

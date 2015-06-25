@@ -394,7 +394,7 @@ if (isDedicated || !hasInterface) exitWith {};
 if (("persistentEVO" call BIS_fnc_getParamValue) == 1 && score player == 0) then {
     {
         _playerData = _x;
-        _puid = player getPlayerUID;
+        _puid = getPlayerUID player;
         if (_puid == (_playerData select 0)) then {
             [player, (_playerData select 1)] call BIS_fnc_addScore;
         };

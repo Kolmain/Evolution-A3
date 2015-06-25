@@ -65,7 +65,7 @@ if (_isInRange) then {
 	[_arty, "Shot, over."] call EVO_fnc_globalSideChat;
 		//fire!
 		_eta = 0;
-		[[[_mortar, _pos], {
+		[[[_arty, _pos], {
 			_gun = _this select 0;
 			_pos = _this select 1;
 			if (local (gunner _gun)) then {

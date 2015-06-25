@@ -14,7 +14,7 @@ _score = _score - 10;
 _caller setVariable ["EVO_score", _score, true];
 [_caller, -10] call bis_fnc_addScore;
 ["PointsRemoved",["UGV request canceled.", 10]] call BIS_fnc_showNotification;
-if (!"B_UavTerminal" in (assignedItems _caller)) exitWith {
+if (!("B_UavTerminal" in (assignedItems _caller))) exitWith {
 	[_caller, format["Crossroads, this is %1, requesting UGV support, over.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	[_caller, format["%1, this is Crossroads, you're not deployed with a UAV terminal, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;

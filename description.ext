@@ -251,6 +251,7 @@ class CfgFunctions
 			class support_rocket {};
 			class support_uav {};
 			class support_ugv {};
+			class support_resupply {};
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};
