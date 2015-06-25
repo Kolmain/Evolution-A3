@@ -78,7 +78,7 @@ class Mission
 	randomSeed=13408;
 	class Intel
 	{
-		briefingName="(CO30) Evolution-A3 [v1.2]";
+		briefingName="(CO30) Evolution-A3 [v1.2beta]";
 		overviewText="Based on the classic Armed Assault mission, Evolution Blue.";
 		resistanceWest=0;
 		resistanceEast=1;
