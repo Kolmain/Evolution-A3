@@ -60,16 +60,9 @@ if (_isInRange) then {
 	[_mortar, "Firing for effect, five rounds, out."] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	[_mortar, "Shot, over."] call EVO_fnc_globalSideChat;
-		//fire!
-		_eta = 0;
-		[[[_mortar, _pos], {
-		_gun = _this select 0;
-		_pos = _this select 1;
-		if (local (gunner _gun)) then {
-			_gun setVehicleAmmoDef 1;
-			_gun doArtilleryFire [_pos, (currentMagazine _gun), 5];
-		};
-	}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+	//fire!
+	_eta = 0;
+	[[_mortar, _pos, 6],"EVO_fnc_doArtyFire", (owner _mortar), false, false] spawn BIS_fnc_MP;
 	_eta = floor(_mortar getArtilleryETA [_pos, currentMagazine _mortar]);
 	[_caller, "Shot, out."] call EVO_fnc_globalSideChat;
 	sleep 3.5;
