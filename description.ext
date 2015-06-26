@@ -269,6 +269,7 @@ class CfgFunctions
 			class gridMarkers {};
 			class doArtyFire {};
 			class createMinefield {};
+			class createSniper {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};

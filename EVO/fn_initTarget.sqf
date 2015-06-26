@@ -195,6 +195,15 @@ for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
 	};
 };
 //////////////////////////////////////
+//OPFOR SNIPERS
+//////////////////////////////////////
+for "_i" from 1 to (["Sniper", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		[_pos] call EVO_fnc_createSniper;
+	};
+};
+//////////////////////////////////////
 //OPFOR CAS
 //////////////////////////////////////
 for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
@@ -229,7 +238,7 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		_startPos = [position currentTarget , 50, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
 		[_startPos, _mineClass] call EVO_fnc_createMinefield;
 	};
@@ -239,7 +248,7 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		_startPos = [position currentTarget , 50, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		[_startPos, "ATMine"] call EVO_fnc_createMinefield;
 	};
 };
