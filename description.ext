@@ -267,6 +267,7 @@ class CfgFunctions
 			class hasLOS {};
 			class createComposition {};
 			class gridMarkers {};
+			class doArtyFire {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
