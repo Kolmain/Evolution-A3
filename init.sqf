@@ -25,6 +25,7 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
+setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
     // Bodyfall SFX
     mrg_unit_sfx_bodyfall_concrete = [
