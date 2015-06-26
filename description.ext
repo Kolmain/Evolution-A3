@@ -81,6 +81,12 @@ class Params
 		default = 12;
 		function = "BIS_fnc_paramDaytime";
  	};
+ 	class timemultiplier {
+		title = "Time Acceleration";
+		values[] = {1,2,4,6,8,12};
+		texts[] = {"1x","2x","4x","6x","8x","12x"};
+		default = 4;
+	};
     class pfatigue {
 		title = "Player Fatigue";
 		texts[] = {"Disabled","Enabled"};
