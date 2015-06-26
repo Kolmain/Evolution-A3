@@ -3,8 +3,8 @@ private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehic
 //Init Global EVO Variables
 //////////////////////////////////////
 _locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
-targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
-_locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
+targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, [] call BIS_fnc_mapSize];
+_locs = nearestLocations [spawnBuilding, ["NameLocal"], [] call BIS_fnc_mapSize];
 sideLocations = _locs;
 publicVariable "sideLocations";
 _mil = [];

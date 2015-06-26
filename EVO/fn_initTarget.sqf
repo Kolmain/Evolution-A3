@@ -46,7 +46,7 @@ _pos = (position (targetLocations select (targetCounter + 1)));
 _array = nearestObjects [_pos, ["house"], 500];
 _obj = _array select 0;
 "opforArrow" setMarkerPos (getPos _obj);
-"opforArrow" setMarkerDir (([_obj, getMarkerPos currentTargetMarkerName] call bis_fnc_relativeDirTo) + 90);
+"opforArrow" setMarkerDir (([getPos _obj, getMarkerPos currentTargetMarkerName] call bis_fnc_DirTo) + 90);
 
 //////////////////////////////////////
 //Target AO Radio Tower
@@ -231,28 +231,7 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
-		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _minePos, [], 0];
-		    EAST revealMine _mine;
-		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    _mine setDir (random 360);
-		    if (EVO_Debug) then {
-				_markerName = format ["mine_%1", markerCounter];
-				_aaMarker = createMarker [_markerName, _minePos ];
-				_markerName setMarkerShape "ICON";
-				_markerName setMarkerType "mil_dot";
-				_markerName setMarkerColor "ColorEAST";
-				_markerName setMarkerPos _minePos;
-				_markerName setMarkerText format["Mine"];
-				markerCounter = markerCounter + 1;
-		    };
-		};
-		for "_i" from 1 to 3 step 1 do {
-			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
-		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
-		    _sign setDir (random 360);
-		};
+		[_startPos, _mineClass] call EVO_fnc_createMinefield;
 	};
 };
 //////////////////////////////////////
@@ -261,33 +240,7 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
 		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
-		_roads = _startPos nearRoads 250;
-		_nearestRoad = [_startPos, _roads] call EVO_fnc_getNearest;
-		_startPos = getPos _nearestRoad;
-		//_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
-		_mineClass = "ATMine";
-		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _minePos, [], 0];
-		    EAST revealMine _mine;
-		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    _mine setDir (random 360);
-		    if (EVO_Debug) then {
-				_markerName = format ["mine_%1", markerCounter];
-				_aaMarker = createMarker [_markerName, _minePos ];
-				_markerName setMarkerShape "ICON";
-				_markerName setMarkerType "mil_dot";
-				_markerName setMarkerColor "ColorEAST";
-				_markerName setMarkerPos _minePos;
-				_markerName setMarkerText format["Mine"];
-				markerCounter = markerCounter + 1;
-		    };
-		};
-		for "_i" from 1 to 3 step 1 do {
-			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
-		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
-		    _sign setDir (random 360);
-		};
+		[_startPos, "ATMine"] call EVO_fnc_createMinefield;
 	};
 };
 //////////////////////////////////////
