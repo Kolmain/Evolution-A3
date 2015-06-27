@@ -14,11 +14,11 @@ taskManagement_markers3D = 1;
 taskManagement_propagate = 1;
 taskManagement_drawDist = 2500;
 corpseManagerMode = 1; //Type of removed bodies: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
-corpseLimit = 10; //Max number of bodies which can be available at the same time. When exceeded, start deleting immediately.
+corpseLimit = 100; //Max number of bodies which can be available at the same time. When exceeded, start deleting immediately.
 corpseRemovalMinTime = 120; //Minimal time in seconds a body stays in the scene (can't be removed sooner).
 corpseRemovalMaxTime = 240; //Maximal time in seconds after which a dead body is removed (can't stay longer)
 wreckManagerMode = 1; //Type of removed wrecks: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
-wreckLimit = 5; //Max number of wrecks which can be available at the same time. When exceeded, start deleting immediately.
+wreckLimit = 100; //Max number of wrecks which can be available at the same time. When exceeded, start deleting immediately.
 wreckRemovalMinTime = 120; //Minimal time in seconds a wreck stays in the scene (can't be removed sooner).
 wreckRemovalMaxTime = 240; //Maximal time in seconds after which a wreck is removed (can't stay longer)
 
@@ -57,24 +57,23 @@ class CfgRadio
 class Params
 {
 	class aiSystem {
-	        title = "AI System";
-	        values[] = {1,2};
-	        texts[] = {"UPSMON","GAIA"};
-	        default = 2;
+	    title = "AI System";
+	    values[] = {1,2};
+	    texts[] = {"UPSMON","GAIA"};
+	    default = 2;
 	};
 	class initialWeatherParam {
-	        title = "Starting Weather";
-	        values[] = {0,1,2,3,4};
-	        texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-	        default = 4;
+	    title = "Starting Weather";
+	    values[] = {0,1,2,3,4};
+	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
+	    default = 4;
 	};
 	class numberOfAOs {
-	        title = "Number of Targets to Clear";
-	        values[] = {1,5,10,15,20,999};
-	        texts[] = {"1","5","10","15","20","All Available"};
-	        default = 999;
+		title = "Number of Targets to Clear";
+	    values[] = {0,1,5,10,15,20,999};
+	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
+	    default = 999;
 	};
-
 	class Daytime {
 		title = "Starting Time";
 		texts[] = {"Morning","Day","Evening","Night"};
@@ -82,6 +81,12 @@ class Params
 		default = 12;
 		function = "BIS_fnc_paramDaytime";
  	};
+ 	class timemultiplier {
+		title = "Time Acceleration";
+		values[] = {1,2,4,6,8,12};
+		texts[] = {"1x","2x","4x","6x","8x","12x"};
+		default = 4;
+	};
     class pfatigue {
 		title = "Player Fatigue";
 		texts[] = {"Disabled","Enabled"};
@@ -161,16 +166,22 @@ class Params
 		default = 0;
 	};
 	class persistentEVO {
-		title = "Remember Player Positions";
+		title = "Mission Persistence";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 0;
+		default = 1;
 	};
 	class hitFX {
 		title = "Unit On-Hit SFX";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
+	};
+	class gridMarkersParam {
+	    title = "OPFOR Sectors Shown on Map";
+	    values[] = {0,1};
+	    texts[] = {"Disabled","Enabled"};
+	    default = 1;
 	};
 
 };
@@ -223,7 +234,6 @@ class CfgFunctions
 			class sm_csar {};
 			class buildSideMissionArray {};
 			class osm {};
-			class wrapUp {};
 			class rearm {};
 			class buildMagazineArray {};
 			class buildAmmoCrate {};
@@ -245,6 +255,9 @@ class CfgFunctions
 			class support_cas {};
 			class support_mortar {};
 			class support_rocket {};
+			class support_uav {};
+			class support_ugv {};
+			class support_resupply {};
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};
@@ -253,6 +266,10 @@ class CfgFunctions
 			class getNearest {};
 			class hasLOS {};
 			class createComposition {};
+			class gridMarkers {};
+			class doArtyFire {};
+			class createMinefield {};
+			class createSniper {};
 			/*
 			class reviveControl {};
 			class reviveBleedOut {};
@@ -556,7 +573,7 @@ class CfgNotifications
 	};
 	class vehDesertion
 	{
-		title = "Vehicle Abandoned"; // Tile displayed as text on black background. Filled by arguments.
+		title = "VEHICLE ABANDOND"; // Tile displayed as text on black background. Filled by arguments.
 		iconPicture = "%2"; // Small icon displayed in left part. Colored by "color", filled by arguments.
 		description = "Abandond %3 vehicle nearby, respawning in %1 seconds"; // Brief description displayed as structured text. Colored by "color", filled by arguments.
 		color[] = {1,1,1,1}; // Icon and text color
@@ -619,6 +636,36 @@ class CfgCommunicationMenu
         enable = "1"; // Simple expression condition for enabling the item
         removeAfterExpressionCall = 1; // 1 to remove the item after calling
     };
+    class ugvRequest
+    {
+        text = "UGV Support"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_ugv;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+    class uavRequest
+    {
+        text = "UAV Support"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_uav;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+    class resupply
+    {
+        text = "Ammo Drop"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_resupply;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\supplydrop_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
 };
 
 class CfgHints
@@ -677,6 +724,36 @@ class CfgHints
 			tip = "These forces will not be reinforced once they are no longer combat effective, and players may only request based on their rank.";
 			arguments[] = {};
 			image = "\a3\ui_f\data\gui\cfg\hints\Commanding_ca.paa";
+			noImage = false;
+		};
+		class artyStrike
+		{
+			displayName = "Artillery Support Request";
+			displayNameShort = "Requesting Artillery";
+			description = "Artillery is an indirect strike effective against well defended targets.%1<t></t>1. Point at the target.%1<t></t>2. Press %3[0]%4 to enter the command menu.%1<t></t>3. Select %3Communications%4 - %3[8]%4.%1<t></t>4. Select %3Artillery Strike%4.%1<t></t> Artillery support will then confirm the request and report the splash. <t></t> If the coordinates that you sent are unable to be used, the supporting unit will grant you another request.";
+			tip = "Make sure there are no friendly forces in the vicinity of your target. You will be held accountable for friendly fire incidents.";
+			arguments[] = {};
+			image = "\a3\ui_f\data\gui\cfg\hints\ArtilleryCall_ca.paa";
+			noImage = false;
+		};
+		class mortarStrike
+		{
+			displayName = "Mortar Support Request";
+			displayNameShort = "Requesting Mortars";
+			description = "Mortars are a light indirect strike effective against stationary targets.%1<t></t>1. Point at the target.%1<t></t>2. Press %3[0]%4 to enter the command menu.%1<t></t>3. Select %3Communications%4 - %3[8]%4.%1<t></t>4. Select %Mortar Strike%4.%1<t></t> Mortar support will then confirm the request and report the splash. <t></t> If the coordinates that you sent are unable to be used, the supporting unit will grant you another request.";
+			tip = "Make sure there are no friendly forces in the vicinity of your target. You will be held accountable for friendly fire incidents.";
+			arguments[] = {};
+			image = "\a3\ui_f\data\gui\cfg\hints\ArtilleryCall_ca.paa";
+			noImage = false;
+		};
+		class fixedCasStrike
+		{
+			displayName = "CAS Request";
+			displayNameShort = "Requesting CAS";
+			description = "CAS is a precise strike effective against infantry or heavy targets.%1<t></t>1. Point at the target.%1<t></t>2. Press %3[0]%4 to enter the command menu.%1<t></t>3. Select %3Communications%4 - %3[8]%4.%1<t></t>4. Select %CAS Strike%4.%1<t></t> The pilot will then confirm the request and execute the order. <t></t> If the coordinates that you sent are unable to be used, the supporting unit will grant you another request.";
+			tip = "Make sure there are no friendly forces in the vicinity of your target. You will be held accountable for friendly fire incidents.";
+			arguments[] = {};
+			image = "\a3\ui_f\data\gui\cfg\hints\ArtilleryCall_ca.paa";
 			noImage = false;
 		};
 	};

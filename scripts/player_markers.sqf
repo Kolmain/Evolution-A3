@@ -81,13 +81,7 @@ _getMarkerColor = {
 	[(((side _this) call bis_fnc_sideID) call bis_fnc_sideType),true] call bis_fnc_sidecolor;
 };
 
-while {true} do {
-
-	waitUntil {
-		sleep 0.025;
-		true;
-	};
-
+["playerMarkersEH", "onEachFrame", {
 	_markerNumber = 0;
 
 	// show players or player's vehicles
@@ -228,4 +222,4 @@ while {true} do {
 		_marker = format["um%1",_markerNumber];
 	};
 
-};
+}] call BIS_fnc_addStackedEventHandler;

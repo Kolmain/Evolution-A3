@@ -128,7 +128,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance attackMilTarget < 1000) then {
 				playsound "goodjob";
-				_score = player getVariable "EVO_score";
+				_score = player getVariable ["EVO_score", 0];
 				_score = _score + 10;
 				player setVariable ["EVO_score", _score, true];
 				["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;

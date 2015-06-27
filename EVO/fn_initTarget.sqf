@@ -5,10 +5,6 @@ private ["_currentTarget","_currentTargetMarker","_aoSize","_x1","_y1","_nextTar
 //////////////////////////////////////
 currentTargetRT = nil;
 currentTargetOF = nil;
-if (isNil "currentAOunits") then {
-	currentAOunits = [];
-	publicVariable "currentAOunits";
-};
 lastAOunits = currentAOunits;
 publicVariable "lastAOunits";
 currentAOunits = [];
@@ -50,7 +46,7 @@ _pos = (position (targetLocations select (targetCounter + 1)));
 _array = nearestObjects [_pos, ["house"], 500];
 _obj = _array select 0;
 "opforArrow" setMarkerPos (getPos _obj);
-"opforArrow" setMarkerDir (([_obj, getMarkerPos currentTargetMarkerName] call bis_fnc_relativeDirTo) + 90);
+"opforArrow" setMarkerDir ([getPos _obj, getMarkerPos currentTargetMarkerName] call bis_fnc_DirTo);
 
 //////////////////////////////////////
 //Target AO Radio Tower
@@ -94,6 +90,14 @@ _grp = createGroup east;
 currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
+_ofName = name currentTargetOF;
+currentTargetOF AddMPEventHandler ["mpkilled", {
+	[officerTask, "Failed", false] call bis_fnc_taskSetState;
+	[[[_ofName], {
+		_msg = format ["Colonel %1 has been killed.", (_this select 0)];
+		["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
+	}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
+}];
 _officer = currentTargetOF;
 _pos = (getPos _officer);
 _spawnPos = [];
@@ -107,25 +111,9 @@ removeAllWeapons _officer;
 _officer setCaptive true;
 doStop _officer;
 [[[currentTargetOF], {
-	(_this select 0) addAction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+	(_this select 0) addaction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF], "_this spawn EVO_fnc_capture", nil,1,false,true,"","!(side leader group currentTargetOF == WEST) && alive currentTargetOF"];
 }], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
-handle = [currentTargetOF, currentTarget] spawn {
-_OF = _this select 0;
-_currentTarget = _this select 1;
-_loop = true;
-while {_loop} do {
-	if (_currentTarget != currentTarget) exitWith {_loop = false};
-		if (!alive _OF) then {
-			[officerTask, "Failed", false] call bis_fnc_taskSetState;
-			[[[_OF], {
-				_msg = format ["Colonel %1 has been killed.", name (_this select 0)];
-				["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
-			}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
-		_loop = false;
-		};
-	sleep 10;
-	};
-};
+
 _grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 {
 	if (HCconnected) then {
@@ -172,17 +160,6 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 			};
 		} forEach units _grp;
 		[_grp, _spawnPos] call bis_fnc_taskDefend;
-		[_newComp, _grp, _mortarGunner, currentTarget] spawn {
-			waitUntil {; sleep 10; _this select 3 != currentTarget};
-			{
-				[_x] call EVO_fnc_wrapUp;
-			} forEach _this select 0;
-
-			{
-				[_x] call EVO_fnc_wrapUp;
-			} forEach units _this select 1;
-			[_this select 2] call EVO_fnc_wrapUp;
-		};
 	};
 };
 //////////////////////////////////////
@@ -215,6 +192,15 @@ for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
 			_delay = ["Armor"] call EVO_fnc_calculateDelay;
 			sleep _delay;
 		};
+	};
+};
+//////////////////////////////////////
+//OPFOR SNIPERS
+//////////////////////////////////////
+for "_i" from 1 to (["Sniper", "Main"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		[_pos] call EVO_fnc_createSniper;
 	};
 };
 //////////////////////////////////////
@@ -252,29 +238,9 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		_startPos = [position currentTarget , 50, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
 		_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
-		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(8) + 1) , random 360 ] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _minePos, [], 0];
-		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    _mine setDir (random 360);
-		    if (EVO_Debug) then {
-				_markerName = format ["mine_%1", markerCounter];
-				_aaMarker = createMarker [_markerName, _minePos ];
-				_markerName setMarkerShape "ICON";
-				_markerName setMarkerType "mil_dot";
-				_markerName setMarkerColor "ColorEAST";
-				_markerName setMarkerPos _minePos;
-				_markerName setMarkerText format["Mine"];
-				markerCounter = markerCounter + 1;
-		    };
-		};
-		for "_i" from 1 to 3 step 1 do {
-			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
-		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
-		    _sign setDir (random 360);
-		};
+		[_startPos, _mineClass] call EVO_fnc_createMinefield;
 	};
 };
 //////////////////////////////////////
@@ -282,33 +248,8 @@ for "_i" from 1 to (["Minefield_Inf", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Minefield_AT", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_startPos = [position currentTarget , 100, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
-		_roads = _startPos nearRoads 250;
-		_nearestRoad = [_startPos, _roads] call EVO_fnc_getNearest;
-		_startPos = getPos _nearestRoad;
-		//_mineClass = ["APERSBoundingMine","APERSMine"] call BIS_fnc_selectRandom;
-		_mineClass = "ATMine";
-		for "_i" from 1 to (8 + random(7)) step 1 do {
-			_minePos = [_startPos, (random(3) + 2) , getDir _nearestRoad] call BIS_fnc_relPos;
-		    _mine = createMine [_mineClass, _minePos, [], 0];
-		    //_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];
-		    _mine setDir (random 360);
-		    if (EVO_Debug) then {
-				_markerName = format ["mine_%1", markerCounter];
-				_aaMarker = createMarker [_markerName, _minePos ];
-				_markerName setMarkerShape "ICON";
-				_markerName setMarkerType "mil_dot";
-				_markerName setMarkerColor "ColorEAST";
-				_markerName setMarkerPos _minePos;
-				_markerName setMarkerText format["Mine"];
-				markerCounter = markerCounter + 1;
-		    };
-		};
-		for "_i" from 1 to 3 step 1 do {
-			_signPos = [_startPos, 15, random 360 ] call BIS_fnc_relPos;
-		    _sign = createVehicle ["Land_Sign_Mines_F", _signPos, [], 0, "NONE"];
-		    _sign setDir (random 360);
-		};
+		_startPos = [position currentTarget , 50, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		[_startPos, "ATMine"] call EVO_fnc_createMinefield;
 	};
 };
 //////////////////////////////////////
@@ -340,10 +281,11 @@ sleep 1;
 //////////////////////////////////////
 [CROSSROADS, format ["We've received our next target, all forces converge on %1!", currentTargetName]] call EVO_fnc_globalSideChat;
 [[[], {
-if (!isDedicated) then {
-	_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
-	playSound _sound;
-};
+	if (!isDedicated) then {
+		_sound = ["opforCaptured_2", "opforCaptured_1", "opforCaptured_0"] call BIS_fnc_selectRandom;
+		playSound _sound;
+		[] call BIS_fnc_drawMinefields;
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 
 [] call EVO_fnc_newTargetTasks;
@@ -354,7 +296,7 @@ if (!isDedicated) then {
 _null = [_currentTarget] spawn {
 	_currentTarget = _this select 0;
 	while {RTonline && (_currentTarget == currentTarget)} do {
-		sleep 10;
+	    sleep 10;
 	    _mortar = nearestObject [position currentTarget, "O_Mortar_01_F"];
 	    _gunner = gunner _mortar;
 	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
@@ -364,22 +306,32 @@ _null = [_currentTarget] spawn {
 	    		_mortar doArtilleryFire [position _currentTarget, "8Rnd_82mm_Mo_Flare_white", (3 + random(floor(3)))];
 	    		_s = 60 + random(floor(30));
 	    		sleep _s;
-	    	};
-		};
+	        };
+   	    };
 	};
 };
 
 //////////////////////////////////////
 //Hold Until Radio Tower Offline
 //////////////////////////////////////
-waitUntil {!RTonline};
-
-[[[], {
-if (!isDedicated) then {
-	_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
-	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-	playsound "goodjob";
+_loop = true;
+_count = 0;
+while {_loop} do {
+	sleep 10;
+	if (!RTonline) then {
+		_loop = false;
+	};
 };
+
+//////////////////////////////////////
+//Radio Tower Offline
+//////////////////////////////////////
+[[[], {
+	if (!isDedicated) then {
+		_tskName = format ["Radio Tower Destroyed at %1", currentTargetName];
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 [towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
@@ -396,7 +348,7 @@ while {_loop} do {
 	sleep 10;
 	{
 		if (alive _x && ([_x, getMarkerPos currentTargetMarkerName] call BIS_fnc_distance2D < 1000)) then {
-		_count = _count + 1;
+			_count = _count + 1;
 		};
 	} forEach currentAOunits;
 	if (_count < 9) then {
@@ -420,6 +372,8 @@ if (_count > 0) then {
 						_loop = false;
 					};
 				};
+				sleep 60;
+				sleep (random 60);
 				deleteVehicle _unit;
 			};
 		};
@@ -433,8 +387,7 @@ playSound _sound;
 [CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
 [attackTask, "Succeeded", false] call bis_fnc_taskSetState;
 
-
-if (alive currentTargetOF) then {
+if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 	[officerTask, "Failed", false] call bis_fnc_taskSetState;
 	_tskName = format ["Colonel %1 Escaped.", name currentTargetOF];
 	["TaskFailed",["",_tskName]] call BIS_fnc_showNotification;
@@ -443,15 +396,15 @@ if (alive currentTargetOF) then {
 //Give BLUFOR Points
 //////////////////////////////////////
 [[[], {
-if (!isDedicated) then {
-	_tskName = format ["%1 Secured.", currentTargetName];
-	_score = player getVariable "EVO_score";
-	_score = _score + 5;
-	player setVariable ["EVO_score", _score, true];
-	["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
-	["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
-	playsound "goodjob";
-};
+	if (!isDedicated) then {
+		_tskName = format ["%1 Secured.", currentTargetName];
+		_score = player getVariable ["EVO_score", 0];
+		_score = _score + 5;
+		player setVariable ["EVO_score", _score, true];
+		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
+		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
+		playsound "goodjob";
+	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 //////////////////////////////////////
 //Set Marker Color
@@ -464,7 +417,6 @@ sleep random 30;
 //////////////////////////////////////
 //Reset for Next AO
 //////////////////////////////////////
-deleteVehicle currentTargetOF;
 targetCounter = targetCounter + 1;
 		//
 	//For Altis' Strange Island "City" TODO
@@ -485,6 +437,22 @@ publicVariable "RTonline";
 //////////////////////////////////////
 //Start Next AO
 //////////////////////////////////////
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+	profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
+	profileNamespace setVariable ["EVO_world", worldName];
+	_scoreArray = [];
+	{
+		if (isPlayer _x) then
+		{
+			_push = [];
+			_push pushBack (getPlayerUID _x);
+			_push pushBack (score _x);
+			_scoreArray pushBack _push;
+		};
+	} forEach playableUnits;
+	profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
+	saveProfileNamespace;
+};
 handle = [] spawn EVO_fnc_initTarget;
 
 

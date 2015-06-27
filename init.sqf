@@ -17,9 +17,15 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
+0 = [] execvm "scripts\tpw_core.sqf";
+0 = [0,1,60] execvm "scripts\tpw_radio.sqf";
+0 = [25,300,150,20,10] execvm "scripts\tpw_park.sqf";
+0 = [5,1000,15,2] execvm "scripts\tpw_boats.sqf";
+0 = [10,300,2,[50,250,500],0] execvm "scripts\tpw_air.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
+setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
     // Bodyfall SFX
     mrg_unit_sfx_bodyfall_concrete = [
@@ -162,10 +168,21 @@ if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
 //////////////////////////////////////
 //Init Common Variables
 //////////////////////////////////////
+EVOp_scoreArray = [];
 EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
 enableSaving [false, false];
 arsenalCrates = [];
 militaryInstallations = [];
+
+HCconnected = false;
+CROSSROADS = [West,"HQ"];
+availableWeapons = [];
+availableMagazines = [];
+EVO_vaCrates = [];
+
+//////////////////////////////////////
+//Customize Variables
+//////////////////////////////////////
 rank1 = 10;
 rank2 = 30;
 rank3 = 60;
@@ -173,53 +190,51 @@ rank4 = 100;
 rank5 = 150;
 rank6 = 200;
 switch (EVO_difficulty) do {
-                        case 1: {
-                            //////////////////////////////////////
-                            //EASY
-                            //////////////////////////////////////
-                            rank1 = 5;
-                            rank2 = 15;
-                            rank3 = 30;
-                            rank4 = 50;
-                            rank5 = 75;
-                            rank6 = 100;
-                        };
-                        case 2: {
-                            //////////////////////////////////////
-                            //NORMAL
-                            //////////////////////////////////////
-                            rank1 = 10;
-                            rank2 = 30;
-                            rank3 = 60;
-                            rank4 = 100;
-                            rank5 = 150;
-                            rank6 = 200;
-                        };
-                        case 3: {
-                            //////////////////////////////////////
-                            //HARD
-                            //////////////////////////////////////
-                            rank1 = 15;
-                            rank2 = 35;
-                            rank3 = 65;
-                            rank4 = 105;
-                            rank5 = 155;
-                            rank6 = 205;
-                        };
-                        case 4: {
-                            //////////////////////////////////////
-                            //ALTIS ON FIRE
-                            //////////////////////////////////////
-                            rank1 = 20;
-                            rank2 = 40;
-                            rank3 = 75;
-                            rank4 = 120;
-                            rank5 = 175;
-                            rank6 = 225;
-                        };
-                    };
-HCconnected = false;
-CROSSROADS = [West,"HQ"];
+    case 1: {
+        //////////////////////////////////////
+        //EASY
+        //////////////////////////////////////
+        rank1 = 5;
+        rank2 = 15;
+        rank3 = 30;
+        rank4 = 50;
+        rank5 = 75;
+        rank6 = 100;
+    };
+    case 2: {
+        //////////////////////////////////////
+        //NORMAL
+        //////////////////////////////////////
+        rank1 = 10;
+        rank2 = 30;
+        rank3 = 60;
+        rank4 = 100;
+        rank5 = 150;
+        rank6 = 200;
+    };
+    case 3: {
+        //////////////////////////////////////
+        //HARD
+        //////////////////////////////////////
+        rank1 = 15;
+        rank2 = 35;
+        rank3 = 65;
+        rank4 = 105;
+        rank5 = 155;
+        rank6 = 205;
+    };
+    case 4: {
+        //////////////////////////////////////
+        //ALTIS ON FIRE
+        //////////////////////////////////////
+        rank1 = 20;
+        rank2 = 40;
+        rank3 = 75;
+        rank4 = 120;
+        rank5 = 175;
+        rank6 = 225;
+    };
+ };
 rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
 rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
 rank3vehicles = ["b_heli_light_01_armed_f","b_heli_transport_01_f","b_heli_transport_01_camo_f","b_mrap_01_gmg_f","b_apc_wheeled_01_cannon_f"];
@@ -335,10 +350,15 @@ availableBackpacks = [
     "B_TacticalPack_blk",
     "B_TacticalPack_mcamo"
 ];
-availableWeapons = [];
-availableMagazines = [];
 
-
+EVO_opforGroundTrans = ["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"];
+EVO_opforAirTrans = ["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"];
+EVO_opforInfantry = [
+    (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")
+];
+EVO_opforVehicles = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"];
+EVO_opforAAA = "O_APC_Tracked_02_AA_F";
+EVO_opforSnipers = ["O_sniper_F", "O_ghillie_lsh_F", "O_ghillie_sard_F", "O_ghillie_ard_F"];
 //////////////////////////////////////
 //Init Headless Client
 //////////////////////////////////////
@@ -348,14 +368,26 @@ if (!(isServer) && !(hasInterface)) then {
 	publicVariable "HCconnected";
 };
 
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+    _lastWorld = profileNamespace getVariable ["EVO_world", "nil"];
+    if (_lastWorld == "nil") then {
 
+    } else {
+        if (_lastWorld == worldName) then {
+            targetCounter = profileNamespace getVariable ["EVO_currentTargetCounter", 2];
+            EVOp_scoreArray = profileNamespace getVariable ["EVO_scoreArray", []];
+            publicVariable "EVOp_scoreArray";
+        };
+
+    };
+
+};
 //////////////////////////////////////
 //Init Server
 //////////////////////////////////////
 if (isServer) then {
     if (!isNil "MHQ") then {
         _null = [MHQ] spawn EVO_fnc_mhq;
-        _null = [MHQ] spawn EVO_fnc_basicRespawn;
     } else {
         MHQ = objNull;
         "mhqMarker" setMarkerAlpha 0;
@@ -371,19 +403,50 @@ if (isServer) then {
 //////////////////////////////////////
 //Init Clients
 //////////////////////////////////////
+
 if (isDedicated || !hasInterface) exitWith {};
+if (("persistentEVO" call BIS_fnc_getParamValue) == 1 && score player == 0) then {
+    {
+        _playerData = _x;
+        _puid = getPlayerUID player;
+        if (_puid == (_playerData select 0)) then {
+            [player, (_playerData select 1)] call BIS_fnc_addScore;
+        };
+    } forEach EVOp_scoreArray;
+};
 _brief = [] execVM "briefing.sqf";
+"EVO_vaCrates" addPublicVariableEventHandler {
+    {
+        if (alive (_x select 0)) then {
+            [(_x select 0), rank (_x select 1)] call EVO_fnc_buildAmmoCrate;
+        };
+    } forEach EVO_vaCrates;
+};
 intro = true;
+supportMapClick = [0,0,0];
+supportClicked = false;
 player execVM "scripts\intro.sqf";
 [] execVM "scripts\player_markers.sqf";
 ["InitializePlayer", [player]] call BIS_fnc_dynamicGroups;
 WaitUntil{!intro};
 playsound "Recall";
+//////////////////////////////////////
+//BIS Jukebox
+//////////////////////////////////////
 if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 	_mus = [] spawn BIS_fnc_jukebox;
 };
+//////////////////////////////////////
+//BIS Ambient Combat Sounds
+//////////////////////////////////////
 if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
     _amb = [] spawn EVO_fnc_amb;
+};
+//////////////////////////////////////
+//EVO Sector Markers
+//////////////////////////////////////
+if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
+    _mrkrs = [] spawn EVO_fnc_gridMarkers;
 };
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 _nil = [] spawn EVO_fnc_supportManager;
@@ -399,34 +462,6 @@ handle = [] spawn {
         };
 	};
 };
-_lastPos = [];
-_profileSessionID = profileNamespace getVariable "EVO_sessionID";
-if (isNil "_profileSessionID") then {
-	_profileSessionID = EVO_sessionID;
-	profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
-} else {
-	if (_profileSessionID == EVO_sessionID) then {
-		systemChat "PERSISTENT EVOLUTION DETECTED.";
-		systemChat "Moving player to last location...";
-		_lastPos = profileNamespace getVariable "EVO_lastPos";
-		if (isNIl "_lastPos") then {
-			_lastPos = getPos player;
-			profileNamespace setVariable ["EVO_lastPos", _lastPos];
-			saveProfileNamespace;
-		};
-		//player setPos ((_lastPos select 0), (_lastPos select 1), 0);
-		player setPos _lastPos;
-		_lastLoadout = profileNamespace getVariable "EVO_lastLoadout";
-		systemChat "Setting player loadout to last known loadout...";
-		handle = [player, _lastLoadout] execVM "scripts\setloadout.sqf";
-		//loadout = _lastLoadout;
-	} else {
-		_profileSessionID = EVO_sessionID;
-		profileNamespace setVariable ["EVO_sessionID", _profileSessionID];
-		saveProfileNamespace;
-	};
-};
-
 
 handle = [player,
 [["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";

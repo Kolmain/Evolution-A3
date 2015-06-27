@@ -17,6 +17,37 @@ switch (_mission) do {
     //////////////////////////////////////
     case "Main": {
        switch (_type) do {
+                case "Sniper": {
+                    switch (EVO_difficulty) do {
+                        case 1: {
+                            //////////////////////////////////////
+                            //EASY
+                            //////////////////////////////////////
+                            _qty = floor(random(1));
+                        };
+                        case 2: {
+                            //////////////////////////////////////
+                            //NORMAL
+                            //////////////////////////////////////
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
+                            if (_qty > 5) then {_qty = 5};
+                        };
+                        case 3: {
+                            //////////////////////////////////////
+                            //HARD
+                            //////////////////////////////////////
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
+                            if (_qty > 6) then {_qty = 6};
+                        };
+                        case 4: {
+                            //////////////////////////////////////
+                            //ALTIS ON FIRE
+                            //////////////////////////////////////
+                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
+                            if (_qty > 7) then {_qty = 7};
+                        };
+                    };
+                };
             case "Comps": {
                     switch (EVO_difficulty) do {
                         case 1: {
@@ -88,22 +119,22 @@ switch (_mission) do {
                             //////////////////////////////////////
                             //NORMAL
                             //////////////////////////////////////
-                            _qty = ((floor(random(1))) + floor(random(targetCounter)));
-                            if (_qty > 3) then {_qty = 3};
+                            _qty = ((floor(random(2))) + floor(random(targetCounter)));
+                            if (_qty > 5) then {_qty = 5};
                         };
                         case 3: {
                             //////////////////////////////////////
                             //HARD
                             //////////////////////////////////////
                             _qty = ((floor(random(2))) + floor(random(targetCounter)));
-                            if (_qty > 4) then {_qty = 4};
+                            if (_qty > 6) then {_qty = 6};
                         };
                         case 4: {
                             //////////////////////////////////////
                             //ALTIS ON FIRE
                             //////////////////////////////////////
                             _qty = ((floor(random(1))) + floor(random(targetCounter)));
-                            if (_qty > 5) then {_qty = 5};
+                            if (_qty > 7) then {_qty = 7};
                         };
                     };
                 };

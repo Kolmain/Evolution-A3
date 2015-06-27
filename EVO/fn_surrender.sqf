@@ -5,7 +5,7 @@ _unit = _this select 0;
 [[[_unit], {
 	_unit = _this select 0;
 	_unit playMoveNow "AmovPercMstpSsurWnonDnon";
-	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"_this spawn EVO_fnc_capture",nil,1,false,true,"","true"];
+	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"_this spawn EVO_fnc_capture",nil,1,false,true,"","side leader group _unit != WEST"];
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 _unit disableAI "ANIM";
 _unit disableAI "FSM";
@@ -38,8 +38,9 @@ while {_loop} do {
 	if (leader group _unit == player) then {
 		_msg = format ["%2 %1 has been secured.", name _unit, rank _unit];
 		playsound "goodjob";
-		_score = player getVariable "EVO_score";
+		_score = player getVariable ["EVO_score", 0];
 		_score = _score + 3;
+		[player, 3] call bis_fnc_addScore;
 		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["You captured a POW.", 3]] call BIS_fnc_showNotification;
 	};

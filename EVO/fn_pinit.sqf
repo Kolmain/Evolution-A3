@@ -6,7 +6,7 @@ _score = 0;
 if (isMultiplayer) Then {
 	_score = score player;
 } else {
-	_score = player getVariable "EVO_score";
+	_score = player getVariable ["EVO_score", 0];
 	if (isNil "_score") then {
 	_score = 0;
 	}
@@ -22,7 +22,8 @@ player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\o
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ"];
+	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
+	player addaction ["<t color='#CCCC00'>Go to HQ</t>", "[player, spawnBuilding] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance MHQ) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
 };
 
 //////////////////////////////////////
@@ -139,7 +140,7 @@ _ret = [] spawn {
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1, _this select 0], {
 		if (player == (_this select 0) && player != _this select 1) then {
-			_score = player getVariable "EVO_score";
+			_score = player getVariable ["EVO_score", 0];
 			_score = _score + 1;
 			player setVariable ["EVO_score", _score, true];
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
@@ -166,7 +167,7 @@ handle = [] spawn {
 				//
 			} else {
 				if (_LOS) then {
-					currentTargetRT setVariable ["EVO_seen, true, true];
+					currentTargetRT setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
@@ -183,7 +184,7 @@ handle = [] spawn {
 				//
 			} else {
 				if (_LOS) then {
-					currentTargetOF setVariable ["EVO_seen, true, true];
+					currentTargetOF setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
@@ -191,7 +192,7 @@ handle = [] spawn {
 				};
 			};
 		};
-		
+
 	};
 };
 
@@ -214,13 +215,6 @@ handle = [] spawn {
 		if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
 			handle = [] call EVO_fnc_rank;
 		};
-		if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-			_currentLoadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-			profileNamespace setVariable ["EVO_lastLoadout", _currentLoadout];
-			profileNamespace setVariable ["EVO_score", (player getVariable "EVO_score")];
-			profileNamespace setVariable ["EVO_lastPos", getPos player];
-			saveProfileNamespace;
-		};
 		sleep 1;
 	};
 };
@@ -236,6 +230,3 @@ handle = [] spawn {
 		_unit addEventHandler ["HandleScore", {_this call EVO_fnc_handleScore}];
 	};
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
-
-
-

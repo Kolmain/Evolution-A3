@@ -2,9 +2,11 @@ private ["_vehicle","_msg","_mhq"];
 if (!isServer) exitWith {};
 
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
+
 if (_vehicle == objNull) exitWith {["_vehicle can't be objNull."] call BIS_fnc_error};
 MHQ = _vehicle;
 publicVariable "MHQ";
+waitUntil {canMove MHQ; sleep 5;};
 [WEST, MHQ, "Mobile HQ"] call BIS_fnc_addRespawnPosition;
 "mhqMarker" setMarkerAlpha 0.75;
 [[],{

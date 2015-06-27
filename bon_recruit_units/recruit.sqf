@@ -81,6 +81,22 @@ if (player distance SpawnBuilding < 1000) then {
 	};
 };
 _unit setRank "PRIVATE";
+[[[_unit], {
+	_unit = _this select 0;
+	_unit addEventHandler ["HandleScore", {
+		_ai = _this select 0;
+		_source = _this select 1;
+		_scoreToAdd = _this select 2;
+		_player = leader group _ai;
+		_score = _player getVariable ["EVO_score", 0];
+		_score = _score + _scoreToAdd;
+		_player setVariable ["EVO_score", _score, true];
+		[_player, _scoreToAdd] call bis_fnc_addScore;
+		if (EVO_Debug) then {
+			systemChat format ["%1 got points from %2. Sending points to %3.", _ai, _source, _player];
+		};
+	}];
+}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
 [_unit] execVM (BON_RECRUIT_PATH+"init_newunit.sqf");
 /*******************************************************/
 

@@ -3,8 +3,8 @@ private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehic
 //Init Global EVO Variables
 //////////////////////////////////////
 _locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
-targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, 10000000];
-_locs = nearestLocations [spawnBuilding, ["NameLocal"], 100000];
+targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, [] call BIS_fnc_mapSize];
+_locs = nearestLocations [spawnBuilding, ["NameLocal"], [] call BIS_fnc_mapSize];
 sideLocations = _locs;
 publicVariable "sideLocations";
 _mil = [];
@@ -14,7 +14,10 @@ _mil = [];
 	};
 } foreach _locs;
 militaryLocations = _mil;
-targetCounter = 2;
+if (isNil "targetCounter") then {
+	targetCounter = 2;
+};
+//targetCounter = 2;
 totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
 if (totalTargets == 999) then {totalTargets = count targetLocations};
 totalTargets = totalTargets + targetCounter;
@@ -35,7 +38,24 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
-
+EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+currentAOunits = [];
+publicVariable "currentAOunits";
+{
+	gunner _x addEventHandler ["HandleScore", {
+		_supportAsset = _this select 0;
+		_source = _this select 1;
+		_scoreToAdd = _this select 2;
+		_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
+		_score = _player getVariable ["EVO_score", 0];
+		_score = _score + _scoreToAdd;
+		_player setVariable ["EVO_score", _score, true];
+		[_player, _scoreToAdd] call bis_fnc_addScore;
+		if (EVO_Debug) then {
+			systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
+		};
+	}];
+} forEach EVO_supportUnits;
 if (EVO_Debug) then {
 	systemChat format["EVO_init found %1 AO's.", count targetLocations];
 	_counter = 1;
@@ -70,7 +90,7 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
 	if (faction _vehicle == "BLU_F") then {
-		if (!(_vehicle isKindOf "Plane")) then {
+		if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 		} else {
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
@@ -123,7 +143,26 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 //////////////////////////////////////
 //Init First Target
 //////////////////////////////////////
-handle = [] spawn EVO_fnc_initTarget;
+if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
+	if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
+		profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
+		profileNamespace setVariable ["EVO_world", worldName];
+		_scoreArray = [];
+		{
+			if (isPlayer _x) then
+			{
+				_push = [];
+				_push pushBack (getPlayerUID _x);
+				_push pushBack (score _x);
+				_scoreArray pushBack _push;
+			};
+		} forEach playableUnits;
+		profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
+		saveProfileNamespace;
+	};
+	handle = [] spawn EVO_fnc_initTarget;
+};
+
 
 
 
