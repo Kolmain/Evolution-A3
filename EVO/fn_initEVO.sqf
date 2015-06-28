@@ -16,6 +16,18 @@ _mil = [];
 militaryLocations = _mil;
 if (isNil "targetCounter") then {
 	targetCounter = 2;
+} else {
+	for "_i" from 3 to targetCounter step 1 do {
+		_marker = format ["%1", _i];
+		_currentTarget = targetLocations select _i;
+		_mrkr = createMarker [_marker, position _currentTarget];
+		_marker setMarkerPos (position _currentTarget);
+		_marker setMarkerSize [(((size _currentTarget) select 0) + 200), (((size _currentTarget) select 1) + 200)];
+		_marker setMarkerDir direction _currentTarget;
+		_marker setMarkerShape "ELLIPSE";
+	  	_marker setMarkerBrush "SOLID";
+		_marker setMarkerColor "ColorWEST";
+	};
 };
 //targetCounter = 2;
 totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
