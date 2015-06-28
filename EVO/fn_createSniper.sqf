@@ -2,7 +2,7 @@ _pos = _this select 0;
 _overwatchPos = [_pos, 600, 200] call BIS_fnc_findOverwatch;
 if (isNil "_overwatchPos") exitWith {};
 _grp = createGroup EAST;
-_class = ["O_sniper_F", "O_ghillie_lsh_F", "O_ghillie_sard_F", "O_ghillie_ard_F"] call BIS_fnc_selectRandom;
+_class = EVO_opforSnipers call BIS_fnc_selectRandom;
 _sniper = _grp createUnit [_class, _overwatchPos, [], 0, "NONE"];
 _sniper doWatch _pos;
 _grp setBehaviour "STEALTH";

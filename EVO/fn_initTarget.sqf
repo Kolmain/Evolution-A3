@@ -46,7 +46,7 @@ _pos = (position (targetLocations select (targetCounter + 1)));
 _array = nearestObjects [_pos, ["house"], 500];
 _obj = _array select 0;
 "opforArrow" setMarkerPos (getPos _obj);
-"opforArrow" setMarkerDir (([getPos _obj, getMarkerPos currentTargetMarkerName] call bis_fnc_DirTo) + 90);
+"opforArrow" setMarkerDir ([getPos _obj, getMarkerPos currentTargetMarkerName] call bis_fnc_DirTo);
 
 //////////////////////////////////////
 //Target AO Radio Tower

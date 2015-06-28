@@ -26,7 +26,7 @@ if (_mineClass == "ATMine") then {
 //Place AI Anywhere
 	_lastPos = _startPos;
 	for "_i" from 1 to (10 + (random 10)) step 1 do {
-		_minePos = [_lastPos, ((random 8) + 3) , _dir] call BIS_fnc_relPos;
+		_minePos = [_lastPos, ((random 8) + 3) , (random 360)] call BIS_fnc_relPos;
 		_mine = createMine [_mineClass, _minePos, [], 0];
 		EAST revealMine _mine;
 		//_mine = createVehicle [_mineClass, _minePos, [], 0, "NONE"];

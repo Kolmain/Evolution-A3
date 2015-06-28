@@ -173,6 +173,16 @@ EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
 enableSaving [false, false];
 arsenalCrates = [];
 militaryInstallations = [];
+
+HCconnected = false;
+CROSSROADS = [West,"HQ"];
+availableWeapons = [];
+availableMagazines = [];
+EVO_vaCrates = [];
+
+//////////////////////////////////////
+//Customize Variables
+//////////////////////////////////////
 rank1 = 10;
 rank2 = 30;
 rank3 = 60;
@@ -225,8 +235,6 @@ switch (EVO_difficulty) do {
         rank6 = 225;
     };
  };
-HCconnected = false;
-CROSSROADS = [West,"HQ"];
 rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
 rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
 rank3vehicles = ["b_heli_light_01_armed_f","b_heli_transport_01_f","b_heli_transport_01_camo_f","b_mrap_01_gmg_f","b_apc_wheeled_01_cannon_f"];
@@ -342,10 +350,15 @@ availableBackpacks = [
     "B_TacticalPack_blk",
     "B_TacticalPack_mcamo"
 ];
-availableWeapons = [];
-availableMagazines = [];
-EVO_vaCrates = [];
 
+EVO_opforGroundTrans = ["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"];
+EVO_opforAirTrans = ["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"];
+EVO_opforInfantry = [
+    (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")
+];
+EVO_opforVehicles = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"];
+EVO_opforAAA = "O_APC_Tracked_02_AA_F";
+EVO_opforSnipers = ["O_sniper_F", "O_ghillie_lsh_F", "O_ghillie_sard_F", "O_ghillie_ard_F"];
 //////////////////////////////////////
 //Init Headless Client
 //////////////////////////////////////

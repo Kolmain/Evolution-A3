@@ -13,7 +13,7 @@ while {true} do {
   _spendable = [player] call EVO_fnc_supportPoints;
   if (_spendable != _lastSpendable) then {
     if (_spendable >= 5 && !_hasMortar) then {
-      resupplyComm = [player, "resupply"] call BIS_fnc_addCommMenuItem;
+      //resupplyComm = [player, "resupply"] call BIS_fnc_addCommMenuItem;
       _hasRessuply = true;
       //transport?
       mortarStrikeComm = [player, "mortarStrike"] call BIS_fnc_addCommMenuItem;
