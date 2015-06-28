@@ -199,8 +199,8 @@ for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Sniper", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
-		[_pos] call EVO_fnc_createSniper;
+		//_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		//[_pos] call EVO_fnc_createSniper;
 	};
 };
 //////////////////////////////////////
@@ -208,7 +208,7 @@ for "_i" from 1 to (["Sniper", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+		_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		_plane = _ret select 0;
 		_grp = _ret select 2;
 			//_plane flyInHeight 400;
@@ -218,7 +218,7 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
 		};
 		while {RTonline && (_this select 0 == currentTarget)} do {
-			_ret = [(getPos server), (floor (random 360)), (["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"] call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+			_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
 				//_plane flyInHeight 400;
@@ -260,16 +260,6 @@ for "_i" from 1 to (["Comps", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_currentTarget = _this select 0;
 		_pos = [position _currentTarget, (random 300) , (random 360)] call BIS_fnc_relPos;
 		//_newComp = [_pos, ([] call BIS_fnc_selectRandom)] call EVO_fnc_createComposition;
-		if (EVO_Debug) then {
-				_markerName = format ["mine_%1", markerCounter];
-				_aaMarker = createMarker [_markerName, _pos ];
-				_markerName setMarkerShape "ICON";
-				_markerName setMarkerType "mil_dot";
-				_markerName setMarkerColor "ColorEAST";
-				_markerName setMarkerPos _pos;
-				_markerName setMarkerText format["EMPLACEMENT"];
-				markerCounter = markerCounter + 1;
-		    };
 	};
 };
 
