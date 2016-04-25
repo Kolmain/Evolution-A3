@@ -38,4 +38,6 @@ Discussion available at [Bohemia Interactive Forums](http://forums.bistudio.com/
 
 ### Requirements
 
-Evolution-A3 uses no mods and is 100% Vanilla ArmA 3.
+The [Community Upgrade Project (CUP)](https://steamcommunity.com/sharedfiles/filedetails/?id=583575232) is required to play Evolution-A3 on Saharani.
+
+![CUP](http://images.akamai.steamusercontent.com/ugc/355021463469540173/635B16F9F148CF9B8D615E2BE536B1A19F0E0E92/ "CUP-A3")
