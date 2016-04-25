@@ -68,7 +68,7 @@ currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
 publicVariable "RTonline";
-_grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
+_grp = [getPos currentTargetRT, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 {
 	if (HCconnected) then {
 		handle = [_x] call EVO_fnc_sendToHC;
@@ -87,7 +87,7 @@ _grp = [getPos currentTargetRT, EAST, (configFile >> "CfgGroups" >> "EAST" >> "O
 //////////////////////////////////////
 _spawnPos = [position currentTarget , 50, 300, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 _grp = createGroup east;
-currentTargetOF = _grp createUnit ["O_officer_F", _spawnPos, [], 0, "FORM"];
+currentTargetOF = _grp createUnit [EVO_opforOfficer, _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
 _ofName = name currentTargetOF;
@@ -114,7 +114,7 @@ doStop _officer;
 	(_this select 0) addaction [format["<t color='#CCCC00'>Capture COLONEL %1</t>", name currentTargetOF], "_this spawn EVO_fnc_capture", nil,1,false,true,"","!(side leader group currentTargetOF == WEST) && alive currentTargetOF"];
 }], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
 
-_grp = [getPos currentTargetOF, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
+_grp = [getPos currentTargetOF, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 {
 	if (HCconnected) then {
 		handle = [_x] call EVO_fnc_sendToHC;
@@ -153,7 +153,7 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		} else {
 			nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
 		};
-		_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam_AA")] call EVO_fnc_spawnGroup;
+		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 		{
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;

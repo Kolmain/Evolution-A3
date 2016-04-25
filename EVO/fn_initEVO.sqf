@@ -2,6 +2,8 @@ private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehic
 //////////////////////////////////////
 //Init Global EVO Variables
 //////////////////////////////////////
+
+/*
 _locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
 targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, [] call BIS_fnc_mapSize];
 _locs = nearestLocations [spawnBuilding, ["NameLocal"], [] call BIS_fnc_mapSize];
@@ -33,6 +35,18 @@ if (isNil "targetCounter") then {
 totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
 if (totalTargets == 999) then {totalTargets = count targetLocations};
 totalTargets = totalTargets + targetCounter;
+*/
+targetLocations = [];
+targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
+{
+	_closesttown = (nearestLocations [(getPos _x),["NameCityCapital","NameCity","NameVillage"],10000]) select 0;
+	targetLocations = targetLocations + [_closesttown];
+} forEach targetObjects;
+totalTargets = count targetLocations;
+targetCounter = 0;
+
+
+
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
 currentTargetRT = nil;
@@ -111,7 +125,7 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 	//////////////////////////////////////
 	//Setup OPFOR AAA
 	//////////////////////////////////////
-	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
+	if (typeOf _vehicle == EVO_opforAAA) then {
 		_markerName = format ["aa_%1", markerCounter];
 		_aaMarker = createMarker [_markerName, position _x ];
 		_markerName setMarkerShape "ELLIPSE";
@@ -121,9 +135,9 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 		_markerName setMarkerPos (GetPos _vehicle);
 		markerCounter = markerCounter + 1;
 		_grp = createGroup east;
-		_driver = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
-		_commander = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
-		_gunner = _grp createUnit ["O_crew_F", getPos server, [], 0, "FORM"];
+		_driver = _grp createUnit [EVO_opforCrew, getPos server, [], 0, "FORM"];
+		_commander = _grp createUnit [EVO_opforCrew, getPos server, [], 0, "FORM"];
+		_gunner = _grp createUnit [EVO_opforCrew, getPos server, [], 0, "FORM"];
 		_driver moveInDriver _vehicle;
 		_driver assignAsDriver _vehicle;
 		doStop _driver;
