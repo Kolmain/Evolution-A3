@@ -27,6 +27,9 @@ _grp = _ret select 2;
 } foreach units _grp;
 
 _veh AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-_veh allowCrewInImmobile true;
+if ([true, false] call BIS_fnc_selectRandom) then {
+	_veh allowCrewInImmobile true;
+}
+
 
 _ret;

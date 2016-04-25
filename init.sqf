@@ -242,18 +242,25 @@ rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_arme
 rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
 rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
 rank7vehicles = ["b_plane_cas_01_f"];
-rank1weapons = ["arifle_MX_F","launch_NLAW_F","launch_RPG32_F"];
-rank1items = ["optic_Aco","optic_ACO_grn","acc_flashlight"];
-rank2weapons = ["launch_B_Titan_short_F","launch_B_Titan_F","hgun_ACPC2_F","arifle_MXC_F","arifle_MX_GL_F","arifle_MX_SW_F"];
+
+rank1weapons = ["CUP_arifle_M16A2","CUP_arifle_M16A4","CUP_launch_M136","CUP_hgun_M9"];
+rank1items = ["CUP_acc_Flashlight_wdl","optic_ACO_grn","acc_flashlight"];
+
+rank2weapons = ["CUP_arifle_M16A2_GL","CUP_arifle_M16A4_GL","CUP_arifle_M4A1","CUP_hgun_Colt1911","arifle_MX_GL_F","arifle_MX_SW_F","CUP_SOFLAM"];
 rank2items = ["optic_Hamr","optic_Aco_smg","optic_ACO_grn_smg","optic_Holosight","optic_Holosight_smg","bipod_01_F_snd","bipod_01_F_blk","bipod_01_F_mtp"];
-rank3weapons = ["arifle_MXM_F","arifle_Mk20C_F","arifle_Mk20C_plain_F","arifle_Mk20_GL_F","hgun_Pistol_heavy_02_F","LMG_Mk200_F"];
-rank3items = ["B_UavTerminal","Laserdesignator","acc_pointer_IR","optic_MRCO","NVGoggles"];
-rank4weapons = ["hgun_ACPC2_snds_F","arifle_MXM_Black_F","arifle_TRG21_F","arifle_TRG21_GL_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black_F","arifle_MX_SW_Black_F","hgun_PDW2000_F","SMG_01_F","SMG_02_F"];
+
+rank3weapons = ["CUP_arifle_XM8_Carbine","CUP_launch_FIM92Stinger","CUP_launch_Javelin","CUP_lmg_M249","hgun_Pistol_heavy_02_F","LMG_Mk200_F"];
+rank3items = ["B_UavTerminal","CUP_Laserdesignator","acc_pointer_IR","optic_MRCO","NVGoggles"];
+
+rank4weapons = ["CUP_arifle_G36A","CUP_lmg_M60E4","arifle_TRG21_F","arifle_TRG21_GL_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black_F","arifle_MX_SW_Black_F","hgun_PDW2000_F","SMG_01_F","SMG_02_F"];
 rank4items = ["muzzle_snds_H","muzzle_snds_L","muzzle_snds_M","muzzle_snds_B","muzzle_snds_H_MG","muzzle_snds_H_SW","muzzle_snds_acp","muzzle_snds_338_black","muzzle_snds_338_green","muzzle_snds_338_sand","muzzle_snds_93mmg","muzzle_snds_93mmg_tan"];
-rank5weapons = ["srifle_EBR_F","srifle_DMR_02_F","srifle_DMR_02_camo_F","srifle_DMR_02_sniper_F","srifle_DMR_03_F","srifle_DMR_03_khaki_F","srifle_DMR_03_tan_F","srifle_DMR_03_multicam_F","srifle_DMR_03_woodland_F","srifle_DMR_06_camo_F","srifle_DMR_06_olive_F","srifle_DMR_06_camo_khs_F","MMG_02_camo_F","MMG_02_black_F","MMG_02_sand_F"];
+
+rank5weapons = ["CUP_arifle_G36C","srifle_DMR_02_F","srifle_DMR_02_camo_F","srifle_DMR_02_sniper_F","srifle_DMR_03_F","srifle_DMR_03_khaki_F","srifle_DMR_03_tan_F","srifle_DMR_03_multicam_F","srifle_DMR_03_woodland_F","srifle_DMR_06_camo_F","srifle_DMR_06_olive_F","srifle_DMR_06_camo_khs_F","MMG_02_camo_F","MMG_02_black_F","MMG_02_sand_F"];
 rank5items = ["optic_SOS","optic_NVS","optic_Nightstalker","optic_tws","optic_tws_mg","optic_Yorris","optic_MRD","optic_DMS","optic_LRPS"];
-rank6weapons = ["srifle_LRR_F","srifle_GM6_F","srifle_LRR_camo_F"];
+
+rank6weapons = ["CUP_arifle_G36K","srifle_GM6_F","srifle_LRR_camo_F"];
 rank6items = ["optic_AMS","optic_AMS_khk","optic_AMS_snd"];
+
 rank7weapons = [];
 availableHeadgear = [
     "H_HelmetB",
@@ -351,15 +358,20 @@ availableBackpacks = [
     "B_TacticalPack_mcamo"
 ];
 
-EVO_opforGroundTrans = ["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"];
-EVO_opforAirTrans = ["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"];
+
+EVO_opforGroundTrans = ["CUP_O_Ural_SLA",  "CUP_O_Ural_Open_SLA"];
+EVO_opforAirTrans = ["CUP_O_Mi8_SLA_1","CUP_O_Mi8_SLA_2","CUP_O_UH1H_SLA"];
 EVO_opforInfantry = [
-    (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")
+    (configFile >> "CfgGroups" >> "EAST" >> "" >> "Infantry" >> "CUP_O_SLA_InfantrySquad"),
+    (configFile >> "CfgGroups" >> "EAST" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_SpecialPurposeSquad")
 ];
-EVO_opforVehicles = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"];
-EVO_opforAAA = "O_APC_Tracked_02_AA_F";
-EVO_opforSnipers = ["O_sniper_F", "O_ghillie_lsh_F", "O_ghillie_sard_F", "O_ghillie_ard_F"];
-EVO_opforCAS = ["O_Heli_Attack_02_F","O_Heli_Attack_02_black_F","O_Plane_CAS_02_F","O_UAV_02_CAS_F","O_Plane_CAS_02_F"];
+EVO_opforVehicles = ["CUP_O_BRDM2_SLA","CUP_O_BRDM2_ATGM_SLA","CUP_O_BTR60_SLA","CUP_O_UAZ_Unarmed_SLA","CUP_O_UAZ_AGS30_SLA","CUP_O_UAZ_MG_SLA","CUP_O_UAZ_Open_SLA","CUP_O_Ural_ZU23_SLA","CUP_O_T72_SLA"];
+EVO_opforAAA = "CUP_O_ZSU23_SLA";
+EVO_opforCrew = "CUP_O_sla_Crew";
+EVO_opforOfficer = "CUP_O_sla_Officer";
+EVO_opforHeavyLift = "";
+EVO_opforSnipers = ["CUP_O_SLA_Sniper_KSVK"];
+EVO_opforCAS = ["CUP_O_Ka50_SLA","CUP_O_Su25_SLA","CUP_O_SU34_LGB_SLA","CUP_O_SU34_AGM_SLA"];
 //////////////////////////////////////
 //Init Headless Client
 //////////////////////////////////////
@@ -465,7 +477,8 @@ handle = [] spawn {
 };
 
 handle = [player,
-[["ItemMap","ItemCompass","ItemWatch","ItemRadio","H_HelmetB"],"arifle_MX_F",["","","",""],"hgun_P07_F",["","","",""],"",["","","",""],"U_B_CombatUniform_mcam",["FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","Chemlight_green"],"V_PlateCarrier1_rgr",["FirstAidKit","FirstAidKit","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","30Rnd_65x39_caseless_mag","16Rnd_9x21_Mag","16Rnd_9x21_Mag","SmokeShell","SmokeShellGreen","HandGrenade","HandGrenade"],"B_AssaultPack_mcamo",[],[["30Rnd_65x39_caseless_mag"],["16Rnd_9x21_Mag"],[],[]],"arifle_MX_F","FullAuto"]] execVM "scripts\setloadout.sqf";
+[["ItemMap","ItemCompass","ItemWatch","ItemRadio","Binocular","CUP_H_USArmy_HelmetMICH","G_Tactical_Black"],"CUP_arifle_M16A4_Base",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_TwoKnee",["FirstAidKit","FirstAidKit","FirstAidKit","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9"],"V_PlateCarrier1_rgr",["CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_HandGrenade_M67","CUP_HandGrenade_M67","SmokeShellBlue","SmokeShellRed"],"B_AssaultPack_rgr",[],[["CUP_30Rnd_556x45_Stanag"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_arifle_M16A4_Base","Single"]
+] execVM "scripts\setloadout.sqf";
 loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 profileNamespace setVariable ["EVO_loadout", loadout];
 saveProfileNamespace;
