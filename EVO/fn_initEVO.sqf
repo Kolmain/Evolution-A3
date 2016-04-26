@@ -105,7 +105,7 @@ handle = [] spawn EVO_fnc_endgame;
 //////////////////////////////////////
 //Build Available Side Missions
 //////////////////////////////////////
-handle = [] spawn EVO_fnc_buildSideMissionArray;
+//handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 //////////////////////////////////////
 //Check All Vehicles on Map

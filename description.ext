@@ -5,7 +5,7 @@ OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
 respawn = 3;
 respawnDelay = 15;
-respawnTemplates[] = {"MenuPosition", "Revive"};
+respawnTemplates[] = {"MenuPosition", "Revive", "MenuInventory"};
 reviveDelay = 10;
 respawnOnStart = -1;
 enableDebugConsole = 1;
@@ -54,6 +54,22 @@ class CfgRadio
 	};
 };
 
+class CfgRespawnInventory
+{
+	class defaultWest
+	{
+		displayName = "Default"; // Name visible in the menu
+		icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa"; // Icon displayed next to the name
+		uniform = "CUP_U_B_USArmy_TwoKnee";
+		backpack = "B_AssaultPack_rgr";
+		weapons[] = {"Binocular","CUP_arifle_M16A4_Base","CUP_hgun_M9","Throw","Put"};
+		magazines[] = {"CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_HandGrenade_M67","CUP_HandGrenade_M67","SmokeShellBlue","SmokeShellRed"};
+		items[] = {"FirstAidKit","FirstAidKit","FirstAidKit"};
+		linkedItems[] = {"V_PlateCarrier1_rgr","CUP_H_USArmy_HelmetMICH","G_Tactical_Black","ItemMap","ItemCompass","ItemWatch","ItemRadio"};
+
+	};
+};
+
 class Params
 {
 	class aiSystem {
@@ -67,12 +83,6 @@ class Params
 	    values[] = {0,1,2,3,4};
 	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
 	    default = 4;
-	};
-	class numberOfAOs {
-		title = "Number of Targets to Clear";
-	    values[] = {0,1,5,10,15,20,999};
-	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
-	    default = 999;
 	};
 	class Daytime {
 		title = "Starting Time";
@@ -145,7 +155,7 @@ class Params
 		title = "Visible Kill Notifications";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class bisJukebox {
 		title = "BIS Jukebox";
@@ -181,7 +191,7 @@ class Params
 	    title = "OPFOR Sectors Shown on Map";
 	    values[] = {0,1};
 	    texts[] = {"Disabled","Enabled"};
-	    default = 1;
+	    default = 0;
 	};
 
 };
@@ -765,7 +775,7 @@ class CfgDebriefing
 	{
 		title = "MISSION ACCOMPLISHED";
 		subtitle = "";
-		description = "NATO units successfully captured all designated villages and cities, forcing the OPFOR assets to retreat.";
+		description = "US units successfully captured all designated villages and cities, forcing the SLA forces to retreat.";
 		pictureBackground = "";
 		picture = "b_inf";
 		pictureColor[] = {0.0,0.3,0.6,1};

@@ -52,7 +52,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 			_vehicle = vehicle _player;
 			if (_vehicle != _player) then {
 				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player) && isTouchingGround _vehicle) then {
-					if (player distance spawnBuilding < 1000) then {
+					if (player distance spawnBuilding < 500) then {
 						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","ItemGPS","H_PilotHelmetHeli_B","G_Tactical_Black"],"CUP_smg_MP5A5",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_PilotOverall",["FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit"],"CUP_V_B_USArmy_PilotVest",["FirstAidKit","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","SmokeShellBlue","SmokeShellRed","SmokeShell"],"B_Parachute",[],[["CUP_30Rnd_9x19_MP5"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_smg_MP5A5","Single"]] execVM "scripts\setloadout.sqf";
 						systemChat "Auto-switching loadout to helicopter pilot loadout...";
@@ -60,7 +60,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 							_player = _this select 0;
 							_vehicle = _this select 1;
 							waitUntil {driver _vehicle != _player};
-							if (_player distance spawnBuilding < 1000) then {
+							if (_player distance spawnBuilding < 500) then {
 								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 								systemChat "Auto-switching back to previous loadout...";
 							};
@@ -76,7 +76,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 					};
 				};
 				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B" && driver _vehicle == player) then {
-					if (player distance spawnBuilding < 1000) then {
+					if (player distance spawnBuilding < 500) then {
 						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","ItemGPS","H_PilotHelmetHeli_B","G_Tactical_Black"],"CUP_smg_MP5A5",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_PilotOverall",["FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit"],"CUP_V_B_USArmy_PilotVest",["FirstAidKit","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","SmokeShellBlue","SmokeShellRed","SmokeShell"],"B_Parachute",[],[["CUP_30Rnd_9x19_MP5"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_smg_MP5A5","Single"]] execVM "scripts\setloadout.sqf";
 						systemChat "Auto-switching loadout to pilot loadout...";
@@ -84,7 +84,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 							_player = _this select 0;
 							_vehicle = _this select 1;
 							waitUntil {driver _vehicle != _player};
-							if (_player distance spawnBuilding < 1000) then {
+							if (_player distance spawnBuilding < 500) then {
 								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
 								systemChat "Auto-switching back to previous loadout...";
 							};

@@ -17,7 +17,7 @@ if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
 	_player setVariable ["EVOrank", "PRIVATE", true];
 	[_player, rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 2;
-	bon_recruit_recruitableunits = ["B_Soldier_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
@@ -33,7 +33,7 @@ if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 	_player setVariable ["EVOrank", "CORPORAL", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 4;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_exp_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","B_soldier_exp_F"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\corp.paa", _msg]] call BIS_fnc_showNotification;
@@ -61,7 +61,7 @@ if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 	_player setVariable ["EVOrank", "SERGEANT", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 6;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","CUP_B_US_Soldier_MG","CUP_B_US_Soldier_AT","CUP_B_US_Medic"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\sgt.paa", _msg]] call BIS_fnc_showNotification;
@@ -89,7 +89,7 @@ if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then
 	_player setVariable ["EVOrank", "LIEUTENANT", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 8;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","CUP_B_US_Soldier_MG","CUP_B_US_Soldier_AT","CUP_B_US_Medic","CUP_B_US_Soldier_Engineer","CUP_B_US_Pilot_Light"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
@@ -117,7 +117,7 @@ if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 	_player setVariable ["EVOrank", "CAPTAIN", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 10;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","CUP_B_US_Soldier_MG","CUP_B_US_Soldier_AT","CUP_B_US_Medic","CUP_B_US_Soldier_Engineer","CUP_B_US_Pilot_Light"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
@@ -145,7 +145,7 @@ if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 	_player setVariable ["EVOrank", "MAJOR", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 12;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","CUP_B_US_Soldier_MG","CUP_B_US_Soldier_AT","CUP_B_US_Medic","CUP_B_US_Soldier_Engineer","CUP_B_US_Pilot_Light","CUP_B_US_Sniper"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
@@ -173,7 +173,7 @@ if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 	_player setVariable ["EVOrank", "COLONEL", true];
 	[_player,rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 14;
-	bon_recruit_recruitableunits = ["B_Soldier_F","B_Soldier_GL_F","B_soldier_AR_F","B_soldier_M_F","B_soldier_LAT_F","B_medic_F","B_soldier_repair_F","B_Helipilot_F","B_soldier_AT_F","B_soldier_AA_F","B_engineer_F","B_helicrew_F","B_soldier_UAV_F","B_spotter_F","B_sniper_F","B_ghillie_lsh_F","B_Recon_Sharpshooter_F","B_HeavyGunner_F","B_recon_JTAC_F","B_recon_M_F","B_recon_medic_F","B_recon_exp_F","B_recon_LAT_F","B_recon_F"];
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack","CUP_B_US_Soldier_GL","CUP_B_US_Soldier_AR","CUP_B_US_Soldier_MG","CUP_B_US_Soldier_AT","CUP_B_US_Medic","CUP_B_US_Soldier_Engineer","CUP_B_US_Pilot_Light","CUP_B_US_Sniper","CUP_B_US_SpecOps_SD"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;

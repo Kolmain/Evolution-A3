@@ -235,105 +235,46 @@ switch (EVO_difficulty) do {
         rank6 = 225;
     };
  };
-rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
-rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
-rank3vehicles = ["b_heli_light_01_armed_f","b_heli_transport_01_f","b_heli_transport_01_camo_f","b_mrap_01_gmg_f","b_apc_wheeled_01_cannon_f"];
-rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_armed_01_minigun_f"];
-rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
-rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
-rank7vehicles = ["b_plane_cas_01_f"];
+rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","nonsteerable_parachute_f","steerable_parachute_f","CUP_B_HMMWV_Unarmed_USMC"];
+rank2vehicles = ["b_truck_01_covered_f","b_truck_01_transport_f"];
+rank3vehicles = ["CUP_B_HMMWV_MK19_USMC","CUP_B_HMMWV_M2_USMC","CUP_B_HMMWV_TOW_USMC","CUP_B_MH6J_USA"];
+rank4vehicles = ["CUP_B_M1126_ICV_M2_Woodland_Slat","CUP_B_M113_USA","CUP_B_M1135_ATGMV_Woodland_Slat"];
+rank5vehicles = ["CUP_B_M1126_ICV_MK19_Woodland","CUP_B_M163_USA","CUP_B_UH60L_US"];
+rank6vehicles = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC"];
+rank7vehicles = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z"];
 
-rank1weapons = ["CUP_arifle_M16A2","CUP_arifle_M16A4","CUP_launch_M136","CUP_hgun_M9"];
-rank1items = ["CUP_acc_Flashlight_wdl","optic_ACO_grn","acc_flashlight"];
+rank1weapons = ["CUP_arifle_M16A2","CUP_arifle_M16A4","CUP_launch_M136","CUP_hgun_M9","CUP_MP5A5"];
+rank1items = ["acc_flashlight"];
 
-rank2weapons = ["CUP_arifle_M16A2_GL","CUP_arifle_M16A4_GL","CUP_arifle_M4A1","CUP_hgun_Colt1911","arifle_MX_GL_F","arifle_MX_SW_F","CUP_SOFLAM"];
-rank2items = ["optic_Hamr","optic_Aco_smg","optic_ACO_grn_smg","optic_Holosight","optic_Holosight_smg","bipod_01_F_snd","bipod_01_F_blk","bipod_01_F_mtp"];
+rank2weapons = ["CUP_arifle_M16A2_GL","CUP_arifle_M16A4_GL","CUP_lmg_M240"];
+rank2items = ["CUP_optic_CompM2_Black","CUP_Laserdesignator"];
 
-rank3weapons = ["CUP_arifle_XM8_Carbine","CUP_launch_FIM92Stinger","CUP_launch_Javelin","CUP_lmg_M249","hgun_Pistol_heavy_02_F","LMG_Mk200_F"];
-rank3items = ["B_UavTerminal","CUP_Laserdesignator","acc_pointer_IR","optic_MRCO","NVGoggles"];
+rank3weapons = ["CUP_srifle_M24_wdl","CUP_arifle_M4A1"];
+rank3items = ["B_UavTerminal","acc_pointer_IR","CUP_optic_RCO","NVGoggles"];
 
-rank4weapons = ["CUP_arifle_G36A","CUP_lmg_M60E4","arifle_TRG21_F","arifle_TRG21_GL_F","arifle_TRG20_F","SMG_01_F","arifle_MX_GL_Black_F","arifle_MX_SW_Black_F","hgun_PDW2000_F","SMG_01_F","SMG_02_F"];
-rank4items = ["muzzle_snds_H","muzzle_snds_L","muzzle_snds_M","muzzle_snds_B","muzzle_snds_H_MG","muzzle_snds_H_SW","muzzle_snds_acp","muzzle_snds_338_black","muzzle_snds_338_green","muzzle_snds_338_sand","muzzle_snds_93mmg","muzzle_snds_93mmg_tan"];
+rank4weapons = ["CUP_arifle_M4A1_BUIS_GL","CUP_lmg_M249_E2","CUP_launch_FIM92Stinger"];
+rank4items = ["CUP_optic_HoloBlack","CUP_acc_ANPEQ_2"];
 
-rank5weapons = ["CUP_arifle_G36C","srifle_DMR_02_F","srifle_DMR_02_camo_F","srifle_DMR_02_sniper_F","srifle_DMR_03_F","srifle_DMR_03_khaki_F","srifle_DMR_03_tan_F","srifle_DMR_03_multicam_F","srifle_DMR_03_woodland_F","srifle_DMR_06_camo_F","srifle_DMR_06_olive_F","srifle_DMR_06_camo_khs_F","MMG_02_camo_F","MMG_02_black_F","MMG_02_sand_F"];
-rank5items = ["optic_SOS","optic_NVS","optic_Nightstalker","optic_tws","optic_tws_mg","optic_Yorris","optic_MRD","optic_DMS","optic_LRPS"];
+rank5weapons = ["CUP_srifle_Mk12SPR","CUP_launch_Javelin"];
+rank5items = ["CUP_optic_LeupoldMk4"];
 
-rank6weapons = ["CUP_arifle_G36K","srifle_GM6_F","srifle_LRR_camo_F"];
-rank6items = ["optic_AMS","optic_AMS_khk","optic_AMS_snd"];
+rank6weapons = ["CUP_arifle_G36K","CUP_arifle_G36C","CUP_arifle_G36K"];
+rank6items = ["CUP_optic_CWS"];
 
-rank7weapons = [];
+rank7weapons = ["CUP_srifle_M107_Base"];
+rank7items = ["CUP_optic_ZDDot","CUP_optic_LeupoldM3LR"];
+
 availableHeadgear = [
-    "H_HelmetB",
-    "H_HelmetB_camo",
-    "H_HelmetB_paint",
-    "H_HelmetB_light",
-    "H_HelmetSpecB",
-    "H_Booniehat_mcamo",
-    "H_Booniehat_khk_hs",
-    "H_MilCap_mcamo",
-    "H_Cap_tan_specops_US",
-    "H_Cap_khaki_specops_UK",
-    "H_Cap_headphones",
-    "H_Bandanna_mcamo",
-    "H_Bandanna_khk_hs",
-    "H_Shemag_khk",
-    "H_ShemagOpen_khk",
-    "H_Watchcap_blk",
-    "H_PilotHelmetHeli_B",
-    "H_CrewHelmetHeli_B",
-    "H_PilotHelmetFighter_B",
-    "H_HelmetCrew_B",
-    "H_Cap_marshal",
-    "H_Watchcap_sgg",
-    "H_Watchcap_camo",
-    "H_Watchcap_khk",
-    "H_Watchcap_cbr",
-    "H_Beret_02",
-    "H_BandMask_demon",
-    "H_BandMask_reaper",
-    "H_HelmetB_light_snakeskin"
+
 ];
 availableGoggles = [
-    "G_Combat",
-    "G_Lowprofile",
-    "G_Shades_Black",
-    "G_Shades_Blue",
-    "G_Shades_Green",
-    "G_Shades_Red",
-    "G_Sport_Blackred",
-    "G_Sport_Blackyellow",
-    "G_Squares_Tinted",
-    "G_Tactical_Black",
-    "G_Tactical_Clear",
-    "G_Bandanna_blk"
+
 ];
 availableUniforms = [
-    "U_B_CombatUniform_mcam",
-    "U_B_CombatUniform_mcam_tshirt",
-    "U_B_CombatUniform_mcam_vest",
-    "U_B_HeliPilotCoveralls",
-    "U_B_CTRG_1",
-    "U_B_CTRG_2",
-    "U_B_CTRG_3",
-    "V_PlateCarrierIAGL_oli",
-    "V_PlateCarrierSpec_mtp",
-    "V_PlateCarrierSpec_blk",
-    "V_PlateCarrierGL_mtp",
-    "V_PlateCarrierGL_blk",
-    "U_B_FullGhillie_ard",
-    "U_B_FullGhillie_sard",
-    "U_B_FullGhillie_lsh",
-    "U_BG_Guerilla2_1"
+
 ];
 availableVests = [
-    "V_BandollierB_khk",
-    "V_BandollierB_blk",
-    "V_PlateCarrier1_rgr",
-    "V_PlateCarrier2_rgr",
-    "V_PlateCarrierGL_rgr",
-    "V_PlateCarrierSpec_rgr",
-    "V_PlateCarrierL_CTRG",
-    "V_PlateCarrierH_CTRG"
+
 ];
 availableItems = [
     "ItemWatch",
@@ -350,12 +291,7 @@ availableItems = [
     "Item_MineDetector"
 ];
 availableBackpacks = [
-    "B_AssaultPack_rgr",
-    "B_AssaultPack_mcamo",
-    "B_Kitbag_rgr",
-    "B_Kitbag_mcamo",
-    "B_TacticalPack_blk",
-    "B_TacticalPack_mcamo"
+
 ];
 
 
@@ -409,7 +345,7 @@ if (isServer) then {
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
     [] spawn EVO_fnc_protectBase;
-    [WEST, spawnBuilding, "Staging Base"] call BIS_fnc_addRespawnPosition;
+    //[WEST, spawnBuilding, "Staging Base"] call BIS_fnc_addRespawnPosition;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
@@ -462,16 +398,17 @@ if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
     _mrkrs = [] spawn EVO_fnc_gridMarkers;
 };
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-_nil = [] spawn EVO_fnc_supportManager;
+//_nil = [] spawn EVO_fnc_supportManager;
 handle = [] spawn {
 	while {true} do {
 		waitUntil {player distance hqbox < 5};
 	   	waitUntil {player distance hqbox > 5};
    		if (isTouchingGround player) then {
             loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+            [player, [missionNamespace, "LAST LOADOUT"]] call BIS_fnc_saveInventory ;
             profileNamespace setVariable ["EVO_loadout", loadout];
             saveProfileNamespace;
-            systemChat "Loadout saved to profile...";
+            //systemChat "Loadout saved to profile...";
         };
 	};
 };
