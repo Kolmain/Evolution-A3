@@ -1,4 +1,4 @@
-# Evolution-A3
+# Evolution-A3 *Classic*
 ![Evolution-A3](https://cloud.githubusercontent.com/assets/8865327/7921364/f944fe48-0872-11e5-8b42-c73af9b3b615.jpg "Evolution-A3")
 Evolution-A3 is a remake of the popular Armed Assualt (ArmA) mission, Evolution Blue by KilJoy.
 Evolution-A3 features all of the original gameplay mechanics, either in their original form, redesigned by myself, or with similair community content replacing the functionality of the original outdated code. 
@@ -38,4 +38,4 @@ Discussion available at [Bohemia Interactive Forums](http://forums.bistudio.com/
 
 ### Requirements
 
-Evolution-A3 uses no mods and is 100% Vanilla ArmA 3.
+Evolution-A3 Classic requires the Community Upgrade Project.
