@@ -84,6 +84,12 @@ class Params
 	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
 	    default = 4;
 	};
+	class numberOfAOs {
+		title = "Number of Targets to Clear";
+	    values[] = {0,1,5,10,15,20,999};
+	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
+	    default = 999;
+	};
 	class Daytime {
 		title = "Starting Time";
 		texts[] = {"Morning","Day","Evening","Night"};
@@ -155,7 +161,7 @@ class Params
 		title = "Visible Kill Notifications";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 0;
+		default = 1;
 	};
 	class bisJukebox {
 		title = "BIS Jukebox";
@@ -191,7 +197,7 @@ class Params
 	    title = "OPFOR Sectors Shown on Map";
 	    values[] = {0,1};
 	    texts[] = {"Disabled","Enabled"};
-	    default = 0;
+	    default = 1;
 	};
 
 };
