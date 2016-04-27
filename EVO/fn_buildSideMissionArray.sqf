@@ -7,12 +7,13 @@ curreSidemissionUnits = [];
 publicVariable "curreSidemissionUnits";
 publicVariable "currentSideMission";
 publicVariable "currentSideMissionStatus";
+
 //build AA hunt
 //as long as there are AAA batteries
 _options = [];
 {
 	_vehicle = _x;
-	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F" && alive _vehicle && canMove _vehicle) then {
+	if (typeOf _vehicle == EVO_opforAAA && alive _vehicle && canMove _vehicle) then {
 		_options = _options + [_vehicle];
 	};
 } forEach vehicles;
@@ -23,7 +24,7 @@ if (!isNil "_vehicle") then {
 	_ret = [getPos _vehicle] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["Eliminate the OPFOR anti-air threat near %1 to enable BLUFOR support to continue.", _name];
+	_descrip = format ["Eliminate the OPFOR anti-air threat near %1.", _name];
 	_img = getText(configFile >>  "CfgVehicles" >>  (typeOf _vehicle) >> "picture");
 
 	availableSideMissions = availableSideMissions + [
@@ -142,9 +143,9 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
+	_descrip = format ["OPFOR has taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_csar,"CSAR Downed Helo Crew", _descrip,"",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_csar,"CSAR Helo Crew", _descrip,"",_img,1,[]]
 	];
 };
 
