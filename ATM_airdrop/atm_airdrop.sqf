@@ -1,11 +1,3 @@
-///////////////////////////////////////////////////////////
-//                =ATM= Airdrop       	 				    //
-//         		 =ATM=Pokertour        		       		    //
-//				version : 6.0							        //
-//				date : 12/02/2014						   //
-//                   visit us : atmarma.fr                 //
-/////////////////////////////////////////////////////////
-
 private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2","_soundPath"];
 	waitUntil { !isNull player };
 [] execVM "ATM_airdrop\functions.sqf";
@@ -17,9 +9,7 @@ private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2",
 
 	openMap true;
 	hint "SELECT DROP LOCATION VIA SINGLE LEFT CLICK.";
-
 	ATM_Jump_mapclick = false;
-	//onMapSingleClick "ATM_Jump_clickpos = _pos; ATM_Jump_mapclick = true; onMapSingleClick ''; true;";
 	["atmMapClickEH", "onMapSingleClick", {
 		ATM_Jump_clickpos = _pos;
 		ATM_Jump_mapclick = true;
