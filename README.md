@@ -28,9 +28,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 ### Current Version
 
-For latest release, check the [GitHub release section](https://github.com/Kolmain/Evolution-A3/releases).
-
-Also available on [Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=441868055).
+Latest version available on [Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=441868055).
 
 Discussion available at [Bohemia Interactive Forums](http://forums.bistudio.com/showthread.php?191210-(Co30)-Evolution-A3).
 
