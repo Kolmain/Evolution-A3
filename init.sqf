@@ -13,7 +13,6 @@ if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
 //////////////////////////////////////
 //Init Third Party Scripts
 //////////////////////////////////////
-call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";

@@ -7,13 +7,8 @@ private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehic
 _locs = nearestLocations [spawnBuilding, ["NameLocal","NameCity", "NameCityCapital", "NameVillage"], [] call BIS_fnc_mapSize];
 sideLocations = _locs;
 publicVariable "sideLocations";
-_mil = [];
-{
-	if ((tolower (text _x)) in ["military"]) then {
-		_mil set [(count _mil),_x]
-	};
-} foreach _locs;
-militaryLocations = _mil;
+//LocationBase_F
+militaryLocations = nearestObjects [spawnBuilding, ["LocationBase_F"], [] call BIS_fnc_mapSize];
 targetLocations = [];
 targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
 {

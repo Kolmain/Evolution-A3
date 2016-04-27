@@ -70,7 +70,7 @@ if (_bool) then {
 		[getPos _obj, EVO_fnc_sm_attackMil,"Attack Installation", _descrip,"",_img,1,[]]
 	];
 };
-
+/*
 //convoy
 // 1 in 2 chance
 _bool = false;
@@ -102,7 +102,7 @@ if (_bool) then {
 		[getPos _obj2, EVO_fnc_sm_convoy, "Ambush Convoy End", _descrip,"",_img,1,[]]
 	];
 };
-
+*/
 //reinforce defense
 // 1 in 2 chance
 _bool = false;
