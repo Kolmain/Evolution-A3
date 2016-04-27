@@ -16,7 +16,7 @@ private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2",
 
 
 	openMap true;
-	hint "SELECT DROP LOCATION VIA SINGLE LEFT CLICK."
+	hint "SELECT DROP LOCATION VIA SINGLE LEFT CLICK.";
 
 	ATM_Jump_mapclick = false;
 	//onMapSingleClick "ATM_Jump_clickpos = _pos; ATM_Jump_mapclick = true; onMapSingleClick ''; true;";
