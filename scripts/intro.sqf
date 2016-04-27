@@ -8,7 +8,7 @@ if (!isNil "MHQ") then {
 
   [
         getPos spawnBuilding,
-        "NATO Staging Area", // SITREP text
+        "US Base", // SITREP text
         100, // altitude
         100, // radius
         120, // viewing angle
