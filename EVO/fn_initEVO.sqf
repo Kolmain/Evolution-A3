@@ -36,6 +36,9 @@ totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
 if (totalTargets == 999) then {totalTargets = count targetLocations};
 totalTargets = totalTargets + targetCounter;
 */
+
+
+
 targetLocations = [];
 targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
 {
@@ -115,7 +118,7 @@ handle = [] spawn EVO_fnc_endgame;
 	//////////////////////////////////////
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
-	if (faction _vehicle == "BLU_F") then {
+	if (faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") then {
 		if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 		} else {
@@ -169,7 +172,6 @@ handle = [] spawn EVO_fnc_endgame;
 //////////////////////////////////////
 //Init First Target
 //////////////////////////////////////
-if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
 	if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
 		profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
 		profileNamespace setVariable ["EVO_world", worldName];
@@ -187,7 +189,6 @@ if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
 		saveProfileNamespace;
 	};
 	handle = [] spawn EVO_fnc_initTarget;
-};
 
 
 
