@@ -33,7 +33,7 @@ switch (_type) do {
 		} else {
 			[_grp] spawn {
 				_grp = _this select 0;
-				if ([true, true, false] call bis_fnc_selectRandom) then {
+				if ([true, true, true, false] call bis_fnc_selectRandom) then {
 					//insert via land
 					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					//_veh = createVehicle [ call bis_fnc_selectRandom, _spawnPos2, [], 0, "NONE"];
@@ -98,7 +98,7 @@ switch (_type) do {
 				    	_x assignAsCargo _heli;
 				    	_x moveInCargo _heli;
 				    } forEach units _grp;
-				    if ([true, false] call bis_fnc_selectRandom) then {
+				    if ([true, false, false] call bis_fnc_selectRandom) then {
 				    	//paradrop
 					    _goTo = [position currentTarget, 100, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					    _heli doMove _goTo;
@@ -126,6 +126,7 @@ switch (_type) do {
 					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 300)};
 					    {
 					    	unassignVehicle  _x;
+					    	doGetOut _x
 					    } forEach units _grp;
 					    _grp leaveVehicle _heli;
 					    waitUntil {count crew _heli == count units _heliGrp};
@@ -167,9 +168,10 @@ switch (_type) do {
 					publicVariable "currentAOunits";
 				}];
 			} forEach units _grp;
-			if ((typeOf _tank == "O_MRAP_02_gmg_F" || typeOf _tank == "O_MRAP_02_hmg_F" || typeOf _tank == "O_UGV_01_rcws_F") && !_init) then {
+			_heavylift = false;
+			if (_heavylift && !_init) then {
 				_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-				_ret = [_spawnPos, (floor (random 360)), "O_Heli_Transport_04_F", EAST] call EVO_fnc_spawnvehicle;
+				_ret = [_spawnPos, (floor (random 360)), EVO_opforHeavyLift, EAST] call EVO_fnc_spawnvehicle;
 				_heli = _ret select 0;
 				[_heli, _tank] spawn {
 					_heli = _this select 0;
