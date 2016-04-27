@@ -258,8 +258,6 @@ class CfgFunctions
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};
-			class deathFX {};
-			class hitFX {};
 			class getNearest {};
 			class hasLOS {};
 			class createComposition {};
@@ -267,21 +265,7 @@ class CfgFunctions
 			class doArtyFire {};
 			class createMinefield {};
 			class createSniper {};
-			/*
-			class reviveControl {};
-			class reviveBleedOut {};
-			class reviveEnabled {};
-			class reviveExecuteTemplate {};
-			class reviveIconControl {};
-			class reviveIconManager {};
-			class reviveIncapacitate {};
-			class reviveInit {};
-			class reviveKeys {};
-			class reviveOnPlayerKilled {};
-			class reviveOnPlayerREspawn {};
-			class reviveProgress {};
-			class reviveSetStatus {};
-			*/
+			class trackAir {};
 		};
 	};
 };
