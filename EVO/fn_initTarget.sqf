@@ -148,11 +148,7 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
-		if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-			(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
-		} else {
-			nul = [_mortar] execVM "scripts\UPSMON\MON_artillery_add.sqf";
-		};
+		(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
 		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 		{
 			if (HCconnected) then {
@@ -212,21 +208,14 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_plane = _ret select 0;
 		_grp = _ret select 2;
 			//_plane flyInHeight 400;
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-				_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			} else {
-			_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-		};
+			_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+
 		while {RTonline && (_this select 0 == currentTarget)} do {
 			_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
 				//_plane flyInHeight 400;
-				if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-				} else {
-				_null = [(leader _grp), currentTargetMarkerName, "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			};
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _plane || !alive _plane};
 			_delay = ["CAS"] call EVO_fnc_calculateDelay;
 			sleep _delay;
