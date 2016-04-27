@@ -22,19 +22,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			//_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+
 				if ([true, false] call bis_fnc_selectRandom) then {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
 				} else {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
 				};
-			} else {
-				if ([true, false] call bis_fnc_selectRandom) then {
-					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				} else {
-					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				};
-			};
 			{
 				currentSidemissionUnits pushBack _x;
 				publicVariable "currentSidemissionUnits";
@@ -49,19 +42,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
 				if ([true, false] call bis_fnc_selectRandom) then {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
 				} else {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
 				};
-			} else {
-				if ([true, false] call bis_fnc_selectRandom) then {
-					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				} else {
-					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				};
-			};
+		
 			{
 				currentSidemissionUnits pushBack _x;
 				publicVariable "currentSidemissionUnits";
@@ -102,7 +88,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 									_loop = false;
 								};
 							};
-							deleteVehicle _unit;
 						};
 					};
 				} forEach currentSidemissionUnits;
@@ -123,7 +108,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (!isDedicated) then {
 	//client
 		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
-		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at a military installation. Capture the military installation!";
+		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at this location. Capture the military installation!";
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance attackMilTarget < 1000) then {
