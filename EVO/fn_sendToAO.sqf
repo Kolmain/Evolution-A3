@@ -25,19 +25,11 @@ switch (_type) do {
 			}];
 		} forEach units _grp;
 		if (_init) then {
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
 				if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
 				} else {
 					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
 				};
-			} else {
-				if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
-					_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				} else {
-					_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				};
-			};
 		} else {
 			[_grp] spawn {
 				_grp = _this select 0;
@@ -73,19 +65,13 @@ switch (_type) do {
 				    } forEach units _grp;
 				    _grp leaveVehicle _transport;
 				    waitUntil {count crew _transport == count units _transGrp};
-					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+				
 						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
 						} else {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
 						};
-			    	} else {
-			    		if ([true, false, false, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
-							_null = [(leader _grp), currentTargetMarkerName, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-						} else {
-							_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-						};
-			    	};
+			  
 				    doStop _transport;
 				    _transport doMove _spawnPos2;
 				    handle = [_transport, _spawnPos2] spawn {
@@ -129,11 +115,9 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-						if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+					
 			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    	} else {
-			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			    	};
+			    
 					} else {
 						//land
 						 _goTo = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
@@ -155,11 +139,9 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-						if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			
 			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    	} else {
-			    		_null = [(leader _grp), currentTargetMarkerName, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			    	};
+
 					};
 				};
 			};
@@ -210,11 +192,9 @@ switch (_type) do {
 					{
 						ropeCut [ _x, 5];
 					} forEach ropes _heli;
-					if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			
 			    		(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    	} else {
-			    		_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			    	};
+			    	
 					group driver _tank setSpeedMode "LIMITED";
 					_heli land "NONE";
 					driver _heli doMove getPos server;
@@ -229,11 +209,9 @@ switch (_type) do {
 					};
 				};
 			} else {
-				if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
+			
 			    	(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    } else {
-			    	_null = [(leader group driver _tank), currentTargetMarkerName, "ONROAD", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-			    };
+			   
 				_grp setSpeedMode "FULL";
 				[_grp] spawn {
 					_grp = _this select 0;
