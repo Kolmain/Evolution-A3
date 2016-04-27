@@ -207,15 +207,16 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		_plane = _ret select 0;
 		_grp = _ret select 2;
-			//_plane flyInHeight 400;
-			_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-
+		_plane flyInHeight 500;
+		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+		[_plane] spawn EVO_fnc_trackAir;
 		while {RTonline && (_this select 0 == currentTarget)} do {
 			_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
-				//_plane flyInHeight 400;
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			_plane flyInHeight 500;
+			_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			[_plane] spawn EVO_fnc_trackAir;
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _plane || !alive _plane};
 			_delay = ["CAS"] call EVO_fnc_calculateDelay;
 			sleep _delay;
