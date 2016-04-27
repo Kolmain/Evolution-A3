@@ -3,10 +3,8 @@ private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehic
 //Init Global EVO Variables
 //////////////////////////////////////
 
-/*
-_locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
-targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, [] call BIS_fnc_mapSize];
-_locs = nearestLocations [spawnBuilding, ["NameLocal"], [] call BIS_fnc_mapSize];
+
+_locs = nearestLocations [spawnBuilding, ["NameLocal","NameCity", "NameCityCapital", "NameVillage"], [] call BIS_fnc_mapSize];
 sideLocations = _locs;
 publicVariable "sideLocations";
 _mil = [];
@@ -16,8 +14,15 @@ _mil = [];
 	};
 } foreach _locs;
 militaryLocations = _mil;
+targetLocations = [];
+targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
+{
+	_closesttown = (nearestLocations [(getPos _x),["NameCityCapital","NameCity","NameVillage"],10000]) select 0;
+	targetLocations = targetLocations + [_closesttown];
+} forEach targetObjects;
+totalTargets = count targetLocations;
 if (isNil "targetCounter") then {
-	targetCounter = 2;
+	targetCounter = 0;
 } else {
 	for "_i" from 3 to targetCounter step 1 do {
 		_marker = format ["%1", _i];
@@ -31,22 +36,6 @@ if (isNil "targetCounter") then {
 		_marker setMarkerColor "ColorWEST";
 	};
 };
-//targetCounter = 2;
-totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
-if (totalTargets == 999) then {totalTargets = count targetLocations};
-totalTargets = totalTargets + targetCounter;
-*/
-
-
-
-targetLocations = [];
-targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
-{
-	_closesttown = (nearestLocations [(getPos _x),["NameCityCapital","NameCity","NameVillage"],10000]) select 0;
-	targetLocations = targetLocations + [_closesttown];
-} forEach targetObjects;
-totalTargets = count targetLocations;
-targetCounter = 0;
 
 
 
@@ -56,8 +45,6 @@ currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
 officerAlive = true;
-infSquads = ("infSquadsParam" call BIS_fnc_getParamValue);
-armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 markerCounter = 0;
 "opforair" setMarkerAlpha 0;
 "counter" setMarkerAlpha 0;
