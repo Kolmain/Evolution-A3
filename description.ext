@@ -75,13 +75,7 @@ class Params
 	    title = "Starting Weather";
 	    values[] = {0,1,2,3,4};
 	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-	    default = 4;
-	};
-	class numberOfAOs {
-	    title = "Number of Targets to Clear";
-	    values[] = {0,1,5,10,15,20,999};
-	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
-	    default = 999;
+	    default = 1;
 	};
 	class Daytime {
 		title = "Starting Time";
@@ -106,19 +100,19 @@ class Params
 		title = "Player Respawn Points";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class EvoDifficulty {
 		title = "Difficulty";
 		texts[] = {"Easy","Normal","Hard","Altis on Fire"};
 		values[] = {1,2,3,4};
-		default = 2;
+		default = 3;
 	};
 	class pilotDressRequired {
 		title = "Require Pilot Loadout to Pilot";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class rankVehicles {
 		title = "Require Rank for Vehicles";
@@ -132,12 +126,6 @@ class Params
 		values[] = {0,1};
 		default = 1;
 	};
-	class mhqParam {
-		title = "Mobile HQ Spawn Point";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
-	};
 	class randomSideMissions {
 		title = "Randomly Generate Side Missions";
 		texts[] = {"Disabled","Enabled"};
@@ -148,7 +136,7 @@ class Params
 		title = "Visible Kill Notifications";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
-		default = 1;
+		default = 0;
 	};
 	class bisJukebox {
 		title = "BIS Jukebox";
@@ -178,7 +166,7 @@ class Params
 	    title = "OPFOR Sectors Shown on Map";
 	    values[] = {0,1};
 	    texts[] = {"Disabled","Enabled"};
-	    default = 1;
+	    default = 0;
 	};
 
 };

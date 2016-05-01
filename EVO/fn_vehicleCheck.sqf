@@ -2,12 +2,14 @@ private ["_player","_vehicle","_class","_classname","_displayName","_txt"];
 
 _player = _this select 0;
 _vehicle = vehicle _player;
+_factionVeh = faction _vehicle;
+_faction = toUpper(_factionVeh);
 _class = typeOf _vehicle;
-_classname = toLower(_class);
+_classname = toUpper(_class);
 if (_vehicle != _player && (driver _vehicle == _player)) then {
 	switch (rank player) do {
 		case "PRIVATE": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification; _player action ["engineOff", vehicle _player];
@@ -18,7 +20,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 		case "CORPORAL": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;
@@ -30,7 +32,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 		case "SERGEANT": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;
@@ -42,7 +44,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 		case "LIEUTENANT": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;
@@ -54,7 +56,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		};
 	};
 		case "CAPTAIN": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;
@@ -66,7 +68,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 		case "MAJOR": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;
@@ -78,7 +80,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 			};
 		};
 		case "COLONEL": {
-			if ((faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles) && !(_classname in rank7vehicles)) then {
+			if ((_faction == "CUP_B_USMC" || _faction == "CUP_B_US_Army") && !(_classname in rank1vehicles) && !(_classname in rank2vehicles) && !(_classname in rank3vehicles) && !(_classname in rank4vehicles) && !(_classname in rank5vehicles) && !(_classname in rank6vehicles) && !(_classname in rank7vehicles)) then {
 				_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
 				_txt = format["You are not qualified to operate this %1", _displayName];
 				["notQualified",[_txt]] call BIS_fnc_showNotification;

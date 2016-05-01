@@ -49,9 +49,10 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
-EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+//EVO_supportUnits = [arty_west, mortar_west, rocket_west];
 currentAOunits = [];
 publicVariable "currentAOunits";
+/*
 {
 	gunner _x addEventHandler ["HandleScore", {
 		_supportAsset = _this select 0;
@@ -67,6 +68,7 @@ publicVariable "currentAOunits";
 		};
 	}];
 } forEach EVO_supportUnits;
+*/
 if (EVO_Debug) then {
 	systemChat format["EVO_init found %1 AO's.", count targetLocations];
 	_counter = 1;
@@ -90,7 +92,7 @@ handle = [] spawn EVO_fnc_endgame;
 //////////////////////////////////////
 //Build Available Side Missions
 //////////////////////////////////////
-handle = [] spawn EVO_fnc_buildSideMissionArray;
+//handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 //////////////////////////////////////
 //Check All Vehicles on Map

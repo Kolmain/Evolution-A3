@@ -166,7 +166,7 @@ handle = [] spawn {
 			if (_seen) then {
 				//
 			} else {
-				if (_LOS) then {
+				if (_LOS && isTouchingGround player) then {
 					currentTargetRT setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
@@ -183,7 +183,7 @@ handle = [] spawn {
 			if (_seen) then {
 				//
 			} else {
-				if (_LOS) then {
+				if (_LOS && isTouchingGround player) then {
 					currentTargetOF setVariable ["EVO_seen", true, true];
 					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;

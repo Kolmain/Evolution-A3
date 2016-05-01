@@ -167,6 +167,8 @@ rank5vehicles = ["CUP_B_M1126_ICV_MK19_Woodland","CUP_B_M163_USA","CUP_B_UH60L_U
 rank6vehicles = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC"];
 rank7vehicles = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z"];
 
+{_x = toUpper(_x)} forEach rank1vehicles + rank2vehicles + rank3vehicles + rank4vehicles + rank5vehicles + rank6vehicles + rank7vehicles;
+
 rank1weapons = ["CUP_arifle_M16A2","CUP_arifle_M16A4","CUP_launch_M136","CUP_hgun_M9","CUP_MP5A5"];
 rank1items = ["acc_flashlight"];
 
@@ -218,7 +220,7 @@ EVO_opforVehicles = ["CUP_O_BRDM2_SLA","CUP_O_BRDM2_ATGM_SLA","CUP_O_BTR60_SLA",
 EVO_opforAAA = "CUP_O_ZSU23_SLA";
 EVO_opforCrew = "CUP_O_sla_Crew";
 EVO_opforOfficer = "CUP_O_sla_Officer";
-EVO_opforHeavyLift = "";
+EVO_opforHeavyLift = "CUP_O_Mi8_SLA_1";
 EVO_opforSnipers = ["CUP_O_SLA_Sniper_KSVK"];
 EVO_opforCAS = ["CUP_O_Ka50_SLA","CUP_O_Su25_SLA","CUP_O_SU34_LGB_SLA","CUP_O_SU34_AGM_SLA"];
 //////////////////////////////////////

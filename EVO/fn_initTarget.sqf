@@ -90,7 +90,7 @@ _grp = createGroup east;
 currentTargetOF = _grp createUnit [EVO_opforOfficer, _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
-_ofName = name currentTargetOF;
+_ofName = str(name currentTargetOF);
 currentTargetOF AddMPEventHandler ["mpkilled", {
 	[officerTask, "Failed", false] call bis_fnc_taskSetState;
 	[[[_ofName], {

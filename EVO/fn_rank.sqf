@@ -10,7 +10,7 @@ _newScore = _score;
 _rank = rank _player;
 _EVOrank = _player getVariable ["EVOrank", "none"];
 //////////////////////////////////////
-//PRIVATE | RANK0
+//PRIVATE | RANK1
 //////////////////////////////////////
 if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
 	_player setUnitRank "PRIVATE";
@@ -26,7 +26,7 @@ if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
-//CORPORAL | RANK1
+//CORPORAL | RANK2
 //////////////////////////////////////
 if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 	_player setUnitRank "CORPORAL";
@@ -54,7 +54,7 @@ if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
-//SERGEANT | RANK2
+//SERGEANT | RANK3
 //////////////////////////////////////
 if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 	_player setUnitRank "SERGEANT";
@@ -82,7 +82,7 @@ if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
-//LIEUTENANT | RANK3
+//LIEUTENANT | RANK4
 //////////////////////////////////////
 if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then {
 	_player setUnitRank "LIEUTENANT";
@@ -110,7 +110,7 @@ if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
-//CAPTAIN | RANK4
+//CAPTAIN | RANK5
 //////////////////////////////////////
 if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 	_player setUnitRank "CAPTAIN";
@@ -138,7 +138,7 @@ if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
-//MAJOR | RANK5
+//MAJOR | RANK6
 //////////////////////////////////////
 if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 	_player setUnitRank "MAJOR";
@@ -165,7 +165,7 @@ if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 	} forEach rank6vehicles;
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 //////////////////////////////////////
-//COLONEL | RANK6
+//COLONEL | RANK7
 //////////////////////////////////////
 };
 if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {

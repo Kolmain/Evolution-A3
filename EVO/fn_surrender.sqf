@@ -20,7 +20,7 @@ _loop = true;
 while {_loop} do {
 	_captured = false;
 	_players = [_unit, 1000] call EVO_fnc_playersNearby;
-	if (!_players || !alive _unit || (_unit distance spawnBuilding < 50)) then {
+	if (!_players || !alive _unit || (_unit distance powCamp < 50)) then {
 		_loop = false;
 	};
 	if (isPlayer(leader group _unit) && !_captured) then {
