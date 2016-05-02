@@ -159,70 +159,68 @@ switch (EVO_difficulty) do {
         rank6 = 225;
     };
  };
-rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","nonsteerable_parachute_f","steerable_parachute_f","CUP_B_HMMWV_Unarmed_USMC"];
-rank2vehicles = ["b_truck_01_covered_f","b_truck_01_transport_f"];
-rank3vehicles = ["CUP_B_HMMWV_MK19_USMC","CUP_B_HMMWV_M2_USMC","CUP_B_HMMWV_TOW_USMC","CUP_B_MH6J_USA"];
-rank4vehicles = ["CUP_B_M1126_ICV_M2_Woodland_Slat","CUP_B_M113_USA","CUP_B_M1135_ATGMV_Woodland_Slat"];
-rank5vehicles = ["CUP_B_M1126_ICV_MK19_Woodland","CUP_B_M163_USA","CUP_B_UH60L_US"];
-rank6vehicles = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC"];
-rank7vehicles = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z"];
+RANK1VEHICLES = ["B_TRUCK_01_REPAIR_F","B_TRUCK_01_AMMO_F","B_TRUCK_01_FUEL_F","B_TRUCK_01_MEDICAL_F","NONSTEERABLE_PARACHUTE_F","STEERABLE_PARACHUTE_F","CUP_B_HMMWV_UNARMED_USMC"];
+RANK2VEHICLES = ["B_TRUCK_01_COVERED_F","B_TRUCK_01_TRANSPORT_F"];
+RANK3VEHICLES = ["CUP_B_HMMWV_MK19_USMC","CUP_B_HMMWV_M2_USMC","CUP_B_HMMWV_TOW_USMC","CUP_B_MH6J_USA"];
+RANK4VEHICLES = ["CUP_B_M1126_ICV_M2_WOODLAND_SLAT","CUP_B_M113_USA","CUP_B_M1135_ATGMV_WOODLAND_SLAT"];
+RANK5VEHICLES = ["CUP_B_M1126_ICV_MK19_WOODLAND","CUP_B_M163_USA","CUP_B_UH60L_US"];
+RANK6VEHICLES = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC"];
+RANK7VEHICLES = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z"];
 
-{_x = toUpper(_x)} forEach rank1vehicles + rank2vehicles + rank3vehicles + rank4vehicles + rank5vehicles + rank6vehicles + rank7vehicles;
+RANK1WEAPONS = ["CUP_ARIFLE_M16A2","CUP_ARIFLE_M16A4","CUP_LAUNCH_M136","CUP_HGUN_M9","CUP_MP5A5"];
+RANK1ITEMS = ["ACC_FLASHLIGHT"];
 
-rank1weapons = ["CUP_arifle_M16A2","CUP_arifle_M16A4","CUP_launch_M136","CUP_hgun_M9","CUP_MP5A5"];
-rank1items = ["acc_flashlight"];
+RANK2WEAPONS = ["CUP_ARIFLE_M16A2_GL","CUP_ARIFLE_M16A4_GL","CUP_LMG_M240"];
+RANK2ITEMS = ["CUP_OPTIC_COMPM2_BLACK","CUP_LASERDESIGNATOR"];
 
-rank2weapons = ["CUP_arifle_M16A2_GL","CUP_arifle_M16A4_GL","CUP_lmg_M240"];
-rank2items = ["CUP_optic_CompM2_Black","CUP_Laserdesignator"];
+RANK3WEAPONS = ["CUP_SRIFLE_M24_WDL","CUP_ARIFLE_M4A1"];
+RANK3ITEMS = ["B_UAVTERMINAL","ACC_POINTER_IR","CUP_OPTIC_RCO","NVGOGGLES"];
 
-rank3weapons = ["CUP_srifle_M24_wdl","CUP_arifle_M4A1"];
-rank3items = ["B_UavTerminal","acc_pointer_IR","CUP_optic_RCO","NVGoggles"];
+RANK4WEAPONS = ["CUP_ARIFLE_M4A1_BUIS_GL","CUP_LMG_M249_E2","CUP_LAUNCH_FIM92STINGER"];
+RANK4ITEMS = ["CUP_OPTIC_HOLOBLACK","CUP_ACC_ANPEQ_2"];
 
-rank4weapons = ["CUP_arifle_M4A1_BUIS_GL","CUP_lmg_M249_E2","CUP_launch_FIM92Stinger"];
-rank4items = ["CUP_optic_HoloBlack","CUP_acc_ANPEQ_2"];
+RANK5WEAPONS = ["CUP_SRIFLE_MK12SPR","CUP_LAUNCH_JAVELIN"];
+RANK5ITEMS = ["CUP_OPTIC_LEUPOLDMK4"];
 
-rank5weapons = ["CUP_srifle_Mk12SPR","CUP_launch_Javelin"];
-rank5items = ["CUP_optic_LeupoldMk4"];
+RANK6WEAPONS = ["CUP_ARIFLE_G36K","CUP_ARIFLE_G36C","CUP_ARIFLE_G36K"];
+RANK6ITEMS = ["CUP_OPTIC_CWS"];
 
-rank6weapons = ["CUP_arifle_G36K","CUP_arifle_G36C","CUP_arifle_G36K"];
-rank6items = ["CUP_optic_CWS"];
+RANK7WEAPONS = ["CUP_SRIFLE_M107_BASE"];
+RANK7ITEMS = ["CUP_OPTIC_ZDDOT","CUP_OPTIC_LEUPOLDM3LR"];
 
-rank7weapons = ["CUP_srifle_M107_Base"];
-rank7items = ["CUP_optic_ZDDot","CUP_optic_LeupoldM3LR"];
-
-availableHeadgear = [];
-availableGoggles = [];
-availableUniforms = [];
-availableVests = [];
-availableItems = [
-    "ItemWatch",
-    "ItemCompass",
-    "ItemGPS",
-    "ItemRadio",
-    "ItemMap",
-    "MineDetector",
-    "Binocular",
-    "FirstAidKit",
-    "Medikit",
-    "ToolKit",
-    "Item_MineDetector"
+AVAILABLEHEADGEAR = [];
+AVAILABLEGOGGLES = [];
+AVAILABLEUNIFORMS = [];
+AVAILABLEVESTS = [];
+AVAILABLEITEMS = [
+    "ITEMWATCH",
+    "ITEMCOMPASS",
+    "ITEMGPS",
+    "ITEMRADIO",
+    "ITEMMAP",
+    "MINEDETECTOR",
+    "BINOCULAR",
+    "FIRSTAIDKIT",
+    "MEDIKIT",
+    "TOOLKIT",
+    "ITEM_MINEDETECTOR"
 ];
-availableBackpacks = ["B_AssaultPack_rgr"];
+AVAILABLEBACKPACKS = ["B_ASSAULTPACK_RGR"];
 
 
-EVO_opforGroundTrans = ["CUP_O_Ural_SLA",  "CUP_O_Ural_Open_SLA"];
-EVO_opforAirTrans = ["CUP_O_Mi8_SLA_1","CUP_O_Mi8_SLA_2","CUP_O_UH1H_SLA"];
-EVO_opforInfantry = [
-    (configFile >> "CfgGroups" >> "EAST" >> "" >> "Infantry" >> "CUP_O_SLA_InfantrySquad"),
-    (configFile >> "CfgGroups" >> "EAST" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_SpecialPurposeSquad")
+EVO_OPFORGROUNDTRANS = ["CUP_O_URAL_SLA",  "CUP_O_URAL_OPEN_SLA"];
+EVO_OPFORAIRTRANS = ["CUP_O_MI8_SLA_1","CUP_O_MI8_SLA_2","CUP_O_UH1H_SLA"];
+EVO_OPFORINFANTRY = [
+    (CONFIGFILE >> "CFGGROUPS" >> "EAST" >> "" >> "INFANTRY" >> "CUP_O_SLA_INFANTRYSQUAD"),
+    (CONFIGFILE >> "CFGGROUPS" >> "EAST" >> "CUP_O_SLA" >> "INFANTRY" >> "CUP_O_SLA_SPECIALPURPOSESQUAD")
 ];
-EVO_opforVehicles = ["CUP_O_BRDM2_SLA","CUP_O_BRDM2_ATGM_SLA","CUP_O_BTR60_SLA","CUP_O_UAZ_Unarmed_SLA","CUP_O_UAZ_AGS30_SLA","CUP_O_UAZ_MG_SLA","CUP_O_UAZ_Open_SLA","CUP_O_Ural_ZU23_SLA","CUP_O_T72_SLA"];
-EVO_opforAAA = "CUP_O_ZSU23_SLA";
-EVO_opforCrew = "CUP_O_sla_Crew";
-EVO_opforOfficer = "CUP_O_sla_Officer";
-EVO_opforHeavyLift = "CUP_O_Mi8_SLA_1";
-EVO_opforSnipers = ["CUP_O_SLA_Sniper_KSVK"];
-EVO_opforCAS = ["CUP_O_Ka50_SLA","CUP_O_Su25_SLA","CUP_O_SU34_LGB_SLA","CUP_O_SU34_AGM_SLA"];
+EVO_OPFORVEHICLES = ["CUP_O_BRDM2_SLA","CUP_O_BRDM2_ATGM_SLA","CUP_O_BTR60_SLA","CUP_O_UAZ_UNARMED_SLA","CUP_O_UAZ_AGS30_SLA","CUP_O_UAZ_MG_SLA","CUP_O_UAZ_OPEN_SLA","CUP_O_URAL_ZU23_SLA","CUP_O_T72_SLA"];
+EVO_OPFORAAA = "CUP_O_ZSU23_SLA";
+EVO_OPFORCREW = "CUP_O_SLA_CREW";
+EVO_OPFOROFFICER = "CUP_O_SLA_OFFICER";
+EVO_OPFORHEAVYLIFT = "CUP_O_MI8_SLA_1";
+EVO_OPFORSNIPERS = ["CUP_O_SLA_SNIPER_KSVK"];
+EVO_OPFORCAS = ["CUP_O_KA50_SLA","CUP_O_SU25_SLA","CUP_O_SU34_LGB_SLA","CUP_O_SU34_AGM_SLA"];
 //////////////////////////////////////
 //Init Headless Client
 //////////////////////////////////////

@@ -33,7 +33,7 @@ switch (_type) do {
 		} else {
 			[_grp] spawn {
 				_grp = _this select 0;
-				if ([true, true, true, false] call bis_fnc_selectRandom) then {
+				if ([true, true, true, true, false] call bis_fnc_selectRandom) then {
 					//insert via land
 					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					//_veh = createVehicle [ call bis_fnc_selectRandom, _spawnPos2, [], 0, "NONE"];
@@ -65,13 +65,13 @@ switch (_type) do {
 				    } forEach units _grp;
 				    _grp leaveVehicle _transport;
 				    waitUntil {count crew _transport == count units _transGrp};
-				
+
 						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
 						} else {
 							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
 						};
-			  
+
 				    doStop _transport;
 				    _transport doMove _spawnPos2;
 				    handle = [_transport, _spawnPos2] spawn {
@@ -115,9 +115,9 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-					
+
 			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    
+
 					} else {
 						//land
 						 _goTo = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
@@ -140,7 +140,7 @@ switch (_type) do {
 					    	} forEach units group driver _heli;
 					    	deleteVehicle _heli;
 						};
-			
+
 			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
 
 					};
@@ -194,9 +194,9 @@ switch (_type) do {
 					{
 						ropeCut [ _x, 5];
 					} forEach ropes _heli;
-			
+
 			    		(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			    	
+
 					group driver _tank setSpeedMode "LIMITED";
 					_heli land "NONE";
 					driver _heli doMove getPos server;
@@ -211,9 +211,9 @@ switch (_type) do {
 					};
 				};
 			} else {
-			
+
 			    	(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-			   
+
 				_grp setSpeedMode "FULL";
 				[_grp] spawn {
 					_grp = _this select 0;

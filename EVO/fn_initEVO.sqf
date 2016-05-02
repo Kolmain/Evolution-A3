@@ -102,7 +102,7 @@ handle = [] spawn EVO_fnc_endgame;
 	//////////////////////////////////////
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
-	if (faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army") then {
+	if (faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army" || faction _vehicle == "BLU_F") then {
 		if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
 			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
 		} else {

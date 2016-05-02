@@ -65,8 +65,6 @@ class Mission
 	{
 		briefingName="(Co30) Evolution Blue";
 		overviewText="By Kolmain";
-		resistanceWest=0;
-		resistanceEast=1;
 		startWind=0.099999994;
 		forecastWind=0.099999994;
 		forecastWaves=0.099999994;
@@ -2056,6 +2054,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="car1";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item98
 		{
@@ -2066,6 +2065,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="car2";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item99
 		{
@@ -2251,6 +2251,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="vtcar";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item119
 		{
@@ -2302,6 +2303,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="car1_1";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item124
 		{
@@ -2312,6 +2314,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="car1_2";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item125
 		{
@@ -2322,6 +2325,7 @@ class Mission
 			lock="UNLOCKED";
 			skill=0.60000002;
 			text="car1_4";
+			init="_null = [this] spawn EVO_fnc_basicRespawn;";
 		};
 		class Item126
 		{
@@ -2707,7 +2711,7 @@ class Mission
 		class Item161
 		{
 			position[]={9774.6846,139.995,10079.813};
-			azimut=90.860413;
+			azimut=90.860397;
 			special="NONE";
 			id=216;
 			side="EMPTY";
@@ -2715,6 +2719,7 @@ class Mission
 			leader=1;
 			skill=0.60000002;
 			text="hqBox";
+			init="clearMagazineCargo this; clearWeaponCargoGlobal this;";
 		};
 		class Item162
 		{
