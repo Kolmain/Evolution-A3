@@ -117,7 +117,7 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 						};
 					};
 				};
-				if (toLower(typeOf _killed) == toLower("O_officer_F")) then {
+				if (toLower(typeOf _killed) == toLower("CUP_O_sla_Officer")) then {
 					//support car
 					_scoreToAdd = -5;
 					_score = _score - 5;

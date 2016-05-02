@@ -139,13 +139,13 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 			_max_distance = _max_distance + 50;
 		};
 		_dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
-		_comp = ["comps\mortar.sqf", "comps\mortar_50.sqf", "comps\mortar_50_2.sqf", "comps\mortar_50_tower.sqf"] call BIS_fnc_selectRandom;
+		_comp = ["comps\mortar.sqf"] call BIS_fnc_selectRandom;
 		_grp = createGroup EAST;
-		_mortarGunner = _grp createUnit ["O_crew_F", _spawnPos, [], 0, "FORM"];
+		_mortarGunner = _grp createUnit ["CUP_O_sla_Crew", _spawnPos, [], 0, "FORM"];
 		//_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_ObjectsMapper;
 		_newComp = [_spawnPos, _comp] call EVO_fnc_createComposition;
 		//_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
+		_mortar = nearestObject [_spawnPos, "CUP_O_2b14_82mm_RU"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
 		(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
@@ -277,7 +277,7 @@ _null = [_currentTarget] spawn {
 	_currentTarget = _this select 0;
 	while {RTonline && (_currentTarget == currentTarget)} do {
 	    sleep 10;
-	    _mortar = nearestObject [position currentTarget, "O_Mortar_01_F"];
+	    _mortar = nearestObject [position currentTarget, "CUP_O_2b14_82mm_RU"];
 	    _gunner = gunner _mortar;
 	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
 	    	_mortar setDamage 1;

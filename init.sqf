@@ -4,11 +4,11 @@
 if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
     EVO_Debug = true;
     publicVariable "EVO_Debug";
-    NSLVR_DEBUG = true;
+    NSLVR_Debug = true;
 } else {
     EVO_Debug = false;
     publicVariable "EVO_Debug";
-    NSLVR_DEBUG = false;
+    NSLVR_Debug = false;
 };
 //////////////////////////////////////
 //Init Third Party Scripts

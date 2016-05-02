@@ -24,4 +24,4 @@
 "B_G_Mortar_01_F",
 "O_G_Mortar_01_F",
 "I_Mortar_01_F",
-"O_Mortar_01_F"
+"CUP_O_2b14_82mm_RU"

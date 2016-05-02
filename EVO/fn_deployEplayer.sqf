@@ -43,8 +43,8 @@ if (!isNil "MASH") then {
 	} forEach playerStructures;
 	*/
 	deleteVehicle MASH;
-	_msg = format ["Your previous MASH has been removed."];
-	["deployed",["MASH REMOVED", _msg]] call BIS_fnc_showNotification;
+	_msg = format ["Your previous FARP has been removed."];
+	["deployed",["FARP REMOVED", _msg]] call BIS_fnc_showNotification;
 };
 
 if (!isNil "playerRespawnPoint") then {
@@ -73,49 +73,8 @@ _medmark setMarkerColor "ColorBlue";
 _medmark setMarkerText _mssg;
 _medmark setMarkerSize [1, 1];
 sleep 5;
-_msg = format ["Your MASH has been deployed at map grid %1.", mapGridPosition player];
-["deployed",["MASH DEPLOYED", _msg]] call BIS_fnc_showNotification;
-/*
-PlayerCrate = objNull;
-{
-	if (typeOf _x == "CargoNet_01_box_F") then {
-		PlayerCrate = _x;
-	};
-} forEach playerStructures;
-_array = [PlayerCrate, player];
-EVO_vaCrates pushBack _array;
-publicVariable "EVO_vaCrates";
-[PlayerCrate, rank player] call EVO_fnc_buildAmmoCrate;
-
-_mash = nearestObject [_pos, "Land_Medevac_house_V1_F"];
-*/
-while {alive MASH} do {
-	_pts = player getVariable ["EVO_healingPts", 0];
-	if (_pts >= 1) then {
-		player setVariable ["EVO_healingPts", 0, true];
-		[player, 1] call bis_fnc_addScore;
-		["PointsAdded",["Your MASH healed a BLUFOR unit.", 1]] call BIS_fnc_showNotification;
-	};
-	sleep 1;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+_msg = format ["Your FARP has been deployed at map grid %1.", mapGridPosition player];
+["deployed",["FARP DEPLOYED", _msg]] call BIS_fnc_showNotification;
 
 
 /*

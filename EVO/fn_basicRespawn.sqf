@@ -1,5 +1,6 @@
 _vehicle = [_this, 0, objNull] call BIS_fnc_param;
-_nil = [_vehicle] call NSLVR_fnc_vehRespawn;
+//_nil = [_vehicle] call NSLVR_fnc_vehRespawn;
+_nul = [_vehicle, 2, 200, 2, true] execVM "NSLVR\vehrespawn.sqf";
 
 /*
 private ["_vehicle","_mhq","_classname","_pos","_dir","_loop","_newVehicle","_null"];
