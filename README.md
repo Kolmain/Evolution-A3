@@ -1,4 +1,4 @@
-# Evolution Blue *Classic*
+# Evolution *Advanced*
 ![Evolution-A3](https://cloud.githubusercontent.com/assets/8865327/7921364/f944fe48-0872-11e5-8b42-c73af9b3b615.jpg "Evolution-A3")
 Evolution-A3 is a remake of the popular Armed Assualt (ArmA) mission, Evolution Blue by KilJoy.
 Evolution-A3 features all of the original gameplay mechanics, either in their original form, redesigned by myself, or with similair community content replacing the functionality of the original outdated code. 
@@ -20,7 +20,7 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
   - **Modular sidemissions** that provide bonus points to all players, and extra bonus points to the players responsible for completing the task, including: CSAR, Defend, Attack, Defend the Base, Ambush, and AAA hunt.
   - **Officer and POW Capturing** in every area of operation for bonus points!
   - **OPFOR support assets** may be available at the AO including mortar, anti-air, CAS, and sniper support.
-  - All powered by the **Community Upgrade Project**.
+  - sethduda's Advanced **Sling Loading, Rappelling/Fastroping, and Towing**.
 
 
 > The overall goal of this project is to bring Evolution Blue up to ArmA 3 standards while preserving as much original gameplay as possible. Minor additions such as Revive and Support Assets that delineate from the origional concept should be added with optional paramters.
@@ -28,12 +28,9 @@ Evolution-A3 features all of the original gameplay mechanics, either in their or
 
 ### Current Version
 
-Latest version available on [Steam Workshop](http://steamcommunity.com/sharedfiles/filedetails/?id=677540897).
-
-Discussion available at [Bohemia Interactive Forums](http://forums.bistudio.com/showthread.php?191210-(Co30)-Evolution-A3).
+See releases section.
 
 
 ### Requirements
 
-Evolution-A3 Classic requires the [Community Upgrade Project](https://steamcommunity.com/workshop/filedetails/?id=583575232).
-![CUP](http://images.akamai.steamusercontent.com/ugc/355021463469540173/635B16F9F148CF9B8D615E2BE536B1A19F0E0E92/ "CUP")
+Evolution Advanced Requires access to the Tanoa terrain and APEX content.
