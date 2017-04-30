@@ -771,3 +771,56 @@ class CfgDebriefing
 		pictureColor[] = {0.0,0.3,0.6,1};
 	};
 };
+
+class CfgUnitInsignia
+{
+	class PRIVATE
+	{
+		displayName = "";
+		author = "";
+		texture = "img\pvt.paa";
+		textureVehicle = "";
+	};
+	class CORPORAL
+	{
+		displayName = "";
+		author = "";
+		texture = "img\corp.paa";
+		textureVehicle = "";
+	};
+	class SERGEANT
+	{
+		displayName = "";
+		author = "";
+		texture = "img\sgt.paa";
+		textureVehicle = "";
+	};
+	class LIEUTENANT
+	{
+		displayName = "";
+		author = "";
+		texture = "img\ltn.paa";
+		textureVehicle = "";
+	};
+	class CAPTAIN
+	{
+		displayName = "";
+		author = "";
+		texture = "img\cpt.paa";
+		textureVehicle = "";
+	};
+	class MAJOR
+	{
+		displayName = "";
+		author = "";
+		texture = "img\mjr.paa";
+		textureVehicle = "";
+	};
+	class COLONEL
+	{
+		displayName = "";
+		author = "";
+		texture = "img\col.paa";
+		textureVehicle = "";
+	};
+};
