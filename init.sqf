@@ -17,8 +17,6 @@ call compile preprocessFileLineNumbers "scripts\Init_UPSMON.sqf";
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
-0 = [] execvm "scripts\tpw_core.sqf";
-0 = [0,1,60] execvm "scripts\tpw_radio.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
