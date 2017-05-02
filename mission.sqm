@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=269;
+		nextID=271;
 	};
 	class MarkerIDProvider
 	{
@@ -688,7 +688,7 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20724.525,32.537514,7228.5322};
+				position[]={20725.754,32.416336,7229.3496};
 				angles[]={0.031990308,3.5882399,6.2060065};
 			};
 			side="Empty";
@@ -696,7 +696,6 @@ class Mission
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=31;
 			type="C_Offroad_01_F";
@@ -1406,57 +1405,54 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20750.012,30.598289,7253.7402};
-				angles[]={0.0053265258,2.5724583,6.2778587};
+				position[]={20750.012,30.598658,7253.7402};
+				angles[]={0.0053232545,2.5724583,6.2778621};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=72;
 			type="B_MRAP_01_F";
-			atlOffset=0.0056324005;
+			atlOffset=0.0060005188;
 		};
 		class Item69
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20753.711,30.553211,7256.019};
-				angles[]={0.0093286335,2.5724757,6.2778587};
+				position[]={20753.711,30.552755,7256.019};
+				angles[]={0.0093200579,2.5724757,6.2778621};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=73;
 			type="B_MRAP_01_F";
-			atlOffset=0.0064563751;
+			atlOffset=0.0060005188;
 		};
 		class Item70
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20736.984,30.989038,7237.0112};
-				angles[]={0.1312411,3.2692983,6.2299027};
+				position[]={20736.984,30.988651,7237.0112};
+				angles[]={0.13124876,3.2692983,6.2299004};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=74;
 			type="C_Offroad_01_F";
-			atlOffset=0.019386292;
+			atlOffset=0.0189991;
 		};
 		class Item71
 		{
@@ -1464,14 +1460,13 @@ class Mission
 			class PositionInfo
 			{
 				position[]={20730.545,31.752846,7232.8418};
-				angles[]={0.10626491,3.3997791,6.2551923};
+				angles[]={0.1062731,3.3997791,6.2551899};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=75;
 			type="C_Offroad_01_F";
@@ -1482,14 +1477,13 @@ class Mission
 			class PositionInfo
 			{
 				position[]={20742.119,30.708307,7239.2148};
-				angles[]={0.058599081,3.2696998,6.2711854};
+				angles[]={0.058590703,3.2696998,6.2711778};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=76;
 			type="C_Offroad_01_F";
@@ -1499,18 +1493,17 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20747.617,30.383505,7242.7773};
-				angles[]={0.10362761,3.272126,6.272521};
+				position[]={20748.367,32.53701,7242.3013};
+				angles[]={0,3.272126,0};
 			};
 			side="Empty";
-			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=77;
 			type="C_Offroad_01_F";
+			atlOffset=2.1120014;
 		};
 		class Item74
 		{
@@ -1999,76 +1992,72 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20745.422,30.579142,7261.4531};
-				angles[]={0.0066682254,2.5725629,6.2738566};
+				position[]={20745.422,30.579466,7261.4531};
+				angles[]={0.0066671576,2.5725629,6.2738476};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=106;
 			type="B_MRAP_01_F";
-			atlOffset=0.0066757202;
+			atlOffset=0.0069999695;
 		};
 		class Item103
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20748.721,30.534077,7263.6934};
-				angles[]={0.0066682254,2.5724933,6.2738566};
+				position[]={20748.721,30.533735,7263.6934};
+				angles[]={0.0066671576,2.5724933,6.2738476};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=107;
 			type="B_MRAP_01_F";
-			atlOffset=0.0073413849;
+			atlOffset=0.0069999695;
 		};
 		class Item104
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20740.424,30.591314,7269.2188};
-				angles[]={-0,2.5727723,6.272521};
+				position[]={20740.424,30.590864,7269.2188};
+				angles[]={0,2.5727723,6.2725215};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=108;
 			type="B_MRAP_01_F";
-			atlOffset=0.0064506531;
+			atlOffset=0.0060005188;
 		};
 		class Item105
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={20744.127,30.548336,7271.2612};
-				angles[]={0.0013372133,2.5726328,6.2711854};
+				position[]={20744.127,30.548559,7271.2612};
+				angles[]={0.0013439035,2.5726328,6.2711778};
 			};
 			side="Empty";
 			flags=4;
 			class Attributes
 			{
 				skill=0.60000002;
-				init="nul = [this, 5] spawn EVO_fnc_basicRespawn";
 			};
 			id=109;
 			type="B_MRAP_01_F";
-			atlOffset=0.0067749023;
+			atlOffset=0.0069980621;
 		};
 		class Item106
 		{

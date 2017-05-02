@@ -189,15 +189,7 @@ class Params
 class CfgFunctions
 {
     #include "CHVD\CfgFunctions.hpp"
-    class NSLVR
-	{
-		class functions
-		{
-			class vehRespawn {file = "NSLVR\vehRespawn.sqf";};
-			class abandonMarker {file = "NSLVR\abandonMarker.sqf";};
-			class actionMP {file = "NSLVR\actionMP.sqf";};
-		};
-	};
+
     class EVO
 	{
 		tag = "EVO";
@@ -215,7 +207,6 @@ class CfgFunctions
 			class repair {};
 			class rtoffline {};
 			class pinit {};
-			class respawnRepair {};
 			class amb {};
 			class capture {};
 			class sendToHC {};
@@ -239,7 +230,6 @@ class CfgFunctions
 			class buildAmmoCrate {};
 			class newTargetTasks {};
 			class supportPoints {};
-			class basicRespawn {};
 			class sendToAO {};
 			class spawnGroup {};
 			class spawnVehicle {};
@@ -270,21 +260,6 @@ class CfgFunctions
 			class doArtyFire {};
 			class createMinefield {};
 			class createSniper {};
-			/*
-			class reviveControl {};
-			class reviveBleedOut {};
-			class reviveEnabled {};
-			class reviveExecuteTemplate {};
-			class reviveIconControl {};
-			class reviveIconManager {};
-			class reviveIncapacitate {};
-			class reviveInit {};
-			class reviveKeys {};
-			class reviveOnPlayerKilled {};
-			class reviveOnPlayerREspawn {};
-			class reviveProgress {};
-			class reviveSetStatus {};
-			*/
 		};
 	};
 };
