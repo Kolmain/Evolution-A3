@@ -228,13 +228,31 @@ switch (EVO_difficulty) do {
         rank6 = 225;
     };
  };
-rank1vehicles = ["B_Truck_01_Repair_F","B_Truck_01_ammo_F","B_Truck_01_fuel_F","B_Truck_01_medical_F","b_mrap_01_f","nonsteerable_parachute_f","steerable_parachute_f","b_boat_transport_01_f","b_g_boat_transport_01_f"];
-rank2vehicles = ["b_heli_light_01_f","b_sdv_01_f","b_mrap_01_hmg_f","b_truck_01_covered_f","b_truck_01_mover_f","b_truck_01_box_f","b_truck_01_transport_f"];
-rank3vehicles = ["b_heli_light_01_armed_f","b_heli_transport_01_f","b_heli_transport_01_camo_f","b_mrap_01_gmg_f","b_apc_wheeled_01_cannon_f"];
-rank4vehicles = ["b_apc_tracked_01_rcws_f","b_apc_tracked_01_crv_f","b_boat_armed_01_minigun_f"];
-rank5vehicles = ["b_apc_tracked_01_aa_f","b_mbt_01_cannon_f","b_mbt_01_tusk_f"];
-rank6vehicles = ["b_heli_attack_01_f","b_mbt_01_arty_f","b_mbt_01_mlrs_f"];
-rank7vehicles = ["b_plane_cas_01_f"];
+
+srank0vehicles = ["B_Quadbike_01_F", 	"B_LSV_01_unarmed_F"];
+srank1vehicles = srank0vehicles + ["B_MRAP_01_F", "B_Boat_Transport_01_F", "B_Truck_01_transport_F", "B_Truck_01_Repair_F", "B_Truck_01_ammo_F", "B_Truck_01_fuel_F", "B_Truck_01_medical_F"];
+srank2vehicles = srank1vehicles + ["B_LSV_01_armed_F"];
+srank3vehicles = srank2vehicles + ["B_MRAP_01_hmg_F"];
+srank4vehicles = srank3vehicles + ["B_MRAP_01_gmg_F"];
+srank5vehicles = srank4vehicles + ["B_APC_Tracked_01_rcws_F"];
+srank6vehicles = srank5vehicles + ["B_Heli_Light_01_F"];
+
+prank0vehicles = srank0vehicles + ["B_Heli_Light_01_F"];
+prank1vehicles = prank0vehicles + ["I_Heli_light_03_unarmed_F"];
+prank2vehicles = prank1vehicles + ["B_Heli_Light_01_armed_F"];
+prank3vehicles = prank2vehicles + ["I_Heli_light_03_F"];
+prank4vehicles = prank3vehicles + ["B_Heli_Transport_03_F"];
+prank5vehicles = prank4vehicles + ["B_T_VTOL_01_vehicle_F"];
+prank6vehicles = prank5vehicles + ["I_Plane_Fighter_03_CAS_F"];
+
+crank0vehicles = srank4vehicles;
+crank1vehicles = crank0vehicles + ["B_APC_Tracked_01_rcws_F"];
+crank2vehicles = crank1vehicles + ["B_APC_Tracked_01_AA_F", "B_APC_Wheeled_01_cannon_F"];
+crank3vehicles = crank2vehicles + ["I_APC_Wheeled_03_cannon_F"];
+crank4vehicles = crank3vehicles + ["I_APC_tracked_03_cannon_F"];
+crank5vehicles = crank4vehicles + ["B_MBT_01_cannon_F"];
+crank6vehicles = crank5vehicles + ["B_MBT_01_TUSK_F"];
+
 rank1weapons = ["arifle_MX_F","launch_NLAW_F","launch_RPG32_F"];
 rank1items = ["optic_Aco","optic_ACO_grn","acc_flashlight"];
 rank2weapons = ["launch_B_Titan_short_F","launch_B_Titan_F","hgun_ACPC2_F","arifle_MXC_F","arifle_MX_GL_F","arifle_MX_SW_F"];
