@@ -25,6 +25,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "PRIVATE": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -42,6 +43,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "CORPORAL": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -59,6 +61,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "SERGEANT": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -76,6 +79,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "LIEUTENANT": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -93,6 +97,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "CAPTAIN": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -110,6 +115,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "MAJOR": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";
@@ -127,6 +133,7 @@ if (_vehicle != _player && (driver _vehicle == _player)) then {
 		case "COLONEL": {
 			switch (typeOf player) do {
 				case "B_Soldier_F";
+				case "B_soldier_AT_F";
 				case "B_sniper_F";
 				case "B_soldier_AR_F";
 				case "B_medic_F";

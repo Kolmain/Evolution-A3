@@ -43,7 +43,7 @@ if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
 	_respawnPos = [(group player), player] spawn BIS_fnc_addRespawnPosition;
 };
-
+/*
 if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 	_ret = [] spawn {
 		while {alive player} do {
@@ -103,7 +103,7 @@ if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
 		};
 	};
 };
-
+*/
 //////////////////////////////////////
 //Add MASH/FARP to Player
 //////////////////////////////////////
