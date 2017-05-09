@@ -39,6 +39,7 @@ if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 	["promoted",["img\corp.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 	{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -50,7 +51,7 @@ if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >>  _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank2vehicles;
+	} forEach rank2vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
@@ -67,6 +68,7 @@ if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 	["promoted",["img\sgt.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 	{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -78,7 +80,7 @@ if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank3vehicles;
+	} forEach rank3vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
@@ -95,6 +97,7 @@ if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then
 	["promoted",["img\ltn.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 	{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -106,7 +109,7 @@ if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank4vehicles;
+	} forEach rank4vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
@@ -123,6 +126,7 @@ if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 	["promoted",["img\cpt.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 	{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -134,7 +138,7 @@ if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank5vehicles;
+	} forEach rank5vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
@@ -151,6 +155,7 @@ if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 	["promoted",["img\mjr.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 		{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -162,7 +167,7 @@ if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank6vehicles;
+	} forEach rank6vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 //////////////////////////////////////
 //COLONEL | RANK6
@@ -179,6 +184,7 @@ if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 	["promoted",["img\col.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
 	sleep 5;
+	/*
 		{
 		_dn = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 		_txt = format["You now have access to the %1.", _dn];
@@ -190,6 +196,6 @@ if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 		_txt = format["You now have access to the %1.", _dn];
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
-	} forEach rank7vehicles;
+	} forEach rank7vehicles;*/
 	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
 };

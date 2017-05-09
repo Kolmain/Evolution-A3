@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={20778.451,36.522217,7218.0947};
-		dir[]={0.54661125,-0.61317182,-0.57051027};
-		up[]={0.42438284,0.78966367,-0.44293919};
-		aside[]={-0.72217691,-2.4517067e-006,-0.69189543};
+		pos[]={20747.885,96.195251,7200.3921};
+		dir[]={0.41897145,-0.73481679,0.53363013};
+		up[]={0.45389202,0.67796826,0.57810569};
+		aside[]={0.78663367,4.5767956e-007,-0.6176334};
 	};
 };
 binarizationWanted=0;
@@ -1302,15 +1302,11 @@ class Mission
 					flags=6;
 					class Attributes
 					{
-						name="testp";
+						name="testso";
 						isPlayer=1;
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";
@@ -1388,20 +1384,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20783.164,29.173031,7211.8613};
-						angles[]={0.0013372133,5.5470877,6.2791886};
+						position[]={20783.164,29.173029,7211.8618};
+						angles[]={0.0013439035,5.5470929,6.2791882};
 					};
 					side="West";
 					flags=6;
 					class Attributes
 					{
+						name="testm";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";
@@ -1418,6 +1411,48 @@ class Mission
 					};
 					id=216;
 					type="B_medic_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="Male02ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=1.01;
+								};
+							};
+						};
+						nAttributes=2;
+					};
 				};
 			};
 			class Attributes
@@ -3559,20 +3594,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20782.191,29.178068,7211};
+						position[]={20782.189,29.178076,7211};
 						angles[]={0,5.5281558,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						name="testen";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";
@@ -3650,20 +3682,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20786.072,29.165691,7214.3145};
+						position[]={20786.072,29.165691,7214.3149};
 						angles[]={0,5.4825153,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						name="testmg";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";
@@ -3748,13 +3777,10 @@ class Mission
 					flags=7;
 					class Attributes
 					{
+						name="testp";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_HeliPilotCoveralls";
@@ -3836,20 +3862,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20787.863,29.164286,7216.0313};
+						position[]={20787.863,29.164286,7216.0308};
 						angles[]={0,5.4564052,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						name="testc";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam_vest";
@@ -3932,20 +3955,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20785.123,29.165916,7213.5322};
+						position[]={20785.123,29.165916,7213.5317};
 						angles[]={0,5.6033273,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						name="testsn";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";
@@ -4023,20 +4043,17 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={20784.217,29.167721,7212.6841};
+						position[]={20784.217,29.167723,7212.6836};
 						angles[]={0,5.6545525,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						name="testat";
 						isPlayable=1;
 						class Inventory
 						{
-							class binocular
-							{
-								name="Binocular";
-							};
 							class uniform
 							{
 								typeName="U_B_CombatUniform_mcam";

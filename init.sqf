@@ -272,9 +272,9 @@ gltier1 = ["arifle_MX_GL_F"];
 gltier2 = ["arifle_SPAR_01_GL_blk_F", "arifle_SPAR_01_GL_snd_F"];
 ////Sniper Rifles
 srtier0 = ["arifle_MXM_F"];
-srtier1 = ["srifle_DMR_06_camo_khs_F"];
+srtier1 = ["srifle_DMR_06_camo_F"];
 srtier2 = ["srifle_EBR_F"];
-srtier3 = ["arifle_SPAR_02_blk_F", "arifle_SPAR_02_snd_F"];
+srtier3 = ["arifle_SPAR_03_blk_F", "arifle_SPAR_03_snd_F"];
 srtier4 = ["srifle_DMR_03_F", "srifle_DMR_03_tan_F"];
 srtier5 = ["srifle_DMR_02_F", "srifle_DMR_02_sniper_F"];
 srtier6 = ["srifle_LRR_F", "srifle_LRR_camo_F", "srifle_GM6_F"];

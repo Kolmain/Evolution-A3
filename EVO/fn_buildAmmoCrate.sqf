@@ -5,7 +5,7 @@ if (("fullArsenal" call BIS_fnc_getParamValue) == 0) exitWith {};
 
 switch (_EVOrank) do {
   case "PRIVATE": {
-    availableBackpacks = [];
+    availableBackpacks = bprank0;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
@@ -23,7 +23,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank0weap;
-        availableItems = commonitems + baserank0items + baserank0gear;
+        availableItems = commonitems + baserank0items + baserank1gear;
       };
       case "B_crew_F": {
         availableWeapons = crank0weap;
@@ -54,7 +54,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank1weap;
-        availableItems = commonitems + baserank1items + baserank1gear;
+        availableItems = commonitems + baserank1items + baserank2gear;
       };
       case "B_crew_F": {
         availableWeapons = crank1weap;
@@ -67,7 +67,7 @@ switch (_EVOrank) do {
     };
   };
   case "SERGEANT": {
-    availableBackpacks = [];
+    availableBackpacks = bprank0;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
@@ -85,7 +85,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank2weap;
-        availableItems = commonitems + baserank2items + baserank2gear;
+        availableItems = commonitems + baserank2items + baserank3gear;
       };
       case "B_crew_F": {
         availableWeapons = crank2weap;
@@ -98,7 +98,7 @@ switch (_EVOrank) do {
     };
   };
   case "LIEUTENANT": {
-    availableBackpacks = [];
+    availableBackpacks = bprank0 + bprank1;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
@@ -116,7 +116,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank3weap;
-        availableItems = commonitems + baserank3items + baserank3gear;
+        availableItems = commonitems + baserank3items + baserank4gear;
       };
       case "B_crew_F": {
         availableWeapons = crank3weap;
@@ -129,7 +129,7 @@ switch (_EVOrank) do {
     };
   };
   case "CAPTAIN": {
-    availableBackpacks = bprank1;
+    availableBackpacks = bprank0 + bprank1;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
@@ -147,7 +147,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank4weap;
-        availableItems = commonitems + baserank4items + baserank4gear;
+        availableItems = commonitems + baserank4items + baserank5gear;
       };
       case "B_crew_F": {
         availableWeapons = crank4weap;
@@ -160,7 +160,7 @@ switch (_EVOrank) do {
     };
   };
   case "MAJOR": {
-    availableBackpacks = [];
+    availableBackpacks = bprank0 + bprank1;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
@@ -178,7 +178,7 @@ switch (_EVOrank) do {
       };
       case "B_soldier_AR_F": {
         availableWeapons = arrank5weap;
-        availableItems = commonitems + baserank5items + baserank5gear;
+        availableItems = commonitems + baserank5items + baserank6gear;
       };
       case "B_crew_F": {
         availableWeapons = crank5weap;
@@ -191,7 +191,7 @@ switch (_EVOrank) do {
     };
   };
   case "COLONEL": {
-    availableBackpacks = bprank1;
+    availableBackpacks = bprank0 + bprank1 + bprank2;
     switch (typeOf player) do {
       case "B_medic_F";
       case "B_engineer_F";
