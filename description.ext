@@ -3,11 +3,6 @@ author="Kolmain";
 OnLoadName = "Evoluton-A3";
 OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
-respawn = 3;
-respawnDelay = 15;
-respawnTemplates[] = {"MenuPosition", "Revive"};
-reviveDelay = 10;
-respawnOnStart = -1;
 enableDebugConsole = 1;
 taskManagement_markers2D = 1;
 taskManagement_markers3D = 1;
@@ -33,15 +28,6 @@ class Header
  gameType = COOP;            //DM, Team, Coop, CTI
  minPlayers = 1;             //min # of players the mission supports
  maxPlayers = 30;            //Max # of players the mission supports
-};
-
-class CfgRespawnTemplates
-{
-	class EVO_respawn
-	{
-		onPlayerKilled = "EVO_fnc_reviveOnPlayerKilled";
-		onPlayerRespawn = "EVO_fnc_reviveOnPlayerRespawn";
-	};
 };
 
 class CfgRadio
@@ -189,15 +175,7 @@ class Params
 class CfgFunctions
 {
     #include "CHVD\CfgFunctions.hpp"
-    class NSLVR
-	{
-		class functions
-		{
-			class vehRespawn {file = "NSLVR\vehRespawn.sqf";};
-			class abandonMarker {file = "NSLVR\abandonMarker.sqf";};
-			class actionMP {file = "NSLVR\actionMP.sqf";};
-		};
-	};
+
     class EVO
 	{
 		tag = "EVO";
@@ -215,7 +193,6 @@ class CfgFunctions
 			class repair {};
 			class rtoffline {};
 			class pinit {};
-			class respawnRepair {};
 			class amb {};
 			class capture {};
 			class sendToHC {};
@@ -239,7 +216,6 @@ class CfgFunctions
 			class buildAmmoCrate {};
 			class newTargetTasks {};
 			class supportPoints {};
-			class basicRespawn {};
 			class sendToAO {};
 			class spawnGroup {};
 			class spawnVehicle {};
@@ -270,21 +246,6 @@ class CfgFunctions
 			class doArtyFire {};
 			class createMinefield {};
 			class createSniper {};
-			/*
-			class reviveControl {};
-			class reviveBleedOut {};
-			class reviveEnabled {};
-			class reviveExecuteTemplate {};
-			class reviveIconControl {};
-			class reviveIconManager {};
-			class reviveIncapacitate {};
-			class reviveInit {};
-			class reviveKeys {};
-			class reviveOnPlayerKilled {};
-			class reviveOnPlayerREspawn {};
-			class reviveProgress {};
-			class reviveSetStatus {};
-			*/
 		};
 	};
 };
@@ -769,5 +730,58 @@ class CfgDebriefing
 		pictureBackground = "";
 		picture = "b_inf";
 		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+};
+
+class CfgUnitInsignia
+{
+	class PRIVATE
+	{
+		displayName = "";
+		author = "";
+		texture = "img\pvt.paa";
+		textureVehicle = "";
+	};
+	class CORPORAL
+	{
+		displayName = "";
+		author = "";
+		texture = "img\corp.paa";
+		textureVehicle = "";
+	};
+	class SERGEANT
+	{
+		displayName = "";
+		author = "";
+		texture = "img\sgt.paa";
+		textureVehicle = "";
+	};
+	class LIEUTENANT
+	{
+		displayName = "";
+		author = "";
+		texture = "img\ltn.paa";
+		textureVehicle = "";
+	};
+	class CAPTAIN
+	{
+		displayName = "";
+		author = "";
+		texture = "img\cpt.paa";
+		textureVehicle = "";
+	};
+	class MAJOR
+	{
+		displayName = "";
+		author = "";
+		texture = "img\mjr.paa";
+		textureVehicle = "";
+	};
+	class COLONEL
+	{
+		displayName = "";
+		author = "";
+		texture = "img\col.paa";
+		textureVehicle = "";
 	};
 };

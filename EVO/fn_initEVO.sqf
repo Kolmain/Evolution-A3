@@ -99,16 +99,6 @@ handle = [] spawn EVO_fnc_buildSideMissionArray;
 {
 	_vehicle = _x;
 	//////////////////////////////////////
-	//Setup BLUFOR Vehicle Respawn/Repair Systems
-	//////////////////////////////////////
-	if (faction _vehicle == "BLU_F") then {
-		if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
-			_null = [_vehicle] spawn EVO_fnc_respawnRepair;
-		} else {
-			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
-		};
-	};
-	//////////////////////////////////////
 	//Setup OPFOR AAA
 	//////////////////////////////////////
 	if (typeOf _vehicle == "O_APC_Tracked_02_AA_F") then {
@@ -174,7 +164,3 @@ if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
 	};
 	handle = [] spawn EVO_fnc_initTarget;
 };
-
-
-
-

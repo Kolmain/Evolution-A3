@@ -1,3 +1,4 @@
+//TODO fix rank vehicles display to add prank and crank as needed
 _index = player createDiarySubject ["OPREP","OPREP"];
 player createDiaryRecord ["OPREP", ["Situation", "CSAT forces have established a foothold in Altis alongside the AAF. Fighting has erupted all over the island. NATO expeditionary forces have established a staging area on the southeast corner of the island."]];
 player createDiaryRecord ["OPREP", ["Enemy Forces", "OPFOR infantry companies have secured the villages and cities of Altis, and are dug in expecting assault. Additional OPFOR support assets have been spotted throughout the island. Expect OPFOR CAS and indirect fire support. Forward recon elements also discovered a significant AAA network covering the island, and have marked the known air coverage locations."]];
@@ -21,37 +22,37 @@ _assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank1vehicles;
+} forEach srank0vehicles;
 _assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'/><br/> CORPORAL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank2vehicles;
+} forEach srank1vehicles;
 _assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'/><br/> SERGEANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank3vehicles;
+} forEach srank2vehicles;
 _assetString = _assetString + "<br/><img image='img\ltn.paa' width='32' height='32'><br/> LIEUTENANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank4vehicles;
+} forEach srank3vehicles;
 _assetString = _assetString + "<br/><img image='img\cpt.paa' width='32' height='32'/><br/> CAPTAIN <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank5vehicles;
+} forEach srank4vehicles;
 _assetString = _assetString + "<br/><img image='img\mjr.paa' width='32' height='32'><br/> MAJOR <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank6vehicles;
+} forEach srank5vehicles;
 _assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'/><br/> COLONEL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgVehicles" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank7vehicles;
+} forEach srank6vehicles;
 player createDiaryRecord ["Gamemode", ["Assets", _assetString]];
 
 
@@ -60,37 +61,37 @@ _assetString = _assetString + "<br/><img image='img\pvt.paa' width='32' height='
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank1weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\corp.paa' width='32' height='32'/><br/> CORPORAL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank2weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\sgt.paa' width='32' height='32'/><br/> SERGEANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank3weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\ltn.paa' width='32' height='32'/><br/> LIEUTENANT <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank4weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\cpt.paa' width='32' height='32'><br/> CAPTAIN <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank5weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\mjr.paa' width='32' height='32'/><br/> MAJOR <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank6weapons;
+} forEach sorank0weap;
 _assetString = _assetString + "<br/><img image='img\col.paa' width='32' height='32'/><br/> COLONEL <br/><br/>";
 {
 	_displayName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
 	_assetString = _assetString + _displayName + "<br/>";
-} forEach rank7weapons;
+} forEach sorank0weap;
 player createDiaryRecord ["Gamemode", ["Weapons", _assetString]];
 
 
