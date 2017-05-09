@@ -446,8 +446,7 @@ if (isServer) then {
 	[] spawn EVO_fnc_initEVO;
 	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
 	publicVariable "EVO_sessionID";
-    [] spawn EVO_fnc_protectBase;
-    [WEST, spawnBuilding, "Staging Base"] call BIS_fnc_addRespawnPosition;
+  [] spawn EVO_fnc_protectBase;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 

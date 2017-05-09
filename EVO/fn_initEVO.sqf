@@ -164,7 +164,3 @@ if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
 	};
 	handle = [] spawn EVO_fnc_initTarget;
 };
-
-
-
-
