@@ -3,11 +3,6 @@ author="Kolmain";
 OnLoadName = "Evoluton-A3";
 OnLoadMission = "An ArmA Classic.";
 loadScreen = "img\evo.paa";
-respawn = 3;
-respawnDelay = 15;
-respawnTemplates[] = {"MenuPosition"};
-reviveDelay = 10;
-respawnOnStart = -1;
 enableDebugConsole = 1;
 taskManagement_markers2D = 1;
 taskManagement_markers3D = 1;
@@ -33,15 +28,6 @@ class Header
  gameType = COOP;            //DM, Team, Coop, CTI
  minPlayers = 1;             //min # of players the mission supports
  maxPlayers = 30;            //Max # of players the mission supports
-};
-
-class CfgRespawnTemplates
-{
-	class EVO_respawn
-	{
-		onPlayerKilled = "EVO_fnc_reviveOnPlayerKilled";
-		onPlayerRespawn = "EVO_fnc_reviveOnPlayerRespawn";
-	};
 };
 
 class CfgRadio
