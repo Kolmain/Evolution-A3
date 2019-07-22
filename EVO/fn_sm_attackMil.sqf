@@ -21,12 +21,12 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		publicVariable "currentSideMissionMarker";
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			//_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (EVO_OPFORINFANTRY call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 
 				if ([true, false] call bis_fnc_selectRandom) then {
-					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
+					[_grp, getmarkerpos currentSideMissionMarker, 100] call CBA_fnc_taskDefend;
 				} else {
-					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
+					[_grp, getmarkerpos currentSideMissionMarker, 300] call CBA_fnc_taskPatrol;
 				};
 			{
 				currentSidemissionUnits pushBack _x;
@@ -40,13 +40,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 
 		for "_i" from 1 to (["Armor", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+			_ret = [_spawnPos, (floor (random 360)), (EVO_OPFORVEHICLES call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
-				if ([true, false] call bis_fnc_selectRandom) then {
-					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
-				} else {
-					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
-				};
+			[_grp, getmarkerpos currentSideMissionMarker, 300] call CBA_fnc_taskPatrol;
 		
 			{
 				currentSidemissionUnits pushBack _x;
@@ -101,14 +97,14 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			handle = [] spawn EVO_fnc_buildSideMissionArray;
 			deleteMarker currentSideMissionMarker;
 		};
-		_tskDisplayName = format ["Attack OPFOR Installation"];
+		_tskDisplayName = format ["Attack SLA Installation"];
 		attackMilTask = format ["attackMilTask%1", floor(random(1000))];
 		[WEST, [attackMilTask], [_tskDisplayName, _tskDisplayName, ""], (position attackMilTarget), 1, 2, true] call BIS_fnc_taskCreate;
 	};
 	if (!isDedicated) then {
 	//client
-		["TaskAssigned",["","Attack OPFOR Installation"]] call BIS_fnc_showNotification;
-		CROSSROADS sideChat "All units be advised, forward scouts report OPFOR activity at this location. Capture the military installation!";
+		["TaskAssigned",["","Attack SLA Installation"]] call BIS_fnc_showNotification;
+		CROSSROADS sideChat "All units be advised, forward scouts report SLA activity at this location. Capture the military installation!";
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance attackMilTarget < 1000) then {
@@ -119,7 +115,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			CROSSROADS sideChat "Forward scouts report OPFOR activity at the military installation is declining. Nice job men!";
+			CROSSROADS sideChat "Forward scouts report SLA activity at the military installation is declining. Nice job men!";
 			["TaskSucceeded",["","OPFOR Installation Seized"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";

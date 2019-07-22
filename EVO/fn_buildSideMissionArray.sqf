@@ -43,7 +43,7 @@ if (("randomSideMissions" call BIS_fnc_getParamValue) == 1) then {
 if (_bool) then {
 	_img = getText(configFile >>  "CfgTaskTypes" >>  "Defend" >> "icon");
 	availableSideMissions = availableSideMissions + [
-		[getPos spawnBuilding, EVO_fnc_sm_baseDef,"Defend NATO Staging Base","OPFOR ground units are converging on the staging base. Defeat the enemy counterattack.","",_img,1,[]]
+		[getPos spawnBuilding, EVO_fnc_sm_baseDef,"Defend Staging Base","SLA ground units are converging on the staging base. Defeat the enemy counterattack.","",_img,1,[]]
 	];
 };
 
@@ -120,9 +120,9 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!", _name];
+	_descrip = format ["SLA squads have discovered our forward recon units around %1. They're sending squads to seek and destroy our men, get out there and help them!", _name];
 	availableSideMissions = availableSideMissions + [
-		[getPos _obj, EVO_fnc_sm_reinforce,"Reinforce NATO Recon Element", _descrip,"",_img,1,[]]
+		[getPos _obj, EVO_fnc_sm_reinforce,"Reinforce Recon Element", _descrip,"",_img,1,[]]
 	];
 };
 
@@ -143,7 +143,7 @@ if (_bool) then {
 	_ret = [getPos _obj] call EVO_fnc_nearestTownName;
 	_name = _ret select 0;
 	_distance = _ret select 1;
-	_descrip = format ["OPFOR has taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
+	_descrip = format ["SLA has taken out a friendly bird near %1. They're sending squads to find the crew, get them out of there!", _name];
 	availableSideMissions = availableSideMissions + [
 		[getPos _obj, EVO_fnc_sm_csar,"CSAR Helo Crew", _descrip,"",_img,1,[]]
 	];

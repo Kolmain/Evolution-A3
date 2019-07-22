@@ -24,20 +24,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		publicVariable "currentSideMissionMarker";
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
-			if (("aiSystem" call BIS_fnc_getParamValue) == 2) then {
-				if ([true, false] call bis_fnc_selectRandom) then {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
-				} else {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
-				};
-			} else {
-				if ([true, false] call bis_fnc_selectRandom) then {
-					_null = [(leader _grp), currentSideMissionMarker, "FORTIFY", "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				} else {
-					_null = [(leader _grp), currentSideMissionMarker, "SAFE", "NOSMOKE", "DELETE:", 80, "SHOWMARKER"] execVM "scripts\UPSMON.sqf";
-				};
-			};
+			_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
+			[_grp, getPos _vehicle, 100] call CBA_fnc_taskDefend;
 			{
 				currentSideMissionsUnits pushBack _x;
 			} forEach units _grp;
