@@ -8,7 +8,7 @@ Using orientation of objects: yes
 */
 
 [
-	["Land_Communication_F",[-0.00927734,1.51172,0],0,1,0,[0,0],"","",true,false],
+	["Land_Radar",[-0.00927734,1.51172,0],0,1,0,[0,0],"","",true,false],
 	["Land_HBarrierWall_corner_F",[-2.19141,-2.31982,0],179.243,1,0,[0,-0],"","",true,false],
 	["Land_PowerGenerator_F",[3.0376,2.05957,0],192.448,1,0,[0,0],"","",true,false],
 	["Land_spp_Mirror_F",[2.74463,3.93262,0],62.286,1,0,[0,0],"","",true,false],

@@ -51,7 +51,7 @@ _obj = _array select 0;
 //////////////////////////////////////
 //Target AO Radio Tower
 //////////////////////////////////////
-_towerClass = "Land_Communication_F";
+_towerClass = "Land_Radar";
 _spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
 //_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_ObjectsMapper;
 _radioTowerComp = [_spawnPos, "Comps\radiotower.sqf"] call EVO_fnc_createComposition;
@@ -148,7 +148,6 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_mortar = nearestObject [_spawnPos, "CUP_O_2b14_82mm_RU"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
-		(group _mortarGunner) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "NOFOLLOW"], false];
 		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 		{
 			if (HCconnected) then {
@@ -208,14 +207,14 @@ for "_i" from 1 to (["CAS", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_plane = _ret select 0;
 		_grp = _ret select 2;
 		_plane flyInHeight 500;
-		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+		[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 		[_plane] spawn EVO_fnc_trackAir;
 		while {RTonline && (_this select 0 == currentTarget)} do {
 			_ret = [(getPos server), (floor (random 360)), (EVO_opforCAS call bis_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_plane = _ret select 0;
 			_grp = _ret select 2;
 			_plane flyInHeight 500;
-			_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 			[_plane] spawn EVO_fnc_trackAir;
 			waitUntil {({alive _x} count units _grp) < 1 || !canMove _plane || !alive _plane};
 			_delay = ["CAS"] call EVO_fnc_calculateDelay;

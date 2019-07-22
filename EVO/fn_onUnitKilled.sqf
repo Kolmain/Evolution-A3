@@ -126,7 +126,7 @@ if (isPlayer _killer || isPlayer (leader group _killer)) then {
 						if (player == _killer) then {["PointsRemoved",["You killed the OPFOR Officer.", 5]] call BIS_fnc_showNotification};
 					}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 				};
-				if (toLower(typeOf _killed) == toLower("Land_Communication_F")) then {
+				if (toLower(typeOf _killed) == toLower("Land_Radar")) then {
 					//support car
 					_scoreToAdd = 8;
 					_score = _score + 8;

@@ -27,67 +27,7 @@ setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 //////////////////////////////////////
 //Init OPFOR AI System
 //////////////////////////////////////
-    if (isServer) then
-    {
-        // From what range away from closest player should units be cached (in meters or what every metric system arma uses)?
-        // To test this set it to 20 meters. Then make sure you get that close and move away.
-        // You will notice 2 levels of caching 1 all but leader, 2 completely away
-        // Stage 2 is 2 x GAIA_CACHE_STAGE_1. So default 2000, namely 2 x 1000
-        GAIA_CACHE_STAGE_1             = 1000;
-        // The follow 3 influence how close troops should be to known conflict to be used. (so they wont travel all the map to support)
-        // How far should footmobiles be called in to support attacks.
-        // This is also the range that is used by the transport system. If futher then the below setting from a zone, they can get transport.
-        MCC_GAIA_MAX_SLOW_SPEED_RANGE  = 600;
-        // How far should vehicles be called in to support attacks. (including boats)
-        MCC_GAIA_MAX_MEDIUM_SPEED_RANGE= 4500;
-        // How far should air units be called in to support attacks.
-        MCC_GAIA_MAX_FAST_SPEED_RANGE  = 80000;
-        // How logn should mortars and artillery wait (in seconds) between fire support missions.
-        MCC_GAIA_MORTAR_TIMEOUT        = 120;
-        // DANGEROUS SETTING!!!
-        // If set to TRUE gaia will even send units that she does NOT control into attacks. Be aware ONLy for attacks.
-        // They will not suddenly patrol if set to true.
-        MCC_GAIA_ATTACKS_FOR_NONGAIA     = false;
-
-        // If set to false, ai will not use smoke and flares (during night)
-        MCC_GAIA_AMBIANT                 = true;
-
-        // Influence how high the chance is (when applicaple) that units do smokes and flare (so not robotic style)
-        // Default is 20 that is a chance of 1 out of 20 when they are applicable to use smokes and flares
-        MCC_GAIA_AMBIANT_CHANCE          = 20;
-        // The seconds of rest a transporter takes after STARTING his last order
-        MCC_GAIA_TRANSPORT_RESTTIME     = 40;
-        call compile preprocessfile "gaia\gaia_init.sqf";
-        [] spawn {
-            _gaia_respawn = [];
-            while {true} do
-            {
-                //player globalchat "Deleting started..............";
-
-                {
-                    _gaia_respawn = (missionNamespace getVariable [ "GAIA_RESPAWN_" + str(_x),[] ]);
-                    //Store ALL original group setups
-                    if (count(_gaia_respawn)==0) then {[(_x)] call fn_cache_original_group;};
-
-                    if ((({alive _x} count units _x) == 0) ) then
-                    {
-                        //Before we send him to heaven check if he should be reincarnated
-                        if (count(_gaia_respawn)==2) then { [_gaia_respawn,(_x getVariable  ["MCC_GAIA_RESPAWN",-1]),(_x getVariable  ["MCC_GAIA_CACHE",false]),(_x getVariable  ["GAIA_zone_intend",[]])] call fn_uncache_original_group;};
-
-                        //Remove the respawn group content before the group is re-used
-                        missionNamespace setVariable ["GAIA_RESPAWN_" + str(_x), nil];
-
-                        deleteGroup _x;
-                    };
-
-                    sleep .1;
-
-                } foreach allGroups;
-
-                sleep 2;
-            };
-        };
-    };
+[] execVM "Vcom\VcomInit.sqf";
 
 //////////////////////////////////////
 //Init Common Variables
@@ -159,8 +99,8 @@ switch (EVO_difficulty) do {
         rank6 = 225;
     };
  };
-RANK1VEHICLES = ["B_TRUCK_01_REPAIR_F","B_TRUCK_01_AMMO_F","B_TRUCK_01_FUEL_F","B_TRUCK_01_MEDICAL_F","NONSTEERABLE_PARACHUTE_F","STEERABLE_PARACHUTE_F","CUP_B_HMMWV_UNARMED_USMC"];
-RANK2VEHICLES = ["B_TRUCK_01_COVERED_F","B_TRUCK_01_TRANSPORT_F"];
+RANK1VEHICLES = ["CUP_B_MTVR_Repair_USMC","CUP_B_MTVR_Ammo_USMC","CUP_B_MTVR_Fuel_USMC","CUP_B_HMMWV_Ambulance_USMC","NONSTEERABLE_PARACHUTE_F","STEERABLE_PARACHUTE_F","CUP_B_HMMWV_UNARMED_USMC"];
+RANK2VEHICLES = ["CUP_B_MTVR_USMC"];
 RANK3VEHICLES = ["CUP_B_HMMWV_MK19_USMC","CUP_B_HMMWV_M2_USMC","CUP_B_HMMWV_TOW_USMC","CUP_B_MH6J_USA"];
 RANK4VEHICLES = ["CUP_B_M1126_ICV_M2_WOODLAND_SLAT","CUP_B_M113_USA","CUP_B_M1135_ATGMV_WOODLAND_SLAT"];
 RANK5VEHICLES = ["CUP_B_M1126_ICV_MK19_WOODLAND","CUP_B_M163_USA","CUP_B_UH60L_US"];
@@ -211,8 +151,15 @@ AVAILABLEBACKPACKS = ["B_ASSAULTPACK_RGR"];
 EVO_OPFORGROUNDTRANS = ["CUP_O_URAL_SLA",  "CUP_O_URAL_OPEN_SLA"];
 EVO_OPFORAIRTRANS = ["CUP_O_MI8_SLA_1","CUP_O_MI8_SLA_2","CUP_O_UH1H_SLA"];
 EVO_OPFORINFANTRY = [
-    (CONFIGFILE >> "CFGGROUPS" >> "EAST" >> "" >> "INFANTRY" >> "CUP_O_SLA_INFANTRYSQUAD"),
-    (CONFIGFILE >> "CFGGROUPS" >> "EAST" >> "CUP_O_SLA" >> "INFANTRY" >> "CUP_O_SLA_SPECIALPURPOSESQUAD")
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_InfantrySquad"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_SniperTeam"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_InfantrySection"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_InfantrySectionAA"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_InfantrySectionAT"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry" >> "CUP_O_SLA_InfantrySectionMG"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry_Militia" >> "CUP_O_SLA_InfantrySquad_Militia"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry_SpecOps" >> "CUP_O_SLA_SpecialPurposeSquad"),
+    (configfile >> "CfgGroups" >> "East" >> "CUP_O_SLA" >> "Infantry_Urban" >> "CUP_O_SLA_InfantrySquad_Urban")
 ];
 EVO_OPFORVEHICLES = ["CUP_O_BRDM2_SLA","CUP_O_BRDM2_ATGM_SLA","CUP_O_BTR60_SLA","CUP_O_UAZ_UNARMED_SLA","CUP_O_UAZ_AGS30_SLA","CUP_O_UAZ_MG_SLA","CUP_O_UAZ_OPEN_SLA","CUP_O_URAL_ZU23_SLA","CUP_O_T72_SLA"];
 EVO_OPFORAAA = "CUP_O_ZSU23_SLA";
@@ -230,20 +177,6 @@ if (!(isServer) && !(hasInterface)) then {
 	publicVariable "HCconnected";
 };
 
-if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-    _lastWorld = profileNamespace getVariable ["EVO_world", "nil"];
-    if (_lastWorld == "nil") then {
-
-    } else {
-        if (_lastWorld == worldName) then {
-            targetCounter = profileNamespace getVariable ["EVO_currentTargetCounter", 2];
-            EVOp_scoreArray = profileNamespace getVariable ["EVO_scoreArray", []];
-            publicVariable "EVOp_scoreArray";
-        };
-
-    };
-
-};
 //////////////////////////////////////
 //Init Server
 //////////////////////////////////////

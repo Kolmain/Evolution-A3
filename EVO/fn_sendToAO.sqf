@@ -26,9 +26,9 @@ switch (_type) do {
 		} forEach units _grp;
 		if (_init) then {
 				if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+					[this, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
 				} else {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 				};
 		} else {
 			[_grp] spawn {
@@ -40,6 +40,12 @@ switch (_type) do {
 					_ret = [_spawnPos2, (floor (random 360)), (EVO_opforGroundTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
+					_transGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					_transGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					_transGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					_transGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					_transGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					_transGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 				    _roads = _transport nearRoads 100;
 				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
 				    _transport setPos getPos _nearestRoad;
@@ -67,9 +73,9 @@ switch (_type) do {
 				    waitUntil {count crew _transport == count units _transGrp};
 
 						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
-							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "FORTIFY"], false];
+							[this, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
 						} else {
-							_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+							[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 						};
 
 				    doStop _transport;
@@ -89,6 +95,12 @@ switch (_type) do {
 				    _ret = [_spawnPos2, (floor (random 360)), (EVO_opforAirTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _heli = _ret select 0;
 				    _heliGrp = _ret select 2;
+					_heliGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					_heliGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					_heliGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					_heliGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					_heliGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					_heliGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 				    {
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
@@ -116,7 +128,7 @@ switch (_type) do {
 					    	deleteVehicle _heli;
 						};
 
-			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    		[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 
 					} else {
 						//land
@@ -141,7 +153,7 @@ switch (_type) do {
 					    	deleteVehicle _heli;
 						};
 
-			    		_grp setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
+			    		[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 
 					};
 				};
@@ -183,6 +195,12 @@ switch (_type) do {
 					group driver _heli setBehaviour "CARELESS";
 					group driver _heli setCombatMode "BLUE";
 					group driver _heli setSpeedMode "FULL";
+					group driver _heli setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					group driver _heli setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					group driver _heli setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					group driver _heli setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					group driver _heli setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					group driver _heli setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 					_lz = [position currentTarget, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					driver _heli doMove _lz;
 					_heli flyInHeight 50;
@@ -195,9 +213,8 @@ switch (_type) do {
 						ropeCut [ _x, 5];
 					} forEach ropes _heli;
 
-			    		(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-
-					group driver _tank setSpeedMode "LIMITED";
+			    	[group driver _tank, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
+					_heli setSpeedMode "LIMITED";
 					_heli land "NONE";
 					driver _heli doMove getPos server;
 					_heli flyInHeight 50;
@@ -212,8 +229,7 @@ switch (_type) do {
 				};
 			} else {
 
-			    	(leader group driver _tank) setVariable ["GAIA_ZONE_INTEND",[currentTargetMarkerName, "MOVE"], false];
-
+			    [_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 				_grp setSpeedMode "FULL";
 				[_grp] spawn {
 					_grp = _this select 0;

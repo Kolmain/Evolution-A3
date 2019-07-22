@@ -24,9 +24,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			//_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
 
 				if ([true, false] call bis_fnc_selectRandom) then {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
+					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
 				} else {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
+					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 				};
 			{
 				currentSidemissionUnits pushBack _x;
@@ -43,9 +43,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
 				if ([true, false] call bis_fnc_selectRandom) then {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "FORTIFY"], false];
+					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskDefend;
 				} else {
-					_grp setVariable ["GAIA_ZONE_INTEND",[currentSideMissionMarker, "MOVE"], false];
+					[_grp, getmarkerpos currentTargetMarkerName, 300] call CBA_fnc_taskPatrol;
 				};
 		
 			{
