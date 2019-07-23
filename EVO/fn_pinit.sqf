@@ -1,17 +1,4 @@
 private ["_score","_player","_respawnPos","_ret","_vehicle","_displayName","_txt","_hitID","_handleHealID","_string","_currentLoadout"];
-//////////////////////////////////////
-//Catch Player Score
-//////////////////////////////////////
-_score = 0;
-if (isMultiplayer) Then {
-	_score = score player;
-} else {
-	_score = player getVariable ["EVO_score", 0];
-	if (isNil "_score") then {
-	_score = 0;
-	}
-};
-player setVariable ["EVO_score", _score, true];
 
 //////////////////////////////////////
 //Setup Player Actions
@@ -21,87 +8,14 @@ player addaction ["<t color='#CCCC00'>View Distance Settings</t>", CHVD_fnc_open
 player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10 && ((leader group player) == player)"];
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
-if (("mhqParam" call BIS_fnc_getParamValue) == 1) then {
-	player addaction ["<t color='#CCCC00'>Go to MHQ</t>", "[player, MHQ] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance spawnBuilding) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
-	player addaction ["<t color='#CCCC00'>Go to HQ</t>", "[player, spawnBuilding] call BIS_fnc_moveToRespawnPosition", nil,1,false,true,"","(player distance MHQ) < 10 && alive MHQ && isTouchingGround MHQ && canMove MHQ && fuel MHQ > 0"];
-};
 
 //////////////////////////////////////
 //Setup Player-centric Parameters
 //////////////////////////////////////
-if (("fullArsenal" call BIS_fnc_getParamValue) == 0) then {
-	//player addaction ["Arsenal","['Open',true] spawn BIS_fnc_arsenal;",nil,1,false,true,"","(player distance hqbox) < 10"];
-	0 = ["AmmoboxInit",[hqbox, true]] spawn BIS_fnc_arsenal;
-};
-
 if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 	player enableFatigue false;
 } else {
 	player enableFatigue true;
-};
-
-if (("pRespawnPoints" call BIS_fnc_getParamValue) == 1) then {
-	_respawnPos = [(group player), player] spawn BIS_fnc_addRespawnPosition;
-};
-
-if (("pilotDressRequired" call BIS_fnc_getParamValue) == 1) then {
-	_ret = [] spawn {
-		while {alive player} do {
-			sleep 1;
-			_player = player;
-			_vehicle = vehicle _player;
-			if (_vehicle != _player) then {
-				if (_vehicle isKindOf "Helicopter" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetHeli_B" && (driver _vehicle == player || gunner _vehicle == player) && isTouchingGround _vehicle) then {
-					if (player distance spawnBuilding < 500) then {
-						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","ItemGPS","H_PilotHelmetHeli_B","G_Tactical_Black"],"CUP_smg_MP5A5",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_PilotOverall",["FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit"],"CUP_V_B_USArmy_PilotVest",["FirstAidKit","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","SmokeShellBlue","SmokeShellRed","SmokeShell"],"B_Parachute",[],[["CUP_30Rnd_9x19_MP5"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_smg_MP5A5","Single"]] execVM "scripts\setloadout.sqf";
-						systemChat "Auto-switching loadout to helicopter pilot loadout...";
-						handle = [_player, _vehicle] spawn {
-							_player = _this select 0;
-							_vehicle = _this select 1;
-							waitUntil {driver _vehicle != _player};
-							if (_player distance spawnBuilding < 500) then {
-								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
-								systemChat "Auto-switching back to previous loadout...";
-							};
-						};
-					} else {
-						_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
-						_txt = format["You are not equipped to operate this %1. You require pilot gear.", _displayName];
-						["notQualified",[_txt]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						sleep 1;
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-				if (_vehicle isKindOf "Plane" && typeOf _vehicle != "nonsteerable_parachute_f" && typeOf _vehicle != "steerable_parachute_f" && headgear _player != "H_PilotHelmetFighter_B" && driver _vehicle == player) then {
-					if (player distance spawnBuilding < 500) then {
-						loadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-						handle = [_player, [["ItemMap","ItemCompass","ItemWatch","ItemRadio","ItemGPS","H_PilotHelmetHeli_B","G_Tactical_Black"],"CUP_smg_MP5A5",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_PilotOverall",["FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit","FirstAidKit"],"CUP_V_B_USArmy_PilotVest",["FirstAidKit","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_30Rnd_9x19_MP5","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","SmokeShellBlue","SmokeShellRed","SmokeShell"],"B_Parachute",[],[["CUP_30Rnd_9x19_MP5"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_smg_MP5A5","Single"]] execVM "scripts\setloadout.sqf";
-						systemChat "Auto-switching loadout to pilot loadout...";
-						handle = [_player, _vehicle] spawn {
-							_player = _this select 0;
-							_vehicle = _this select 1;
-							waitUntil {driver _vehicle != _player};
-							if (_player distance spawnBuilding < 500) then {
-								handle = [_player, loadout] execVM "scripts\setloadout.sqf";
-								systemChat "Auto-switching back to previous loadout...";
-							};
-						};
-					} else {
-						_displayName = getText(configFile >>  "CfgVehicles" >> typeOf _vehicle >> "displayName");
-						_txt = format["You are not equipped to operate this %1. You require pilot gear.", _displayName];
-						["notQualified",[_txt]] call BIS_fnc_showNotification;
-						_player action ["engineOff", vehicle _player];
-						sleep 1;
-						_player action ["getOut", vehicle _player];
-						_player action ["Eject", vehicle _player];
-					};
-				};
-			};
-		};
-	};
 };
 
 //////////////////////////////////////
@@ -140,9 +54,8 @@ _ret = [] spawn {
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1, _this select 0], {
 		if (player == (_this select 0) && player != _this select 1) then {
-			_score = player getVariable ["EVO_score", 0];
+			_score =  score player
 			_score = _score + 1;
-			player setVariable ["EVO_score", _score, true];
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
 			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
 			[player, 1] call BIS_fnc_addScore;
@@ -172,6 +85,8 @@ handle = [] spawn {
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
 					["towerTask", currentTargetRT] call BIS_fnc_taskSetDestination
+					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
+					[player, 3] call BIS_fnc_addScore;
 				};
 			};
 		};
@@ -189,6 +104,8 @@ handle = [] spawn {
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
 					["officerTask", currentTargetOF] call BIS_fnc_taskSetDestination
+					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
+					[player, 3] call BIS_fnc_addScore;
 				};
 			};
 		};

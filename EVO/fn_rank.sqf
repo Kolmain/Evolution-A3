@@ -5,10 +5,9 @@ private ["_player","_score","_newScore","_rank","_EVOrank","_scoreToAdd","_msg",
 //////////////////////////////////////
 _player = player;
 _score = score _player;
-player setVariable ["EVO_score", _score, true];
 _newScore = _score;
 _rank = rank _player;
-_EVOrank = _player getVariable ["EVOrank", "none"];
+_EVOrank = _rank
 //////////////////////////////////////
 //PRIVATE | RANK1
 //////////////////////////////////////

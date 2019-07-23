@@ -148,12 +148,10 @@ handle = [] spawn EVO_fnc_endgame;
 			_x setSkill ["spottime", 0.5];
 			_x setSkill ["commanding", 0.8];
 			_x setSkill ["general", 0.8];
-			_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
 			if (HCconnected) then {
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 		} forEach units _grp;
-		_vehicle addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
 		_vehicle allowCrewInImmobile true;
 	};

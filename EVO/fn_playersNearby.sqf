@@ -4,10 +4,10 @@ _distance = _this select 1;
 _return = false;
 _players = [];
 {
-  if (isPlayer _x && _x distance _object < _distance) then {
+  if (_x distance _object < _distance) then {
     _players pushback _x;
   };
-} forEach playableUnits;
+} forEach ([] call CBA_fnc_players);
 
 if (count _players > 0) then {
   _return = true;

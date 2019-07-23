@@ -9,9 +9,9 @@ _unit = _this select 0;
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 _unit disableAI "ANIM";
 _unit disableAI "FSM";
-_unit removeWeapon primaryWeapon _unit;
-_unit removeWeapon secondaryWeapon _unit;
-_unit removeWeapon handgunWeapon _unit;
+_result = [_unit, primaryWeapon _unit] call CBA_fnc_dropWeapon
+_result = [_unit, secondaryWeapon _unit] call CBA_fnc_dropWeapon
+_result = [_unit, handgunWeapon _unit] call CBA_fnc_dropWeapon
 _unit setCaptive true;
 _grp = createGroup side _unit;
 [_unit] joinSilent _grp;
@@ -29,7 +29,7 @@ while {_loop} do {
 			_unit switchMove "";
 			_unit enableAI "ANIM";
 			_unit enableAI "FSM";
-		}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+		}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 		_captured = true;
 	};
 };
@@ -38,12 +38,9 @@ while {_loop} do {
 	if (leader group _unit == player) then {
 		_msg = format ["%2 %1 has been secured.", name _unit, rank _unit];
 		playsound "goodjob";
-		_score = player getVariable ["EVO_score", 0];
-		_score = _score + 3;
 		[player, 3] call bis_fnc_addScore;
-		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["You captured a POW.", 3]] call BIS_fnc_showNotification;
 	};
-}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 
 deleteVehicle _unit;

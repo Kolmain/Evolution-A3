@@ -12,6 +12,6 @@ if (isNil ("casMarker")) then {
 };
 while {alive _vehicle && canMove _vehicle} do {
   "casMarker" setMarkerPos (getPos _vehicle);
-  sleep 10;
+  sleep 1;
 };
 

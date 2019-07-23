@@ -16,8 +16,6 @@ if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
 [] execVM "scripts\randomWeather2.sqf";
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
-0 = [] execvm "scripts\tpw_core.sqf";
-0 = [0,1,60] execvm "scripts\tpw_radio.sqf";
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500;
 CHVD_maxObj = 2500;
@@ -32,12 +30,10 @@ setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 //////////////////////////////////////
 //Init Common Variables
 //////////////////////////////////////
-EVOp_scoreArray = [];
 EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
 enableSaving [false, false];
 arsenalCrates = [];
 militaryInstallations = [];
-
 HCconnected = false;
 CROSSROADS = [West,"HQ"];
 availableWeapons = [];
@@ -45,7 +41,7 @@ availableMagazines = [];
 EVO_vaCrates = [];
 
 //////////////////////////////////////
-//Customize Variables
+//Set Ranks and Unlocks
 //////////////////////////////////////
 rank1 = 10;
 rank2 = 30;
@@ -89,7 +85,7 @@ switch (EVO_difficulty) do {
     };
     case 4: {
         //////////////////////////////////////
-        //ALTIS ON FIRE
+        //INSANE
         //////////////////////////////////////
         rank1 = 20;
         rank2 = 40;
@@ -147,7 +143,9 @@ AVAILABLEITEMS = [
 ];
 AVAILABLEBACKPACKS = ["B_ASSAULTPACK_RGR"];
 
-
+//////////////////////////////////////
+//Set OPFOR Classes
+//////////////////////////////////////
 EVO_OPFORGROUNDTRANS = ["CUP_O_URAL_SLA",  "CUP_O_URAL_OPEN_SLA"];
 EVO_OPFORAIRTRANS = ["CUP_O_MI8_SLA_1","CUP_O_MI8_SLA_2","CUP_O_UH1H_SLA"];
 EVO_OPFORINFANTRY = [
@@ -168,10 +166,10 @@ EVO_OPFOROFFICER = "CUP_O_SLA_OFFICER";
 EVO_OPFORHEAVYLIFT = "CUP_O_MI8_SLA_1";
 EVO_OPFORSNIPERS = ["CUP_O_SLA_SNIPER_KSVK"];
 EVO_OPFORCAS = ["CUP_O_KA50_SLA","CUP_O_SU25_SLA","CUP_O_SU34_LGB_SLA","CUP_O_SU34_AGM_SLA"];
+
 //////////////////////////////////////
 //Init Headless Client
 //////////////////////////////////////
-
 if (!(isServer) && !(hasInterface)) then {
 	HCconnected = true;
 	publicVariable "HCconnected";
@@ -181,17 +179,8 @@ if (!(isServer) && !(hasInterface)) then {
 //Init Server
 //////////////////////////////////////
 if (isServer) then {
-    if (!isNil "MHQ") then {
-        _null = [MHQ] spawn EVO_fnc_mhq;
-    } else {
-        MHQ = objNull;
-        "mhqMarker" setMarkerAlpha 0;
-    };
 	[] spawn EVO_fnc_initEVO;
-	EVO_sessionID = format["EVO_%1_%2", (floor(random 1000) + floor(random 1000)), floor(random 1000)];
-	publicVariable "EVO_sessionID";
     [] spawn EVO_fnc_protectBase;
-    //[WEST, spawnBuilding, "Staging Base"] call BIS_fnc_addRespawnPosition;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
@@ -200,15 +189,6 @@ if (isServer) then {
 //////////////////////////////////////
 
 if (isDedicated || !hasInterface) exitWith {};
-if (("persistentEVO" call BIS_fnc_getParamValue) == 1 && score player == 0) then {
-    {
-        _playerData = _x;
-        _puid = getPlayerUID player;
-        if (_puid == (_playerData select 0)) then {
-            [player, (_playerData select 1)] call BIS_fnc_addScore;
-        };
-    } forEach EVOp_scoreArray;
-};
 _brief = [] execVM "briefing.sqf";
 "EVO_vaCrates" addPublicVariableEventHandler {
     {
@@ -243,48 +223,14 @@ if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
 if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
     _mrkrs = [] spawn EVO_fnc_gridMarkers;
 };
+
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
 //_nil = [] spawn EVO_fnc_supportManager;
-handle = [] spawn {
-	while {true} do {
-		waitUntil {player distance hqbox < 5};
-	   	waitUntil {player distance hqbox > 5};
-   		if (isTouchingGround player) then {
-            loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-            [player, [missionNamespace, "LAST LOADOUT"]] call BIS_fnc_saveInventory ;
-            profileNamespace setVariable ["EVO_loadout", loadout];
-            saveProfileNamespace;
-            //systemChat "Loadout saved to profile...";
-        };
-	};
-};
-
-handle = [player,
-[["ItemMap","ItemCompass","ItemWatch","ItemRadio","Binocular","CUP_H_USArmy_HelmetMICH","G_Tactical_Black"],"CUP_arifle_M16A4_Base",["","","",""],"CUP_hgun_M9",["","","",""],"",["","","",""],"CUP_U_B_USArmy_TwoKnee",["FirstAidKit","FirstAidKit","FirstAidKit","CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9"],"V_PlateCarrier1_rgr",["CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_HandGrenade_M67","CUP_HandGrenade_M67","SmokeShellBlue","SmokeShellRed"],"B_AssaultPack_rgr",[],[["CUP_30Rnd_556x45_Stanag"],["CUP_15Rnd_9x19_M9"],[],[]],"CUP_arifle_M16A4_Base","Single"]
-] execVM "scripts\setloadout.sqf";
-loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-profileNamespace setVariable ["EVO_loadout", loadout];
-saveProfileNamespace;
-deadloadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-player addEventHandler ["Killed",{
-    _player = _this select 0;
-    _killer = _this select 1;
-    deadloadout = [_player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
-}];
 
 _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;
  	_oldPlayer = _this select 1;
- 	_newPlayer setVariable ["EVOrank", (_oldPlayer getVariable "EVOrank"), true];
- 	_newPlayer setUnitRank (_oldPlayer getVariable "EVOrank");
  	_nil = [] spawn EVO_fnc_pinit;
- 	if (!(_newPlayer getVariable "BIS_revive_incapacitated")) then {
- 		handle = [player, (profileNamespace getVariable "EVO_loadout")] execVM "scripts\setloadout.sqf";
- 	} else {
- 	    _newPlayer setDamage 0.5;
- 		handle = [player, deadloadout] execVM "scripts\setloadout.sqf";
- 		removeBackpack player;
- 	};
 }];
 
-if (isMultiplayer) then { _nil = [] spawn EVO_fnc_pinit};
+_nil = [] spawn EVO_fnc_pinit;

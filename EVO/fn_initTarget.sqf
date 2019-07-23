@@ -61,25 +61,24 @@ _radioTowerComp = [_spawnPos, "Comps\radiotower.sqf"] call EVO_fnc_createComposi
 		PublicVariable "currentTargetRT";
 	};
 } forEach _radioTowerComp;
-//currentTargetRT = _towerClass createVehicle _spawnPos;
 publicVariable "currentTargetRT";
 handle = [currentTargetRT] spawn EVO_fnc_demoOnly;
-currentTargetRT addEventHandler ["Killed", {_this spawn EVO_fnc_onUnitKilled}];
 currentTargetRT addEventHandler ["Killed", {_this call EVO_fnc_RToffline}];
 RTonline = true;
 publicVariable "RTonline";
-_grp = [getPos currentTargetRT, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
-{
-	if (HCconnected) then {
-		handle = [_x] call EVO_fnc_sendToHC;
+//Defend Radio Tower 
+for "_i" from 1 to (["Infantry", "Radio"] call EVO_fnc_calculateOPFOR) do {
+	_null = [_currentTarget] spawn {
+		_grp = [_this select 0, "radio", true] call EVO_fnc_sendToAO;
+		waitUntil {({alive _x} count units _grp) < 3};
+		while {RTonline && (_this select 0 == currentTarget)} do {
+			_grp = [_this select 0, "radio"] call EVO_fnc_sendToAO;
+			waitUntil {({alive _x} count units _grp) < 4};
+			_delay = ["Infantry"] call EVO_fnc_calculateDelay;
+			sleep _delay;
+		};
 	};
-	currentAOunits pushBack _x;
-	publicVariable "currentAOunits";
-
-	_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
-} forEach units _grp;
-
-[_grp, getPos currentTargetRT] call bis_fnc_taskDefend;
+};
 
 
 //////////////////////////////////////
@@ -125,7 +124,7 @@ _grp = [getPos currentTargetOF, EAST, (EVO_opforInfantry call BIS_fnc_selectRand
 	_x AddMPEventHandler ["mpkilled", {currentAOunits = currentAOunits - [_this select 1]}];
 } forEach units _grp;
 
-[_grp, getPos currentTargetOF] call bis_fnc_taskDefend;
+[_grp, getPos currentTargetOF, 100] call CBA_fnc_taskDefend;
 //////////////////////////////////////
 //OPFOR MORTAR EMPLACEMENT
 //////////////////////////////////////
@@ -154,7 +153,7 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 		} forEach units _grp;
-		[_grp, _spawnPos] call bis_fnc_taskDefend;
+		[_grp, _spawnPos, 100] call CBA_fnc_taskDefend;
 	};
 };
 //////////////////////////////////////
@@ -314,7 +313,7 @@ while {_loop} do {
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 [towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
-[CROSSROADS, format ["We've received confirmation that the OPFOR communications tower has been destroyed, %1 will no longer be reinforced by OPFOR.", currentTargetName]] call EVO_fnc_globalSideChat;
+[CROSSROADS, format ["We've received confirmation that the SLA communications tower has been destroyed, %1 will no longer be reinforced by SLA.", currentTargetName]] call EVO_fnc_globalSideChat;
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 //////////////////////////////////////
@@ -346,7 +345,7 @@ if (_count > 0) then {
 				_unit = _this select 0;
 				_loop = true;
 				while {_loop} do {
-					_players = [_unit, 1000] call EVO_fnc_playersNearby;
+					_players = [_unit, 500] call EVO_fnc_playersNearby;
 					if (!_players || !alive _unit) then {
 						_loop = false;
 					};
@@ -377,14 +376,11 @@ if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {
 [[[], {
 	if (!isDedicated) then {
 		_tskName = format ["%1 Secured.", currentTargetName];
-		_score = player getVariable ["EVO_score", 0];
-		_score = _score + 5;
-		player setVariable ["EVO_score", _score, true];
 		["PointsAdded",["BLUFOR completed a mission objective.", 5]] call BIS_fnc_showNotification;
 		["TaskSucceeded",["",_tskName]] call BIS_fnc_showNotification;
 		playsound "goodjob";
 	};
-}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 //////////////////////////////////////
 //Set Marker Color
 //////////////////////////////////////
@@ -397,15 +393,6 @@ sleep random 30;
 //Reset for Next AO
 //////////////////////////////////////
 targetCounter = targetCounter + 1;
-		//
-	//For Altis' Strange Island "City" TODO
-//
-if (targetCounter == 9) then {
-	targetCounter = targetCounter + 1;
-};
-//
-	//
-		//
 publicVariable "targetCounter";
 currentTarget = targetLocations select targetCounter;
 publicVariable "currentTarget";
@@ -416,22 +403,6 @@ publicVariable "RTonline";
 //////////////////////////////////////
 //Start Next AO
 //////////////////////////////////////
-if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-	profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
-	profileNamespace setVariable ["EVO_world", worldName];
-	_scoreArray = [];
-	{
-		if (isPlayer _x) then
-		{
-			_push = [];
-			_push pushBack (getPlayerUID _x);
-			_push pushBack (score _x);
-			_scoreArray pushBack _push;
-		};
-	} forEach playableUnits;
-	profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
-	saveProfileNamespace;
-};
 handle = [] spawn EVO_fnc_initTarget;
 
 

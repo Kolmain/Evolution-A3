@@ -278,6 +278,53 @@ switch (_mission) do {
         };
     };
     //////////////////////////////////////
+    //RAID TOWER QTY
+    //////////////////////////////////////
+    case "Radio": {
+       switch (_type) do {
+            case "Infantry": {
+                switch (EVO_difficulty) do {
+                    case 1: {
+                        //////////////////////////////////////
+                        //EASY
+                        //////////////////////////////////////
+                        _qty = 1;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight / 2));
+                    };
+                    case 2: {
+                        //////////////////////////////////////
+                        //NORMAL
+                        //////////////////////////////////////
+                        _qty = 3;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                    case 3: {
+                        //////////////////////////////////////
+                        //HARD
+                        //////////////////////////////////////
+                        _qty = 4;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                    case 4: {
+                        //////////////////////////////////////
+                        //ALTIS ON FIRE
+                        //////////////////////////////////////
+                        _qty = 5;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                };
+            };
+        };
+    };
+    //////////////////////////////////////
     //SIDE MISSION QTY
     //////////////////////////////////////
     case "Side": {

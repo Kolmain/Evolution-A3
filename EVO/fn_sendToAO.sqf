@@ -178,6 +178,183 @@ switch (_type) do {
 			};
 		};
     };
+	case "radio": {
+		//working with infantry
+    	if (_init) then {
+			//if were starting the AO, spawn everything already there at a safe loc
+    		_spawnPos = [getPos currentTargetRT, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    	} else {
+			//if the ao is already started, spawn everything at a safe loc at the next AO
+    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    	};
+		//spawn the grp
+		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
+		{
+			if (HCconnected) then {
+				//handoff to HC if needed
+				handle = [_x] call EVO_fnc_sendToHC;
+			};
+			//add all units to currentAOUnits array for safe keeping
+			currentAOunits pushBack _x;
+			publicVariable "currentAOunits";
+			//remove from current AO units on death
+			_x AddMPEventHandler ["mpkilled", {
+				currentAOunits = currentAOunits - [_this select 1];
+				publicVariable "currentAOunits";
+			}];
+		} forEach units _grp;
+		if (_init) then {
+				//if starting ao then decide weather to hunker down or patrol. more patrol than defend
+				if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+					[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskDefend;
+				} else {
+					[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskPatrol;
+				};
+		} else {
+			//were not starting an ao, so we need to deliver units from the next ao to the current ao
+			[_grp] spawn {
+				_grp = _this select 0;
+				if ([true, true, true, true, false] call bis_fnc_selectRandom) then {
+					//insert via land
+					//spawn pos near grp
+					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					//spawn the vehicle and declare trans var
+					_ret = [_spawnPos2, (floor (random 360)), (EVO_opforGroundTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+				    _transport = _ret select 0;
+				    _transGrp = _ret select 2;
+					//disable AI control on the transport
+					_transGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					_transGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					_transGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					_transGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					_transGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					_transGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
+					//find nearest road and put the transport on it
+				    _roads = _transport nearRoads 100;
+				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
+				    _transport setPos getPos _nearestRoad;
+					{
+						if (HCconnected) then {
+							//send to HC if available
+							handle = [_x] call EVO_fnc_sendToHC;
+						};
+						_x AddMPEventHandler ["mpkilled", {
+							currentAOunits = currentAOunits - [_this select 1];
+							publicVariable "currentAOunits";
+						}];
+					} forEach units _grp;
+					//assign groups as cargo of trans
+					{
+				    	_x assignAsCargo _transport;
+				    	_x moveInCargo _transport;
+				    } forEach units _grp;
+					//send trans into AO and deliver units
+				    _goTo = [getPos currentTargetRT, 100, 250, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				    _transport doMove _goTo;
+				    waitUntil {_transport distance _goTo < 100};
+				    doStop _transport;
+				    {
+				    	unassignVehicle  _x;
+				    } forEach units _grp;
+				    _grp leaveVehicle _transport;
+				    waitUntil {count crew _transport == count units _transGrp};
+
+						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskDefend;
+						} else {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskPatrol;
+						};
+
+				    doStop _transport;
+				    _transport doMove _spawnPos2;
+				    handle = [_transport, _spawnPos2] spawn {
+				    	_spawnPos = _this select 1;
+				    	_transport = _this select 0;
+				    	waitUntil {(_transport distance _spawnPos) < 500};
+				    	{
+				    		deleteVehicle _x;
+				    	} forEach units group driver _transport;
+				    	deleteVehicle _transport;
+					};
+				} else {
+					//insert via air
+					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				    _ret = [_spawnPos2, (floor (random 360)), (EVO_opforAirTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+				    _heli = _ret select 0;
+				    _heliGrp = _ret select 2;
+					_heliGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					_heliGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					_heliGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					_heliGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					_heliGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					_heliGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
+				    {
+						if (HCconnected) then {
+							handle = [_x] call EVO_fnc_sendToHC;
+						};
+					} forEach units _heliGrp;
+				    {
+				    	_x assignAsCargo _heli;
+				    	_x moveInCargo _heli;
+				    } forEach units _grp;
+				    if ([true, false, false] call bis_fnc_selectRandom) then {
+				    	//paradrop
+					    _goTo = [getPos currentTargetRT, 100, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					    _heli doMove _goTo;
+					    _heli flyInHeight 150;
+					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 200)};
+					    handle = [_heli] spawn EVO_fnc_paradrop;
+					    doStop _heli;
+					    _heli doMove getPos server;
+					    handle = [_heli] spawn {
+					    	_heli = _this select 0;
+					    	waitUntil {(_heli distance server) < 1000};
+					    	{
+					    		deleteVehicle _x;
+					    	} forEach units group driver _heli;
+					    	deleteVehicle _heli;
+						};
+
+			    		if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskDefend;
+						} else {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskPatrol;
+						};
+
+					} else {
+						//land
+						_goTo = [getPos currentTargetRT, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					    _heli doMove _goTo;
+					    _heli flyInHeight 50;
+					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 300)};
+					    {
+					    	unassignVehicle  _x;
+					    	doGetOut _x
+					    } forEach units _grp;
+					    _grp leaveVehicle _heli;
+					    waitUntil {count crew _heli == count units _heliGrp};
+					    doStop _heli;
+					    _heli doMove getPos server;
+					    handle = [_heli] spawn {
+					    	_heli = _this select 0;
+					    	waitUntil {(_heli distance server) < 1000};
+					    	{
+					    		deleteVehicle _x;
+					    	} forEach units group driver _heli;
+					    	deleteVehicle _heli;
+						};
+
+			    		if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskDefend;
+						} else {
+							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskPatrol;
+						};
+
+					};
+				};
+			};
+		};
+    };
     case "armor": {
     		if (_init) then {
 	    		_spawnPos = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;

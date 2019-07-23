@@ -1,8 +1,8 @@
 private ["_unit","_score","_rank","_minimum","_pointsToSpend"];
 
 _unit = player;
-_score = _unit getVariable ["EVO_score", 0];
-_rank = _unit getVariable ["EVOrank", "PRIVATE"];
+_score = score _unit;
+_rank = rank _unit;
 _minimum = 0;
 switch (_rank) do {
     case "PRIVATE": {
