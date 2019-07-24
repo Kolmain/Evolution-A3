@@ -96,47 +96,17 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-	class pRespawnPoints {
-		title = "Player Respawn Points";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
-	};
 	class EvoDifficulty {
 		title = "Difficulty";
 		texts[] = {"Easy","Normal","Hard","Altis on Fire"};
 		values[] = {1,2,3,4};
 		default = 3;
 	};
-	class pilotDressRequired {
-		title = "Require Pilot Loadout to Pilot";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
-	};
 	class rankVehicles {
 		title = "Require Rank for Vehicles";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 1;
-	};
-	class fullArsenal {
-		title = "Require Rank for Weapons";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class randomSideMissions {
-		title = "Randomly Generate Side Missions";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class killNotificationParam {
-		title = "Visible Kill Notifications";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
 	};
 	class bisJukebox {
 		title = "BIS Jukebox";
@@ -156,19 +126,6 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-	class persistentEVO {
-		title = "Mission Persistence";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class gridMarkersParam {
-	    title = "OPFOR Sectors Shown on Map";
-	    values[] = {0,1};
-	    texts[] = {"Disabled","Enabled"};
-	    default = 0;
-	};
-
 };
 
 class CfgRemoteExec

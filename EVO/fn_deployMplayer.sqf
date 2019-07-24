@@ -3,18 +3,9 @@ _pos = getPos player;
 player playMoveNow "Acts_carFixingWheel";
 
 if (!isNil "MASH") then {
-	/*
-	{
-		if ((_x select 0) == PlayerCrate) then {
-			EVO_vaCrates = EVO_vaCrates - [_x];
-			publicVariable "EVO_vaCrates";
-		};
-	} forEach EVO_vaCrates;
-
 	{
 		deleteVehicle _x;
 	} forEach playerStructures;
-	*/
 	deleteVehicle MASH;
 	_msg = format ["Your previous MASH has been removed."];
 	["deployed",["MASH REMOVED", _msg]] call BIS_fnc_showNotification;
@@ -34,11 +25,11 @@ if (!alive player || player distance _pos > 1) exitWith {};
 
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
-//playerStructures = [(getPos player), (getDir player), call (compile (preprocessFileLineNumbers ("Comps\mash.sqf")))] call BIS_fnc_ObjectsMapper;
-MASH = "MASH_EP1" createVehicle (position player);
-MASH setDir (getDir player - 180);
+playerStructures = [(getPos player), (getDir player), call (compile (preprocessFileLineNumbers ("Comps\mash.sqf")))] call BIS_fnc_ObjectsMapper;
+//MASH = "MASH_EP1" createVehicle (position player);
+//MASH setDir (getDir player - 180);
 _mssg = format["%2 %1's MASH",(name player), (rank player)];
-playerRespawnPoint = [(group player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;
+playerRespawnPoint = [(side player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;
 _medmark = createMarker [_mark, getPos player];
 _medmark setMarkerShape "ICON";
 _medmark setMarkerType "b_med";
