@@ -90,8 +90,12 @@ handle = [] spawn {
 					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
-					["towerTask", currentTargetRT] call BIS_fnc_taskSetDestination;
+					[[[], {
+						["towerTask", getPos currentTargetRT] call BIS_fnc_taskSetDestination;
+						
+					}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
+					
 					[player, 3] call BIS_fnc_addScore;
 				};
 			};
@@ -109,7 +113,10 @@ handle = [] spawn {
 					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
-					["officerTask", currentTargetOF] call BIS_fnc_taskSetDestination;
+					[[[], {
+						["officerTask", getPos currentTargetOF] call BIS_fnc_taskSetDestination;
+						
+					}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
 					[player, 3] call BIS_fnc_addScore;
 				};
