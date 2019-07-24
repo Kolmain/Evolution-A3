@@ -17,7 +17,7 @@ if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
 [] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
 CHVD_allowNoGrass = true;
-CHVD_maxView = 2500;
+CHVD_maxView = 2500; 
 CHVD_maxObj = 2500;
 setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 
@@ -189,6 +189,15 @@ if (isServer) then {
 //////////////////////////////////////
 
 if (isDedicated || !hasInterface) exitWith {};
+handle = [] spawn {
+	while {true} do {
+		waitUntil {player distance hqbox < 5};
+	   	waitUntil {player distance hqbox > 5};
+   		if (isTouchingGround player) then {
+            loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+        };
+	};
+};
 _brief = [] execVM "briefing.sqf";
 "EVO_vaCrates" addPublicVariableEventHandler {
     {
@@ -233,4 +242,17 @@ _index = player addMPEventHandler ["MPRespawn", {
  	_nil = [] spawn EVO_fnc_pinit;
 }];
 
+	player setUnitRank "PRIVATE";
+	player setVariable ["EVOrank", "PRIVATE", true];
+	[player, rank player] call BIS_fnc_setUnitInsignia;
+	bon_max_units_allowed = 2;
+	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
+	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
+	[hqbox, (rank player)] call EVO_fnc_buildAmmoCrate;
+_nil = [] spawn {
+    while {true} do {
+        call EVO_fnc_rank;
+        sleep 20;
+    };
+};
 _nil = [] spawn EVO_fnc_pinit;

@@ -8,7 +8,15 @@ player addaction ["<t color='#CCCC00'>View Distance Settings</t>", CHVD_fnc_open
 player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\open_dialog.sqf",nil,1,false,true,"","(player distance spawnBuilding) < 10 && ((leader group player) == player)"];
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
-
+[player, loadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf";
+[hqbox, (rank player)] call EVO_fnc_buildAmmoCrate;
+call EVO_fnc_rank;
+					group player setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
+					group player setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
+					group player setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
+					group player setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
+					group player setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
+					group player setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 //////////////////////////////////////
 //Setup Player-centric Parameters
 //////////////////////////////////////
@@ -22,12 +30,10 @@ if (("pfatigue" call BIS_fnc_getParamValue) == 0) then {
 //Add MASH/FARP to Player
 //////////////////////////////////////
 if (typeOf player == "B_medic_F") then {
-	//player addAction ["<t color='#CCCC00'>Build MASH</t>", "[] call EVO_fnc_deployMplayer;"];
 	player addaction ["<t color='#CCCC00'>Build MASH</t>","[] call EVO_fnc_deployMplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
 	[["Gamemode","MASH"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
 if (typeOf player == "B_soldier_repair_F") then {
-	//player addAction ["<t color='#CCCC00'>Build FARP</t>", "[] call EVO_fnc_deployEplayer;"];
 	player addaction ["<t color='#CCCC00'>Build FARP</t>","[] call EVO_fnc_deployEplayer",nil,1,false,true,"","player distance spawnBuilding > 800 && isTouchingGround player && speed player < 1 && vehicle player == player && animationState player != 'Acts_carFixingWheel'"];
 	[["Gamemode","FARP"], 15, "", 35, "", true, true, true, true] call BIS_fnc_advHint;
 };
@@ -54,7 +60,7 @@ _ret = [] spawn {
 _handleHealID = player addEventHandler ["HandleHeal",{
 	[[[_this select 1, _this select 0], {
 		if (player == (_this select 0) && player != _this select 1) then {
-			_score =  score player
+			_score =  score player;
 			_score = _score + 1;
 			_string = format["Applied FAK to %1.", (getText(configFile >>  "CfgVehicles" >>  (typeOf _this select 2) >> "displayName"))];
 			["PointsAdded",[_string, 1]] call BIS_fnc_showNotification;
@@ -84,7 +90,7 @@ handle = [] spawn {
 					[player, format["Crossroads, be advised we have eyes on objective at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
-					["towerTask", currentTargetRT] call BIS_fnc_taskSetDestination
+					["towerTask", currentTargetRT] call BIS_fnc_taskSetDestination;
 					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
 					[player, 3] call BIS_fnc_addScore;
 				};
@@ -103,7 +109,7 @@ handle = [] spawn {
 					[player, format["Crossroads, be advised we have eyes on HVT at %1, over.", currentTargetName]] call EVO_fnc_globalSideChat;
 					sleep 4;
 					[CROSSROADS, format ["Copy %1, updating map location now. Good luck, out.", groupID group player]] call EVO_fnc_globalSideChat;
-					["officerTask", currentTargetOF] call BIS_fnc_taskSetDestination
+					["officerTask", currentTargetOF] call BIS_fnc_taskSetDestination;
 					["PointsAdded",["Objective Located", 3]] call BIS_fnc_showNotification;
 					[player, 3] call BIS_fnc_addScore;
 				};
@@ -128,9 +134,6 @@ handle = [] spawn {
 					};
 				} forEach units group player;
 			};
-		};
-		if (("fullArsenal" call BIS_fnc_getParamValue) == 1) then {
-			handle = [] call EVO_fnc_rank;
 		};
 		sleep 1;
 	};

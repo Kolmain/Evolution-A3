@@ -16,11 +16,11 @@ taskManagement_drawDist = 2500;
 corpseManagerMode = 1; //Type of removed bodies: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
 corpseLimit = 100; //Max number of bodies which can be available at the same time. When exceeded, start deleting immediately.
 corpseRemovalMinTime = 120; //Minimal time in seconds a body stays in the scene (can't be removed sooner).
-corpseRemovalMaxTime = 300; //Maximal time in seconds after which a dead body is removed (can't stay longer)
+corpseRemovalMaxTime = 240; //Maximal time in seconds after which a dead body is removed (can't stay longer)
 wreckManagerMode = 1; //Type of removed wrecks: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable
 wreckLimit = 100; //Max number of wrecks which can be available at the same time. When exceeded, start deleting immediately.
 wreckRemovalMinTime = 120; //Minimal time in seconds a wreck stays in the scene (can't be removed sooner).
-wreckRemovalMaxTime = 300; //Maximal time in seconds after which a wreck is removed (can't stay longer)
+wreckRemovalMaxTime = 240; //Maximal time in seconds after which a wreck is removed (can't stay longer)
 
 #include "bon_recruit_units\dialog\common.hpp"
 #include "bon_recruit_units\dialog\recruitment.hpp"
@@ -232,7 +232,6 @@ class CfgFunctions
 			class sendToServer {};
 			class vehicleCheck {};
 			class handleScore {};
-			class onUnitKilled {};
 			class getVehicleInfo {};
 			class getWeaponInfo {};
 			class getMagazineInfo {};
@@ -243,7 +242,6 @@ class CfgFunctions
 			class sm_reinforce {};
 			class sm_csar {};
 			class buildSideMissionArray {};
-			class osm {};
 			class rearm {};
 			class buildMagazineArray {};
 			class buildAmmoCrate {};
@@ -260,13 +258,11 @@ class CfgFunctions
 			class healMen {};
 			class endgame {};
 			class nearestTownName {};
-			class mhq {};
 			class support_arty {};
 			class support_cas {};
 			class support_mortar {};
 			class support_rocket {};
 			class support_uav {};
-			class support_ugv {};
 			class support_resupply {};
 			class supportManager {};
 			class calculateDelay {};
@@ -486,6 +482,16 @@ class CfgCommunicationMenu
         text = "Rocket Support"; // Text displayed in the menu and in a notification
         submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
         expression = "_this spawn EVO_fnc_support_rocket;"; // Code executed upon activation
+        icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
+        cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
+        enable = "1"; // Simple expression condition for enabling the item
+        removeAfterExpressionCall = 1; // 1 to remove the item after calling
+    };
+    class ugvRequest
+    {
+        text = "UGV Support"; // Text displayed in the menu and in a notification
+        submenu = ""; // Submenu opened upon activation (expression is ignored when submenu is not empty.)
+        expression = "_this spawn EVO_fnc_support_ugv;"; // Code executed upon activation
         icon = "\a3\Ui_f\data\GUI\Cfg\CommunicationMenu\artillery_ca.paa"; // Icon displayed permanently next to the command menu
         cursor = "\a3\Ui_f\data\IGUI\Cfg\Cursors\iconCursorSupport_ca.paa"; // Custom cursor displayed when the item is selected
         enable = "1"; // Simple expression condition for enabling the item

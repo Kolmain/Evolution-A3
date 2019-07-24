@@ -9,9 +9,9 @@ _unit = _this select 0;
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 _unit disableAI "ANIM";
 _unit disableAI "FSM";
-_result = [_unit, primaryWeapon _unit] call CBA_fnc_dropWeapon
-_result = [_unit, secondaryWeapon _unit] call CBA_fnc_dropWeapon
-_result = [_unit, handgunWeapon _unit] call CBA_fnc_dropWeapon
+_result = [_unit, primaryWeapon _unit] call CBA_fnc_dropWeapon;
+_result = [_unit, secondaryWeapon _unit] call CBA_fnc_dropWeapon;
+_result = [_unit, handgunWeapon _unit] call CBA_fnc_dropWeapon;
 _unit setCaptive true;
 _grp = createGroup side _unit;
 [_unit] joinSilent _grp;

@@ -7,22 +7,22 @@ _player = player;
 _score = score _player;
 _newScore = _score;
 _rank = rank _player;
-_EVOrank = _rank
+_EVOrank = _rank;
 //////////////////////////////////////
 //PRIVATE | RANK1
 //////////////////////////////////////
-if (_newScore < rank1 and _EVOrank != "PRIVATE")  then {
+if ((_newScore < rank1) and (_EVOrank != "PRIVATE"))  then {
 	_player setUnitRank "PRIVATE";
 	_player setVariable ["EVOrank", "PRIVATE", true];
 	[_player, rank _player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 2;
 	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 	_msg = format ["You've been promoted to the rank of %1.", player getVariable "EVOrank"];
 	["promoted",["img\pvt.paa", _msg]] call BIS_fnc_showNotification;
 	playsound "Paycall";
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
 //CORPORAL | RANK2
@@ -50,7 +50,7 @@ if (_newScore < rank2 and _newScore >= rank1 and _EVOrank != "CORPORAL")  then	{
 		_pic = getText(configFile >> "CfgVehicles" >>  _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank2vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
 //SERGEANT | RANK3
@@ -78,7 +78,7 @@ if (_newScore < rank3 and _newScore >= rank2 and _EVOrank != "SERGEANT")  then	{
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank3vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
 //LIEUTENANT | RANK4
@@ -106,7 +106,7 @@ if (_newScore < rank4 and _newScore >= rank3 and _EVOrank != "LIEUTENANT")  then
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank4vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
 //CAPTAIN | RANK5
@@ -134,7 +134,7 @@ if (_newScore < rank5 and _newScore >= rank4 and _EVOrank != "CAPTAIN")  then {
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank5vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };
 //////////////////////////////////////
 //MAJOR | RANK6
@@ -162,7 +162,7 @@ if (_newScore < rank6 and _newScore >= rank5 and _EVOrank != "MAJOR")  then {
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank6vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 //////////////////////////////////////
 //COLONEL | RANK7
 //////////////////////////////////////
@@ -190,5 +190,5 @@ if (_newScore >= rank6 and _EVOrank != "COLONEL")  then {
 		_pic = getText(configFile >> "CfgVehicles" >> _x >> "picture");
 		["unlocked",[_pic, _txt]] call BIS_fnc_showNotification;
 	} forEach rank7vehicles;
-	[hqbox, (_player getVariable "EVOrank")] call EVO_fnc_buildAmmoCrate;
+	[hqbox, (score _player)] call EVO_fnc_buildAmmoCrate;
 };

@@ -1,4 +1,4 @@
-_truck = nearestObject [player, "B_Truck_01_Repair_F"];
+_truck = nearestObject [player, "CUP_B_MTVR_REPAIR_USMC"];
 if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	_msg = format ["You can't deploy a FARP without a Repair Truck."];
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
