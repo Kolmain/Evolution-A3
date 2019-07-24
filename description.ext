@@ -198,7 +198,7 @@ class CfgFunctions
 			class sm_convoy {};
 			class sm_reinforce {};
 			class sm_csar {};
-			class buildSideMissionArray {};
+			class pickSideMission {};
 			class rearm {};
 			class buildMagazineArray {};
 			class buildAmmoCrate {};

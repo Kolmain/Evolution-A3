@@ -1,9 +1,4 @@
-private ["_vehClass","_veh","_maxPositions","_class","_unit","_spawnPos","_grp","_tskDisplayName","_score"];
-
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "csar";
 	publicVariable "currentSideMission";
 	currentSideMissionStatus = "ip";
@@ -12,7 +7,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (isServer) then {
          	//server
          	opforUnits = [];
-         	_vehClass = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_stripped_F","B_Heli_Attack_01_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","B_Heli_Transport_03_unarmed_F","B_Heli_Transport_03_F","B_Heli_Transport_03_black_F","B_Heli_Transport_03_unarmed_green_F"] call bis_fnc_selectRandom;
+         	_vehClass = ["CUP_B_AH1Z", "CUP_B_AH6J_MP_USA", "CUP_B_MH6J_USA", "CUP_B_UH60L_US"] call bis_fnc_selectRandom;
          	_veh = _vehClass createVehicle csarLoc;
          	_veh setDamage 1;
          	_maxPositions = (_veh emptyPositions "Commander") + (_veh emptyPositions "Gunner") + (_veh emptyPositions "Driver");
@@ -27,8 +22,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
          	};
          	for "_i" from 1 to (_maxPositions - 1) step 1 do {
          	    if ([true, false] call bis_fnc_selectRandom) then {
-         	    	_class = ["B_Helipilot_F","B_helicrew_F"] call bis_fnc_selectRandom;
-         	    	_unit = csarGrp createUnit [_class, getPos _veh, [], 0, "FORM"];
+         	    	_unit = csarGrp createUnit ["CUP_B_US_Pilot_Light", getPos _veh, [], 0, "FORM"];
          	    	[_unit] spawn {
          	    		_this select 0 allowDamage false;
          	    		sleep 10;
@@ -101,9 +95,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if (currentSideMissionStatus == "success") then {
 				if (player distance spawnBuilding < 1000) then {
 					playsound "goodjob";
-					_score = player getVariable ["EVO_score", 0];
-					_score = _score + 10;
-					player setVariable ["EVO_score", _score, true];
 					[player, 10] call BIS_fnc_addScore;
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};

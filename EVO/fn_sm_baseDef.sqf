@@ -1,15 +1,11 @@
-private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_heliGrp","_wp","_tskDisplayName","_score"];
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "baseDef";
 	publicVariable "currentSideMission";
 	currentSidemissionUnits = 100;
 	currentSideMissionStatus = "ip";
 	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
-		currentSidemissionUnits = 0;
+		currentSidemissionUnits = [];
 	//server
 		_spawnLocations = [(targetLocations select 0), (targetLocations select 1)];
 
@@ -98,9 +94,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance spawnBuilding < 1000) then {
 				playsound "goodjob";
-				_score = player getVariable ["EVO_score", 0];
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
+				[player, 10] call BIS_fnc_addScore;
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
