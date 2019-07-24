@@ -235,7 +235,7 @@ if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
 };
 
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-//_nil = [] spawn EVO_fnc_supportManager;
+_nil = [] spawn EVO_fnc_supportManager;
 
 _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;

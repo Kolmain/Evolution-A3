@@ -13,9 +13,6 @@ _arty = _caller;
 _arty = rocket_west;
 _busy = false;
 _busy = _arty getVariable ["EVO_support_busy", false];
-_score = player getVariable ["EVO_score", 0];
-_score = _score - 6;
-player setVariable ["EVO_score", _score, true];
 [player, -6] call bis_fnc_addScore;
 ["PointsRemoved",["Rocket support initiated.", 6]] call BIS_fnc_showNotification;
 if(!_busy || isNil "_busy") then {
@@ -42,9 +39,6 @@ if (!visiblemap) exitWith {
 	[_arty, format["Copy that %2, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	_newartyStrike = [_caller, "rocketStrike"] call BIS_fnc_addCommMenuItem;
-	_score = player getVariable ["EVO_score", 0];
-	_score = _score + 6;
-	player setVariable ["EVO_score", _score, true];
 	[player, 6] call bis_fnc_addScore;
 	["PointsAdded",["Rocket support canceled.", 6]] call BIS_fnc_showNotification;
 };
@@ -78,9 +72,6 @@ if (_isInRange) then {
 } else {
 [_arty, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newartyStrike = [_caller, "rocketStrike"] call BIS_fnc_addCommMenuItem;
-_score = player getVariable ["EVO_score", 0];
-_score = _score + 6;
-player setVariable ["EVO_score", _score, true];
 [player, 6] call bis_fnc_addScore;
 };
 
@@ -89,9 +80,6 @@ player setVariable ["EVO_score", _score, true];
 sleep 3.5;
 [_arty, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newartyStrike = [_caller, "rocketStrike"] call BIS_fnc_addCommMenuItem;
-_score = player getVariable ["EVO_score", 0];
-_score = _score + 6;
-player setVariable ["EVO_score", _score, true];
 [player, 6] call bis_fnc_addScore;
 ["PointsAdded",["Rocket support canceled.", 6]] call BIS_fnc_showNotification;
 

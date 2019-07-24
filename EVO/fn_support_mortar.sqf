@@ -11,9 +11,6 @@ _mortar = _caller;
 _mortar = mortar_west;
 _busy = false;
 _busy = _mortar getVariable ["EVO_support_busy", false];
-_score = player getVariable ["EVO_score", 0];
-_score = _score - 5;
-player setVariable ["EVO_score", _score, true];
 [player, -5] call bis_fnc_addScore;
 ["PointsRemoved",["Mortar support initiated.", 5]] call BIS_fnc_showNotification;
 if(!_busy || isNil "_busy") then {
@@ -38,9 +35,6 @@ if (!visiblemap) exitWith {
 	[_mortar, format["Copy that %2, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	_newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-	_score = player getVariable ["EVO_score", 0];
-	_score = _score + 5;
-	player setVariable ["EVO_score", _score, true];
 	[player, 5] call bis_fnc_addScore;
 	["PointAdded",["Mortar support canceled.", 5]] call BIS_fnc_showNotification;
 };
@@ -75,9 +69,6 @@ if (_isInRange) then {
 } else {
 [_mortar, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-_score = player getVariable ["EVO_score", 0];
-_score = _score + 5;
-player setVariable ["EVO_score", _score, true];
 [player, 5] call bis_fnc_addScore;
 };
 
@@ -86,9 +77,6 @@ player setVariable ["EVO_score", _score, true];
 sleep 3.5;
 [_mortar, format["%2 this is %1, we are already servicing a request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-_score = player getVariable ["EVO_score", 0];
-_score = _score + 5;
-player setVariable ["EVO_score", _score, true];
 [player, 5] call bis_fnc_addScore;
 ["PointAdded",["Mortar support canceled.", 5]] call BIS_fnc_showNotification;
 

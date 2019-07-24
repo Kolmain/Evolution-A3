@@ -8,9 +8,6 @@ _is3D = _this select 3;
 _ID = _this select 4;
 _grpSide = side _caller;
 _grp = group _caller;
-_score = _caller getVariable "EVO_score";
-_score = _score - 5;
-_caller setVariable ["EVO_score", _score, true];
 [_caller, -5] call bis_fnc_addScore;
 ["PointsRemoved",["Resupply request initiated.", 5]] call BIS_fnc_showNotification;
 
@@ -44,9 +41,6 @@ if (!visiblemap) exitWith {
 	[_heliGrp, format["Copy that %2, out.", groupID (group _heliGrp), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	_newResupply = [_caller, "resupply"] call BIS_fnc_addCommMenuItem;
-	_score = player getVariable ["EVO_score", 0];
-	_score = _score + 5;
-	player setVariable ["EVO_score", _score, true];
 	[player, 5] call bis_fnc_addScore;
 	["PointsAdded",["Ammo drop canceled.", 5]] call BIS_fnc_showNotification;
 };

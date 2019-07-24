@@ -59,9 +59,6 @@ publicVariable "currentAOunits";
 		_source = _this select 1;
 		_scoreToAdd = _this select 2;
 		_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
-		_score = _player getVariable ["EVO_score", 0];
-		_score = _score + _scoreToAdd;
-		_player setVariable ["EVO_score", _score, true];
 		[_player, _scoreToAdd] call bis_fnc_addScore;
 		if (EVO_Debug) then {
 			systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
@@ -160,22 +157,6 @@ handle = [] spawn EVO_fnc_endgame;
 //////////////////////////////////////
 //Init First Target
 //////////////////////////////////////
-	if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-		profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
-		profileNamespace setVariable ["EVO_world", worldName];
-		_scoreArray = [];
-		{
-			if (isPlayer _x) then
-			{
-				_push = [];
-				_push pushBack (getPlayerUID _x);
-				_push pushBack (score _x);
-				_scoreArray pushBack _push;
-			};
-		} forEach playableUnits;
-		profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
-		saveProfileNamespace;
-	};
 	handle = [] spawn EVO_fnc_initTarget;
 
 

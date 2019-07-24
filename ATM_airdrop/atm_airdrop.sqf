@@ -19,9 +19,7 @@ private ["_position","_cut","_dialog","_s_alt","_s_alt_text","_sound","_sound2",
 		if (!visiblemap) exitWith {
 		["atmMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 		if (player getVariable "EVOrank" != "PRIVATE") then {
-			_score = player getVariable ["EVO_score", 0];
-			_score = _score + 3;
-			player setVariable ["EVO_score", _score, true];
+			[player, 3] call bis_fnc_addScore;
 			["PointsAdded",["HALO insertion canceled.", 3]] call BIS_fnc_showNotification;
 		} else {
 			["PointsAdded",["HALO insertion canceled.", 0]] call BIS_fnc_showNotification;

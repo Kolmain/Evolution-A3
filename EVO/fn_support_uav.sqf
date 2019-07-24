@@ -9,9 +9,6 @@ _ID = _this select 4;
 _grpSide = side _caller;
 if (_grpSide == independent) then {_grpSide = RESISTANCE;};
 _grp = group _caller;
-_score = _caller getVariable "EVO_score";
-_score = _score - 10;
-_caller setVariable ["EVO_score", _score, true];
 [_caller, -10] call bis_fnc_addScore;
 ["PointsRemoved",["UAV request initiated.", 10]] call BIS_fnc_showNotification;
 if (!("B_UavTerminal" in (assignedItems _caller))) exitWith {
@@ -19,9 +16,6 @@ if (!("B_UavTerminal" in (assignedItems _caller))) exitWith {
 	sleep 3.5;
 	[Crossroads, format["%1, this is Crossroads, you're not deployed with a UAV terminal, RTB and pick it up at the staging base, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	_newUaVrequest = [_caller, "uavRequest"] call BIS_fnc_addCommMenuItem;
-	_score = _caller getVariable "EVO_score";
-	_score = _score + 10;
-	_caller setVariable ["EVO_score", _score, true];
 	[_caller, 10] call bis_fnc_addScore;
 	["PointsAdded",["UAV request canceled.", 10]] call BIS_fnc_showNotification;
 };
@@ -49,9 +43,6 @@ if (!visiblemap) exitWith {
 	[Crossroads, format["Copy that %1, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	_newUaVrequest = [_caller, "uavRequest"] call BIS_fnc_addCommMenuItem;
-	_score = _caller getVariable "EVO_score";
-	_score = _score + 10;
-	_caller setVariable ["EVO_score", _score, true];
 	[_caller, 10] call bis_fnc_addScore;
 	["PointsAdded",["UAV request canceled.", 10]] call BIS_fnc_showNotification;
 };

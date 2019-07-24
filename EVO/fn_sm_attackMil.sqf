@@ -105,9 +105,7 @@
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance attackMilTarget < 1000) then {
 				playsound "goodjob";
-				_score = player getVariable ["EVO_score", 0];
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
+				[player, 10] call bis_fnc_addScore;
 				["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
