@@ -42,7 +42,7 @@ Vcm_Settings =
 	VCM_SKILLCHANGE = true; //AI Groups will have their skills changed by Vcom.
 	VCM_USECBASETTINGS = true;//If CBA is enabled on the host, use the CBA default settings. If false, use the filepatching settings instead.
 	VCM_CARGOCHNG = true; //If true, Vcom will handle disembarking/re-embarking orders instead of vanilla. This is with the intention to prevent the endless embark/disembark loops AI are given.	
-	VCM_TURRETUNLOAD = true;//If true, AI will automatically disembark turret positions in vehicles, if the vehicle is badly damaged. This is to prevent AI leaving a tank, when the tracks are damaged.	
+	VCM_TURRETUNLOAD = false;//If true, AI will automatically disembark turret positions in vehicles, if the vehicle is badly damaged. This is to prevent AI leaving a tank, when the tracks are damaged.	
 	VCM_DISEMBARKRANGE = 200; //How far AI will disembark from their enemies. If the vehicle is damaged, they will disembark.
 	
 	//AI SKILL SETTINGS HERE!!!!!!!!!!!!

@@ -1,6 +1,3 @@
-private ["_options","_vehicle","_img","_bool","_pos","_array","_obj","_locationArray","_pos2","_array2","_obj2","_descrip","_ret","_distance"];
-
-
 currentSideMission = "none";
 currentSideMissionStatus = "ip";
 curreSidemissionUnits = [];
@@ -8,29 +5,26 @@ publicVariable "curreSidemissionUnits";
 publicVariable "currentSideMission";
 publicVariable "currentSideMissionStatus";
 
-//build AA hunt
-//as long as there are AAA batteries
-_options = [];
-{
-	_vehicle = _x;
-	if (typeOf _vehicle == EVO_opforAAA && alive _vehicle && canMove _vehicle) then {
-		_options = _options + [_vehicle];
-	};
-} forEach vehicles;
-_vehicle = _options call BIS_fnc_selectRandom;
-if (!isNil "_vehicle") then {
-	aaHuntTarget = _vehicle;
-	publicVariable "aaHuntTarget";
-	_ret = [getPos _vehicle] call EVO_fnc_nearestTownName;
-	_name = _ret select 0;
-	_distance = _ret select 1;
-	_descrip = format ["Eliminate the OPFOR anti-air threat near %1.", _name];
-	_img = getText(configFile >>  "CfgVehicles" >>  (typeOf _vehicle) >> "picture");
+switch (_mission) do {
+                case "aaa": {
+                    _options = [];
+					{
+						_vehicle = _x;
+						if (typeOf _vehicle == EVO_opforAAA && alive _vehicle && canMove _vehicle) then {
+							_options = _options + [_vehicle];
+						};
+					} forEach vehicles;
+					_vehicle = _options call BIS_fnc_selectRandom;
+					if (!isNil "_vehicle") then {
+						aaHuntTarget = _vehicle;
+						publicVariable "aaHuntTarget";
+						[] call EVO_fnc_sm_aaHunt;
+					} else {
+						//none left
+					};
+                };
 
-	availableSideMissions = availableSideMissions + [
-		[getPos aaHuntTarget, EVO_fnc_sm_aaHunt, "Destroy AAA Battery", _descrip, "", _img, 1,[]]
-	];
-};
+
 
 //base defence
 // 1 in 4 chance

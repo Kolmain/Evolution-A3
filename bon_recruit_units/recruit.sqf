@@ -35,7 +35,7 @@ _queuepos = 0;
 _queuecount = count bon_recruit_queue;
 if(_queuecount > 0) then {
 	_queuepos = (bon_recruit_queue select (_queuecount - 1)) + 1;
-	hint parseText format["<t size='1.0' font='PuristaMedium' color='#ef2525'>%1</t> added to queue.",_typename];
+	hint parseText format["%1 added to queue.",_typename];
 };
 bon_recruit_queue = bon_recruit_queue + [_queuepos];
 
@@ -44,7 +44,7 @@ bon_recruit_queue = bon_recruit_queue + [_queuepos];
 
 WaitUntil{_queuepos == bon_recruit_queue select 0};
 sleep (1.5 * (_queuepos min 1));
-hint parseText format["Processing your <t size='1.0' font='PuristaMedium' color='#ffd800'>%1</t>.",_typename];
+hint parseText format["Processing your %1.",_typename];
 
 sleep 8.5;
 
@@ -56,7 +56,7 @@ _unit = objNull;
 
 if (player distance SpawnBuilding < 500) then {
 	//_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-	_spawnPos = getPos player;
+	_spawnPos = getPos SpawnBuilding;
 	_unit = group player createUnit [_unittype, _spawnPos, [], 0, "FORM"];
 } else {
     _spawnPos = [((getPos player) select 0), ((getPos player) select 1), (((getPos player) select 2) + 200)];
@@ -80,23 +80,28 @@ if (player distance SpawnBuilding < 500) then {
 	    _unit allowDamage true;
 	};
 };
+//set unit loadout 
+switch (typeOf _unit) do {
+	case "CUP_B_US_Soldier_Backpack": { [unit, riflemanLoadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Soldier_GL": { [unit, grendaierloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Soldier_AR": { [unit, autoloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Soldier_MG": { [unit, mgloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Soldier_AT": { [unit, atloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Medic": { [unit, medicloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Soldier_Engineer": { [unit, engineerloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Pilot_Light": { [unit, pilotloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_Sniper": { [unit, sniperloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+	case "CUP_B_US_SpecOps_SD": { [unit, specopsloadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf"; };
+};
 _unit setRank "PRIVATE";
-[[[_unit], {
-	_unit = _this select 0;
-	_unit addEventHandler ["HandleScore", {
+_unit = _this select 0;
+_unit addEventHandler ["HandleScore", {
 		_ai = _this select 0;
 		_source = _this select 1;
 		_scoreToAdd = _this select 2;
 		_player = leader group _ai;
-		_score = _player getVariable ["EVO_score", 0];
-		_score = _score + _scoreToAdd;
-		_player setVariable ["EVO_score", _score, true];
 		[_player, _scoreToAdd] call bis_fnc_addScore;
-		if (EVO_Debug) then {
-			systemChat format ["%1 got points from %2. Sending points to %3.", _ai, _source, _player];
-		};
-	}];
-}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
+}];
 [_unit] execVM (BON_RECRUIT_PATH+"init_newunit.sqf");
 /*******************************************************/
 
@@ -104,7 +109,7 @@ _unit setRank "PRIVATE";
 
 
 //hint parseText format["Your <t size='1.0' font='PuristaMedium' color='#008aff'>%1</t> %2 has arrived.",_typename,name _unit];
-_msg = format["Your <t size='1.0' font='PuristaMedium' color='#008aff'>%1</t> %2 has arrived.",_typename,name _unit];
+_msg = format["Your %1 %2 has arrived.",_typename,name _unit];
 ["deployed",["REINFORCEMENTS", _msg]] call BIS_fnc_showNotification;
 bon_recruit_queue = bon_recruit_queue - [_queuepos];
 

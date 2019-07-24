@@ -1,8 +1,4 @@
-private ["_vehicle","_aaMarker","_spawnPos","_grp","_null","_tskDisplayName","_score"];
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "aaHunt";
 	currentSideMissionStatus = "ip";
 	currentSideMissionsUnits = [];
@@ -21,7 +17,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		currentSideMissionMarker setMarkerColor "ColorEAST";
 		currentSideMissionMarker setMarkerPos (GetPos _vehicle);
 		markerCounter = markerCounter + 1;
-		publicVariable "currentSideMissionMarker";
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
@@ -73,9 +68,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance aaHuntTarget < 1000) then {
 				playsound "goodjob";
-				_score = player getVariable ["EVO_score", 0];
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
+				[player, 10] call bis_fnc_addScore;
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
@@ -85,4 +78,4 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			publicVariable "currentSideMission";
 		};
 	};
-},"BIS_fnc_spawn",true,true] call BIS_fnc_MP;
+},"BIS_fnc_spawn"] call BIS_fnc_MP;

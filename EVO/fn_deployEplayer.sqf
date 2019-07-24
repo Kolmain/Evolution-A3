@@ -4,6 +4,16 @@ if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 
+// Check for nearby enemies
+_enemyArray = (getPos player) nearEntities [["Man"], 15];
+{
+	if (side _x == EAST) then {
+		exitWith {
+			_msg = format ["You can't deploy a FARP near hostiles."];
+			["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
+		};
+} forEach _enemyArray;
+
 /*
 _pos = getPos player;
 

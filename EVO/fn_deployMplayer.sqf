@@ -1,5 +1,14 @@
 private ["_pos","_msg","_mark","_mssg","_medmark","_crate"];
 _pos = getPos player;
+// Check for nearby enemies
+_enemyArray = (getPos player) nearEntities [["Man"], 15];
+{
+	if (side _x == EAST) then {
+		exitWith {
+			_msg = format ["You can't deploy a MASH near hostiles."];
+			["deployed",["MASH NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
+		};
+} forEach _enemyArray;
 player playMoveNow "Acts_carFixingWheel";
 
 if (!isNil "MASH") then {
