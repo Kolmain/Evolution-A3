@@ -189,6 +189,7 @@ if (isServer) then {
 //////////////////////////////////////
 if (isDedicated || !hasInterface) exitWith {};
 
+//Set Player Starting Loadout
 removeAllWeapons player;
 removeAllItems player;
 removeAllAssignedItems player;
@@ -215,11 +216,10 @@ player linkItem "ItemMap";
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
 player linkItem "ItemRadio";
+loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 
 handle = [] spawn {
-    loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	while {true} do {
-		waitUntil {player distance hqbox < 5};
 	   	waitUntil {player distance hqbox > 5};
    		if (isTouchingGround player) then {
             loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
