@@ -189,6 +189,33 @@ if (isServer) then {
 //////////////////////////////////////
 if (isDedicated || !hasInterface) exitWith {};
 
+removeAllWeapons player;
+removeAllItems player;
+removeAllAssignedItems player;
+removeUniform player;
+removeVest player;
+removeBackpack player;
+removeHeadgear player;
+removeGoggles player;
+player forceAddUniform "CUP_U_B_USArmy_TwoKnee";
+for "_i" from 1 to 3 do {player addItemToUniform "FirstAidKit";};
+for "_i" from 1 to 2 do {player addItemToUniform "CUP_15Rnd_9x19_M9";};
+player addVest "V_PlateCarrier1_rgr";
+for "_i" from 1 to 6 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
+for "_i" from 1 to 2 do {player addItemToVest "CUP_HandGrenade_M67";};
+player addItemToVest "SmokeShellBlue";
+player addItemToVest "SmokeShellRed";
+player addBackpack "B_AssaultPack_rgr";
+player addHeadgear "CUP_H_USArmy_HelmetMICH";
+player addGoggles "CUP_G_PMC_RadioHeadset_Glasses_Dark";
+player addWeapon "CUP_arifle_M16A4_Base";
+player addWeapon "CUP_hgun_M9";
+player addWeapon "Binocular";
+player linkItem "ItemMap";
+player linkItem "ItemCompass";
+player linkItem "ItemWatch";
+player linkItem "ItemRadio";
+
 handle = [] spawn {
     loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
 	while {true} do {
@@ -244,7 +271,6 @@ _index = player addMPEventHandler ["MPRespawn", {
 }];
 
 	player setUnitRank "PRIVATE";
-	[player, rank player] call BIS_fnc_setUnitInsignia;
 	bon_max_units_allowed = 2;
 	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";

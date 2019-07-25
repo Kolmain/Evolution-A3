@@ -1,9 +1,16 @@
-private ["_crate","_EVOrank"];
 _crate = _this select 0;
 _EVOrank = _this select 1;
-if (("fullArsenal" call BIS_fnc_getParamValue) == 0) exitWith {};
+_availableWeapons = [];
+_availableMagazines = [];
+_availableItems = [];
 
 switch (_EVOrank) do {
+    default {
+           availableWeapons = availableWeapons + rank1weapons;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+        availableItems = availableItems + rank1items;
+
+    };
     case "PRIVATE": {
            availableWeapons = availableWeapons + rank1weapons;
         availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;

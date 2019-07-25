@@ -9,6 +9,7 @@ player addaction ["<t color='#CCCC00'>Recruit Infantry</t>","bon_recruit_units\o
 player addaction ["<t color='#CCCC00'>HALO Drop</t>", EVO_fnc_paraInsert, nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 player addaction ["<t color='#CCCC00'>Group Management</t>","disableserialization; ([] call BIS_fnc_displayMission) createDisplay 'RscDisplayDynamicGroups'",nil,1,false,true,"","(player distance spawnBuilding) < 10"];
 [player, loadout] call compile preprocessFileLineNumbers "scripts\setloadout.sqf";
+//0 = ["AmmoboxInit",[hqbox, true]] spawn BIS_fnc_arsenal;
 [hqbox, (rank player)] call EVO_fnc_buildAmmoCrate;
 call EVO_fnc_rank;
 					group player setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
