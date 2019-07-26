@@ -16,13 +16,13 @@
 		markerCounter = markerCounter + 1;
 		publicVariable "currentSideMissionMarker";
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [getMarkerPos currentTargetMarkerName, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (EVO_OPFORINFANTRY call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 
 				if ([true, false] call bis_fnc_selectRandom) then {
-					[_grp, getmarkerpos currentSideMissionMarker, 100] call CBA_fnc_taskDefend;
+					[_grp, position _location, 100] call CBA_fnc_taskDefend;
 				} else {
-					[_grp, getmarkerpos currentSideMissionMarker, 300] call CBA_fnc_taskPatrol;
+					[_grp, position _location, 300] call CBA_fnc_taskPatrol;
 				};
 			{
 				currentSidemissionUnits pushBack _x;
@@ -35,10 +35,10 @@
 		};
 
 		for "_i" from 1 to (["Armor", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [getPos _vehicle, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [position _location, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_ret = [_spawnPos, (floor (random 360)), (EVO_OPFORVEHICLES call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
-			[_grp, getmarkerpos currentSideMissionMarker, 300] call CBA_fnc_taskPatrol;
+			[_grp, position _location, 300] call CBA_fnc_taskPatrol;
 		
 			{
 				currentSidemissionUnits pushBack _x;
@@ -51,18 +51,19 @@
 		};
 
 
-		handle = [] spawn {
+		handle = [_location] spawn {
+			_location = _this select 0;
 			_loop = true;
 			_count = 0;
 			while {_loop} do {
 				_count = 0;
 				sleep 10;
 				{
-					if (alive _x && ([_x, getMarkerPos currentSidemissionUnits] call BIS_fnc_distance2D < 1000)) then {
+					if (alive _x && ([_x, position _location] call BIS_fnc_distance2D < 1000)) then {
 					_count = _count + 1;
 					};
 				} forEach currentSidemissionUnits;
-				if (_count < 6) then {
+				if (_count < 5) then {
 					_loop = false;
 				};
 			};
@@ -90,7 +91,7 @@
 			publicVariable "currentSideMissionStatus";
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 			deleteMarker currentSideMissionMarker;
 		};
 		_tskDisplayName = format ["Attack SLA Installation"];

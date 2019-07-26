@@ -165,7 +165,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 			deleteMarker convoyEndMarker;
 			deleteMarker convoyStartMarker;
 			deleteMarker convoyStartAoMarker;

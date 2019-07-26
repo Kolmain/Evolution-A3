@@ -11,7 +11,7 @@
 
 
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [(position ([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [([_spawnLocations] call BIS_fnc_selectRandom), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (EVO_OPFORINFANTRY call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
 			{
@@ -25,7 +25,7 @@
 		};
 
 		for "_i" from 1 to (["Armor", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [(position ([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_spawnPos = [(([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_ret = [_spawnPos, (floor (random 360)), (EVO_OPFORVEHICLES call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
 		    handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
@@ -78,7 +78,7 @@
 			currentSideMissionStatus = "success";
 			publicVariable "currentSideMissionStatus";
 			[baseDefTask, "Succeeded", false] call bis_fnc_taskSetState;
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 		};
 		_tskDisplayName = format ["Defend Staging Base"];
 		baseDefTask = format ["baseDefTask_%1", floor(random(1000))];

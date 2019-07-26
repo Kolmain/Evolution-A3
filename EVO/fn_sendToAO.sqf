@@ -160,7 +160,6 @@ switch (_type) do {
 					    } forEach units _grp;
 					    _grp leaveVehicle _heli;
 					    waitUntil {count crew _heli == count units _heliGrp};
-					    doStop _heli;
 					    _heli doMove getPos server;
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;

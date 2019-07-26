@@ -56,7 +56,7 @@
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			handle = [] spawn EVO_fnc_pickSideMission;
 			deleteMarker currentSideMissionMarker;
 		};
 	};

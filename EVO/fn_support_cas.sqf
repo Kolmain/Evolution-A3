@@ -7,7 +7,7 @@ _target = _this select 2;
 _is3D = _this select 3;
 _ID = _this select 4;
 _grpSide = side _caller;
-_planeClass = "CUP_B_AV8B_GBU12_USMC";
+_planeClass = "B_Plane_CAS_01_dynamicLoadout_F";
 _pilot = pilot_west;
 _score = _score - 7;
 [player, -7] call bis_fnc_addScore;
@@ -30,6 +30,7 @@ _pos = supportMapClick;
 if (!visiblemap) exitWith {
 	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _pilot), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+	_arty setVariable ["EVO_support_busy", false, true];
 	sleep 3.5;
 	[_pilot, format["Copy that %2, out.", groupID (group _pilot), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
@@ -45,12 +46,17 @@ if ( _dis > 1000) then {
 
 	[_pilot, format["Grid %3 confirmed, en route, over.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
-	_center = createCenter sideLogic;
-	_group = createGroup _center;
-	_cas = _group createUnit ["ModuleCAS_F", _pos , [], 0, ""];
-	_cas setDir 0;
-	_cas setVariable ["vehicle", _planeClass , true];
-	_cas setVariable ["type", 2, true];
+	params [
+	"_position","_direction",["_vehicle","B_Plane_CAS_01_F"],["_type",2],
+	"_logic"
+];
+
+	_logic = "Logic" createVehicleLocal _pos;
+	_logic setDir (random 360);
+	_logic setVariable ["vehicle", _planeClass];
+	_logic setVariable ["type", 2];
+	[_logic,nil,true] call BIS_fnc_moduleCAS;
+	deleteVehicle _logic;
 	_loop = true;
 	_plane = objNull;
 	while {_loop} do {

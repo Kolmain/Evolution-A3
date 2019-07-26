@@ -35,6 +35,7 @@ _pos = supportMapClick;
 if (!visiblemap) exitWith {
 	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+	_arty setVariable ["EVO_support_busy", false, true];
 	sleep 3.5;
 	[_arty, format["Copy that %2, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
