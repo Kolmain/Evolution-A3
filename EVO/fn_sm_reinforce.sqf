@@ -7,9 +7,9 @@
 	if (isServer) then {
 		attackingUnits = 0;
          	//server
-         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "West" >> "Guerilla" >> "Infantry" >> "IRG_InfTeam_AT")] call EVO_fnc_spawnGroup;
+         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "Indep" >> "CUP_I_RACS" >> "Infantry" >> "CUP_I_RACS_InfantrySquad")] call EVO_fnc_spawnGroup;
          	handle = [reinforceSquad, locationPosition defendTarget] call BIS_fnc_taskDefend;
-		for "_i" from 1 to 4 do {
+		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [locationPosition defendTarget, 500, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
@@ -90,8 +90,7 @@
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			handle = [] spawn EVO_fnc_pickSideMission;
 		};
 		_tskDisplayName = format ["Reinforce NATO Recon Units"];
 		reinforceTask = format ["reinforceTask%1", floor(random(1000))];

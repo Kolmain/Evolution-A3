@@ -1,21 +1,9 @@
 //////////////////////////////////////
-//Init EVO_Debug
-//////////////////////////////////////
-if (("evo_debug" call BIS_fnc_getParamValue) == 1) then {
-    EVO_Debug = true;
-    publicVariable "EVO_Debug";
-    NSLVR_Debug = true;
-} else {
-    EVO_Debug = false;
-    publicVariable "EVO_Debug";
-    NSLVR_Debug = false;
-};
-//////////////////////////////////////
 //Init Third Party Scripts
 //////////////////////////////////////
 [] execVM "scripts\randomWeather2.sqf";
-//[] execVM "scripts\clean.sqf";
 [] execVM "bon_recruit_units\init.sqf";
+NSLVR_DEBUG = false;
 CHVD_allowNoGrass = true;
 CHVD_maxView = 2500; 
 CHVD_maxObj = 2500;
@@ -32,13 +20,12 @@ setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 //////////////////////////////////////
 EVO_difficulty = "EvoDifficulty" call BIS_fnc_getParamValue;
 enableSaving [false, false];
-arsenalCrates = [];
 militaryInstallations = [];
 HCconnected = false;
 CROSSROADS = [West,"HQ"];
 availableWeapons = [];
 availableMagazines = [];
-EVO_vaCrates = [];
+EVO_vaCrates = [hqbox];
 
 //////////////////////////////////////
 //Set Ranks and Unlocks
@@ -96,12 +83,12 @@ switch (EVO_difficulty) do {
     };
  };
 RANK1VEHICLES = ["CUP_B_MTVR_REPAIR_USMC","CUP_B_MTVR_AMMO_USMC","CUP_B_MTVR_FUEL_USMC","CUP_B_HMMWV_AMBULANCE_USMC","NONSTEERABLE_PARACHUTE_F","STEERABLE_PARACHUTE_F","CUP_B_HMMWV_UNARMED_USMC"];
-RANK2VEHICLES = ["CUP_B_MTVR_USMC"];
-RANK3VEHICLES = ["CUP_B_HMMWV_MK19_USMC","CUP_B_HMMWV_M2_USMC","CUP_B_HMMWV_TOW_USMC","CUP_B_MH6J_USA"];
-RANK4VEHICLES = ["CUP_B_M1126_ICV_M2_WOODLAND_SLAT","CUP_B_M113_USA","CUP_B_M1135_ATGMV_WOODLAND_SLAT"];
-RANK5VEHICLES = ["CUP_B_M1126_ICV_MK19_WOODLAND","CUP_B_M163_USA","CUP_B_UH60L_US"];
-RANK6VEHICLES = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC"];
-RANK7VEHICLES = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z"];
+RANK2VEHICLES = ["CUP_B_MTVR_USMC", "CUP_B_M1151_M2_WDL_USA"];
+RANK3VEHICLES = ["CUP_B_M1151_MK19_WDL_USA","CUP_B_M1167_WDL_USA","CUP_B_MH6J_USA", "CUP_B_M113_USA"];
+RANK4VEHICLES = ["CUP_B_M1126_ICV_M2_WOODLAND_SLAT","CUP_B_M1135_ATGMV_WOODLAND_SLAT", "CUP_B_M1129_MC_MK19_WOODLAND"];
+RANK5VEHICLES = ["CUP_B_M1126_ICV_MK19_WOODLAND","CUP_B_M163_USA","CUP_B_MH60S_FFV_USMC","CUP_B_UH1Y_GUNSHIP_DYNAMIC_USMC", "CUP_B_UH60M_FFV_US","CUP_B_M60A3_USMC","CUP_B_M2A3BRADLEY_USA_W"];
+RANK6VEHICLES = ["CUP_B_AH6J_MP_USA","CUP_B_M1A2_TUSK_MG_USMC","CUP_B_CH47F_VIV_USA", "CUP_B_CH53E_VIV_USMC","CUP_B_M1128_MGS_WOODLAND_SLAT"];
+RANK7VEHICLES = ["CUP_B_AV8B_GBU12_USMC","CUP_B_AH1Z", "CUP_B_AH64D_DL_USA", "CUP_B_A10_DYN_USA"];
 
 RANK1WEAPONS = ["CUP_ARIFLE_M16A2","CUP_ARIFLE_M16A4","CUP_LAUNCH_M136","CUP_HGUN_M9","CUP_MP5A5"];
 RANK1ITEMS = ["ACC_FLASHLIGHT"];
@@ -109,8 +96,8 @@ RANK1ITEMS = ["ACC_FLASHLIGHT"];
 RANK2WEAPONS = ["CUP_ARIFLE_M16A2_GL","CUP_ARIFLE_M16A4_GL","CUP_LMG_M240"];
 RANK2ITEMS = ["CUP_OPTIC_COMPM2_BLACK","CUP_LASERDESIGNATOR"];
 
-RANK3WEAPONS = ["CUP_SRIFLE_M24_WDL","CUP_ARIFLE_M4A1"];
-RANK3ITEMS = ["B_UAVTERMINAL","ACC_POINTER_IR","CUP_OPTIC_RCO","NVGOGGLES"];
+RANK3WEAPONS = ["CUP_SRIFLE_M24_WDL","CUP_ARIFLE_M4A1", "CUP_SOFLAM"];
+RANK3ITEMS = ["B_UAVTERMINAL","ACC_POINTER_IR","CUP_OPTIC_RCO","CUP_NVG_PVS15_black"];
 
 RANK4WEAPONS = ["CUP_ARIFLE_M4A1_BUIS_GL","CUP_LMG_M249_E2","CUP_LAUNCH_FIM92STINGER"];
 RANK4ITEMS = ["CUP_OPTIC_HOLOBLACK","CUP_ACC_ANPEQ_2"];
@@ -124,10 +111,10 @@ RANK6ITEMS = ["CUP_OPTIC_CWS"];
 RANK7WEAPONS = ["CUP_SRIFLE_M107_BASE"];
 RANK7ITEMS = ["CUP_OPTIC_ZDDOT","CUP_OPTIC_LEUPOLDM3LR"];
 
-AVAILABLEHEADGEAR = [];
+AVAILABLEHEADGEAR = ["CUP_H_USArmy_HelmetMICH"];
 AVAILABLEGOGGLES = [];
-AVAILABLEUNIFORMS = [];
-AVAILABLEVESTS = [];
+AVAILABLEUNIFORMS = ["CUP_U_B_USArmy_TwoKnee"];
+AVAILABLEVESTS = ["V_PlateCarrier1_rgr"];
 AVAILABLEITEMS = [
     "ITEMWATCH",
     "ITEMCOMPASS",
@@ -141,7 +128,7 @@ AVAILABLEITEMS = [
     "TOOLKIT",
     "ITEM_MINEDETECTOR"
 ];
-AVAILABLEBACKPACKS = ["B_ASSAULTPACK_RGR"];
+AVAILABLEBACKPACKS = ["B_ASSAULTPACK_RGR", "CUP_B_Kombat_Olive"];
 
 //////////////////////////////////////
 //Set OPFOR Classes
@@ -181,6 +168,7 @@ if (!(isServer) && !(hasInterface)) then {
 if (isServer) then {
 	[] spawn EVO_fnc_initEVO;
     [] spawn EVO_fnc_protectBase;
+    [] spawn EVO_fnc_pickSideMission;
 	["Initialize"] call BIS_fnc_dynamicGroups;
 };
 
@@ -189,49 +177,21 @@ if (isServer) then {
 //////////////////////////////////////
 if (isDedicated || !hasInterface) exitWith {};
 
-//Set Player Starting Loadout
-removeAllWeapons player;
-removeAllItems player;
-removeAllAssignedItems player;
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeHeadgear player;
-removeGoggles player;
-player forceAddUniform "CUP_U_B_USArmy_TwoKnee";
-for "_i" from 1 to 3 do {player addItemToUniform "FirstAidKit";};
-for "_i" from 1 to 2 do {player addItemToUniform "CUP_15Rnd_9x19_M9";};
-player addVest "V_PlateCarrier1_rgr";
-for "_i" from 1 to 6 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
-for "_i" from 1 to 2 do {player addItemToVest "CUP_HandGrenade_M67";};
-player addItemToVest "SmokeShellBlue";
-player addItemToVest "SmokeShellRed";
-player addBackpack "B_AssaultPack_rgr";
-player addHeadgear "CUP_H_USArmy_HelmetMICH";
-player addGoggles "CUP_G_PMC_RadioHeadset_Glasses_Dark";
-player addWeapon "CUP_arifle_M16A4_Base";
-player addWeapon "CUP_hgun_M9";
-player addWeapon "Binocular";
-player linkItem "ItemMap";
-player linkItem "ItemCompass";
-player linkItem "ItemWatch";
-player linkItem "ItemRadio";
-loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+loadout = getUnitLoadout player;
 
 handle = [] spawn {
 	while {true} do {
-	   	waitUntil {player distance hqbox > 5};
+        waitUntil {player distance hqbox < 10};
+	   	waitUntil {player distance hqbox > 10};
    		if (isTouchingGround player) then {
-            loadout = [player] call compile preprocessFileLineNumbers "scripts\getloadout.sqf";
+            loadout = getUnitLoadout player;
         };
 	};
 };
 _brief = [] execVM "briefing.sqf";
 "EVO_vaCrates" addPublicVariableEventHandler {
     {
-        if (alive (_x select 0)) then {
-            [(_x select 0), rank (_x select 1)] call EVO_fnc_buildAmmoCrate;
-        };
+            [_x, rank player] call EVO_fnc_buildAmmoCrate;
     } forEach EVO_vaCrates;
 };
 intro = true;
@@ -254,15 +214,8 @@ if (("bisJukebox" call BIS_fnc_getParamValue) == 1) then {
 if (("bisAmbientCombatSounds" call BIS_fnc_getParamValue) == 1) then {
     _amb = [] spawn EVO_fnc_amb;
 };
-//////////////////////////////////////
-//EVO Sector Markers
-//////////////////////////////////////
-if (("gridMarkersParam" call BIS_fnc_getParamValue) == 1) then {
-    _mrkrs = [] spawn EVO_fnc_gridMarkers;
-};
 
 recruitComm = [player, "recruit"] call BIS_fnc_addCommMenuItem;
-_nil = [] spawn EVO_fnc_supportManager;
 
 _index = player addMPEventHandler ["MPRespawn", {
  	_newPlayer = _this select 0;
@@ -275,10 +228,4 @@ _index = player addMPEventHandler ["MPRespawn", {
 	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	[hqbox, (rank player)] call EVO_fnc_buildAmmoCrate;
-    _nil = [] spawn {
-        while {true} do {
-            call EVO_fnc_rank;
-            sleep 20;
-        };
-    };
     _nil = [] spawn EVO_fnc_pinit;

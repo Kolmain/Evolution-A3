@@ -58,6 +58,10 @@ if (player distance SpawnBuilding < 500) then {
 	//_spawnPos = [getPos player, 10, 10, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	_spawnPos = getPos SpawnBuilding;
 	_unit = group player createUnit [_unittype, _spawnPos, [], 0, "FORM"];
+	_unit addEventHandler ["GetInMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+		handle = [_unit] call EVO_fnc_vehicleCheck;
+	}];
 } else {
     _spawnPos = [((getPos player) select 0), ((getPos player) select 1), (((getPos player) select 2) + 200)];
 	_unit = group player createUnit [_unittype, [_spawnPos select 0, _spawnPos select 1, 200], [], 0, "FORM"];
@@ -69,6 +73,10 @@ if (player distance SpawnBuilding < 500) then {
     _unit moveIndriver _chute;
     _unit DoMove (getPos leader group _unit);
     _unit allowdamage true;
+	_unit addEventHandler ["GetInMan", {
+		params ["_unit", "_role", "_vehicle", "_turret"];
+		handle = [_unit] call EVO_fnc_vehicleCheck;
+	}];
 	[_unit] spawn {
 	    _unit = _this select 0;
 	    (vehicle _unit) allowDamage false;// Set parachute invincible to prevent exploding if it hits buildings

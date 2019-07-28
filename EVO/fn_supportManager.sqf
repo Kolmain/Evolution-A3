@@ -7,8 +7,6 @@ _hasRessuply = false;
 _hasUAV = false;
 _spendable = 0;
 _lastSpendable = 0;
-while {true} do {
-  sleep 10;
   _spendable = [player] call EVO_fnc_supportPoints;
   if (_spendable != _lastSpendable) then {
     if (_spendable >= 5 && !_hasMortar) then {
@@ -73,4 +71,3 @@ while {true} do {
 
     _lastSpendable = _spendable;
   };
-};

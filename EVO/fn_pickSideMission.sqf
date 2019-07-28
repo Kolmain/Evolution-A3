@@ -1,10 +1,10 @@
 currentSideMission = "none";
 currentSideMissionStatus = "ip";
-curreSidemissionUnits = [];
-publicVariable "curreSidemissionUnits";
+currentSidemissionUnits = [];
+publicVariable "currentSidemissionUnits";
 publicVariable "currentSideMission";
 publicVariable "currentSideMissionStatus";
-_mission = ["aaa", false] call BIS_fnc_selectRandom;
+_mission = ["aaa", "attack"] call BIS_fnc_selectRandom;
 switch (_mission) do {
                 case "aaa": {
                     _options = [];
@@ -20,7 +20,7 @@ switch (_mission) do {
 						publicVariable "aaHuntTarget";
 						[] call EVO_fnc_sm_aaHunt;
 					} else {
-						//none left
+						 [] spawn EVO_fnc_pickSideMission;
 					};
                 };
 				case "basedefend": {

@@ -98,6 +98,7 @@ currentTargetOF AddMPEventHandler ["mpkilled", {
 	}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
 }];
 _officer = currentTargetOF;
+group _officer setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
 _pos = (getPos _officer);
 _spawnPos = [];
 _max_distance = 100;

@@ -5,8 +5,9 @@ _unit = _this select 0;
 [[[_unit], {
 	_unit = _this select 0;
 	_unit playMoveNow "AmovPercMstpSsurWnonDnon";
-	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"_this spawn EVO_fnc_capture",nil,1,false,true,"","side leader group _unit != WEST"];
-}], "BIS_fnc_spawn", true] call BIS_fnc_MP;
+	_unit addAction [format["<t color='#CCCC00'>Capture %2 %1</t>", name _unit, rank _unit],"_this spawn EVO_fnc_capture", [], 1, true, false, "", "_target distance _this < 10 && side leader group _unit != WEST"];
+
+}], "BIS_fnc_spawn"] call BIS_fnc_MP;
 _unit disableAI "ANIM";
 _unit disableAI "FSM";
 _result = [_unit, primaryWeapon _unit] call CBA_fnc_dropWeapon;

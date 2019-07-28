@@ -1,8 +1,9 @@
-private ["_veh","_vehicle","_killer","_mhq","_classname","_dir","_pos","_vehPos","_posDriverExit","_posCommanderExit","_posCargoExit","_posDriver","_posCommander","_posCargo","_driverExitOffset","_deadPos","_deadExitPos","_newVehicle","_null","_displayName","_markerName","_vehMarker"];
-
 _veh = _this select 0;
-
-	_veh addEventHandler ["Killed", {
+clearWeaponCargoGlobal _veh;
+clearMagazineCargoGlobal _veh;
+clearBackpackCargoGlobal _veh;
+clearItemCargoGlobal _veh;
+	_veh AddEventHandler ["Killed", {
 		handle = _this spawn {
 			_vehicle = _this select 0;
 			_killer = _this select 1;
@@ -43,6 +44,10 @@ _veh = _this select 0;
 			waitUntil {!isNil "_newVehicle"};
 			handle = [_newVehicle] spawn {
 				_newVehicle = _this select 0;
+				clearWeaponCargoGlobal _newVehicle;
+				clearMagazineCargoGlobal _newVehicle;
+				clearBackpackCargoGlobal _newVehicle;
+				clearItemCargoGlobal _newVehicle;
 				_displayName = getText(configFile >>  "CfgVehicles" >>  (typeOf _newVehicle) >> "displayName");
 				_markerName = format ["damaged_%1_%2", _displayName, markerCounter];
 				_vehMarker = createMarker [_markerName, position _newVehicle ];

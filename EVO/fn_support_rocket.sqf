@@ -1,7 +1,6 @@
 private ["_caller","_pos","_is3D","_ID","_grpSide","_arty","_busy","_score","_newartyStrike","_isInRange","_eta"];
 
 _caller = _this select 0;
-_caller playMoveNow "Acts_listeningToRadio_Loop";
 _pos = _this select 1;
 _target = _this select 2;
 _is3D = _this select 3;
@@ -35,6 +34,7 @@ _pos = supportMapClick;
 if (!visiblemap) exitWith {
 	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
+	_arty setVariable ["EVO_support_busy", false, true];
 	sleep 3.5;
 	[_arty, format["Copy that %2, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;

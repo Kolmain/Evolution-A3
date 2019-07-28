@@ -1,4 +1,3 @@
-private ["_locTypes","_locs","_mil","_counter","_markerName","_aaMarker","_vehicle","_null","_grp","_driver","_commander","_gunner","_ret","_plane"];
 //////////////////////////////////////
 //Init Global EVO Variables
 //////////////////////////////////////
@@ -49,47 +48,9 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
-//EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+EVO_supportUnits = [arty_west, mortar_west, rocket_west, uav_west];
 currentAOunits = [];
 publicVariable "currentAOunits";
-/*
-{
-	gunner _x addEventHandler ["HandleScore", {
-		_supportAsset = _this select 0;
-		_source = _this select 1;
-		_scoreToAdd = _this select 2;
-		_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
-		[_player, _scoreToAdd] call bis_fnc_addScore;
-		if (EVO_Debug) then {
-			systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
-		};
-	}];
-} forEach EVO_supportUnits;
-*/
-if (EVO_Debug) then {
-	systemChat format["EVO_init found %1 AO's.", count targetLocations];
-	_counter = 1;
-	{
-		_markerName = format ["debug_ao_%1", markerCounter];
-		_aaMarker = createMarker [_markerName, position _x ];
-		_markerName setMarkerShape "ICON";
-		_markerName setMarkerType "mil_dot";
-		_markerName setMarkerColor "ColorWEST";
-		_markerName setMarkerPos (position _x);
-		_markerName setMarkerText format["AO %1", _counter];
-		markerCounter = markerCounter + 1;
-		_counter = _counter + 1;
-	} forEach targetLocations
-};
-//////////////////////////////////////
-//Spawn End Game Loop
-//////////////////////////////////////
-handle = [] spawn EVO_fnc_endgame;
-
-//////////////////////////////////////
-//Build Available Side Missions
-//////////////////////////////////////
-//handle = [] spawn EVO_fnc_buildSideMissionArray;
 
 //////////////////////////////////////
 //Check All Vehicles on Map
@@ -100,7 +61,7 @@ handle = [] spawn EVO_fnc_endgame;
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
 	if (faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army" || faction _vehicle == "BLU_F") then {
-		if (toUpper(typeOf _vehicle) == "CUP_B_HMMWV_UNARMED_USMC")	then {
+		if (toUpper(typeOf _vehicle) == "CUP_B_M1151_USMC")	then {
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
 		} else {
 			if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
@@ -149,8 +110,10 @@ handle = [] spawn EVO_fnc_endgame;
 				handle = [_x] call EVO_fnc_sendToHC;
 			};
 		} forEach units _grp;
-		_vehicle addEventHandler ["Killed", {deleteMarker _markerName}];
+		_vehicle setVariable ["EVO_markerName", _markerName, true];
+		_vehicle AddEventHandler ["Killed", {deleteMarker ((_this select 0) getVariable "EVO_markerName")}];
 		_vehicle allowCrewInImmobile true;
+		_vehicle setDir (random 360);
 	};
 } forEach vehicles;
 

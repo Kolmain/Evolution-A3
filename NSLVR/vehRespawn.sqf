@@ -270,6 +270,10 @@ _monitor = true;
 					deleteVehicle _veh;
 					sleep 1;
 					_veh = createVehicle [_vehtype, _pos, [], 0, "NONE"];
+					clearWeaponCargoGlobal _veh;
+					clearMagazineCargoGlobal _veh;
+					clearBackpackCargoGlobal _veh;
+					clearItemCargoGlobal _veh;
 
 					//If the old vehicle had a name transfer it to the new vehicle
 					if (_vehName != "") then {

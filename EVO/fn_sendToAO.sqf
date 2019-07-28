@@ -160,7 +160,6 @@ switch (_type) do {
 					    } forEach units _grp;
 					    _grp leaveVehicle _heli;
 					    waitUntil {count crew _heli == count units _heliGrp};
-					    doStop _heli;
 					    _heli doMove getPos server;
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;
@@ -257,20 +256,16 @@ switch (_type) do {
 				    	unassignVehicle  _x;
 				    } forEach units _grp;
 				    _grp leaveVehicle _transport;
-				    waitUntil {count crew _transport == count units _transGrp};
-
 						if ([true, true, true, false, false, false, false, false, false, false, false] call bis_fnc_selectRandom) then {
 							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskDefend;
 						} else {
 							[_grp, getPos currentTargetRT, 100] call CBA_fnc_taskPatrol;
 						};
-
-				    doStop _transport;
 				    _transport doMove _spawnPos2;
 				    handle = [_transport, _spawnPos2] spawn {
 				    	_spawnPos = _this select 1;
 				    	_transport = _this select 0;
-				    	waitUntil {(_transport distance _spawnPos) < 500};
+					    	waitUntil {{_x distance _heli < 1500} count allPlayers < 1};
 				    	{
 				    		deleteVehicle _x;
 				    	} forEach units group driver _transport;
@@ -332,12 +327,10 @@ switch (_type) do {
 					    	doGetOut _x
 					    } forEach units _grp;
 					    _grp leaveVehicle _heli;
-					    waitUntil {count crew _heli == count units _heliGrp};
-					    doStop _heli;
 					    _heli doMove getPos server;
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;
-					    	waitUntil {(_heli distance server) < 1000};
+					    	waitUntil {{_x distance _heli < 1500} count allPlayers < 1};
 					    	{
 					    		deleteVehicle _x;
 					    	} forEach units group driver _heli;
@@ -375,7 +368,7 @@ switch (_type) do {
 					publicVariable "currentAOunits";
 				}];
 			} forEach units _grp;
-			_heavylift = false;
+			_heavylift = [false, true] call BIS_fnc_selectRandom;
 			if (_heavylift && !_init) then {
 				_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				_ret = [_spawnPos, (floor (random 360)), EVO_opforHeavyLift, EAST] call EVO_fnc_spawnvehicle;
@@ -415,7 +408,7 @@ switch (_type) do {
 					_heli flyInHeight 50;
 					[_heli] spawn {
 						_heli = _this select 0;
-						waitUntil {([_heli, getPos server] call BIS_fnc_distance2D < 500)};
+					    waitUntil {{_x distance _heli < 1500} count allPlayers < 1};
 						{
 							deleteVehicle _x;
 						} forEach crew _heli;

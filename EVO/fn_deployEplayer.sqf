@@ -4,61 +4,37 @@ if (isNil "_truck" || (player distance _truck > 25)) exitWith {
 	["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 };
 
-// Check for nearby enemies
 _enemyArray = (getPos player) nearEntities [["Man"], 15];
 {
-	if (side _x == EAST) then {
-		exitWith {
+	if (side _x == EAST) exitWith {
 			_msg = format ["You can't deploy a FARP near hostiles."];
 			["deployed",["FARP NOT DEPLOYED", _msg]] call BIS_fnc_showNotification;
 		};
 } forEach _enemyArray;
 
-
-_pos = getPos player;
-
-_h = nearestObject [_pos, "Camp_EP1"];
-[[_h],{
-	_h = _this select 0;
-	if (isServer) then
-	{
-		_nearVehicles = [];
-		while {alive _h} do
-		{
-			{
-				_x call EVO_fnc_rearm;
-			}
-			forEach ((getPos _h) nearEntities [["Car", "Tank", "Helicopter"], 10]);
-			sleep 2;
-		};
-	};
-},"BIS_fnc_spawn"] call BIS_fnc_MP;
-
-
-_pos = getPos player;
-player playMoveNow "Acts_carFixingWheel";
-
 if (!isNil "MASH") then {
-	{
-		deleteVehicle _x;
-	} forEach playerStructures;
+	deleteVehicle MASH;
 	_msg = format ["Your previous FARP has been removed."];
 	["deployed",["FARP REMOVED", _msg]] call BIS_fnc_showNotification;
 };
 
-if (!isNil "playerRespawnPoint") then {
+if (!isNil "MASH") then {
 	playerRespawnPoint call BIS_fnc_removeRespawnPosition;
 };
 
-
-
-WaitUntil {animationState player != "Acts_carFixingWheel"};
-if (!alive player || player distance _pos > 1) exitWith {};
-
+_pos = [position player, 5, 15, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+MASH = "USMC_WarfareBBarracks" createVehicle _pos;
+MASH allowDamage false;
+EVO_vaCrates pushBack MASH;
+publicVariable "EVO_vaCrates";
+{
+    [_x, rank player] call EVO_fnc_buildAmmoCrate;
+} forEach EVO_vaCrates;
+player playMoveNow "Acts_carFixingWheel";
 
 _mark = format["%1mash",(name player)];
 deleteMarker _mark;
-playerStructures = [(getPos player), (getDir player), call (compile (preprocessFileLineNumbers ("Comps\mash.sqf")))] call BIS_fnc_ObjectsMapper;
+
 _mssg = format["%2 %1's FARP",(name player), (rank player)];
 playerRespawnPoint = [(side player), (getPos player), _mssg] call BIS_fnc_addRespawnPosition;
 _medmark = createMarker [_mark, getPos player];

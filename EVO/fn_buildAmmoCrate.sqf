@@ -1,8 +1,5 @@
 _crate = _this select 0;
 _EVOrank = _this select 1;
-_availableWeapons = [];
-_availableMagazines = [];
-_availableItems = [];
 
 switch (_EVOrank) do {
     default {
