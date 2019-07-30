@@ -72,6 +72,7 @@ if (_isInRange) then {
 } else {
 [_arty, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _arty), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newartyStrike = [_caller, "rocketStrike"] call BIS_fnc_addCommMenuItem;
+_arty setVariable ["EVO_support_busy", false, true];
 [player, 6] call bis_fnc_addScore;
 };
 

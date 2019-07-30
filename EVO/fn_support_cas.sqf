@@ -29,7 +29,7 @@ _pos = supportMapClick;
 if (!visiblemap) exitWith {
 	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _pilot), groupID (group _caller)]] call EVO_fnc_globalSideChat;
-	_arty setVariable ["EVO_support_busy", false, true];
+	_pilot setVariable ["EVO_support_busy", false, true];
 	sleep 3.5;
 	[_pilot, format["Copy that %2, out.", groupID (group _pilot), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
@@ -45,49 +45,22 @@ if ( _dis > 1000) then {
 
 	[_pilot, format["Grid %3 confirmed, en route, over.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
-	params [
-	"_position","_direction",["_vehicle","B_Plane_CAS_01_F"],["_type",2],
-	"_logic"
-];
-
-	_logic = "Logic" createVehicleLocal _pos;
-	_logic setDir (random 360);
-	_logic setVariable ["vehicle", _planeClass];
-	_logic setVariable ["type", 2];
-	[_logic,nil,true] call BIS_fnc_moduleCAS;
-	deleteVehicle _logic;
-	_loop = true;
-	_plane = objNull;
-	while {_loop} do {
-		sleep 1;
-		_plane = nearestObject [_pos, "B_Plane_CAS_01_F"];
-		if (!isPlayer driver _plane) then {
-			_loop = false;
-			driver _plane setVariable ["EVO_playerRequester", player, true];
-			[[[_plane], {
-			driver (_this select 0) addEventHandler ["HandleScore", {
-			_supportAsset = _this select 0;
-			_source = _this select 1;
-			_scoreToAdd = _this select 2;
-			_player = _supportAsset getVariable ["EVO_playerRequester", objNull];
-			[_player, _scoreToAdd] call bis_fnc_addScore;
-			if (EVO_Debug) then {
-				systemChat format ["%1 got points from %2. Sending points to %3.", _supportAsset, _source, _player];
-			};
-		}];
-	}], "BIS_fnc_spawn", false] call BIS_fnc_MP;
+		_logic = "Logic" createVehicleLocal _pos;
+		_logic setDir (random 360);
+		_logic setVariable ["vehicle", _planeClass];
+		_logic setVariable ["type", 2];
+		[_logic,nil,true] call BIS_fnc_moduleCAS;
+		deleteVehicle _logic;
+		_loop = true;
+	};
 };
-};
-waituntil {isnull _cas};
-[_pilot, format["Fixed wing CAS support request completed, %2 out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
 
 } else {
-
-[_pilot, format["Grid %3 is too close to friendly forces, request denied, out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
-sleep 5;
-_newCasStrike = [_caller, "fixedCasStrike"] call BIS_fnc_addCommMenuItem;
-[player, 7] call bis_fnc_addScore;
-["PointsAdded",["CAS support canceled.", 7]] call BIS_fnc_showNotification;
+	[_pilot, format["Grid %3 is too close to friendly forces, request denied, out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;
+	sleep 5;
+	_newCasStrike = [_caller, "fixedCasStrike"] call BIS_fnc_addCommMenuItem;
+	[player, 7] call bis_fnc_addScore;
+	["PointsAdded",["CAS support canceled.", 7]] call BIS_fnc_showNotification;
 };
 supportMapClick = [0,0,0];
 supportClicked = false;

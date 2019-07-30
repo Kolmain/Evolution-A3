@@ -30,7 +30,7 @@ _pos = supportMapClick;
 if (!visiblemap) exitWith {
 	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 	[_caller, format["%1, this is %2, scratch that last request, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
-	_arty setVariable ["EVO_support_busy", false, true];
+	_mortar setVariable ["EVO_support_busy", false, true];
 	sleep 3.5;
 	[_mortar, format["Copy that %2, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
@@ -69,6 +69,7 @@ if (_isInRange) then {
 } else {
 [_mortar, format["%2 this is %1, specified map grid is out of range, out.", groupID (group _mortar), groupID (group _caller)]] call EVO_fnc_globalSideChat;
 _newMortarStrike = [_caller, "mortarStrike"] call BIS_fnc_addCommMenuItem;
+_mortar setVariable ["EVO_support_busy", false, true];
 [player, 5] call bis_fnc_addScore;
 };
 

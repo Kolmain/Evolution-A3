@@ -42,12 +42,8 @@ player addEventHandler ["GetInMan", {
 //////////////////////////////////////
 player addEventHandler ["HandleScore", {
 	params ["_unit", "_object", "_score"];
-	[[[_unit], {
-		if (player == _this select 0) then {
-			_nil = [] spawn EVO_fnc_rank;
-			_nil = [] spawn EVO_fnc_supportManager;
-		};
-	}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
+	[] remoteExecCall ["EVO_fnc_rank", _unit];
+	[] remoteExecCall ["EVO_fnc_supportManager", _unit];
 	true
 }];
 

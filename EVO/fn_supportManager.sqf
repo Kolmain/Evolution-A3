@@ -1,32 +1,36 @@
 private ["_spendable","_lastSpendable"];
-_hasCas = false;
-_hasArty = false;
-_hasMortar = false;
-_hasRocket = false;
-_hasRessuply = false;
-_hasUAV = false;
-_spendable = 0;
-_lastSpendable = 0;
-  _spendable = [player] call EVO_fnc_supportPoints;
-  if (_spendable != _lastSpendable) then {
-    if (_spendable >= 5 && !_hasMortar) then {
+hasCas = false;
+hasArty = false;
+hasMortar = false;
+hasRocket = false;
+hasRessuply = false;
+hasUAV = false;
+spendable = 0;
+lastSpendable = 0;
+  spendable = [player] call EVO_fnc_supportPoints;
+  if (spendable != lastSpendable) then {
+    if (spendable >= 4 && !hasMortar) then {
+      uavComm = [player, "uavRequest"] call BIS_fnc_addCommMenuItem;
+      hasUAV = true;
+    };
+    if (spendable >= 5 && !hasMortar) then {
       mortarStrikeComm = [player, "mortarStrike"] call BIS_fnc_addCommMenuItem;
-      _hasMortar = true;
+      hasMortar = true;
     };
 
-    if (_spendable >= 6 && !_hasArty) then {
+    if (spendable >= 6 && !hasArty) then {
       artyStrikeComm = [player, "artyStrike"] call BIS_fnc_addCommMenuItem;
-      _hasArty = true;
+      hasArty = true;
     };
 
-    if (_spendable >= 7 && !_hasCas) then {
+    if (spendable >= 7 && !hasCas) then {
       casStrikeComm = [player, "fixedCasStrike"] call BIS_fnc_addCommMenuItem;
-      _hasCas = true;
+      hasCas = true;
     };
 
-    if (_spendable >= 8 && !_hasRocket) then {
+    if (spendable >= 8 && !hasRocket) then {
       rocketStrikeComm = [player, "rocketStrike"] call BIS_fnc_addCommMenuItem;
-      _hasRocket = true;
+      hasRocket = true;
     };
 
     if (_spendable >= 9) then {
@@ -43,22 +47,22 @@ _lastSpendable = 0;
 
     if (_spendable < 5) then {
       [player, mortarStrikeComm] call BIS_fnc_removeCommMenuItem;
-      _hasMortar = false;
+      hasMortar = false;
     };
 
     if (_spendable < 6) then {
       [player, artyStrikeComm] call BIS_fnc_removeCommMenuItem;
-      _hasArty = false;
+      hasArty = false;
     };
 
     if (_spendable < 7) then {
       [player, casStrikeComm] call BIS_fnc_removeCommMenuItem;
-      _hasCas = false;
+      hasCas = false;
     };
 
     if (_spendable < 8) then {
       [player, rocketStrikeComm] call BIS_fnc_removeCommMenuItem;
-      _hasRocket = false;
+      hasRocket = false;
     };
 
     if (_spendable < 9) then {
@@ -69,5 +73,5 @@ _lastSpendable = 0;
 
     };
 
-    _lastSpendable = _spendable;
+    lastSpendable = spendable;
   };
