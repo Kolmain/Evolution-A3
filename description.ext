@@ -26,7 +26,6 @@ wreckRemovalMaxTime = 240; //Maximal time in seconds after which a wreck is remo
 #include "bon_recruit_units\dialog\recruitment.hpp"
 #include "ATM_airdrop\dialog.hpp"
 #include "CHVD\dialog.hpp"
-#include "R3F_LOG\desc_include.h"
 
 class Header
 {
@@ -54,25 +53,29 @@ class CfgRadio
 	};
 };
 
+class CfgRespawnInventory
+{
+	class defaultWest
+	{
+		displayName = "Default"; // Name visible in the menu
+		icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa"; // Icon displayed next to the name
+		uniform = "CUP_U_B_USArmy_TwoKnee";
+		backpack = "B_AssaultPack_rgr";
+		weapons[] = {"Binocular","CUP_arifle_M16A4_Base","CUP_hgun_M9","Throw","Put"};
+		magazines[] = {"CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_HandGrenade_M67","CUP_HandGrenade_M67","SmokeShellBlue","SmokeShellRed"};
+		items[] = {"FirstAidKit","FirstAidKit","FirstAidKit"};
+		linkedItems[] = {"V_PlateCarrier1_rgr","CUP_H_USArmy_HelmetMICH","G_Tactical_Black","ItemMap","ItemCompass","ItemWatch","ItemRadio"};
+
+	};
+};
+
 class Params
 {
-	class aiSystem {
-	    title = "AI System";
-	    values[] = {1,2};
-	    texts[] = {"UPSMON","GAIA"};
-	    default = 2;
-	};
 	class initialWeatherParam {
 	    title = "Starting Weather";
 	    values[] = {0,1,2,3,4};
 	    texts[] = {"Clear","Overcast","Rain","Fog","Random"};
-	    default = 4;
-	};
-	class numberOfAOs {
-		title = "Number of Targets to Clear";
-	    values[] = {0,1,5,10,15,20,999};
-	    texts[] = {"Only Side Missions","1","5","10","15","20","All Available"};
-	    default = 999;
+	    default = 1;
 	};
 	class Daytime {
 		title = "Starting Time";
@@ -93,17 +96,11 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-	class pRespawnPoints {
-		title = "Player Respawn Points";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
 	class EvoDifficulty {
 		title = "Difficulty";
 		texts[] = {"Easy","Normal","Hard","Altis on Fire"};
 		values[] = {1,2,3,4};
-		default = 2;
+		default = 3;
 	};
 	class pilotDressRequired {
 		title = "Require Pilot Loadout to Pilot";
@@ -129,24 +126,6 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-	class randomSideMissions {
-		title = "Randomly Generate Side Missions";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class r3fParam {
-		title = "R3F Logistics";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
-	};
-	class killNotificationParam {
-		title = "Visible Kill Notifications";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
 	class bisJukebox {
 		title = "BIS Jukebox";
 		texts[] = {"Disabled","Enabled"};
@@ -165,30 +144,36 @@ class Params
 		values[] = {0,1};
 		default = 0;
 	};
-	class persistentEVO {
-		title = "Mission Persistence";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class hitFX {
-		title = "Unit On-Hit SFX";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
-	};
-	class gridMarkersParam {
-	    title = "OPFOR Sectors Shown on Map";
-	    values[] = {0,1};
-	    texts[] = {"Disabled","Enabled"};
-	    default = 1;
-	};
+};
 
+class CfgRemoteExec
+{
+	// List of script functions allowed to be sent from client via remoteExec
+	class Functions
+	{
+		mode = 2;
+		jip = 1;		
+		
+		class vcm_serverask { allowedTargets = 0;jip = 1; };
+		class VCM_PublicScript { allowedTargets = 0;jip = 1; };
+		class BIS_fnc_debugConsoleExec { allowedTargets = 0;jip = 1; };
+		class SpawnScript { allowedTargets = 0;jip = 1; };
+		class enableSimulationGlobal { allowedTargets = 0;jip = 1; };
+		class VCM_fnc_KnowAbout { allowedTargets = 0;jip = 1; };
+		
+	};
+	
+	
+};
+
+class Extended_PreInit_EventHandlers {
+	VCM_CBASettings = call compile preprocessFileLineNumbers "Vcom\Functions\VCM_Functions\fn_CBASettings.sqf";
 };
 
 class CfgFunctions
 {
     #include "CHVD\CfgFunctions.hpp"
+	#include "vcom\cfgFunctions.hpp"
     class NSLVR
 	{
 		class functions
@@ -222,7 +207,6 @@ class CfgFunctions
 			class sendToServer {};
 			class vehicleCheck {};
 			class handleScore {};
-			class onUnitKilled {};
 			class getVehicleInfo {};
 			class getWeaponInfo {};
 			class getMagazineInfo {};
@@ -232,8 +216,7 @@ class CfgFunctions
 			class sm_convoy {};
 			class sm_reinforce {};
 			class sm_csar {};
-			class buildSideMissionArray {};
-			class osm {};
+			class pickSideMission {};
 			class rearm {};
 			class buildMagazineArray {};
 			class buildAmmoCrate {};
@@ -250,19 +233,15 @@ class CfgFunctions
 			class healMen {};
 			class endgame {};
 			class nearestTownName {};
-			class mhq {};
 			class support_arty {};
 			class support_cas {};
 			class support_mortar {};
 			class support_rocket {};
 			class support_uav {};
-			class support_ugv {};
 			class support_resupply {};
 			class supportManager {};
 			class calculateDelay {};
 			class calculateOPFOR {};
-			class deathFX {};
-			class hitFX {};
 			class getNearest {};
 			class hasLOS {};
 			class createComposition {};
@@ -270,21 +249,7 @@ class CfgFunctions
 			class doArtyFire {};
 			class createMinefield {};
 			class createSniper {};
-			/*
-			class reviveControl {};
-			class reviveBleedOut {};
-			class reviveEnabled {};
-			class reviveExecuteTemplate {};
-			class reviveIconControl {};
-			class reviveIconManager {};
-			class reviveIncapacitate {};
-			class reviveInit {};
-			class reviveKeys {};
-			class reviveOnPlayerKilled {};
-			class reviveOnPlayerREspawn {};
-			class reviveProgress {};
-			class reviveSetStatus {};
-			*/
+			class trackAir {};
 		};
 	};
 };
@@ -310,145 +275,6 @@ class CfgSounds
 	{
 		name = "Goodjob";
 		sound[] = {"Sound\goodjob.ogg", db-1, 1.0};
-		titles[] = {};
-	};
-	class MRG_bodyfall_concrete_1 {
-		name = "bodyfall_concrete_1";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_concrete_1", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_concrete_2 {
-		name = "bodyfall_concrete_2";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_concrete_2", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_concrete_3 {
-		name = "bodyfall_concrete_3";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_concrete_3", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-
-	class MRG_bodyfall_grass_1 {
-		name = "bodyfall_grass_1";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_grass_1", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_grass_2 {
-		name = "bodyfall_grass_2";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_grass_2", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_grass_3 {
-		name = "bodyfall_grass_3";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_grass_3", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-
-	class MRG_bodyfall_drygrass_1 {
-		name = "bodyfall_drygrass_1";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_drygrass_1", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_drygrass_2 {
-		name = "bodyfall_drygrass_2";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_drygrass_2", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_drygrass_3 {
-		name = "bodyfall_drygrass_3";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_drygrass_3", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-
-	class MRG_bodyfall_sand_1 {
-		name = "bodyfall_sand_1";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_sand_1", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_sand_2 {
-		name = "bodyfall_sand_2";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_sand_2", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_bodyfall_sand_3 {
-		name = "bodyfall_sand_3";
-		sound[] = {"A3\sounds_f\characters\movements\bodyfalls\bodyfall_sand_3", VOLUME, 0.9 + random 0.2};
-		titles[] = {};
-	};
-
-	class MRG_scream_1 {
-		name = "MRG_scream_1";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P01\Max_Hit_01", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_2 {
-		name = "MRG_scream_2";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P01\Max_Hit_02", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_3 {
-		name = "MRG_scream_3";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P01\Max_Hit_03", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_4 {
-		name = "MRG_scream_4";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P02\Mid_Hit_01", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_5 {
-		name = "MRG_scream_5";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P02\Mid_Hit_02", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_6 {
-		name = "MRG_scream_6";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P03\Hit_Mid_1", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_7 {
-		name = "MRG_scream_7";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P03\Hit_Mid_2", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_8 {
-		name = "MRG_scream_8";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P03\Hit_Mid_3", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_9 {
-		name = "MRG_scream_9";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P04\Hit_Max_2", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_10 {
-		name = "MRG_scream_10";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P04\Hit_Max_3", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_11 {
-		name = "MRG_scream_11";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P05\Hit_Max_1", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_12 {
-		name = "MRG_scream_12";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P05\Hit_Max_2", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_13 {
-		name = "MRG_scream_13";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P05\Hit_Max_3", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_14 {
-		name = "MRG_scream_14";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P05\Hit_Max_4", VOLUME_SCREAM, 0.9 + random 0.2};
-		titles[] = {};
-	};
-	class MRG_scream_15 {
-		name = "MRG_scream_15";
-		sound[] = {"A3\Sounds_F\characters\human-sfx\P05\Hit_Max_5", VOLUME_SCREAM, 0.9 + random 0.2};
 		titles[] = {};
 	};
 	class sectorCaptured_0
@@ -573,9 +399,9 @@ class CfgNotifications
 	};
 	class vehDesertion
 	{
-		title = "VEHICLE ABANDOND"; // Tile displayed as text on black background. Filled by arguments.
+		title = "VEHICLE ABANDONED"; // Tile displayed as text on black background. Filled by arguments.
 		iconPicture = "%2"; // Small icon displayed in left part. Colored by "color", filled by arguments.
-		description = "Abandond %3 vehicle nearby, respawning in %1 seconds"; // Brief description displayed as structured text. Colored by "color", filled by arguments.
+		description = "Abandoned %3 vehicle nearby, respawning in %1 seconds"; // Brief description displayed as structured text. Colored by "color", filled by arguments.
 		color[] = {1,1,1,1}; // Icon and text color
 		duration = 5; // How many seconds will the notification be displayed
 		priority = 0; // Priority; higher number = more important; tasks in queue are selected by priority
@@ -765,7 +591,7 @@ class CfgDebriefing
 	{
 		title = "MISSION ACCOMPLISHED";
 		subtitle = "";
-		description = "NATO units successfully captured all designated villages and cities, forcing the OPFOR assets to retreat.";
+		description = "US units successfully captured all designated villages and cities, forcing the SLA forces to retreat.";
 		pictureBackground = "";
 		picture = "b_inf";
 		pictureColor[] = {0.0,0.3,0.6,1};

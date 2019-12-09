@@ -6,7 +6,7 @@ while {true} do {
   {deleteMarkerLocal _x;} count gridmarkers;
   gridmarkers = [];
   {
-    if ( !((side _x) isEqualTo civilian) && (_x distance (position currentTarget) < 550) ) then {
+    if ( !((side _x) isEqualTo civilian) ) then {
       _pos = getPosATL _x;
       _px = floor ( (_pos select 0) / 100);
       _py = floor ( (_pos select 1) / 100);

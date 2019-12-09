@@ -278,6 +278,53 @@ switch (_mission) do {
         };
     };
     //////////////////////////////////////
+    //RAID TOWER QTY
+    //////////////////////////////////////
+    case "Radio": {
+       switch (_type) do {
+            case "Infantry": {
+                switch (EVO_difficulty) do {
+                    case 1: {
+                        //////////////////////////////////////
+                        //EASY
+                        //////////////////////////////////////
+                        _qty = 1;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight / 2));
+                    };
+                    case 2: {
+                        //////////////////////////////////////
+                        //NORMAL
+                        //////////////////////////////////////
+                        _qty = 3;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                    case 3: {
+                        //////////////////////////////////////
+                        //HARD
+                        //////////////////////////////////////
+                        _qty = 4;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                    case 4: {
+                        //////////////////////////////////////
+                        //ALTIS ON FIRE
+                        //////////////////////////////////////
+                        _qty = 5;
+                        _qty = _qty + (random(floor(2 * currentTargetSqkm)));
+                        _qty = _qty + random(floor(3));
+                        _qty = _qty + random(floor(_weight));
+                    };
+                };
+            };
+        };
+    };
+    //////////////////////////////////////
     //SIDE MISSION QTY
     //////////////////////////////////////
     case "Side": {
@@ -316,7 +363,7 @@ switch (_mission) do {
                         //////////////////////////////////////
                         //EASY
                         //////////////////////////////////////
-                        _qty = 4;
+                        _qty = 1;
                         _qty = _qty + (random(floor(2 * currentTargetSqkm)));
                         _qty = _qty + random(floor(3));
                         _qty = _qty + random(floor(_weight / 2));
@@ -325,7 +372,7 @@ switch (_mission) do {
                         //////////////////////////////////////
                         //NORMAL
                         //////////////////////////////////////
-                        _qty = 6;
+                        _qty = 2;
                         _qty = _qty + (random(floor(2 * currentTargetSqkm)));
                         _qty = _qty + random(floor(3));
                         _qty = _qty + random(floor(_weight));
@@ -334,7 +381,7 @@ switch (_mission) do {
                         //////////////////////////////////////
                         //HARD
                         //////////////////////////////////////
-                        _qty = 7;
+                        _qty = 3;
                         _qty = _qty + (random(floor(2 * currentTargetSqkm)));
                         _qty = _qty + random(floor(3));
                         _qty = _qty + random(floor(_weight));
@@ -343,7 +390,7 @@ switch (_mission) do {
                         //////////////////////////////////////
                         //ALTIS ON FIRE
                         //////////////////////////////////////
-                        _qty = 8;
+                        _qty = 4;
                         _qty = _qty + (random(floor(2 * currentTargetSqkm)));
                         _qty = _qty + random(floor(3));
                         _qty = _qty + random(floor(_weight));
@@ -366,7 +413,7 @@ switch (_mission) do {
                         //////////////////////////////////////
                         //NORMAL
                         //////////////////////////////////////
-                        _qty = 2;
+                        _qty = 1;
                         _qty = _qty + (random(floor(2 * currentTargetSqkm)));
                         _qty = _qty + random(floor(_weight / 2));
                     };

@@ -16,17 +16,6 @@ _grp setCombatMode "RED";
 	_x setSkill ["spottime", 0.8];
 	_x setSkill ["commanding",1];
 	_x setSkill ["general", 1];
-	_x AddMPEventHandler ["mpkilled", {_this spawn EVO_fnc_onUnitKilled}];
-	if (("hitFX" call BIS_fnc_getParamValue) == 1) then {
-		_x addEventHandler ["killed", {
-			//_this spawn EVO_fnc_deathFX;
-			[_this,"EVO_fnc_deathFX", true] call BIS_fnc_MP;
-		}];
-		_x addEventHandler ["hit", {
-			//_this spawn EVO_fnc_hitFX;
-			[_this,"EVO_fnc_hitFX", true] call BIS_fnc_MP;
-		}];
-	};
 	if (HCconnected) then {
 		handle = [_x] call EVO_fnc_sendToHC;
 	};

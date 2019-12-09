@@ -6,9 +6,6 @@ if (player getVariable ["EVOrank", "PRIVATE"] == "PRIVATE" || _spendable > 2) th
 		null = [] execVM "ATM_airdrop\atm_airdrop.sqf";
 		["PointsRemoved",["HALO insertion initiated.", 0]] call BIS_fnc_showNotification;
 	} else {
-		_score = player getVariable ["EVO_score", 0];
-		_score = _score - 2;
-		player setVariable ["EVO_score", _score, true];
 		[player, -2] call BIS_fnc_addScore;
 		null = [] execVM "ATM_airdrop\atm_airdrop.sqf";
 		["PointsRemoved",["HALO insertion initiated.", 2]] call BIS_fnc_showNotification;

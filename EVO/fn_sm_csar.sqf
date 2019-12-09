@@ -1,9 +1,4 @@
-private ["_vehClass","_veh","_maxPositions","_class","_unit","_spawnPos","_grp","_tskDisplayName","_score"];
-
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "csar";
 	publicVariable "currentSideMission";
 	currentSideMissionStatus = "ip";
@@ -12,8 +7,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (isServer) then {
          	//server
          	opforUnits = [];
-         	_vehClass = ["B_Heli_Light_01_F","B_Heli_Light_01_armed_F","B_Heli_Light_01_stripped_F","B_Heli_Attack_01_F","B_Heli_Transport_01_F","B_Heli_Transport_01_camo_F","B_Heli_Transport_03_unarmed_F","B_Heli_Transport_03_F","B_Heli_Transport_03_black_F","B_Heli_Transport_03_unarmed_green_F"] call bis_fnc_selectRandom;
-         	_veh = _vehClass createVehicle csarLoc;
+         	_vehClass = ["CUP_B_AH1Z", "CUP_B_AH6J_MP_USA", "CUP_B_MH6J_USA", "CUP_B_UH60L_US"] call bis_fnc_selectRandom;
+			_veh = createVehicle [_vehClass, csarLoc];
          	_veh setDamage 1;
          	_maxPositions = (_veh emptyPositions "Commander") + (_veh emptyPositions "Gunner") + (_veh emptyPositions "Driver");
          	csarGrp = createGroup west;
@@ -27,8 +22,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
          	};
          	for "_i" from 1 to (_maxPositions - 1) step 1 do {
          	    if ([true, false] call bis_fnc_selectRandom) then {
-         	    	_class = ["B_Helipilot_F","B_helicrew_F"] call bis_fnc_selectRandom;
-         	    	_unit = csarGrp createUnit [_class, getPos _veh, [], 0, "FORM"];
+         	    	_unit = csarGrp createUnit ["CUP_B_US_Pilot_Light", getPos _veh, [], 0, "FORM"];
          	    	[_unit] spawn {
          	    		_this select 0 allowDamage false;
          	    		sleep 10;
@@ -41,8 +35,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
          	{
          		_x addAction [format["Rescue %1", name _x],"[_this select 0] join _this select 1; _this select 0 setCaptive false;",nil,1,false,true,"","group _x == csarGrp"];
          	} forEach csarUnits;
-		for "_i" from 1 to (floor(random 4) + 1) do {
-			_spawnPos = [locationPosition defendTarget, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
+			_spawnPos = [locationPosition csarLoc, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
@@ -54,19 +48,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				opforUnits = opforUnits + [_x];
 			}  forEach units _grp;
 			handle = [_grp, csarLoc] call BIS_fnc_taskAttack;
-		};
-		for "_i" from 1 to 2 do {
-			_spawnPos = [locationPosition defendTarget, 1000, 1500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call EVO_fnc_spawnGroup;
-			if (HCconnected) then {
-				{
-					handle = [_x] call EVO_fnc_sendToHC;
-				} forEach units _grp;
-			};
-			{
-
-				opforUnits = opforUnits + [_x];
-			}  forEach units _grp;
 		};
 
 		handle = [] spawn {
@@ -83,7 +64,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 			{
 				deleteVehicle _x;
 			} forEach opforUnits;
@@ -95,24 +76,21 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (!isDedicated) then {
 	//client
 		CROSSROADS sideChat "Any available units, we have a helo down! Conduct CSAR ASAP.";
-		["TaskAssigned",["","Rescue NATO Helo Crew"]] call BIS_fnc_showNotification;
+		["TaskAssigned",["","Rescue Helo Crew"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (currentSideMissionStatus == "success") then {
 				if (player distance spawnBuilding < 1000) then {
 					playsound "goodjob";
-					_score = player getVariable ["EVO_score", 0];
-					_score = _score + 10;
-					player setVariable ["EVO_score", _score, true];
 					[player, 10] call BIS_fnc_addScore;
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
 				CROSSROADS sideChat "Our downed crew made it home safely. Nice job men!";
-				["TaskSucceeded",["","NATO Helo Crew Survived"]] call BIS_fnc_showNotification;
+				["TaskSucceeded",["","Helo Crew Survived"]] call BIS_fnc_showNotification;
 			} else {
 				CROSSROADS sideChat "We've lost communications with our downed crew, all units RTB and rearm.";
-				["TaskFailed",["","NATO Helo Crew KIA"]] call BIS_fnc_showNotification;
+				["TaskFailed",["","Helo Crew KIA"]] call BIS_fnc_showNotification;
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";

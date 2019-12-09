@@ -2,13 +2,9 @@
  _colorWest = WEST call BIS_fnc_sideColor;
  _markers =  [["\A3\ui_f\data\map\markers\nato\b_hq.paa", _colorWest, getPos spawnBuilding, 1, 1, 0, "HQ", 0]];
 
-if (!isNil "MHQ") then {
-    _markers = _markers + [["\A3\ui_f\data\map\markers\nato\respawn_motor_ca.paa", _colorWest, getPos MHQ, 1, 1, 0, "Mobile HQ", 0]];
-};
-
   [
         getPos spawnBuilding,
-        "NATO Staging Area", // SITREP text
+        "US Base", // SITREP text
         100, // altitude
         100, // radius
         120, // viewing angle

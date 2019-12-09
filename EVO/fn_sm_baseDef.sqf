@@ -1,22 +1,18 @@
-private ["_spawnLocations","_spawnLocation","_spawnPos","_grp","_ret","_heli","_heliGrp","_wp","_tskDisplayName","_score"];
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "baseDef";
 	publicVariable "currentSideMission";
 	currentSidemissionUnits = 100;
 	currentSideMissionStatus = "ip";
 	publicVariable "currentSideMissionStatus";
 	if (isServer) then {
-		currentSidemissionUnits = 0;
+		currentSidemissionUnits = [];
 	//server
 		_spawnLocations = [(targetLocations select 0), (targetLocations select 1)];
 
 
 		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [(position ([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			//_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
+			_spawnPos = [([_spawnLocations] call BIS_fnc_selectRandom), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_grp = [_spawnPos, EAST, (EVO_OPFORINFANTRY call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 			handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
 			{
 				currentSidemissionUnits pushBack _x;
@@ -29,8 +25,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		};
 
 		for "_i" from 1 to (["Armor", "Side"] call EVO_fnc_calculateOPFOR) do {
-			_spawnPos = [(position ([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_ret = [_spawnPos, (floor (random 360)), (["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"] call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+			_spawnPos = [(([_spawnLocations] call BIS_fnc_selectRandom)), 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+			_ret = [_spawnPos, (floor (random 360)), (EVO_OPFORVEHICLES call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 		    _grp = _ret select 2;
 		    handle = [_grp, getPos spawnBuilding] call BIS_fnc_taskAttack;
 			{
@@ -82,9 +78,9 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			currentSideMissionStatus = "success";
 			publicVariable "currentSideMissionStatus";
 			[baseDefTask, "Succeeded", false] call bis_fnc_taskSetState;
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 		};
-		_tskDisplayName = format ["Defend NATO Staging Base"];
+		_tskDisplayName = format ["Defend Staging Base"];
 		baseDefTask = format ["baseDefTask_%1", floor(random(1000))];
 		[WEST, [baseDefTask], [_tskDisplayName, _tskDisplayName, ""], (getPos spawnBuilding), 1, 2, true] call BIS_fnc_taskCreate;
 	};
@@ -92,20 +88,18 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		//client
 		"counter" setMarkerAlpha 1;
 		"counter_1" setMarkerAlpha 1;
-		CROSSROADS sideChat "All units be advised, we have OPFOR units closing in on the staging base! All available assets move to engage!";
-		["TaskAssigned",["","Defend NATO Staging Base"]] call BIS_fnc_showNotification;
+		CROSSROADS sideChat "All units be advised, we have SLA units closing in on the staging base! All available assets move to engage!";
+		["TaskAssigned",["","Defend Staging Base"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (player distance spawnBuilding < 1000) then {
 				playsound "goodjob";
-				_score = player getVariable ["EVO_score", 0];
-				_score = _score + 10;
-				player setVariable ["EVO_score", _score, true];
+				[player, 10] call BIS_fnc_addScore;
 				["PointsAdded",["BLUFOR completed a sidemission.", 10]] call BIS_fnc_showNotification;
 			};
 			sleep (random 15);
-			CROSSROADS sideChat "The OPFOR counter attack has been defeated. Get back out there!";
-			["TaskSucceeded",["","OPFOR Counterattack Defeated"]] call BIS_fnc_showNotification;
+			CROSSROADS sideChat "The SLA counter attack has been defeated. Get back out there!";
+			["TaskSucceeded",["","SLA Counterattack Defeated"]] call BIS_fnc_showNotification;
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
 			"counter" setMarkerAlpha 0;

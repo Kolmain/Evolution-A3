@@ -1,9 +1,4 @@
-private ["_spawnPos","_grp","_ret","_heli","_heliGrp","_tskDisplayName","_score"];
-
-if (currentSideMission != "none") exitWith {systemChat "Sidemission has already been chosen!"};
-
 [{
-	titleCut ["","BLACK IN", 0];
 	currentSideMission = "reinforce";
 	publicVariable "currentSideMission";
 	attackingUnits = 100;
@@ -12,11 +7,11 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	if (isServer) then {
 		attackingUnits = 0;
          	//server
-         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "West" >> "Guerilla" >> "Infantry" >> "IRG_InfTeam_AT")] call EVO_fnc_spawnGroup;
+         	reinforceSquad = [locationPosition defendTarget, WEST, (configfile >> "CfgGroups" >> "Indep" >> "CUP_I_RACS" >> "Infantry" >> "CUP_I_RACS_InfantrySquad")] call EVO_fnc_spawnGroup;
          	handle = [reinforceSquad, locationPosition defendTarget] call BIS_fnc_taskDefend;
-		for "_i" from 1 to 4 do {
+		for "_i" from 1 to (["Infantry", "Side"] call EVO_fnc_calculateOPFOR) do {
 			_spawnPos = [locationPosition defendTarget, 500, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfTeam")] call EVO_fnc_spawnGroup;
+			_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
@@ -33,7 +28,8 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 		};
 		for "_i" from 1 to 2 do {
 			_spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			_grp = [_spawnPos, EAST, (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad_Weapons")] call EVO_fnc_spawnGroup;
+			
+			_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
 			if (HCconnected) then {
 				{
 					handle = [_x] call EVO_fnc_sendToHC;
@@ -47,7 +43,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 				attackingUnits = attackingUnits + 1;
 			}  forEach units _grp;
 			   _spawnPos = [getPos server, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-			   _ret = [_spawnPos, (floor (random 360)), "O_Heli_Light_02_unarmed_F", EAST] call EVO_fnc_spawnvehicle;
+			   _ret = [_spawnPos, (floor (random 360)), "CUP_O_MI8_SLA_1", EAST] call EVO_fnc_spawnvehicle;
 			   _heli = _ret select 0;
 			   _heliGrp = _ret select 2;
 			   if (HCconnected) then {
@@ -94,8 +90,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			handle = [] spawn EVO_fnc_pickSideMission;
 		};
 		_tskDisplayName = format ["Reinforce NATO Recon Units"];
 		reinforceTask = format ["reinforceTask%1", floor(random(1000))];
@@ -103,21 +98,18 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 	};
 	if (!isDedicated) then {
 	//client
-		CROSSROADS sideChat "All units be advised, OPFOR ground assets are moving to engage our recon elements. All available teams move to reinforce them!";
+		CROSSROADS sideChat "All units be advised, SLA ground assets are moving to engage our recon elements. All available teams move to reinforce them!";
 		["TaskAssigned",["","Reinforce Recon Units"]] call BIS_fnc_showNotification;
 		handle = [] spawn {
 			waitUntil {currentSideMissionStatus != "ip"};
 			if (currentSideMissionStatus == "success") then {
 				if (player distance defendTarget < 1000) then {
 					playsound "goodjob";
-					_score = player getVariable ["EVO_score", 0];
-					_score = _score + 10;
-					player setVariable ["EVO_score", _score, true];
 					[player, 10] call BIS_fnc_addScore;
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
 				sleep (random 15);
-				CROSSROADS sideChat "The OPFOR advance on our recon element has been defeated. Nice job men!";
+				CROSSROADS sideChat "The SLA advance on our recon element has been defeated. Nice job men!";
 				["TaskSucceeded",["","Recon Units Survived"]] call BIS_fnc_showNotification;
 
 			} else {

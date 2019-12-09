@@ -20,7 +20,7 @@ _this select 9: init code on first run (saves having repeat code in vehicle init
 _this select 10: Array of safeZones, can be any of [ "marker", trigger, [OBJ, radius], [pos, radius] ] - Default [] - OPTIONAL
 
 How to use - Vehicle Init Line:
-_nul = [this, 2, 1] execVM "vehrespawn.sqf"; // standard method
+_nul = [this, 2, 200, 2, true] execVM "vehrespawn.sqf"; // standard method
 _nul = [this, 2, 1, {TAG_FNC_HunterHMGInit}, true] execVM "vehrespawn.sqf"; // "advanced" method - setting a pseudo vehicle init on the newly respawned vehicle
 
 ---------------------------------------------------------------------------------------------------- */
@@ -270,6 +270,10 @@ _monitor = true;
 					deleteVehicle _veh;
 					sleep 1;
 					_veh = createVehicle [_vehtype, _pos, [], 0, "NONE"];
+					clearWeaponCargoGlobal _veh;
+					clearMagazineCargoGlobal _veh;
+					clearBackpackCargoGlobal _veh;
+					clearItemCargoGlobal _veh;
 
 					//If the old vehicle had a name transfer it to the new vehicle
 					if (_vehName != "") then {

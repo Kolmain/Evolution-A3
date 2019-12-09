@@ -165,7 +165,7 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			};
 			currentSideMission = "none";
 			publicVariable "currentSideMission";
-			handle = [] spawn EVO_fnc_buildSideMissionArray;
+			 [] spawn EVO_fnc_pickSideMission;
 			deleteMarker convoyEndMarker;
 			deleteMarker convoyStartMarker;
 			deleteMarker convoyStartAoMarker;
@@ -184,9 +184,6 @@ if (currentSideMission != "none") exitWith {systemChat "Sidemission has already 
 			if (currentSideMissionStatus == "success") then {
 				if (player distance (position convoyEnd) < ((position convoyStart) distance (position convoyEnd))) then {
 					playsound "goodjob";
-					_score = player getVariable ["EVO_score", 0];
-					_score = _score + 10;
-					player setVariable ["EVO_score", _score, true];
 					[player, 10] call BIS_fnc_addScore;
 					["PointsAdded",["You completed a sidemission.", 10]] call BIS_fnc_showNotification;
 				};
