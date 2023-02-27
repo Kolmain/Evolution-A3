@@ -19,9 +19,9 @@ sleep 3.5;
 openMap true;
 sleep 3;
 ["supportMapClickEH", "onMapSingleClick", {
-supportMapClick = _pos;
-supportClicked = true;
-["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
+	supportMapClick = _pos;
+	supportClicked = true;
+	["supportMapClickEH", "onMapSingleClick"] call BIS_fnc_removeStackedEventHandler;
 }] call BIS_fnc_addStackedEventHandler;
 ["deployed",["DESIGNATE TARGET", "Left click on your target."]] call BIS_fnc_showNotification;
 waitUntil {supportClicked || !(visiblemap)};
@@ -52,8 +52,6 @@ if ( _dis > 1000) then {
 		[_logic,nil,true] call BIS_fnc_moduleCAS;
 		deleteVehicle _logic;
 		_loop = true;
-	};
-};
 
 } else {
 	[_pilot, format["Grid %3 is too close to friendly forces, request denied, out.", groupID (group _caller), groupID (group _pilot), mapGridPosition _pos]] call EVO_fnc_globalSideChat;

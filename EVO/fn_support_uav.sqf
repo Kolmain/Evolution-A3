@@ -13,7 +13,7 @@ if (_busy) exitWith {
 	[_caller, format["Crossroads, this is %1, requesting UAV support, over.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
 	sleep 3.5;
 	[Crossroads, format["%1, this is Crossroads, UAV is unavailable, out.", groupID (group _caller)]] call EVO_fnc_globalSideChat;
-}
+};
 _grp = group _caller;
 [_caller, -10] call bis_fnc_addScore;
 ["PointsRemoved",["UAV request initiated.", 10]] call BIS_fnc_showNotification;

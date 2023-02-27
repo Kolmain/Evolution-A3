@@ -6,17 +6,18 @@ _init = [_this, 2, false] call BIS_fnc_param;
 //If we started too late and the AO is over, error out
 if (!RTonline && !(_currentTarget == currentTarget)) exitWith {["EVO_fnc_sendToAO called after AO change."] call BIS_fnc_error};
 _grp = grpNull;
-_spawnPos = getPos server;
+_spawnPos = position (targetLocations select (targetCounter + 1));
 //Decide if we are workign with infantry or armor
 switch (_type) do {
     case "infantry": {
 		//working with infantry
     	if (_init) then {
 			//if were starting the AO, spawn everything already there at a safe loc
-    		_spawnPos = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    		_spawnPos = [position currentTarget, 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
     	} else {
 			//if the ao is already started, spawn everything at a safe loc at the next AO
-    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 0, 1000, 10, 0, 2, 0, [], [position (targetLocations select (targetCounter + 1)), position (targetLocations select (targetCounter + 1))]] call BIS_fnc_findSafePos;
+			while { _spawnPos distance position (targetLocations select (targetCounter + 1)) > 1000} do { _spawnPos = [position (targetLocations select (targetCounter + 1)), 0, 1000, 10, 0, 2, 0, [], [position (targetLocations select (targetCounter + 1)), position (targetLocations select (targetCounter + 1))]] call BIS_fnc_findSafePos; };
     	};
 		//spawn the grp
 		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
@@ -49,21 +50,16 @@ switch (_type) do {
 					//insert via land
 					//spawn pos near grp
 					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					while { _spawnPos2 distance getPos leader _grp > 100 } do { _spawnPos2 = [getPos leader _grp, 10, 100, 10, 0, 2, 0] call BIS_fnc_findSafePos; };
 					//spawn the vehicle and declare trans var
 					_ret = [_spawnPos2, (floor (random 360)), (EVO_opforGroundTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
-					//disable AI control on the transport
-					_transGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
-					_transGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
-					_transGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
-					_transGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
-					_transGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
-					_transGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 					//find nearest road and put the transport on it
 				    _roads = _transport nearRoads 100;
 				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
 				    _transport setPos getPos _nearestRoad;
+					_transport setDir (getDir _nearestRoad);
 					{
 						if (HCconnected) then {
 							//send to HC if available
@@ -82,7 +78,7 @@ switch (_type) do {
 					//send trans into AO and deliver units
 				    _goTo = [position currentTarget, 100, 250, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				    _transport doMove _goTo;
-				    waitUntil {_transport distance _goTo < 100};
+				    waitUntil {_transport distance (position currentTarget) < 500};
 				    doStop _transport;
 				    {
 				    	unassignVehicle  _x;
@@ -109,16 +105,11 @@ switch (_type) do {
 					};
 				} else {
 					//insert via air
-					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					while { _spawnPos2 distance (targetLocations select (targetCounter + 1)) > 1000 } do { _spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos; };
 				    _ret = [_spawnPos2, (floor (random 360)), (EVO_opforAirTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _heli = _ret select 0;
 				    _heliGrp = _ret select 2;
-					_heliGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
-					_heliGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
-					_heliGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
-					_heliGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
-					_heliGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
-					_heliGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 				    {
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
@@ -140,9 +131,7 @@ switch (_type) do {
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;
 					    	waitUntil {(_heli distance server) < 1000};
-					    	{
-					    		deleteVehicle _x;
-					    	} forEach units group driver _heli;
+					    	deleteVehicleCrew _heli;
 					    	deleteVehicle _heli;
 						};
 
@@ -150,10 +139,11 @@ switch (_type) do {
 
 					} else {
 						//land
-						_goTo = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-					    _heli doMove _goTo;
-					    _heli flyInHeight 50;
-					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 300)};
+						_lz = current_landing_zones call bis_fnc_selectRandom;
+						_goTo = position _lz;
+						_heli flyInHeight 50;
+						[group _heli, _goTo, _lz] spawn BIS_fnc_wpLand;
+					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 300) || !alive _heli};
 					    {
 					    	unassignVehicle  _x;
 					    	doGetOut _x
@@ -164,9 +154,7 @@ switch (_type) do {
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;
 					    	waitUntil {(_heli distance server) < 1000};
-					    	{
-					    		deleteVehicle _x;
-					    	} forEach units group driver _heli;
+					    	deleteVehicleCrew _heli;
 					    	deleteVehicle _heli;
 						};
 
@@ -184,7 +172,7 @@ switch (_type) do {
     		_spawnPos = [getPos currentTargetRT, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
     	} else {
 			//if the ao is already started, spawn everything at a safe loc at the next AO
-    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
     	};
 		//spawn the grp
 		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
@@ -217,17 +205,11 @@ switch (_type) do {
 					//insert via land
 					//spawn pos near grp
 					_spawnPos2 = [getPos leader _grp, 10, 25, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					while { _spawnPos2 distance getPos leader _grp > 100 } do { _spawnPos2 = [getPos leader _grp, 10, 100, 10, 0, 2, 0] call BIS_fnc_findSafePos; };
 					//spawn the vehicle and declare trans var
 					_ret = [_spawnPos2, (floor (random 360)), (EVO_opforGroundTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _transport = _ret select 0;
 				    _transGrp = _ret select 2;
-					//disable AI control on the transport
-					_transGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
-					_transGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
-					_transGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
-					_transGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
-					_transGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
-					_transGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 					//find nearest road and put the transport on it
 				    _roads = _transport nearRoads 100;
 				    _nearestRoad = [getPos _transport, _roads] call EVO_fnc_getNearest;
@@ -273,16 +255,11 @@ switch (_type) do {
 					};
 				} else {
 					//insert via air
-					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					_spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+					while { _spawnPos2 distance (targetLocations select (targetCounter + 1)) > 1000 } do { _spawnPos2 = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos; };
 				    _ret = [_spawnPos2, (floor (random 360)), (EVO_opforAirTrans call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 				    _heli = _ret select 0;
 				    _heliGrp = _ret select 2;
-					_heliGrp setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
-					_heliGrp setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
-					_heliGrp setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
-					_heliGrp setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
-					_heliGrp setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
-					_heliGrp setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 				    {
 						if (HCconnected) then {
 							handle = [_x] call EVO_fnc_sendToHC;
@@ -318,9 +295,10 @@ switch (_type) do {
 
 					} else {
 						//land
-						_goTo = [getPos currentTargetRT, 10, 300, 10, 0, 2, 0] call BIS_fnc_findSafePos;
-					    _heli doMove _goTo;
-					    _heli flyInHeight 50;
+						_lz = current_landing_zones call bis_fnc_selectRandom;
+						_goTo = position _lz;
+						_heli flyInHeight 50;
+						[group _heli, _goTo, _lz] spawn BIS_fnc_wpLand;
 					    waitUntil {([_heli, _goTo] call BIS_fnc_distance2D < 300)};
 					    {
 					    	unassignVehicle  _x;
@@ -331,9 +309,7 @@ switch (_type) do {
 					    handle = [_heli] spawn {
 					    	_heli = _this select 0;
 					    	waitUntil {{_x distance _heli < 1500} count allPlayers < 1};
-					    	{
-					    		deleteVehicle _x;
-					    	} forEach units group driver _heli;
+					    	deleteVehicleCrew _heli;
 					    	deleteVehicle _heli;
 						};
 
@@ -352,9 +328,9 @@ switch (_type) do {
     		if (_init) then {
 	    		_spawnPos = [position currentTarget, 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	    	} else {
-	    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+	    		_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 	    	};
-		    	_ret = [_spawnPos, (floor (random 360)), (EVO_opforVehicles call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
+			_ret = [_spawnPos, (floor (random 360)), (EVO_opforVehicles call BIS_fnc_selectRandom), EAST] call EVO_fnc_spawnvehicle;
 			_tank = _ret select 0;
 			_grp = _ret select 2;
 			{
@@ -370,7 +346,7 @@ switch (_type) do {
 			} forEach units _grp;
 			_heavylift = [false, true] call BIS_fnc_selectRandom;
 			if (_heavylift && !_init) then {
-				_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
+				_spawnPos = [position (targetLocations select (targetCounter + 1)), 10, 1000, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 				_ret = [_spawnPos, (floor (random 360)), EVO_opforHeavyLift, EAST] call EVO_fnc_spawnvehicle;
 				_heli = _ret select 0;
 				[_heli, _tank] spawn {
@@ -383,19 +359,12 @@ switch (_type) do {
 					group driver _heli setBehaviour "CARELESS";
 					group driver _heli setCombatMode "BLUE";
 					group driver _heli setSpeedMode "FULL";
-					group driver _heli setVariable ["VCM_NOFLANK",true]; //This command will stop the AI squad from executing advanced movement maneuvers.
-					group driver _heli setVariable ["VCM_NORESCUE",true]; //This command will stop the AI squad from responding to calls for backup.
-					group driver _heli setVariable ["VCM_TOUGHSQUAD",true]; //This command will stop the AI squad from calling for backup.
-					group driver _heli setVariable ["Vcm_Disable",true]; //This command will disable Vcom AI on a group entirely.
-					group driver _heli setVariable ["VCM_DisableForm",true]; //This command will disable AI group from changing formations.	
-					group driver _heli setVariable ["VCM_Skilldisable",true]; //This command will disable an AI group from being impacted by Vcom AI skill changes
 					_lz = [position currentTarget, 150, 500, 10, 0, 2, 0] call BIS_fnc_findSafePos;
 					driver _heli doMove _lz;
 					_heli flyInHeight 50;
 					_heli lock 3;
 					waitUntil {([_heli, _lz] call BIS_fnc_distance2D < 100)};
 					_heli flyInHeight 0;
-					_heli land "LAND";
 					waitUntil {(isTouchingGround _tank)};
 					{
 						ropeCut [ _x, 5];

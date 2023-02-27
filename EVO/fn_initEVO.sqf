@@ -1,20 +1,22 @@
 //////////////////////////////////////
 //Init Global EVO Variables
 //////////////////////////////////////
-_locTypes = ["NameCity", "NameCityCapital", "NameVillage"];
-targetLocations = nearestLocations [ (getPos spawnBuilding), _locTypes, [] call BIS_fnc_mapSize];
-_locs = nearestLocations [spawnBuilding, ["NameLocal"], [] call BIS_fnc_mapSize];
+
+
+_locs = nearestLocations [spawnBuilding, ["NameLocal","NameCity", "NameCityCapital", "NameVillage"], [] call BIS_fnc_mapSize];
 sideLocations = _locs;
 publicVariable "sideLocations";
-_mil = [];
+//LocationBase_F
+militaryLocations = nearestObjects [spawnBuilding, ["LocationBase_F"], [] call BIS_fnc_mapSize];
+targetLocations = [];
+targetObjects = [obj, obj_1, obj_2, obj_3, obj_4, obj_5, obj_6, obj_7, obj_8, obj_9, obj_10];
 {
-	if ((tolower (text _x)) in ["military"]) then {
-		_mil set [(count _mil),_x]
-	};
-} foreach _locs;
-militaryLocations = _mil;
+	_closesttown = (nearestLocations [(getPos _x),["NameCityCapital","NameCity","NameVillage"],10000]) select 0;
+	targetLocations = targetLocations + [_closesttown];
+} forEach targetObjects;
+totalTargets = count targetLocations;
 if (isNil "targetCounter") then {
-	targetCounter = 2;
+	targetCounter = 0;
 } else {
 	for "_i" from 3 to targetCounter step 1 do {
 		_marker = format ["%1", _i];
@@ -28,18 +30,15 @@ if (isNil "targetCounter") then {
 		_marker setMarkerColor "ColorWEST";
 	};
 };
-//targetCounter = 2;
-totalTargets = ("numberOfAOs" call BIS_fnc_getParamValue);
-if (totalTargets == 999) then {totalTargets = count targetLocations};
-totalTargets = totalTargets + targetCounter;
+
+
+
 currentTarget = targetLocations select targetCounter;
 currentTargetName = text currentTarget;
 currentTargetRT = nil;
 currentTargetOF = nil;
 RTonline = true;
 officerAlive = true;
-infSquads = ("infSquadsParam" call BIS_fnc_getParamValue);
-armorSquads = ("armorSquadsParam" call BIS_fnc_getParamValue);
 markerCounter = 0;
 "opforair" setMarkerAlpha 0;
 "counter" setMarkerAlpha 0;
@@ -49,7 +48,7 @@ currentSideMissionMarker = "nil";
 nextTargetMarkerName = "nil";
 availableSideMissions = [];
 currentSideMissionStatus = "ip";
-EVO_supportUnits = [arty_west, mortar_west, rocket_west];
+EVO_supportUnits = [arty_west, mortar_west, rocket_west, uav_west];
 currentAOunits = [];
 publicVariable "currentAOunits";
 
@@ -61,8 +60,8 @@ publicVariable "currentAOunits";
 	//////////////////////////////////////
 	//Setup BLUFOR Vehicle Respawn/Repair Systems
 	//////////////////////////////////////
-	if (faction _vehicle == "CUP_B_USMC" || faction _vehicle == "CUP_B_US_Army" || faction _vehicle == "BLU_F") then {
-		if (toUpper(typeOf _vehicle) == "CUP_B_M1151_USMC")	then {
+	if (faction _vehicle == "BLU_F") then {
+		if (toUpper(typeOf _vehicle) == "B_MRAP_01_F")	then {
 			_null = [_vehicle] spawn EVO_fnc_basicRespawn;
 		} else {
 			if (!(_vehicle isKindOf "Plane") && !(_vehicle isKindOf "Man")) then {
@@ -121,25 +120,7 @@ publicVariable "currentAOunits";
 //////////////////////////////////////
 //Init First Target
 //////////////////////////////////////
-if (("numberOfAOs" call BIS_fnc_getParamValue) > 0) then {
-	if (("persistentEVO" call BIS_fnc_getParamValue) == 1) then {
-		profileNamespace setVariable ["EVO_currentTargetCounter", targetCounter];
-		profileNamespace setVariable ["EVO_world", worldName];
-		_scoreArray = [];
-		{
-			if (isPlayer _x) then
-			{
-				_push = [];
-				_push pushBack (getPlayerUID _x);
-				_push pushBack (score _x);
-				_scoreArray pushBack _push;
-			};
-		} forEach playableUnits;
-		profileNamespace setVariable ["EVO_scoreArray", _scoreArray];
-		saveProfileNamespace;
-	};
 	handle = [] spawn EVO_fnc_initTarget;
-};
 
 
 

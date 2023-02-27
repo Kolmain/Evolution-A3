@@ -12,7 +12,7 @@ setTimeMultiplier ("timemultiplier" call BIS_fnc_getParamValue);
 //////////////////////////////////////
 //Init OPFOR AI System
 //////////////////////////////////////
-[] execVM "Vcom\VcomInit.sqf";
+//[] execVM "Vcom\VcomInit.sqf";
 
 //////////////////////////////////////
 //Init Common Variables
@@ -25,7 +25,7 @@ CROSSROADS = [West,"HQ"];
 availableWeapons = [];
 availableMagazines = [];
 EVO_vaCrates = [hqbox];
-
+landing_zones = [];
 //////////////////////////////////////
 //Set Ranks and Unlocks
 //////////////////////////////////////
@@ -198,10 +198,12 @@ availableBackpacks = [
 ];
 
 EVO_opforGroundTrans = ["O_Truck_02_covered_F","O_Truck_02_transport_F","O_Truck_03_transport_F","O_Truck_03_covered_F"];
-EVO_opforAirTrans = ["O_Heli_Attack_02_black_F", "O_Heli_Attack_02_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"];
+EVO_opforAirTrans = ["O_Heli_Transport_04_bench_F", "O_Heli_Transport_04_covered_F","O_Heli_Light_02_v2_F", "O_Heli_Light_02_unarmed_F", "O_Heli_Light_02_F"];
+EVO_opforHeavyLift = "O_Heli_Transport_04_F";
 EVO_opforInfantry = [
     (configFile >> "CfgGroups" >> "EAST" >> "OPF_F" >> "Infantry" >> "OIA_InfSquad")
 ];
+evo_opforofficer = "O_Officer_Parade_Veteran_F";
 EVO_opforVehicles = ["O_MRAP_02_gmg_F", "O_MRAP_02_hmg_F", "O_UGV_01_rcws_F","O_APC_Tracked_02_cannon_F", "O_MBT_02_cannon_F", "O_APC_Wheeled_02_rcws_F"];
 EVO_opforAAA = "O_APC_Tracked_02_AA_F";
 EVO_opforSnipers = ["O_sniper_F", "O_ghillie_lsh_F", "O_ghillie_sard_F", "O_ghillie_ard_F"];
@@ -277,7 +279,7 @@ _index = player addMPEventHandler ["MPRespawn", {
 
 	player setUnitRank "PRIVATE";
 	bon_max_units_allowed = 2;
-	bon_recruit_recruitableunits = ["CUP_B_US_Soldier_Backpack"];
+	bon_recruit_recruitableunits = ["B_Soldier_F"];
 	handle = [] execVM "bon_recruit_units\build_unitlist.sqf";
 	[hqbox, (rank player)] call EVO_fnc_buildAmmoCrate;
     _nil = [] spawn EVO_fnc_pinit;

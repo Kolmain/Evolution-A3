@@ -11,7 +11,7 @@ currentAOunits = [];
 publicVariable "currentAOunits";
 RTonline = true;
 officerAlive = true;
-currentTargetName = text currentTarget;
+currentTargetName = toUpper text currentTarget;
 publicVariable "currentTargetName";
 _currentTarget = currentTarget;
 currentTargetType = type currentTarget;
@@ -48,13 +48,42 @@ _obj = _array select 0;
 "opforArrow" setMarkerPos (getPos _obj);
 "opforArrow" setMarkerDir ([getPos _obj, getMarkerPos currentTargetMarkerName] call bis_fnc_DirTo);
 
+current_landing_zones = [];
+{
+    if (_x distance currentTarget <= 1000) then {
+        current_landing_zones pushBack _x;
+    }
+} forEach landing_zones;
+publicVariable "current_landing_zones";
+//////////////////////////////////////
+//Set AO on Map
+//////////////////////////////////////
+current_objective setPos (position currentTarget);
+current_objective setVariable ["objectArea",[1000, 1000, 0, false, 0]];
+[current_objective, [], true] call BIS_fnc_moduleCoverMap;
+
+//////////////////////////////////////
+//Send UAV to AO
+//////////////////////////////////////
+for "_i" from count waypoints group uav_west - 1 to 0 step -1 do
+{
+	deleteWaypoint [group uav_west, _i];
+};
+_wp = group uav_west addWaypoint [position current_objective, 0];
+_wp setWaypointType "LOITER";
+_wp setWaypointLoiterType "CIRCLE";
+_wp setWaypointLoiterRadius 800;
+_wp setWaypointCombatMode "BLUE";
+_wp setWaypointBehaviour "CARELESS";
+_wp setWaypointSpeed "FULL";
+uav_west flyInHeight 500;
+
 //////////////////////////////////////
 //Target AO Radio Tower
 //////////////////////////////////////
-_towerClass = "Land_Radar";
+_towerClass = "Land_Communication_F";
 _spawnPos = [position currentTarget , 10, 200, 10, 0, 0.3, 0] call BIS_fnc_findSafePos;
-//_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower_griffz.sqf"))] call BIS_fnc_ObjectsMapper;
-_radioTowerComp = [_spawnPos, "Comps\radiotower.sqf"] call EVO_fnc_createComposition;
+_radioTowerComp = [_spawnPos, (random(floor(360))), call (compile (preprocessFileLineNumbers "Comps\radiotower.sqf"))] call BIS_fnc_ObjectsMapper;
 {
 	if (toLower(typeOf _x) == toLower(_towerClass)) then {
 		currentTargetRT = _x;
@@ -89,10 +118,11 @@ _grp = createGroup east;
 currentTargetOF = _grp createUnit [EVO_opforOfficer, _spawnPos, [], 0, "FORM"];
 publicVariable "currentTargetOF";
 currentTargetOF addEventHandler ["Killed", {officerAlive = false; publicVariable "officerAlive";}];
-_ofName = str(name currentTargetOF);
+currentTargetOFname = str(name currentTargetOF);
+publicVariable "currentTargetOFname";
 currentTargetOF AddMPEventHandler ["mpkilled", {
 	[officerTask, "Failed", false] call bis_fnc_taskSetState;
-	[[[_ofName], {
+	[[[currentTargetOFname], {
 		_msg = format ["Colonel %1 has been killed.", (_this select 0)];
 		["TaskFailed",["OFFICER KIA", _msg]] call BIS_fnc_showNotification;
 	}], "BIS_fnc_spawn", true, true] call BIS_fnc_MP;
@@ -141,11 +171,11 @@ for "_i" from 1 to (["Mortar", "Main"] call EVO_fnc_calculateOPFOR) do {
 		_dir = [_spawnPos, position currentTarget] call BIS_fnc_dirTo;
 		_comp = ["comps\mortar.sqf"] call BIS_fnc_selectRandom;
 		_grp = createGroup EAST;
-		_mortarGunner = _grp createUnit ["CUP_O_sla_Crew", _spawnPos, [], 0, "FORM"];
+		_mortarGunner = _grp createUnit ["O_Crew_F", _spawnPos, [], 0, "FORM"];
 		//_newComp = [_spawnPos, _dir, call (compile (preprocessFileLineNumbers _comp))] call BIS_fnc_ObjectsMapper;
 		_newComp = [_spawnPos, _comp] call EVO_fnc_createComposition;
 		//_newComp = [_spawnPos, _dir, _comp, false] call (compile (preprocessFileLineNumbers "scripts\otl7_Mapper.sqf"));
-		_mortar = nearestObject [_spawnPos, "CUP_O_2b14_82mm_RU"];
+		_mortar = nearestObject [_spawnPos, "O_Mortar_01_F"];
 		_mortarGunner assignAsGunner _mortar;
 		_mortarGunner moveInGunner _mortar;
 		_grp = [_spawnPos, EAST, (EVO_opforInfantry call BIS_fnc_selectRandom)] call EVO_fnc_spawnGroup;
@@ -194,8 +224,8 @@ for "_i" from 1 to (["Armor", "Main"] call EVO_fnc_calculateOPFOR) do {
 //////////////////////////////////////
 for "_i" from 1 to (["Sniper", "Main"] call EVO_fnc_calculateOPFOR) do {
 	_null = [_currentTarget] spawn {
-		//_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
-		//[_pos] call EVO_fnc_createSniper;
+		_pos = [position currentTarget , 0, 300, 3, 0, 1, 0] call BIS_fnc_findSafePos;
+		[_pos] call EVO_fnc_createSniper;
 	};
 };
 //////////////////////////////////////
@@ -276,7 +306,7 @@ _null = [_currentTarget] spawn {
 	_currentTarget = _this select 0;
 	while {RTonline && (_currentTarget == currentTarget)} do {
 	    sleep 10;
-	    _mortar = nearestObject [position currentTarget, "CUP_O_2b14_82mm_RU"];
+	    _mortar = nearestObject [position currentTarget, "O_Mortar_01_F"];
 	    _gunner = gunner _mortar;
 	    if (isNil "_gunner" || !alive _gunner || side _gunner != EAST) then {
 	    	_mortar setDamage 1;
@@ -314,7 +344,7 @@ while {_loop} do {
 }], "BIS_fnc_spawn", true] call BIS_fnc_MP;
 [towerTask, "Succeeded", false] call bis_fnc_taskSetState;
 sleep (random 15);
-[CROSSROADS, format ["We've received confirmation that the communications tower has been destroyed, %1 will no longer be reinforced.", currentTargetName]] call EVO_fnc_globalSideChat;
+[CROSSROADS, format ["We've received confirmation that the SLA communications tower has been destroyed, %1 will no longer be reinforced by SLA.", currentTargetName]] call EVO_fnc_globalSideChat;
 _sound = ["capturing_2", "capturing_1", "capturing_0"] call BIS_fnc_selectRandom;
 playSound _sound;
 //////////////////////////////////////
@@ -363,7 +393,7 @@ if (_count > 0) then {
 //////////////////////////////////////
 _sound = ["sectorCaptured_2", "sectorCaptured_1", "sectorCaptured_0"] call BIS_fnc_selectRandom;
 playSound _sound;
-[CROSSROADS, format ["OPFOR are retreating from %1.", currentTargetName]] call EVO_fnc_globalSideChat;
+[CROSSROADS, format ["OPFOR are retreating from %1. Nice job men!", currentTargetName]] call EVO_fnc_globalSideChat;
 [attackTask, "Succeeded", false] call bis_fnc_taskSetState;
 
 if (alive currentTargetOF && side (leader group currentTargetOF) != WEST) then {

@@ -12,7 +12,7 @@ if (_pow == currentTargetOF) then {
 		if (!isDedicated) then {
 			_msg = format ["Colonel %1 has been found, extract him!", name currentTargetOF];
 			["TaskUpdated",["OFFICER FOUND", _msg]] call BIS_fnc_showNotification;
-			waitUntil {(currentTargetOF distance powCamp < 50)};
+			waitUntil {(currentTargetOF distance hqBox < 50)};
 			_msg = format ["Colonel %1 has been secured.", name currentTargetOF];
 			["TaskSucceeded",["OFFICER SECURED", _msg]] call BIS_fnc_showNotification;
 			playsound "goodjob";
@@ -25,7 +25,7 @@ if (_pow == currentTargetOF) then {
 		};
 		if (isServer) then {
 			[officerTask, "Succeeded", false] call bis_fnc_taskSetState;
-			waitUntil {(currentTargetOF distance powCamp < 50)};
+			waitUntil {(currentTargetOF distance hqBox < 50)};
 			sleep 5;
 			deleteVehicle currentTargetOF;
 		};

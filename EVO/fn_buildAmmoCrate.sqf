@@ -2,14 +2,8 @@ _crate = _this select 0;
 _EVOrank = _this select 1;
 
 switch (_EVOrank) do {
-    default {
-           availableWeapons = availableWeapons + rank1weapons;
-        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
-        availableItems = availableItems + rank1items;
-
-    };
     case "PRIVATE": {
-           availableWeapons = availableWeapons + rank1weapons;
+        availableWeapons = availableWeapons + rank1weapons;
         availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
         availableItems = availableItems + rank1items;
 
@@ -44,6 +38,11 @@ switch (_EVOrank) do {
             availableWeapons = availableWeapons + rank1weapons + rank2weapons + rank3weapons + rank4weapons + rank5weapons + rank6weapons + rank7weapons;
         availableItems = availableItems + rank1items + rank2items + rank3items + rank4items + rank5items + rank6items;
         availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+    };
+    default {
+        availableWeapons = availableWeapons + rank1weapons;
+        availableMagazines = availableWeapons call EVO_fnc_buildMagazineArray;
+        availableItems = availableItems + rank1items;
     };
 };
 

@@ -59,13 +59,12 @@ class CfgRespawnInventory
 	{
 		displayName = "Default"; // Name visible in the menu
 		icon = "\A3\Ui_f\data\GUI\Cfg\Ranks\sergeant_gs.paa"; // Icon displayed next to the name
-		uniform = "CUP_U_B_USArmy_TwoKnee";
+		uniform = "U_B_CombatUniform_mcam";
 		backpack = "B_AssaultPack_rgr";
-		weapons[] = {"Binocular","CUP_arifle_M16A4_Base","CUP_hgun_M9","Throw","Put"};
-		magazines[] = {"CUP_15Rnd_9x19_M9","CUP_15Rnd_9x19_M9","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_30Rnd_556x45_Stanag","CUP_HandGrenade_M67","CUP_HandGrenade_M67","SmokeShellBlue","SmokeShellRed"};
+		weapons[] = {"Binocular","arifle_MX_F"};
+		magazines[] = {"30Rnd_65x39_caseless_black_mag_Tracer","30Rnd_65x39_caseless_black_mag_Tracer","30Rnd_65x39_caseless_black_mag_Tracer","30Rnd_65x39_caseless_black_mag_Tracer","30Rnd_65x39_caseless_black_mag_Tracer","30Rnd_65x39_caseless_black_mag_Tracer"};
 		items[] = {"FirstAidKit","FirstAidKit","FirstAidKit"};
-		linkedItems[] = {"V_PlateCarrier1_rgr","CUP_H_USArmy_HelmetMICH","G_Tactical_Black","ItemMap","ItemCompass","ItemWatch","ItemRadio"};
-
+		linkedItems[] = {"V_PlateCarrier2_rgr","H_HelmetB_snakeskin","G_Tactical_Black","ItemMap","ItemCompass","ItemWatch","ItemRadio"};
 	};
 };
 
@@ -102,29 +101,11 @@ class Params
 		values[] = {1,2,3,4};
 		default = 3;
 	};
-	class pilotDressRequired {
-		title = "Require Pilot Loadout to Pilot";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
 	class rankVehicles {
 		title = "Require Rank for Vehicles";
 		texts[] = {"Disabled","Enabled"};
 		values[] = {0,1};
 		default = 1;
-	};
-	class fullArsenal {
-		title = "Require Rank for Weapons";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 1;
-	};
-	class mhqParam {
-		title = "Mobile HQ Spawn Point";
-		texts[] = {"Disabled","Enabled"};
-		values[] = {0,1};
-		default = 0;
 	};
 	class bisJukebox {
 		title = "BIS Jukebox";
@@ -166,14 +147,9 @@ class CfgRemoteExec
 	
 };
 
-class Extended_PreInit_EventHandlers {
-	VCM_CBASettings = call compile preprocessFileLineNumbers "Vcom\Functions\VCM_Functions\fn_CBASettings.sqf";
-};
-
 class CfgFunctions
 {
     #include "CHVD\CfgFunctions.hpp"
-	#include "vcom\cfgFunctions.hpp"
     class NSLVR
 	{
 		class functions
